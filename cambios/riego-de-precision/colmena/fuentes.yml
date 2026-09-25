@@ -1,0 +1,73 @@
+# Fuentes configurables del relevamiento de La Colmena.
+# El script las lee de aca para poder reejecutarlo sin tocar codigo.
+
+agente:
+  # User-Agent identificable con contacto, como pide el contrato del relevamiento.
+  user_agent: "colmena-research/1.0 (relevamiento agro; contacto: 17ianmarco27@gmail.com)"
+  # Una request por segundo por dominio, con backoff ante 429 o 5xx.
+  delay_por_dominio_s: 1.0
+  reintentos: 3
+  backoff_base_s: 2.0
+  timeout_s: 30
+
+# ORDEN DE PRIORIDAD. Antes de scrapear HTML, mirar si hay descarga directa o API.
+oficiales:
+  - nombre: INE - CNPV 2022, Cuadro 1.10 Paraguari (poblacion por distrito)
+    tipo: descarga
+    url: https://www.datos.gov.py/dataset/resultados-finales-del-censo-nacional-de-poblacion-y-viviendas-2022/resource/02326950-a2f2
+    nota: PENDIENTE. Es la via correcta para la poblacion 2022; el PDF de proyecciones da 404.
+  - nombre: DNCP - licitaciones
+    tipo: api
+    url: https://www.contrataciones.gov.py/datos/api/v3/doc/
+    consulta: ["Municipalidad de La Colmena", "Gobernacion de Paraguari"]
+    nota: PENDIENTE. Aca aparece si hubo obras de agua, pozos o riego con plata publica.
+  - nombre: MAG - estadisticas frutihorticolas
+    tipo: descarga
+    url: https://www.mag.gov.py/
+    nota: PENDIENTE. Buscar la Sintesis Estadistica y la ENA por distrito.
+  - nombre: Municipalidad de La Colmena
+    tipo: html
+    url: https://municipalidadlacolmena.gov.py/la-colmena/
+    estado: CAPTURADA
+
+cooperativa:
+  - nombre: INCOOP - registro de cooperativas
+    tipo: html
+    url: https://www.incoop.gov.py/
+    nota: PENDIENTE. Buscar CAICA para socios y directivos.
+  - nombre: CAICA - sitio propio
+    estado: NO SE ENCONTRO. La presencia institucional es en redes y prensa.
+
+prensa:
+  dominios: [abc.com.py, lanacion.com.py, valoragro.com.py, ultimahora.com, infonegocios.com.py, campoagropecuario.com.py]
+  ventana_anios: 5
+  terminos:
+    - "La Colmena"
+    - "CAICA"
+    - "Expo Frutas"
+    - "uva La Colmena"
+    - "durazno Paraguay"
+    - "riego La Colmena"
+    - "Paraguari fruticultura"
+    # Agregados tras la primera vuelta, porque ahi estaba el hallazgo del clima:
+    - "horas de frio durazno Paraguay"
+    - "falta de invierno durazno"
+    - "arroyo Rory La Colmena"
+    - "junta de usuarios agua Paraguari"
+
+clima_satelite:
+  - nombre: Copernicus - cobertura Sentinel-2 sobre La Colmena
+    tipo: api
+    nota: PENDIENTE. Solo verificar cobertura y frecuencia. NO descargar rasters todavia.
+  - nombre: DINAC - estacion meteorologica mas cercana
+    tipo: html
+    url: https://www.dinac.gov.py/
+    nota: PENDIENTE. Cual es, a que distancia, que publica y con que frecuencia.
+
+# Lo que el script NO hace, por contrato:
+prohibido:
+  - PIB distrital (Paraguay no lo calcula; el dato no existe)
+  - datos personales de productores particulares
+  - sitios con login o evasion de paywalls
+  - descarga de imagenes satelitales
+  - inventar o completar datos faltantes

@@ -4,8 +4,8 @@ description: >
   Workspace de DESARROLLO del producto. Lo que se construye aca se despliega sobre la
   plataforma de ../infra-platform (k3s + Argo CD + admision), que NO se toca desde este
   repo: el contrato de lo que la plataforma ofrece y como desplegar esta en desarrollo/.
-  La ficha del producto -objetivo, modelo de datos, economia- vive en
-  ../infra-platform/cambios/riego-de-precision/.
+  La ficha del producto -objetivo, modelo de datos, economia, mercado- vive aca, en
+  cambios/riego-de-precision/ (se mudo desde infra-platform el 25/09/2026).
 
 stack:
   language: "Python 3.12 (backend) + TypeScript (front)"
@@ -50,7 +50,7 @@ structure:
 links:
   repo: "git@github.com:padawanpy7/agro-platform.git"
   plataforma: "../infra-platform  (contrato en desarrollo/README.md)"
-  ficha_producto: "../infra-platform/cambios/riego-de-precision/"
+  ficha_producto: "cambios/riego-de-precision/"
 
 carpeta_cambios: cambios
 change_del_loop: META

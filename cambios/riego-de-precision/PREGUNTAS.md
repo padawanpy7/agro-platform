@@ -4,6 +4,38 @@ Lo que no se decide solo. Una pregunta abierta que BLOQUEA no deja cerrar la vue
 
 ## Abiertas
 
+## 0. Quien es el cliente, y quien pone el capital -- ABIERTA (25/09/2026)
+
+**Todo lo escrito hasta ahora asume que el cliente es UN PRODUCTOR.** La cuota
+(`base por finca + por hectarea`), el modelo A/B de instalacion y el "piso de 3 clientes" de
+[ECONOMIA.md](ECONOMIA.md) salen de ese supuesto.
+
+**El relevamiento de La Colmena lo pone en duda** ([colmena/](colmena/)), y el dueño lo marco
+explicitamente: *"no sabemos si ese es el cliente, a lo mejor conseguimos financiacion de la
+cooperativa para hacer el proyecto para todos los socios"*.
+
+**Los escenarios posibles, y son negocios distintos:**
+
+| | quien decide | quien paga | que cambia |
+|---|---|---|---|
+| **A. Productor individual** | el productor | el productor | es lo que ya esta escrito. Ciclo corto, ticket chico, hay que convencer de a uno |
+| **B. La cooperativa financia para sus socios** | el consejo de la cooperativa | **la cooperativa** | **una venta en vez de N.** El capital no sale de nuestro bolsillo ni del productor: sale de la cooperativa o de un programa. El piso de 3 clientes puede ser **1 contrato** |
+| **C. Una junta de usuarios de agua** | la junta | la junta o sus miembros | el producto deja de ser agronomico y pasa a ser **medicion y reparto de turnos**. Otro pitch, otro precio |
+| **D. Un organismo** (Fecoprod, Itaipu, Yacyreta, gobernacion) | el programa | plata publica o de binacional | ciclo largo, licitacion, pero **cubre varias fincas de una** |
+
+**El D no es especulacion**: Fecoprod, Itaipu y Yacyreta **ya financian la Expo Frutas de La
+Colmena**, y la DNCP publica lo que licitan la Municipalidad y la Gobernacion
+([colmena/03-comercializacion.md](colmena/03-comercializacion.md)).
+
+**Por que NO se decide ahora**: cada escenario cambia el precio, el ciclo de venta y **de quien
+sale el capital**. Decidirlo desde el escritorio es elegir el que mas nos gusta. **Se contesta en
+la primera reunion**, y las preguntas estan en [colmena/07-vacios.md](colmena/07-vacios.md).
+
+**Lo que SI se puede afirmar sin decidirlo**: el producto es el mismo en los cuatro. Lo que cambia
+es quien firma. **Nada de lo construido se tira si gana B en vez de A** -- lo unico que se reescribe
+es `ECONOMIA.md`.
+
+
 Tres. Ninguna es tecnica: las tres dependen de plata, de un campo real o del negocio.
 
 ## 1. Donde corre el producto: este VPS o uno nuevo

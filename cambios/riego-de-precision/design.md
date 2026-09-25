@@ -185,6 +185,12 @@ FastAPI, Python 3.12, async. Tres superficies separadas a proposito:
 | **api de aplicacion** | el front | REST/JSON con OpenAPI |
 | **api de politica** | controlador | REST, la unica que el campo consulta |
 
+**Entre el gateway y el broker falta una pieza que este diseño no nombraba: el servidor LoRaWAN**
+(ChirpStack). El gateway es solo un puente de radio; **algo tiene que gestionar las sesiones, las
+claves y el join de cada nodo**, y descartar el duplicado de radio antes de que llegue a la base.
+Sin eso, cada nodo nuevo se da de alta a mano y las claves viven en un papel. Corre al lado del
+broker, nunca en el campo.
+
 La ingesta va por **MQTT y no por HTTP** porque el gateway reconecta solo, encola y reintenta sin
 que nadie programe eso: es lo que el protocolo ya hace. Un worker consume el topico, valida,
 deduplica y escribe en lote.

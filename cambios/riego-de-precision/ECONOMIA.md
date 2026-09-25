@@ -5,6 +5,19 @@ planificacion, no numeros medidos**: los precios de hardware si son de lista (25
 cuantos sectores y cuantos sensores lleva una hectarea sale del diseño de riego de cada finca.
 Dolar a Gs 8.235 (referencia del dueño: 1.700 USD = ~14 millones).
 
+> **ADVERTENCIA (25/09/2026): todo este documento asume que el cliente es UN PRODUCTOR y que el
+> cultivo es TOMATE.** Las dos cosas estan en duda:
+>
+> - **El cliente**: puede ser una cooperativa que financie el proyecto para todos sus socios, una
+>   junta de usuarios de agua o un organismo. Cada uno cambia el precio, el ciclo y **de quien sale
+>   el capital**. Ver la pregunta 0 de [PREGUNTAS.md](PREGUNTAS.md).
+> - **El cultivo**: el bruto de Gs 231 millones/ha del que cuelga *"la cuota es el 1% de una zafra"*
+>   es de **tomate**. En uva, carozo o banana el numero es otro. Ver
+>   [economia/](economia/), que tiene el analisis por cultivo.
+>
+> **Nada de lo construido se tira si cambia alguna de las dos.** Lo que se reescribe es este
+> documento.
+
 ## El costo NO escala por hectarea
 
 Escala por tres cosas distintas, y confundirlas hace que el precio no cierre:

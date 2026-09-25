@@ -105,8 +105,17 @@ El goteo es la fase 1. Todo esto se apoya en lo que esa fase deja instalado, y e
 | **Evapotranspiracion (ETo)** | de la estacion meteorologica, con Penman-Monteith. Convierte el riego de **reactivo a predictivo**: se riega antes de que el suelo baje, no despues |
 | **Balance hidrico** | entradas (riego + lluvia) menos salidas (ETo). Es EL modelo del riego de precision y sale de datos que ya se guardan |
 | **Grados-dia acumulados** | predice fenologia: cuando florece, cuando cosechar. Solo necesita temperatura |
-| **Alerta de helada** | la estacion ya mide temperatura |
+| **Horas de frio acumuladas** | en carozo y vid deciden si el año sirve, y **no se ven mirando la planta**: cuando se nota, ya paso |
+| **Aviso de helada** | la estacion ya mide temperatura. **Avisar NO es proteger** -- ver la nota |
 | **Litros por kilo cosechado** | `riego_evento` cruzado con el rendimiento de `campania`. Es el KPI agronomico de verdad |
+
+> **Correccion del 25/09/2026.** Esta fila insinuaba que el aviso de helada, solo, resuelve algo.
+> **Es falso donde la proteccion no es pagable**, y esta documentado que el presidente de CAICA
+> considera las medidas de proteccion **inviables por costo**
+> ([relevamiento](colmena/05-clima-riesgos.md)). Un aviso sin con que responder son malas noticias
+> mas temprano, no una cosecha salvada. **Lo que si se promete**: horas de frio para decidir
+> variedad, grados-dia para organizar cosecha y mano de obra, y riego contra la sequia -que es la
+> otra mitad del daño documentado, y esa si se responde-.
 
 ### Un sensor mas, en el nodo que ya esta
 

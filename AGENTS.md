@@ -15,8 +15,9 @@
 - **Dónde corre**: sobre el k3s de `../infra-platform` (Argo CD + admisión). **Este repo no
   despliega solo**: arma lo que hay que desplegar y se lo pasa. El contrato de la plataforma
   -qué existe, cómo desplegar, las 6 reglas de admisión- está en `desarrollo/`.
-- **La ficha del producto** (objetivo, modelo de datos, economía por hectárea) vive en
-  `../infra-platform/cambios/riego-de-precision/`.
+- **La ficha del producto** (objetivo, modelo de datos, economía, mercado) vive **acá**, en
+  `cambios/riego-de-precision/`. Se mudó desde `infra-platform` el 25/09/2026; allá quedó un
+  README como puntero.
 - **Detalle largo**: ver `project.yml` (no lo dupliques acá).
 
 ### Reglas propias de este proyecto (no negociables)

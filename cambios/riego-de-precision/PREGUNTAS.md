@@ -147,7 +147,7 @@ AU915; la region LoRaWAN se configura por firmware). Y a otra escala de precio:
 | Nodo CUBECELL HTCC-AB02 902-928 | Gs 290.000 (~37 USD) | Dragino SE01-LB **151 USD** |
 | Antena GLUE ROD 902-928 SMA | Gs 30.000 (~4 USD) | incluida |
 
-Los dos primeros estan **sin stock** hoy. Pero si se consiguen, el piloto LoRa baja de ~1.215 USD a
+Los dos primeros estan **sin stock** hoy. Pero si se consiguen, el piloto LoRa baja de ~1.285 USD (el subtotal FOB de la tabla de arriba) a
 un orden de **300 a 500 USD**. El costo no es plata: el Dragino viene IP68, con bateria de años y
 calibracion de fabrica; el CubeCell es una placa a la que hay que ponerle caja, sensor, alimentacion
 y aguante a la intemperie. **Se cambia dinero por trabajo de ingenieria y por riesgo de confiabilidad.**

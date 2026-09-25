@@ -17,7 +17,7 @@ el 100% del significado es geografico; separarlos en dos motores rompe la consul
 necesita -"dame la humedad de los ultimos 30 dias de las parcelas cuyo NDVI bajo"- que en un solo
 motor es un JOIN y en dos es trabajo de aplicacion.
 
-### Las once tablas, y cual es cual
+### Las doce tablas, y cual es cual
 
 | tabla | que es | naturaleza |
 |---|---|---|
@@ -32,6 +32,13 @@ motor es un JOIN y en dos es trabajo de aplicacion.
 | `medicion` | lo que manda un sensor | **hypertable** |
 | `captura_trampa` | conteo de plagas por fecha | evento |
 | `riego_evento` | que decidio el controlador y cuanto rego | **hypertable + etiqueta de ML** |
+| `calibracion` | la formula vigente de un dispositivo, con su procedencia | catalogo versionado |
+
+**`calibracion` es la doceava y se agrego el 25/09/2026**: estaba referenciada por
+`medicion.calibracion_id` pero no declarada, que es justo el error que el contrato prohibe. Guarda
+la formula, **de donde salio** (fabricante, ensayo propio, fecha) y desde cuando rige. Nunca se
+edita una fila: se cierra la vigente y se inserta otra, porque si se edita se pierde con que
+formula se calibro lo viejo. Es lo que hace recalculable el historico.
 
 Solo `medicion` y `riego_evento` son hypertables de Timescale. Convertir un catalogo de 200 filas
 en hypertable es costo sin beneficio.
@@ -156,8 +163,9 @@ dispositivo y el dispositivo cae adentro de la parcela por `ST_Contains`.
    de verdad -productividad del agua- y la etiqueta mas util que va a tener el modelo.
 3. **Justificar consumo** ante derechos de agua o restricciones por sequia.
 
-**Advertencia de dimensionamiento, medida y no supuesta**: un sector de goteo de media hectarea
-mueve del orden de 60 L/min por una linea de 1 1/2 a 2 pulgadas. El YF-S201 de 1/2" que se
+**Advertencia de dimensionamiento -y esto es un SUPUESTO, no una medicion**: no hay todavia ningun
+sector instalado que medir. Del orden de magnitud: un sector de goteo de media hectarea a una lamina
+de 3 mm/dia aplicada en 4 horas mueve del orden de 60 L/min por una linea de 1 1/2 a 2 pulgadas. El YF-S201 de 1/2" que se
 consigue local (Gs 95.000) llega a ~30 L/min y es de turbina Hall: sirve para el **banco**, donde
 lo que se valida es el conteo de pulsos y la acumulacion, **no para un sector real**. Para el lote
 va un medidor de riego de 1 1/2 a 2" con salida de pulsos (~40 a 100 USD), que aguanta agua sucia

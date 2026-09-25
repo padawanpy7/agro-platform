@@ -125,6 +125,12 @@ El dato que cambia la conversacion no es cuantas hectareas hay, sino **cuanta pl
 Tomate: 30.475 kg/ha  x  Gs 7.583/kg  =  Gs 231 millones por hectarea y por zafra
 ```
 
+> **Fuente de los dos factores**: rendimiento promedio y precio en finca del tomate publicados por
+> Forbes Paraguay sobre datos de la ENA, nota del 2026 sobre Caaguazu, consultada el 25/09/2026.
+> **Es un promedio nacional de una zafra**: un lote bien manejado rinde mas y uno malo mucho menos,
+> y el precio del tomate es de los mas volatiles del rubro. Sirve para dimensionar, no para
+> prometerle un numero a un productor.
+
 Entonces, para un cliente de 3 ha:
 
 | | |
@@ -173,6 +179,10 @@ por estres hidrico**, y que este cerca de otros dos productores.
 
 ### Los frutales: el mercado es 8 veces mas grande, y esta en el mismo lugar
 
+> **Dos multiplicadores, y no son lo mismo**: los frutales regables solos son **8,3 veces** la
+> horticultura (28.900 / 3.500); sumados a ella, el direccionable total es **9,3 veces** el de
+> antes (32.400 / 3.500).
+
 Datos del **CAN 2022**: Paraguay tiene **82.251 ha de cultivos permanentes**.
 
 | cultivo | hectareas | sirve para goteo? |
@@ -185,7 +195,7 @@ Datos del **CAN 2022**: Paraguay tiene **82.251 ha de cultivos permanentes**.
 | **Frutales regables (sin yerba)** | **~28.900 ha** | |
 
 Sumado a las 3.500 ha de horticultura: **~32.400 ha direccionables**, contra 3.500 mirando solo
-horticultura. **Es 9 veces mas mercado.**
+horticultura. **Es 9,3 veces el direccionable anterior** (ver la nota de arriba).
 
 **Y la banana esta en Caaguazu**: de las ~370.000 toneladas anuales del pais, **Caaguazu produce
 unas 250.000**. El mismo departamento que concentra el 37% del tomate. **Un solo cluster geografico
@@ -217,7 +227,9 @@ Las tres salidas siguen siendo las mismas, pero ya no valen lo mismo:
 1. **Mas cultivos**: frutales (citricos, banana), que tienen riego y son perennes -el cliente no se
    va entre zafras-.
 2. **Mas paises**: el mismo software sirve en cualquier lado; el limite es la instalacion.
-3. **Mas ingreso por cliente**: fertirriego. Por eso esta primero en la hoja de ruta del proposal.
+3. **Mas ingreso por cliente**: fertirriego. En la hoja de ruta del proposal va **tercero** -detras
+   de profundidades multiples y de ETo-, porque esos dos son mas baratos y prueban el ahorro; pero es
+   el de **mayor valor por hectarea** de los tres.
 
 ## Lo que yo leo de todo esto
 
@@ -258,11 +270,12 @@ El goteo en soja esta vacio del segundo, y aca esta por que.
 | | soja (PY, zafra 2025/26) | tomate |
 |---|---|---|
 | Rendimiento | **3.374 kg/ha** (Capeco) | 30.475 kg/ha |
-| Precio | **US$ 335-400/t** | Gs 7.583/kg |
-| **Bruto por hectarea** | **~US$ 1.198  (Gs ~9 millones)** | **Gs 231 millones** |
+| Precio | **US$ 335-400/t**; para la cuenta se toma **355**, el ultimo cierre reportado | Gs 7.583/kg |
+| **Bruto por hectarea** | **~US$ 1.198  (Gs 9,9 millones)** | **Gs 231 millones** |
 | **Punto de equilibrio** | **3.000 kg/ha** con los precios de hoy (APS) | |
 
-**El tomate factura 26 veces mas por hectarea que la soja.** Y la soja rinde 3.374 contra un punto
+**El tomate factura ~23 veces mas por hectarea que la soja** (231,1 / 9,9). Al Gs 9 millones
+redondeado que figuraba antes le salian 26; el orden de magnitud no cambia, el numero si. Y la soja rinde 3.374 contra un punto
 de equilibrio de 3.000: **esta 11% arriba de perder plata**.
 
 Ahora el costo de la infraestructura. Riego por goteo **subterraneo** (SDI), que es el unico que
@@ -289,7 +302,7 @@ estacion meteorologica, NDVI, trampas. Son **3 de los 4 productos, sin el riego*
 Pero eso es **otro producto, y hay que decirlo**:
 
 1. **El precio no puede ser por hectarea.** Gs 150.000/ha/mes sobre un cultivo que factura Gs 9
-   millones/ha al año es **20% del bruto**: absurdo. En extensivo se cobra **por estacion de
+   millones/ha al año es **18% del bruto**: absurdo. En extensivo se cobra **por estacion de
    monitoreo o por zona de manejo**, no por hectarea, y eso cambia todo el modelo de ingresos.
 2. **Es el unico mercado donde te cruzas con TODOS.** Kilimo **ya opera en Paraguay** sobre
    extensivo, y ahi estan tambien Solinftec, Agrosmart y las plataformas de las multinacionales.

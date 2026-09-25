@@ -21,24 +21,37 @@ son vecinos cubre a los dos. Esa es la unica economia de escala real del negocio
 Supuestos de planificacion para horticultura bajo goteo:
 - **~2 sectores por hectarea** (un sector se dimensiona por el caudal de la bomba, tipico 0,5 ha).
 - **~1 punto de medicion por hectarea** al principio. **Este numero es el que decide el negocio** y
-  es lo que mide la prueba de los dos sensores a un metro: si uno cubre 2 ha el costo por ha cae 40%,
-  si hacen falta 2 por ha se duplica.
+  es lo que mide la prueba de los dos sensores a un metro. El efecto, calculado contra la tabla de
+  abajo y no estimado: si **uno cubre 2 ha**, el costo por hectarea baja de 470 a **395 USD (-16%)**;
+  si hacen falta **2 por ha**, sube a **622 USD (+32%)**. Es menos dramatico de lo que suena, porque
+  el sensor es 151 de 470: **los sectores pesan mas que los sensores**.
 
 ## Cuanto cubre un capital de 14 millones
 
 ### Camino comprado (Dragino importado, se consigue hoy)
 
-| concepto | USD |
-|---|---|
-| **Fijo por finca**: gateway LPS8v2 278 + antena, caja, poste, instalacion ~80 | **~360** |
-| **Por sector**: controlador SVC01-LS2 (169, maneja 2 valvulas) -> 85 + solenoide latching 40 | ~125 |
-| **Por hectarea** (2 sectores = 250) + (1 sensor SE01-LB = 151) + (1 caudalimetro = 70) | **~470** |
+**Los precios de abajo son FOB (lista en EE.UU.). Puestos en Paraguay hay que sumarles el
++35/45% de flete, aduana e IVA** que declara PREGUNTAS.md; las dos columnas van juntas justamente
+porque la version FOB, usada sola, sobreestima las hectareas que cubre el capital.
+
+| concepto | USD FOB | **puesto en PY (+35/45%)** |
+|---|---|---|
+| **Fijo por finca**: gateway LPS8v2 278 + antena, caja, poste, instalacion ~80 | ~358 | **483 - 519** |
+| **Por sector**: controlador SVC01-LS2 (169, maneja 2 valvulas) -> 85 + solenoide latching 40 | ~125 | 169 - 181 |
+| **Por hectarea** (2 sectores = 250) + (1 sensor SE01-LB = 151) + (1 caudalimetro = 70) | ~470 | **634 - 682** |
 
 El caudalimetro va **por sector medido**, no por finca. Con uno por hectarea alcanza para el
 numero que se le muestra al cliente; uno por sector afina el diagnostico de fugas y se agrega
 despues, cuando el delta esperado-vs-medido empiece a valer plata.
 
-Con 1.700 USD: `(1.700 - 360) / 470` = **~2,8 hectareas**.
+Con 1.700 USD:
+
+- a precio **FOB**: `(1.700 - 358) / 470` = **~2,9 ha** -- lo que costaria si el hardware apareciera
+  magicamente en el lote;
+- **puesto en Paraguay**: `(1.700 - 483) / 634` = **~1,9 ha**, y con el 45% baja a **~1,7 ha**.
+
+**El numero que vale es ~1,9 ha, no 2,9.** La version FOB estuvo escrita sola hasta el 25/09/2026 y
+sobreestimaba la cobertura del capital en ~50%.
 
 ### Camino construido (CubeCell local, 902-928 MHz)
 
@@ -47,9 +60,11 @@ Con 1.700 USD: `(1.700 - 360) / 470` = **~2,8 hectareas**.
 | **Fijo por finca**: gateway Heltec 62 + antena, caja, poste, instalacion ~80 | **~145** |
 | **Por hectarea**: 2 nodos de valvula armados (~120) + 1 nodo sensor armado (~45) | **~165** |
 
-Con 1.700 USD: `(1.700 - 145) / 165` = **~9,4 hectareas**.
+Con 1.700 USD: `(1.700 - 142) / 165` = **~9,4 ha** a precio local -- **estas piezas se compran en
+Asuncion, asi que aca no hay que sumar importacion**. Es parte de por que el camino construido sale
+tanto mejor.
 
-**La diferencia -3 ha contra 9 ha con el mismo capital- no es gratis**: el Dragino viene IP68,
+**La diferencia -2 ha contra 9 con el mismo capital- no es gratis**: el Dragino viene IP68,
 calibrado y con años de bateria; el armado hay que encajarlo, sellarlo, alimentarlo y hacerlo
 aguantar la intemperie. Se cambia capital por trabajo de ingenieria y por riesgo de falla en campo.
 
@@ -127,7 +142,13 @@ recuperado. Eso es lo que hace que el negocio sea un negocio y no una venta de e
 ## Que agrega el fertirriego (25/09/2026)
 
 El fertirriego es el unico de los tres caminos de crecimiento que **no necesita un cliente nuevo**:
-le sube el ingreso al que ya tenes. Por eso importa tanto con un mercado de 3.500 ha.
+le sube el ingreso al que ya tenes.
+
+> **Sobre que techo se razona**: 3.500 ha es el mercado **horticola**; con frutales el direccionable
+> sube a ~32.400 (ver MERCADO.md). Los dos numeros aparecen en este documento y **no se contradicen**:
+> el fertirriego se decidio cuando el alcance era solo horticultura, y sigue valiendo por si mismo
+> -mas ingreso sin cliente nuevo-, pero **el argumento de "los clientes son finitos" pesa mucho menos
+> con frutales adentro**.
 
 ### Por que se puede cobrar mas
 
@@ -252,8 +273,8 @@ por guarani.**
 
 | escenario | mercado direccionable | 700 ha son... |
 |---|---|---|
-| **Solo horticultura** | 3.500 ha | **19% de todo el pais** -- practicamente imposible |
-| **Horticultura + frutales** | **~32.400 ha** | **2,1%** -- la misma proporcion que hace facil el piso |
+| **Solo horticultura** | 3.500 ha | **20% de todo el pais** -- practicamente imposible |
+| **Horticultura + frutales** | **~32.400 ha** | **2,2%** -- la misma proporcion que hace facil el piso |
 
 Los frutales **no son una linea mas: son lo que hace que "mediana empresa" deje de ser fantasia**.
 Sin ellos el techo del negocio esta por debajo del umbral legal.

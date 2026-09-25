@@ -1,0 +1,89 @@
+name: "agro-platform"
+one_liner: "Producto de agricultura de precision multi-cliente: riego por goteo autonomo, clima, plagas y satelite"
+description: >
+  Workspace de DESARROLLO del producto. Lo que se construye aca se despliega sobre la
+  plataforma de ../infra-platform (k3s + Argo CD + admision), que NO se toca desde este
+  repo: el contrato de lo que la plataforma ofrece y como desplegar esta en desarrollo/.
+  La ficha del producto -objetivo, modelo de datos, economia- vive en
+  ../infra-platform/cambios/riego-de-precision/.
+
+stack:
+  language: "Python 3.12 (backend) + TypeScript (front)"
+  framework: "FastAPI / Next.js"
+  db: "PostgreSQL + TimescaleDB (series) + PostGIS (geometria)"
+  infra: "k3s + Argo CD en el VPS de staging (ver desarrollo/README.md)"
+
+commands:
+  # Vacios A PROPOSITO hasta que exista codigo. Un comando en blanco hace que el gate de `check`
+  # diga "sin comando declarado en project.yml", que es la verdad; poner un comando que no corre
+  # daria un rojo permanente y se aprende a ignorarlo. Se llenan cuando haya que llenarlos:
+  #   build: "npm --prefix web run build"
+  #   test:  "pytest -q && npm --prefix web test"
+  #   lint:  "ruff check . && mypy . && npm --prefix web run lint"
+  build: ""
+  test: ""
+  run: ""
+  lint: ""
+  deploy: ""
+
+conventions:
+  - "El dato NO se promedia en la ingesta. Se guarda crudo y calibrado, con la hora de MEDICION y
+     la de LLEGADA separadas, y con el punto geografico. Todo el historico es material de ML y un
+     dato mal guardado no se arregla despues."
+  - "Multi-cliente por tenant_id + Row-Level Security de Postgres. El aislamiento lo hace cumplir
+     el motor, no el front: una query sin tenant no devuelve filas."
+  - "El lazo de control vive en el CAMPO. La nube manda la politica -umbrales, ventanas-, nunca el
+     abrir y cerrar de una valvula."
+  - "Este repo NO despliega solo: arma lo que hay que desplegar y se lo pasa a infra-platform.
+     Credenciales solo en .env (gitignored) o variables de entorno, nunca en el repo."
+  - "Un cambio = una ficha en cambios/<nombre>/. Nunca un loop nuevo por tarea."
+
+structure:
+  - "cambios/<nombre>/ - la ficha SDD: proposal, HECHO_CUANDO, design, tasks, FEATURES.json."
+  - "cambios/META/ - el change del propio loop (bitacora en PROGRESO.md)."
+  - "desarrollo/ - el contrato de la plataforma: que hay en el VPS, como desplegar, los diagramas.
+     Copiado de infra-platform; si la plataforma cambia, se actualiza alla y se vuelve a copiar."
+  - "memory/playbooks/ - best practices por disciplina. Arrancan VACIOS: los hechos del repo de
+     origen eran de Oracle y APEX, y copiarlos convertiria hechos medidos en folklore."
+  - "scripts/ - el loop. scripts/infra/ssh-ro.js mira el VPS en SOLO LECTURA."
+
+links:
+  repo: "git@github.com:padawanpy7/agro-platform.git"
+  plataforma: "../infra-platform  (contrato en desarrollo/README.md)"
+  ficha_producto: "../infra-platform/cambios/riego-de-precision/"
+
+carpeta_cambios: cambios
+change_del_loop: META
+
+verify_max_rounds: 2
+
+# El PRESUPUESTO de los documentos que se leen en CADA arranque. Lo hace cumplir
+# `node agro.js presupuesto`, que rompe `check`.
+#
+# El techo se puede SUBIR, y es una salida legitima: cuando el contenido que hace falta de verdad
+# no entra, se sube el `tope` Y se reescribe el `porque` con el motivo. El gate exige las dos cosas.
+presupuesto:
+  - archivo: AGENTS.md
+    tope: 500
+    porque: "se lee en CADA tarea; lo que no aplica a todas va a una skill o playbook"
+  - archivo: memory/MEMORY.md
+    tope: 200
+    porque: "es un INDICE de punteros; lo de un cambio va a su aprendizajes.md"
+  - archivo: cambios/META/PROGRESO.md
+    tope: 150
+    porque: "es el puente entre sesiones: las entradas viejas se archivan por mes"
+    # +3 es la regla correcta para AGENTS y los playbooks -donde una linea de mas la pagan todas
+    # las tareas- y la equivocada para una BITACORA, que gana una entrada por sesion por diseño.
+    maxCrecimiento: 8
+  - archivo: memory/playbooks/lead.md
+    tope: 320
+    porque: "lo lee el lead al arrancar y al cerrar CADA sesion"
+  - archivo: memory/playbooks/backend.md
+    tope: 400
+    porque: "se lee antes de tocar la API o la ingesta; los casos medidos van a backend-hechos.md"
+  - archivo: memory/playbooks/database.md
+    tope: 400
+    porque: "se lee antes de tocar el esquema: precision, retencion y RLS se deciden una vez"
+  - archivo: memory/playbooks/ui-designer.md
+    tope: 320
+    porque: "se lee antes de tocar el front; lo consultable va a ui-hechos.md"

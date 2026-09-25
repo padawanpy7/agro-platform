@@ -1,0 +1,24 @@
+{
+  "name": "agro-platform",
+  "version": "1.0.0",
+  "description": "Workspace de desarrollo del producto agro. Despliega contra el k3s de infra-platform.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "node agro.js test-js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "marked": "18.0.9",
+    "ssh2": "1.17.0",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "playwright": "1.62.0"
+  }
+}

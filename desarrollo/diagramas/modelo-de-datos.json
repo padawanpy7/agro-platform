@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Modelo de datos: la parcela es la unidad de analisis",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1240,
+      690
+    ]
+  },
+  "components": [
+    {
+      "id": "cliente",
+      "type": "security",
+      "label": "cliente",
+      "sublabel": "tenant",
+      "tag": "aisla todo",
+      "pos": [
+        40,
+        330
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "campo",
+      "type": "database",
+      "label": "campo",
+      "sublabel": "del cliente",
+      "pos": [
+        240,
+        330
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "parcela",
+      "type": "database",
+      "label": "parcela",
+      "sublabel": "poligono PostGIS",
+      "tag": "une todo",
+      "pos": [
+        450,
+        330
+      ],
+      "size": [
+        160,
+        66
+      ]
+    },
+    {
+      "id": "campania",
+      "type": "database",
+      "label": "campania",
+      "sublabel": "cultivo y rendimiento",
+      "tag": "la etiqueta del ML",
+      "pos": [
+        450,
+        120
+      ],
+      "size": [
+        160,
+        66
+      ]
+    },
+    {
+      "id": "suelo",
+      "type": "database",
+      "label": "analisis_suelo",
+      "sublabel": "laboratorio, con punto",
+      "pos": [
+        240,
+        120
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "ndvi",
+      "type": "database",
+      "label": "indice_satelital",
+      "sublabel": "NDVI por fecha",
+      "pos": [
+        450,
+        560
+      ],
+      "size": [
+        160,
+        66
+      ]
+    },
+    {
+      "id": "dispositivo",
+      "type": "database",
+      "label": "dispositivo",
+      "sublabel": "punto PostGIS",
+      "pos": [
+        690,
+        330
+      ],
+      "size": [
+        155,
+        66
+      ]
+    },
+    {
+      "id": "politica",
+      "type": "database",
+      "label": "politica_riego",
+      "sublabel": "umbrales del lote",
+      "pos": [
+        690,
+        120
+      ],
+      "size": [
+        155,
+        66
+      ]
+    },
+    {
+      "id": "captura",
+      "type": "database",
+      "label": "captura_trampa",
+      "sublabel": "conteo por fecha",
+      "pos": [
+        690,
+        560
+      ],
+      "size": [
+        155,
+        66
+      ]
+    },
+    {
+      "id": "medicion",
+      "type": "database",
+      "label": "medicion",
+      "sublabel": "crudo + calibrado",
+      "tag": "serie temporal",
+      "pos": [
+        940,
+        330
+      ],
+      "size": [
+        160,
+        66
+      ]
+    },
+    {
+      "id": "riego",
+      "type": "database",
+      "label": "riego_evento",
+      "sublabel": "que decidio y cuanto rego",
+      "tag": "la otra etiqueta",
+      "pos": [
+        940,
+        120
+      ],
+      "size": [
+        160,
+        66
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "security-group",
+      "label": "tenant_id + Row-Level Security en todas las tablas",
+      "wraps": [
+        "cliente",
+        "campo",
+        "parcela",
+        "campania",
+        "suelo",
+        "ndvi",
+        "dispositivo",
+        "politica",
+        "captura",
+        "medicion",
+        "riego"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "cli-campo",
+      "from": "cliente",
+      "to": "campo",
+      "label": "1 a N",
+      "variant": "emphasis"
+    },
+    {
+      "id": "campo-parcela",
+      "from": "campo",
+      "to": "parcela",
+      "label": "1 a N",
+      "variant": "emphasis"
+    },
+    {
+      "id": "parcela-disp",
+      "from": "parcela",
+      "to": "dispositivo",
+      "label": "1 a N",
+      "variant": "emphasis",
+      "labelDx": -18
+    },
+    {
+      "id": "disp-medicion",
+      "from": "dispositivo",
+      "to": "medicion",
+      "label": "1 a N",
+      "variant": "emphasis"
+    },
+    {
+      "id": "parcela-campania",
+      "from": "parcela",
+      "to": "campania",
+      "label": "1 a N",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelDy": -46
+    },
+    {
+      "id": "campania-suelo",
+      "from": "campania",
+      "to": "suelo",
+      "label": "contexto",
+      "variant": "dashed"
+    },
+    {
+      "id": "parcela-ndvi",
+      "from": "parcela",
+      "to": "ndvi",
+      "label": "1 a N",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 46
+    },
+    {
+      "id": "parcela-politica",
+      "from": "parcela",
+      "to": "politica",
+      "label": "1 a N",
+      "fromSide": "right",
+      "toSide": "left",
+      "via": [
+        [
+          672,
+          363
+        ],
+        [
+          672,
+          153
+        ]
+      ]
+    },
+    {
+      "id": "disp-captura",
+      "from": "dispositivo",
+      "to": "captura",
+      "label": "1 a N",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 46
+    },
+    {
+      "id": "disp-riego",
+      "from": "dispositivo",
+      "to": "riego",
+      "label": "1 a N",
+      "fromSide": "top",
+      "toSide": "left",
+      "via": [
+        [
+          767.5,
+          210
+        ],
+        [
+          900,
+          210
+        ],
+        [
+          900,
+          153
+        ]
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Por que la parcela es el centro",
+      "items": [
+        "Sensores, trampas y satelite se atan por GEOMETRIA, no a mano",
+        "ST_Contains(parcela.geom, dispositivo.punto) lo resuelve la base",
+        "Si el cliente corrige un limite, todo se recalcula solo"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Sin esto el ML describe pero no predice",
+      "items": [
+        "campania trae el RENDIMIENTO: es la etiqueta de que terreno rinde mejor",
+        "riego_evento trae la ACCION: condicion, decision y resultado",
+        "Capturar rendimiento desde el dia uno, aunque sea a mano"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Precision del dato, para el ML",
+      "items": [
+        "Valor crudo Y calibrado, con la version de calibracion usada",
+        "NULL no es 0: un sensor que no reporto no midio humedad cero",
+        "Hora de MEDICION y hora de llegada: el gateway encola dias"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node agro.js features*)",
+      "Bash(node agro.js presupuesto*)",
+      "Bash(git checkout --detach *)",
+      "Bash(node agro.js check*)",
+      "Bash(node agro.js rama-drift*)"
+    ],
+    "deny": [
+      "PowerShell"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(node agro.js db-sql *)",
+            "command": "c=$(cat); case \"$c\" in *--write*) exit 0;; *db-sql*) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\",\"permissionDecisionReason\":\"db-sql de solo lectura: no lleva --write\"}}';; *) exit 0;; esac"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git *)",
+            "command": "c=$(cat); case \"$c\" in *git*) case \"$c\" in *reset*|*clean*|*branch*|*checkout*|*restore*|*push*|*stash*|*worktree*|*filter-*) printf '%s' \"$c\" | node \"$CLAUDE_PROJECT_DIR/.claude/hooks/git-guard.js\";; esac;; esac"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "c=$(cat); f=$(printf '%s' \"$c\" | sed -n 's/.*\"file_path\"[[:space:]]*:[[:space:]]*\"\\([^\"]*\\)\".*/\\1/p' | sed 's|\\\\\\\\|/|g'); case \"$f\" in */skills/*.md) d=$(dirname \"$f\")/..; [ -f \"$d/scripts/loop/skill-sync.js\" ] && (cd \"$d\" && node agro.js skill-sync) >/dev/null 2>&1 || true ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}

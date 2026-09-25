@@ -1,0 +1,39 @@
+# Config de gitleaks para este repo. Hereda TODAS las reglas por defecto y solo agrega
+# allowlists acotados, uno por caso, cada uno con su por que.
+#
+# Por que existe: las librerias minificadas de terceros que versionamos (autoNumeric, Cleave)
+# tienen adentro cosas como `{key:"..."}` -un nombre de propiedad, no una credencial- y la regla
+# generic-api-key las marca. El gate quedaba en rojo permanente, y un gate que grita en falso es un
+# gate que nadie mira.
+#
+# El allowlist es POR ARCHIVO y solo sobre esas librerias: cualquier hallazgo en codigo nuestro
+# -o en un .env que se escape- sigue frenando el check.
+#
+# Ojo: gitleaks escanea el HISTORIAL, no el arbol de trabajo. Los mismos archivos aparecen bajo
+# openspec/changes/ICC-91/static_application_files/ porque una tanda vieja (f3c5b47) los guardo ahi
+# antes de moverlos a apex/static/.
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Librerias minificadas de terceros: los `key:` son propiedades de JS, no credenciales"
+paths = [
+  '''autoNumeric(\.min)?\.js''',
+  '''cleave(\.min)?\.js''',
+]
+
+# 17/08: se fue el allowlist de la coleccion de Postman de SCO-1 (el `X-WSO2-TraceId` que
+# `generic-api-key` marcaba por el nombre del campo). La reescritura de historia de hoy saco los
+# tres archivos de TODOS los commits, asi que ya no hay nada que perdonar: un allowlist sobre un
+# archivo que no existe en ninguna version solo tapa el dia que alguien lo vuelva a subir.
+#
+# Lo que aparecio en su lugar, en el primer escaneo completo post-reescritura: los fixtures del
+# test del detector propio. Son cadenas inventadas (`n8Fk29xLp0Qz71Rm4Tv6`) que existen
+# justamente para probar que marcamos un `client_secret`/`apiKey` largo; sin este allowlist, el
+# archivo que verifica el gate de secretos rompe el gate de secretos.
+[[allowlists]]
+description = "Fixtures del test de secretos-literales: valores inventados para probar el detector"
+paths = [
+  '''scripts/lib/secretos-literales\.test\.js''',
+]

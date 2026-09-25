@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "markitdown": {
+      "command": "C:\\bffamiliar\\tools\\python-3.13.14-embed-amd64\\python.exe",
+      "args": ["-m", "markitdown_mcp"]
+    }
+  }
+}

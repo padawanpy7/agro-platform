@@ -1,0 +1,122 @@
+// hechos.js - el gate de `memory/hechos/`: que la memoria se pueda encontrar y no mienta.
+//
+// Uso: node agro.js hechos [--json] [--indice]
+//
+// Sale con 1 si algo BLOQUEA. Verifica cuatro cosas, y las cuatro salieron de fallas reales:
+//
+//   1. Frontmatter sano (name = archivo, description presente, estado de un conjunto CERRADO).
+//   2. Un hecho `superado` dice CUAL lo reemplaza, y ese existe. Del research del 31/08 sobre
+//      deepseek-harness: cambiar una decision no es editar el hecho viejo, es escribir uno nuevo
+//      que lo supersede; editar el viejo borra por que se habia decidido lo anterior.
+//   3. Lo `archivado` NO figura en un indice, y lo vigente SI. El indice es lo que se lee: un
+//      hecho fuera de todo indice es invisible, y uno archivado adentro se cita como autoridad de
+//      lo que pasa hoy. Esta es la unica regla que AVISA en vez de bloquear -ver BLOQUEANTES-.
+//   4b. Ningun hecho manda correr una tool que ya no existe. El cierre ya lo verificaba en los
+//       docs DEL TICKET y nadie lo verificaba en la memoria, que es lo que se lee en TODA tarea:
+//       un hecho que dice "corre bash scripts/lint.sh" es una instruccion rota para siempre, y
+//       encima con mas alcance que un doc de ticket.
+//
+//   4. Toda ruta de ESTE repo que un hecho cita existe. El 31/08, mover un archivo dejo 8 punteros
+//      rotos -uno dentro de un script que corre- y nada lo noto; al encender el gate aparecieron
+//      otros 40, casi todos de cuando las tools eran `.sh` sueltos.
+//
+// El indice NO es solo `memory/MEMORY.md`: un hecho de una disciplina se enlaza desde su playbook
+// (`memory/playbooks/db.md` enlaza 41), y eso es lo correcto -al indice global solo va lo que sirve
+// en CUALQUIER tarea-. Mirar solo MEMORY.md daria 153 falsos positivos.
+//
+// La logica vive en `scripts/lib/hechos-core.js` y se prueba sola; aca solo se lee el disco.
+
+const fs = require('fs')
+const path = require('path')
+const core = require('../lib/hechos-core')
+// El detector de comandos muertos ya existe y esta probado: se reusa, no se copia. Vive en
+// cierre-core porque nacio para los docs del ticket; la regla es la misma.
+const { buscarComandosObsoletos } = require('../lib/cierre-core')
+
+const RAIZ = process.cwd()
+const DIR = path.join(RAIZ, 'memory', 'hechos')
+const argv = process.argv.slice(2)
+
+// Un gate que no encuentra su material NO da verde: dice que no pudo medir y sale con 2. Este
+// proyecto ya tiene documentada la familia "el gate que no encuentra nada pasa".
+if (!fs.existsSync(DIR)) {
+  console.error(`no existe ${path.relative(RAIZ, DIR)}: no hay nada que medir (no es un OK)`)
+  process.exit(2)
+}
+
+const archivos = fs.readdirSync(DIR).filter((f) => f.endsWith('.md')).sort()
+const hechos = archivos.map((f) => core.parsear(f, fs.readFileSync(path.join(DIR, f), 'utf8')))
+
+// Todo lo que enlaza hechos: el indice global mas los playbooks.
+function indices() {
+  const fuentes = [path.join(RAIZ, 'memory', 'MEMORY.md')]
+  const pb = path.join(RAIZ, 'memory', 'playbooks')
+  if (fs.existsSync(pb)) for (const f of fs.readdirSync(pb).filter((x) => x.endsWith('.md'))) fuentes.push(path.join(pb, f))
+  const slugs = new Set()
+  for (const f of fuentes) {
+    if (!fs.existsSync(f)) continue
+    for (const m of fs.readFileSync(f, 'utf8').matchAll(/hechos\/([A-Za-z0-9_-]+)\.md/g)) slugs.add(m[1])
+  }
+  return [...slugs]
+}
+
+const indice = indices()
+const enDisco = new Set(hechos.map((h) => h.slug))
+// Un enlace a un hecho que ya no existe: el lector lo sigue y no encuentra nada. Bloquea siempre.
+const huerfanas = indice.filter((s) => !enDisco.has(s))
+
+const existe = (rel) => fs.existsSync(path.join(RAIZ, rel))
+const todos = core.validar(hechos, { existe, indice })
+
+// La lista REAL de tools sale del disco. Si no se puede leer, este chequeo NO corre y se dice: un
+// gate que no encuentra su material no inventa un verde.
+let TOOLS = null
+try {
+  TOOLS = new Set(require('../lib/tools-registro').descubrirTools(RAIZ).keys())
+  const alias = /const ALIAS = \{([^}]*)\}/.exec(fs.readFileSync(path.join(RAIZ, 'agro.js'), 'utf8'))
+  // Los ALIAS entran tambien: `lint` es el nombre de uso de `plsql-lint` y esta escrito asi en
+  // AGENTS.md, en project.yml y en la cabeza de todos. No vive en el disco, pero es una invocacion
+  // valida.
+  if (alias) for (const m of alias[1].matchAll(/(\w[\w-]*)\s*:/g)) TOOLS.add(m[1])
+} catch { TOOLS = null }
+if (!TOOLS) console.error('  (no pude leer la lista de tools: el chequeo de comandos muertos NO corrio)')
+else {
+  for (const h of hechos) {
+    // Se recorre LINEA por linea para poder distinguir "corre esto" de "esto ya no existe": el
+    // segundo es el hecho haciendo su trabajo, no una instruccion rota.
+    for (const linea of String(h.cuerpo || '').split('\n')) {
+      if (core.esMencionHistorica(linea)) continue
+      for (const m of buscarComandosObsoletos(linea, TOOLS, existe)) {
+        todos.push({ archivo: h.archivo, regla: 'comando-muerto', detalle: `manda correr "${m.fragmento}": ${m.porque}` })
+      }
+    }
+  }
+}
+const bloquean = todos.filter((p) => core.BLOQUEANTES.has(p.regla))
+const avisos = todos.filter((p) => !core.BLOQUEANTES.has(p.regla))
+
+if (argv.includes('--json')) {
+  console.log(JSON.stringify({ hechos: hechos.length, indice: indice.length, bloquean, avisos, huerfanas }, null, 2))
+  process.exit(bloquean.length || huerfanas.length ? 1 : 0)
+}
+
+console.log(`==> hechos: ${hechos.length} en disco, ${indice.length} enlazados (MEMORY.md + playbooks)`)
+for (const h of huerfanas) console.log(`  X  un indice enlaza hechos/${h}.md, que no existe`)
+for (const p of bloquean) console.log(`  X  ${p.archivo}  [${p.regla}]  ${p.detalle}`)
+
+if (!bloquean.length && !huerfanas.length) console.log('  OK  frontmatter, estados, y las rutas que citan')
+else {
+  console.log('')
+  console.log('Que hacer:')
+  console.log('  ruta-citada-no-existe   -> el archivo se movio: actualizar el hecho EN EL MISMO cambio')
+  console.log('  archivado-en-el-indice  -> sacar la linea: lo archivado no es autoridad de lo actual')
+  console.log('  superado-sin-sucesor    -> `superado_por: <slug>` del hecho que lo reemplaza')
+}
+
+if (avisos.length) {
+  console.log('')
+  console.log(`  ·  ${avisos.length} sin linea en ningun indice (avisa, no bloquea): --indice para verlos`)
+  if (argv.includes('--indice')) for (const p of avisos) console.log(`     ${p.archivo}`)
+}
+
+process.exit(bloquean.length || huerfanas.length ? 1 : 0)

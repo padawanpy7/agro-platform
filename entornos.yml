@@ -1,0 +1,17 @@
+# Los entornos del producto: lo que cambia entre correr en la maquina y correr en el cluster.
+# Las CREDENCIALES no viven aca -van en `.env`-: aca van rutas, URLs y nombres.
+
+entornos:
+  local:
+    descripcion: "la maquina del que desarrolla: Postgres y el broker en docker"
+    web: "http://localhost:3000"
+    api: "http://localhost:8000"
+  staging:
+    descripcion: "el k3s del VPS. Se despliega por Argo CD desde ../infra-platform, no desde aca"
+    web: ""
+    api: ""
+
+# Variables que el dispatcher publica al ambiente si no estan ya en `.env`. Rutas y URLs, nunca
+# secretos: un secreto derivado es un secreto que nadie sabe de donde salio.
+apps:
+  env: {}

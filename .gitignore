@@ -1,0 +1,38 @@
+work/*
+!work/.gitkeep
+# screenshots/artefactos efimeros del verifier (tambien cuando corre con cwd de un subdir)
+**/work/shots/
+
+node_modules/
+.env
+*.local
+
+# toolchain local (JDK, PMD): pesado y reinstalable
+../tools/
+
+# Contador de uso de tools: el log crudo es runtime (una linea por corrida, no es codigo). El
+# REPORTE por ticket SI se versiona: es el que se mira para saber en que se fue el tiempo y los
+# tokens de cada tarea, y para eso tiene que vivir en el repo, no solo en la maquina.
+metrics/*
+!metrics/por-ticket.md
+
+# Material de pase re-generable con pase-prod.sh (copias verbatim de prod/APEX; ruido de linter).
+# El manifiesto pase.json SI se versiona; las copias QA/PROD no.
+
+*.postman_environment.json
+*.postman_collection.json
+
+# IMDX-003: las fotos de cada una de las 10 corridas (1,7 MB de texto casi identico) se
+# re-generan con `scripts/corrida.js`. El VEREDICTO, que es lo que no se regenera, vive en
+# docs/informe-corridas.md; los diffs de una corrida que difiera SI se versionan, porque esos
+# son el hallazgo. Las fotos de la linea de base (data/snapshots/*.txt) tambien: `restaurar.js`
+# las usa como INSUMO, no son evidencia nomas.
+
+metrics/transcripts/
+
+# --- agro-platform --------------------------------------------------------------------
+# La evidencia de una corrida de pruebas se regenera con un comando; el .md se versiona.
+cambios/*/entrega/*.pdf
+cambios/*/entrega/capturas/
+# Los diagramas de desarrollo/ viajan como .html + .json; las capturas de visual-check no.
+desarrollo/diagramas/*.visual-check.*

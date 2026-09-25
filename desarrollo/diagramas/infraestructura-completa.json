@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Riego de precision: del sensor enterrado al VPS",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1240,
+      715
+    ]
+  },
+  "components": [
+    {
+      "id": "valvulas",
+      "type": "external",
+      "label": "Valvulas de goteo",
+      "sublabel": "actuacion",
+      "pos": [
+        40,
+        70
+      ],
+      "size": [
+        150,
+        60
+      ]
+    },
+    {
+      "id": "humedad",
+      "type": "external",
+      "label": "Sensores de humedad",
+      "sublabel": "enterrados",
+      "tag": "LoRa",
+      "pos": [
+        40,
+        200
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "estacion",
+      "type": "external",
+      "label": "Estacion meteorologica",
+      "sublabel": "clima del lote",
+      "tag": "LoRa",
+      "pos": [
+        40,
+        320
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "trampa",
+      "type": "external",
+      "label": "Trampa de plagas",
+      "sublabel": "capturas",
+      "tag": "LoRa",
+      "pos": [
+        40,
+        440
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "controlador",
+      "type": "backend",
+      "label": "Controlador de riego",
+      "sublabel": "decide solo",
+      "tag": "autonomo",
+      "pos": [
+        240,
+        200
+      ],
+      "size": [
+        155,
+        66
+      ]
+    },
+    {
+      "id": "gateway",
+      "type": "backend",
+      "label": "Gateway LoRa",
+      "sublabel": "encola sin senal",
+      "pos": [
+        240,
+        420
+      ],
+      "size": [
+        155,
+        66
+      ]
+    },
+    {
+      "id": "cloudflare",
+      "type": "security",
+      "label": "Cloudflare",
+      "sublabel": "candado del origen",
+      "pos": [
+        445,
+        420
+      ],
+      "size": [
+        145,
+        66
+      ]
+    },
+    {
+      "id": "traefik",
+      "type": "cloud",
+      "label": "Traefik",
+      "sublabel": "ingress TLS",
+      "pos": [
+        640,
+        420
+      ],
+      "size": [
+        140,
+        66
+      ]
+    },
+    {
+      "id": "satelital",
+      "type": "external",
+      "label": "Sentinel-2",
+      "sublabel": "imagen satelital",
+      "pos": [
+        830,
+        250
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "mqtt",
+      "type": "messagebus",
+      "label": "Broker MQTT",
+      "sublabel": "ingest",
+      "tag": "QoS 1",
+      "pos": [
+        830,
+        420
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "ml",
+      "type": "backend",
+      "label": "Workers de ML",
+      "sublabel": "modelos",
+      "pos": [
+        830,
+        590
+      ],
+      "size": [
+        150,
+        66
+      ]
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "App Next.js",
+      "sublabel": "mapa y reportes",
+      "pos": [
+        1025,
+        250
+      ],
+      "size": [
+        155,
+        66
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API FastAPI",
+      "sublabel": "Python",
+      "tag": "alertas a Telegram",
+      "pos": [
+        1025,
+        420
+      ],
+      "size": [
+        155,
+        66
+      ]
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "TimescaleDB + PostGIS",
+      "pos": [
+        1025,
+        590
+      ],
+      "size": [
+        155,
+        66
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "En el campo: funciona sin internet",
+      "wraps": [
+        "valvulas",
+        "humedad",
+        "estacion",
+        "trampa",
+        "controlador",
+        "gateway"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "VPS de produccion (k3s + Argo CD)",
+      "wraps": [
+        "traefik",
+        "mqtt",
+        "api",
+        "web",
+        "db",
+        "ml"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "humedad-ctrl",
+      "from": "humedad",
+      "to": "controlador",
+      "variant": "emphasis"
+    },
+    {
+      "id": "estacion-ctrl",
+      "from": "estacion",
+      "to": "controlador"
+    },
+    {
+      "id": "ctrl-valvulas",
+      "from": "controlador",
+      "to": "valvulas",
+      "label": "abre y cierra",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "right"
+    },
+    {
+      "id": "ctrl-gw",
+      "from": "controlador",
+      "to": "gateway",
+      "label": "mediciones y decisiones",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 60
+    },
+    {
+      "id": "trampa-gw",
+      "from": "trampa",
+      "to": "gateway"
+    },
+    {
+      "id": "gw-cf",
+      "from": "gateway",
+      "to": "cloudflare",
+      "label": "celular",
+      "variant": "emphasis"
+    },
+    {
+      "id": "cf-traefik",
+      "from": "cloudflare",
+      "to": "traefik",
+      "variant": "security"
+    },
+    {
+      "id": "traefik-mqtt",
+      "from": "traefik",
+      "to": "mqtt"
+    },
+    {
+      "id": "mqtt-api",
+      "from": "mqtt",
+      "to": "api"
+    },
+    {
+      "id": "sat-api",
+      "from": "satelital",
+      "to": "api",
+      "label": "NDVI",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "api-web",
+      "from": "api",
+      "to": "web",
+      "label": "reportes",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "api-db",
+      "from": "api",
+      "to": "db",
+      "label": "escribe la serie",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 36
+    },
+    {
+      "id": "db-ml",
+      "from": "db",
+      "to": "ml",
+      "label": "entrena",
+      "variant": "dashed",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "api-gw",
+      "from": "api",
+      "to": "gateway",
+      "label": "politica de riego: umbrales, nunca el abrir y cerrar",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "via": [
+        [
+          1215,
+          453
+        ],
+        [
+          1215,
+          678
+        ],
+        [
+          317.5,
+          678
+        ]
+      ],
+      "labelSegment": 2
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "El lazo de control vive en el campo",
+      "items": [
+        "Decide con lo que mide, aunque lleve dias sin senal",
+        "La nube manda la POLITICA, nunca el abrir y cerrar",
+        "Sin politica nueva en N dias, cae a un programa conservador"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "El dato llega tarde pero llega correcto",
+      "items": [
+        "El gateway encola cuando no hay senal y reenvia despues",
+        "Cada medicion trae la hora de MEDICION y la de llegada",
+        "Se guarda el valor crudo y el calibrado, sin promediar"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Lo que entra al VPS",
+      "items": [
+        "80 y 443 solo aceptan trafico de Cloudflare",
+        "Lo que corre esta en git y lo reconcilia Argo CD"
+      ]
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 // Uso: node agro.js gaps [--escribir] [--dias N] [--minimo N] [--json]
 //
 // SIN `--escribir` solo muestra que fichas propondria: es un informe y sale 0.
-// CON `--escribir` las agrega a jira/META/FEATURES.json, en rojo.
+// CON `--escribir` las agrega al FEATURES.json del change del loop, en rojo.
 //
 // Por que existe: el pedido era "que un cierre encuentre gaps Y LOS CORRIJA sin que yo le diga
 // nada". Encontrarlos ya lo hace `fallos`. Lo que se perdia es el paso del medio: el hallazgo

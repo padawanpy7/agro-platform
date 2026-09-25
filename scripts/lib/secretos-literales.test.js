@@ -24,10 +24,10 @@ test('un valor corto (tipo codigo de ticket) no se marca', () => {
   assert.deepEqual(hallazgos([{ ruta: 'x.json', contenido }]), [])
 })
 
-// jira/<T>/ticket.json (17/09) guarda el codigo del ticket bajo "clave", y algunos proyectos
-// (GMCC-247, IMDX-001) ya llegan a 8 caracteres: el LARGO_MINIMO por si solo los marcaba como
-// posible secreto. Un codigo de ticket real ("PROYECTO-NUMERO") no es una forma de secreto: se
-// reconoce por FORMA, no por largo.
+// Un `ticket.json` guarda el codigo del ticket bajo "clave", y algunos proyectos (GMCC-247,
+// IMDX-001) ya llegan a 8 caracteres: el LARGO_MINIMO por si solo los marcaba como posible
+// secreto. Un codigo de ticket real ("PROYECTO-NUMERO") no es una forma de secreto: se reconoce
+// por FORMA, no por largo.
 test('un codigo de ticket largo (GMCC-247, IMDX-001) no se marca aunque llegue a 8+ caracteres', () => {
   const contenido = '{\n  "clave": "GMCC-247"\n}\n'
   assert.deepEqual(hallazgos([{ ruta: 'x.json', contenido }]), [])
@@ -35,8 +35,8 @@ test('un codigo de ticket largo (GMCC-247, IMDX-001) no se marca aunque llegue a
   assert.deepEqual(hallazgos([{ ruta: 'x.json', contenido: contenido2 }]), [])
 })
 
-// `iniciativa.clave` (ticket.json) cae a un slug del texto de Jira cuando no hay codigo IN#####
-// (ej. "ofertas-de-productos"): son palabras de diccionario separadas por guion, la forma opuesta
+// `iniciativa.clave` (ticket.json) cae a un slug del titulo cuando no hay codigo IN##### (ej.
+// "ofertas-de-productos"): son palabras de diccionario separadas por guion, la forma opuesta
 // a un secreto de alta entropia (ver los fixtures de arriba: mezclan mayus/minus/digitos SIN
 // separadores legibles).
 test('un slug de palabras (iniciativa.clave sin codigo) no se marca', () => {
@@ -55,13 +55,13 @@ test('un UUID (tambien tiene guiones) SI se marca: no es un identificador legibl
 })
 
 test('formato KEY=valor (.env) tambien se marca', () => {
-  const contenido = 'LDAP_USUARIO=imdx\nAPEX_PASSWORD=Sup3rSecreta123\n'
+  const contenido = 'LDAP_USUARIO=imdx\nDB_PASSWORD=Sup3rSecreta123\n'
   const r = hallazgos([{ ruta: '.env', contenido }])
-  assert.deepEqual(r, [{ archivo: '.env', linea: 2, clave: 'APEX_PASSWORD' }])
+  assert.deepEqual(r, [{ archivo: '.env', linea: 2, clave: 'DB_PASSWORD' }])
 })
 
 test('KEY= vacio (.env.example) no se marca', () => {
-  const contenido = 'LDAP_CONTRASENA=\nAPEX_PASSWORD=\n'
+  const contenido = 'LDAP_CONTRASENA=\nDB_PASSWORD=\n'
   assert.deepEqual(hallazgos([{ ruta: '.env.example', contenido }]), [])
 })
 

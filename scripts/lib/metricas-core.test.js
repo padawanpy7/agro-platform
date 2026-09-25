@@ -130,13 +130,13 @@ test('el reporte tiene una seccion de agentes que dice que NO se puede medir', (
 test('familiaDeComando agrupa por la FORMA del comando, no por su texto', () => {
   const { familiaDeComando: f } = require('./metricas-core')
   // El cd de entrada no es el trabajo: sin sacarlo, la familia mas grande del repo era "cd".
-  assert.strictEqual(f('cd C:/bffamiliar/bf-db-workspace && node agro.js db-sql --base replica'), 'node agro.js db-sql')
+  assert.strictEqual(f('cd C:/repos/agro-platform && node agro.js db-sql --base replica'), 'node agro.js db-sql')
   assert.strictEqual(f('node agro.js check 2>&1 | tail -3'), 'node agro.js check')
   assert.strictEqual(f('bash scripts/db/db-sql.sh --base replica'), 'bash db-sql.sh')
   assert.strictEqual(f('git add -A scripts/'), 'git add')
   assert.strictEqual(f('grep -n "foo" archivo.js | head -5'), 'grep')
   // Un VAR=valor adelante es entorno, no el comando.
-  assert.strictEqual(f('E2E_ESCRIBE=1 bash scripts/apex-e2e.sh'), 'bash apex-e2e.sh')
+  assert.strictEqual(f('E2E_ESCRIBE=1 bash scripts/mi-tool.sh'), 'bash mi-tool.sh')
   assert.strictEqual(f(''), null)
 })
 

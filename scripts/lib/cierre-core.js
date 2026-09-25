@@ -64,7 +64,7 @@ function chequearAtraso(rama, commitsDeMainSinTraer) {
 // infra `infra.js`. Escribirlo ataba este core a un proyecto, y al promoverlo el 01/09 el test de
 // alla fallo por eso.
 const ES_LOOP = new RegExp(
-  '^(scripts/|memory/|db/|skills/|apex/static/|AGENTS\\.md|CLAUDE\\.md|project\\.yml|entornos\\.yml|' +
+  '^(scripts/|memory/|db/|skills/|AGENTS\\.md|CLAUDE\\.md|project\\.yml|entornos\\.yml|' +
   'package\\.json|' + disp.nombre().replace('.', '\\.') + ')')
 
 function archivosDeLoop(archivos) {
@@ -73,9 +73,9 @@ function archivosDeLoop(archivos) {
 
 // Donde buscar la entrada del dia. Son DOS changes, no uno: `diasConCommits` cuenta un dia si sus
 // commits tocaron la carpeta del ticket **o archivos del loop**, y la entrada de un dia de loop vive
-// en la bitacora del change del loop (`jira/META`), no en la del ticket. Mirando solo la del ticket,
-// todo dia de loop salia "sin entrada": el 18/09/2026 el cierre de ICC-13 marcaba 13, 14, 16 y 17/09
-// en rojo con las cuatro entradas ya escritas en `jira/META` (lo encontro la sesion de ICC-13).
+// en la bitacora del change del loop, no en la del ticket. Mirando solo la del ticket, todo dia de
+// loop salia "sin entrada": el 18/09/2026 el cierre de un ticket marcaba cuatro dias en rojo con
+// las cuatro entradas ya escritas en la carpeta del change del loop.
 function carpetasDeBitacora(carpetaTicket, carpetaLoop) {
   const norm = (p) => String(p || '').replace(/\\/g, '/').replace(/\/+$/, '')
   return [...new Set([norm(carpetaTicket), norm(carpetaLoop)].filter(Boolean))]
@@ -163,17 +163,21 @@ function lineasDeLaUltimaEntrada(contenido) {
     if (ENCABEZADO_FECHA.test(lineas[j])) break
     const l = lineas[j].trim()
     // Un encabezado suelto no es contenido: "### Hecho" sin nada abajo sigue siendo una entrada
-    // vacia. Tampoco cuentan la marca de kove ni un separador.
+    // vacia. Tampoco cuenta un comentario HTML ni un separador.
     if (!l || /^#{1,6}\s/.test(l) || /^<!--/.test(l) || /^-{3,}$/.test(l)) continue
     n++
   }
   return n
 }
 
-function chequearProgreso(rutaProgreso, fechasEnElProgreso, hoy, contenido) {
+// `carpetaTicket` es la ruta REAL del change (scripts/lib/carpeta-cambios.js), para que el aviso
+// diga donde crear el archivo EN ESTA corrida y no el placeholder de la documentacion. Es
+// OPCIONAL, con el placeholder de siempre como fallback: los llamadores que no la conocen (o los
+// tests viejos) no se rompen.
+function chequearProgreso(rutaProgreso, fechasEnElProgreso, hoy, contenido, carpetaTicket) {
   if (!rutaProgreso) {
     return falta('progreso', 'no se encontro el PROGRESO del ticket',
-      ['crealo en jira/<TICKET>/PROGRESO.md'])
+      [`crealo en ${carpetaTicket || '<carpeta-de-cambios>/<TICKET>'}/PROGRESO.md`])
   }
   if (!fechasEnElProgreso.length) {
     return falta('progreso', `${rutaProgreso}: sin ninguna entrada con fecha`,
@@ -203,10 +207,10 @@ function chequearProgreso(rutaProgreso, fechasEnElProgreso, hoy, contenido) {
 // --- 6. los docs del ticket no invocan un loop que ya no existe ----------------------------
 // Los tickets viejos guardan comandos en su prosa; el loop se refactoriza y esos comandos
 // quedan apuntando a rutas muertas. Copiar y pegar lo documentado falla, y parece culpa de quien
-// lo corre. Ver [[refactor-del-loop-rompe-tickets-viejos]].
+// lo corre.
 const OBSOLETOS = [
   { patron: /bash\s+scripts\/[\w-]+\.sh/g, porque: 'los wrappers .sh no existen desde el 10/08: es `node agro.js <tool>`' },
-  { patron: /\btests\/e2e\//g, porque: 'los specs viven en jira/<TICKET>/tests/' },
+  { patron: /\btests\/e2e\//g, porque: 'los specs viven en <carpeta-de-cambios>/<TICKET>/tests/' },
   { patron: /scripts\/[\w-]+\.sh\b/g, porque: 'los wrappers .sh no existen desde el 10/08: es `node agro.js <tool>`' },
 ]
 
@@ -272,7 +276,7 @@ function buscarComandosObsoletos(texto, toolsConocidas = null, existe = null) {
 //
 // El archivo POR MES (`progreso/AAAA-MM.md`) es la misma bitacora, solo que ya archivada: cuenta
 // que en julio se corria `scripts/task-start.sh`, y eso era cierto en julio. Se sumo el 18/08, al
-// mover el puente del loop a `jira/META/`: el gate empezo a exigirle a la
+// mover el puente del loop a la carpeta del change del loop: el gate empezo a exigirle a la
 // historia que hablara del presente y frenaba el cierre por dos archivos de julio.
 const esBitacora = (archivo) =>
   /PROGRESO\.md$/i.test(archivo) || /(^|[\\/])progreso[\\/][\d-]+\.md$/i.test(archivo)
@@ -366,10 +370,12 @@ function contarPreguntasAbiertas(contenido) {
 
 // `contenido` es null cuando el archivo no existe. NO se devuelve ok en ese caso: se devuelve
 // aviso, porque "no hay archivo" no prueba que no haya preguntas -prueba que no se sabe-.
-function chequearPreguntas(contenido) {
+// `carpetaTicket` es la ruta REAL del change: mismo motivo y misma regla de fallback que en
+// chequearProgreso.
+function chequearPreguntas(contenido, carpetaTicket) {
   if (contenido === null || contenido === undefined) {
     return aviso('preguntas', 'el ticket no tiene PREGUNTAS.md: no se puede medir si quedaron abiertas',
-      ['si la sesion dejo alguna, crealo en jira/<TICKET>/PREGUNTAS.md',
+      [`si la sesion dejo alguna, crealo en ${carpetaTicket || '<carpeta-de-cambios>/<TICKET>'}/PREGUNTAS.md`,
         'si de verdad no quedo ninguna, el archivo igual sirve para dejarlo dicho'])
   }
 
@@ -586,7 +592,7 @@ function chequearReadmeVsLedger(declarado, ledger) {
   }
   return falta('readme', `el README declara ${declarado.pasan}/${declarado.total} y el ledger dice ${ledger.pasan}/${ledger.total}`, [
     declarado.linea,
-    'la cifra escrita a mano se pudre: generala o sacala ([[lo-que-se-pudre-se-genera]])',
+    'la cifra escrita a mano se pudre: generala o sacala',
   ])
 }
 

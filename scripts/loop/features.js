@@ -1,4 +1,4 @@
-// Estado del ledger POR TICKET (jira/<TICKET>/FEATURES.json).
+// Estado del ledger POR TICKET (<carpeta_cambios>/<TICKET>/FEATURES.json).
 //
 // El ledger no es global: cada ticket tiene el suyo, para no mezclar tareas. Detecta el ticket por
 // la RAMA actual (una tarea = una rama), asi no se reporta el ledger de otra.
@@ -18,6 +18,7 @@
 const fs = require('fs')
 const path = require('path')
 const { execFileSync } = require('child_process')
+const cambios = require('../lib/carpeta-cambios')
 
 const args = process.argv.slice(2)
 const arg = args[0] || ''
@@ -101,7 +102,7 @@ function ramaActual() {
 }
 
 if (arg === '--all') {
-  const base = 'jira'
+  const base = cambios.carpeta()
   let hubo = false
   const changes = fs.existsSync(base) ? fs.readdirSync(base).sort() : []
   for (const c of changes) {
@@ -111,7 +112,7 @@ if (arg === '--all') {
     console.log(`== ${c} ==`)
     reportar(f)
   }
-  if (!hubo) console.log('no hay ningun jira/*/FEATURES.json (los tickets chicos pueden no tener ledger)')
+  if (!hubo) console.log(`no hay ningun ${base}/*/FEATURES.json (los tickets chicos pueden no tener ledger)`)
   process.exit(0)
 }
 
@@ -121,9 +122,9 @@ if (arg && fs.existsSync(arg) && fs.statSync(arg).isFile()) {
 }
 
 // Parado en `main` el ticket es META: la mejora de las herramientas es una tarea como
-// cualquier otra y tiene su propio ledger (jira/META/). Antes esto contestaba
+// cualquier otra y tiene su propio ledger (<carpeta_cambios>/META/). Antes esto contestaba
 // "no se detecto el ticket" y el backlog del loop vivia como prosa en el reporte del lead.
-const LOOP = 'META'
+const LOOP = cambios.delLoop()
 // El ticket es el primer argumento que NO sea una bandera: 'features --gate ICC-83' tiene que
 // mirar ICC-83 y no caer a la rama actual.
 const posicional = args.find((a) => !a.startsWith('-')) || ''
@@ -135,8 +136,8 @@ if (!ticket) {
 }
 
 // Con barra normal a proposito: fs la acepta en Windows y la ruta que se imprime se puede pegar
-// en un comando. path.join la volveria `jira\...`, que no sirve para eso.
-const archivo = `jira/${ticket}/FEATURES.json`
+// en un comando. path.join la volveria `<carpeta>\...`, que no sirve para eso.
+const archivo = `${cambios.carpeta()}/${ticket}/FEATURES.json`
 if (!fs.existsSync(archivo)) {
   const msg = `sin ledger para '${ticket}' (${archivo} no existe). Una tarea chica puede no tener ledger; los grandes lo crean.`
   if (GATE) {

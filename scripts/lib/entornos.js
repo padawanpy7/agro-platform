@@ -5,9 +5,9 @@
 // `path.join(RAIZ, ...)` son varios lugares donde renombrar el archivo rompe algo distinto.
 //
 // Lo que vive aca son RUTAS, URLs y nombres. **Las credenciales no**: van en `.env` con su nombre
-// real. La version anterior de este archivo derivaba DSN de Oracle y workspaces de APEX; se
-// reescribio el 25/09/2026 al portar el loop. Un secreto derivado es un secreto que despues nadie
-// sabe de donde salio.
+// real. La version anterior de este archivo, en el repo de origen, derivaba credenciales de
+// conexion a partir de esta config; se reescribio el 25/09/2026 al portar el loop. Un secreto
+// derivado es un secreto que despues nadie sabe de donde salio.
 
 const fs = require('fs')
 const path = require('path')

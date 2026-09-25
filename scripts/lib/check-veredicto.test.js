@@ -8,10 +8,10 @@ test('"todo verde" SOLO cuando corrieron todos', () => {
   assert.ok(v.linea.includes('todo verde'))
 })
 
-// El caso que motiva la ficha: una tanda de solo .md salteaba los tres gates de PL/SQL y cerraba
+// El caso que motiva la ficha: una tanda de solo .md salteaba los tres gates de DB y cerraba
 // diciendo "todo verde".
 test('con un gate salteado, la linea NO puede decir todo verde', () => {
-  const v = veredicto({ verdes: 8, alcance: ['lint', 'build', 'tests PL/SQL'] })
+  const v = veredicto({ verdes: 8, alcance: ['lint', 'build', 'tests DB'] })
   assert.equal(v.ok, true)
   assert.ok(!v.linea.includes('todo verde'))
   assert.ok(v.linea.includes('8 en verde'))
@@ -19,14 +19,14 @@ test('con un gate salteado, la linea NO puede decir todo verde', () => {
 })
 
 test('saltear por ENTORNO se dice distinto que saltear por alcance', () => {
-  const v = veredicto({ verdes: 8, entorno: ['tests PL/SQL (base real)'] })
+  const v = veredicto({ verdes: 8, entorno: ['tests DB (base real)'] })
   assert.ok(v.linea.includes('ESTA MAQUINA no pudo correr'))
-  assert.ok(v.detalle.join(' ').includes('tests PL/SQL (base real)'))
+  assert.ok(v.detalle.join(' ').includes('tests DB (base real)'))
   assert.ok(v.detalle.join(' ').includes(String.raw`NO es "paso"`))
 })
 
 test('los dos motivos juntos se cuentan por separado', () => {
-  const v = veredicto({ verdes: 6, alcance: ['format', 'npm audit'], entorno: ['tests PL/SQL (base real)'] })
+  const v = veredicto({ verdes: 6, alcance: ['format', 'npm audit'], entorno: ['tests DB (base real)'] })
   assert.ok(v.linea.includes('2 sin nada que medir'))
   assert.ok(v.linea.includes('1 que ESTA MAQUINA no pudo correr'))
 })

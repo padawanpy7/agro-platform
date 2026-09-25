@@ -35,7 +35,7 @@ test('roles ordena alfabeticamente por nombre', () => {
 })
 
 test('playbooks saca el .md y ordena', () => {
-  assert.deepEqual(r.playbooks(['kove.md', 'db.md', 'apex.md']), ['apex', 'db', 'kove'])
+  assert.deepEqual(r.playbooks(['ui.md', 'db.md', 'backend.md']), ['backend', 'db', 'ui'])
 })
 
 test('resumir corta en la primera oracion cuando alcanza', () => {

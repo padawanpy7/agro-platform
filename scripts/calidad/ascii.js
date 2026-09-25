@@ -8,7 +8,6 @@
 // diecisiete reemplazos de texto, asi que no hay motivo para arrastrar un interprete entero.
 // De paso desaparece el modo de fallo que el propio .sh documentaba: llamar a `python3` pelado
 // hacia que el stub de la Microsoft Store abortara el gate y saliera 0, o sea verde en falso.
-// Ver [[un-binario-del-path-puede-ser-un-stub]].
 
 const fs = require('fs')
 const path = require('path')

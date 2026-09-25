@@ -6,8 +6,7 @@
 // teniamos cuatro. La que faltaba es esta.
 //
 // Lo que habia era `tasks.md`: casillas que **marca el mismo que trabaja**. Eso es una DECLARACION,
-// no una verificacion, y este proyecto ya tiene dos hechos escritos sobre lo que cuesta confundirlas
-// ([[decir-que-se-ficho-no-es-ficharlo]], [[un-e2e-verde-puede-no-haber-ejecutado-nada]]).
+// no una verificacion: decir que se hizo no es hacerlo, y un e2e verde puede no haber ejecutado nada.
 // Anthropic lo dice en una linea: "give Claude something that produces a pass or fail, and the loop
 // closes on its own". Un criterio de aceptacion que no es un comando no cierra ningun loop.
 //
@@ -84,10 +83,10 @@ function parsear(texto) {
 //
 // EL 2 ES "NO PUDE MEDIR", NO "FALLO". Es la convencion de todo este loop -`presupuesto` con un
 // --max basura, `hechos` sin la carpeta, `features --gate` sin ledger, `db-sql` contra una base que
-// no existe- y el 31/08 aparecio en un criterio real: `plsql-test` de ICC-83 salio 2 porque la base
-// no respondia. Mezclarlo con el rojo hace leer "el ticket esta mal" cuando lo que pasa es que no se
-// pudo verificar; separarlo y darlo por bueno seria peor -bastaria desenchufar la red para que el
-// criterio pase-. Asi que se muestra aparte Y NO deja cerrar.
+// no existe- y el 31/08 aparecio en un criterio real: una tool de test de ICC-83 salio 2 porque la
+// base no respondia. Mezclarlo con el rojo hace leer "el ticket esta mal" cuando lo que pasa es que
+// no se pudo verificar; separarlo y darlo por bueno seria peor -bastaria desenchufar la red para
+// que el criterio pase-. Asi que se muestra aparte Y NO deja cerrar.
 const NO_SE_PUDO_MEDIR = 2
 function veredicto({ criterios = [], problemas = [] } = {}, resultados = []) {
   const porTitulo = new Map((resultados || []).map((r) => [r.titulo, r]))

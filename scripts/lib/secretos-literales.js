@@ -42,9 +42,9 @@ function esTemplate(valor) {
   return /^\{\{.*\}\}$/.test(valor) || /^\$\{.*\}$/.test(valor) || /^<.*>$/.test(valor)
 }
 
-// Un codigo de Jira ("GMCC-247", "IMDX-001") o un slug de palabras ("ofertas-de-productos") no son
-// una forma de secreto: se reconocen por FORMA, no por largo, y por eso `jira/<T>/ticket.json`
-// (17/09) los deja pasar aunque lleguen a los 8 caracteres del LARGO_MINIMO. La forma que SI importa
+// Un codigo de ticket ("GMCC-247", "IMDX-001") o un slug de palabras ("ofertas-de-productos") no
+// son una forma de secreto: se reconocen por FORMA, no por largo, y por eso un `ticket.json` los
+// deja pasar aunque lleguen a los 8 caracteres del LARGO_MINIMO. La forma que SI importa
 // exceptuar es la de un identificador LEGIBLE (letras/digitos de un solo caso, separados por guion);
 // un UUID tiene guiones igual pero es hex sin distincion de mayus/minus y ES una forma plausible de
 // secreto (session id, api key), asi que se lo saca aparte para que siga marcandose.

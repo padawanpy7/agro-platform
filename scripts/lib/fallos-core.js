@@ -4,11 +4,11 @@
 // POR QUE EXISTE (research de loop engineering, 31/08): el paper 2604.25850 evoluciona un loop
 // solo, y su paso clave no es la auto-modificacion sino el *failure clustering*: agrupar las
 // corridas fallidas por modo de falla y rastrear la causa hasta la instruccion, la tool o el
-// contexto que faltaba. Nosotros escribimos `metrics/tool-runs.log` desde el 10/08 y **nunca lo
-// leimos**. La primera vez que se agrupo -31/08- salieron tres cosas en cinco minutos: 194 lineas
-// del log estaban rotas (un SQL multilinea partia el registro), `--help` salia con 2 en varias
-// tools (o sea que pedir ayuda se contaba como fallo), y `kove-cargar-horas` fallaba en el 95 % de
-// sus corridas.
+// contexto que faltaba. En el repo de origen escribian `metrics/tool-runs.log` desde el 10/08 y
+// **nunca lo leyeron**. La primera vez que se agrupo -31/08- salieron tres cosas en cinco minutos:
+// 194 lineas del log estaban rotas (un SQL multilinea partia el registro), `--help` salia con 2 en
+// varias tools (o sea que pedir ayuda se contaba como fallo), y una tool de accion fallaba en el
+// 95 % de sus corridas.
 //
 // LA DISTINCION QUE HACE QUE ESTO SIRVA: un GATE que sale 1 esta haciendo su trabajo -encontro algo-,
 // una TOOL DE ACCION que sale 1 es un gap. Sin separarlos, el 28,7 % de fallos que tiene el log es
@@ -16,9 +16,8 @@
 
 // Las tools cuyo exit 1 significa "encontre algo", no "me rompi".
 const GATES = new Set([
-  'check', 'lint', 'plsql-lint', 'presupuesto', 'hechos', 'features', 'ascii',
-  'plsql-compila', 'plsql-test', 'cierre', 'aceptacion', 'test-js', 'rama-drift', 'db-drift',
-  'apex-drift', 'apex-estandar', 'apex-js-check', 'apex-static-check', 'check-dep', 'carpetas',
+  'check', 'lint', 'presupuesto', 'hechos', 'features', 'ascii',
+  'cierre', 'aceptacion', 'test-js', 'rama-drift', 'check-dep', 'carpetas',
 ])
 
 // Una linea es: fecha \t tool \t exit \t ms \t args \t detalle \t padre
@@ -41,7 +40,7 @@ function parsear(texto) {
 }
 
 // El modo de falla: la tool, su codigo de salida y el PRIMER argumento -que en este loop es el
-// subcomando (`kove-actividad cerrar`) o el archivo-. Dos corridas con el mismo modo son la misma
+// subcomando (`otra-tool cerrar`) o el archivo-. Dos corridas con el mismo modo son la misma
 // falla repetida, que es lo que hay que mirar; una sola vez puede ser cualquier cosa.
 function modoDe(f) {
   const primero = String(f.args || '').trim().split(/\s+/)[0] || ''

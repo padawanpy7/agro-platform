@@ -136,9 +136,9 @@ function armarGates() {
 
   // Los gates del STACK se declaran en `project.yml` (bloque `commands:`), no se clavan aca. Asi
   // el dia que exista codigo del agro se prenden llenando el yml, y mientras tanto el gate dice
-  // "no hay comando declarado" en vez de dar verde por no haber mirado nada. Reemplazan a los tres
-  // gates de Oracle del repo de origen (`lint` de SQL, `plsql-compila`, `plsql-test`), que se
-  // sacaron el 25/09/2026 junto con sus tools.
+  // "no hay comando declarado" en vez de dar verde por no haber mirado nada. Reemplazan a los
+  // gates del repo de origen (compilacion y tests contra su base real), que se sacaron el
+  // 25/09/2026 junto con sus tools: no tienen equivalente en este stack.
   for (const [clave, nombre] of [['lint', 'lint'], ['build', 'build'], ['test', 'tests del stack']]) {
     const cmd = comandoDe(clave)
     gates.push(cmd

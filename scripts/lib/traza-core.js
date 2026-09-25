@@ -2,7 +2,7 @@
 // red) y devuelve el arbol como DATO, no como texto. Las vistas (arbol/timeline/rebotes) consumen
 // esa estructura; agregar una vista nunca toca este archivo.
 //
-// Tres fuentes, las tres texto plano que YA se escribe solo (jira/META/design-traza.md):
+// Tres fuentes, las tres texto plano que YA se escribe solo:
 //   - el transcript de la sesion: eventos JSONL con `Agent` tool_use/tool_result (la delegacion) y
 //     `queue-operation` con un <task-notification> (como termino: completed/failed).
 //   - el transcript de CADA subagente: mismo formato, y ahi puede haber nuevas delegaciones (la
@@ -13,7 +13,7 @@
 //     este.
 //
 // Nada se inventa: un nodo sin transcript NI notificacion queda con estado 'sin transcript' y
-// tokens/ms en null, nunca en 0 (jira/META/design-traza.md, riesgo 1).
+// tokens/ms en null, nunca en 0.
 
 function eventos(texto) {
   const salida = []

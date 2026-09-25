@@ -4,7 +4,7 @@ const core = require('./gaps-core')
 
 const INFORME = {
   rotas: 0,
-  gaps: [{ modo: 'kove-cargar-horas ICC-13 (exit 1)', tool: 'kove-cargar-horas', veces: 43, ultima: '2026-08-24T10:00:00' }],
+  gaps: [{ modo: 'mi-tool ICC-13 (exit 1)', tool: 'mi-tool', veces: 43, ultima: '2026-08-24T10:00:00' }],
   casiSiempreFalla: [],
   ayudaRota: [],
 }
@@ -12,7 +12,7 @@ const INFORME = {
 test('un modo de falla repetido se vuelve una ficha con su evidencia', () => {
   const { fichas: c } = core.candidatas(INFORME, [])
   assert.equal(c.length, 1)
-  assert.ok(c[0].id.startsWith('HN-FALLA-KOVE-CARGAR-HORAS'))
+  assert.ok(c[0].id.startsWith('HN-FALLA-MI-TOOL'))
   assert.equal(c[0].passes, false)
   assert.ok(c[0].descripcion.includes('43 veces'))
   assert.ok(c[0].pasos.some((p) => /[Cc]ontrol negativo/.test(p)))
@@ -41,7 +41,7 @@ test('la telemetria sucia se ficha primero: envenena todo lo que salga del log',
 })
 
 test('una tool que falla la mitad de las veces se ficha aparte de sus modos', () => {
-  const { fichas: c } = core.candidatas({ ...INFORME, casiSiempreFalla: [{ tool: 'apex-e2e', fallos: 15, corridas: 22 }] }, [])
+  const { fichas: c } = core.candidatas({ ...INFORME, casiSiempreFalla: [{ tool: 'mi-tool', fallos: 15, corridas: 22 }] }, [])
   const f = c.find((x) => x.id.includes('INUSABLE'))
   assert.ok(f)
   assert.ok(f.descripcion.includes('68 %'))
@@ -51,11 +51,11 @@ test('la ayuda rota se ficha UNA vez, con todas las tools nombradas', () => {
   const { fichas: c } = core.candidatas({
     ...INFORME,
     gaps: [],
-    ayudaRota: [{ tool: 'kove-tarea', modo: 'kove-tarea --help (exit 2)' }, { tool: 'db-sql', modo: 'db-sql --help (exit 2)' }],
+    ayudaRota: [{ tool: 'mi-tool', modo: 'mi-tool --help (exit 2)' }, { tool: 'db-sql', modo: 'db-sql --help (exit 2)' }],
   }, [])
   const f = c.filter((x) => x.id === 'HN-AYUDA-CUENTA-COMO-FALLO')
   assert.equal(f.length, 1)
-  assert.ok(f[0].descripcion.includes('kove-tarea'))
+  assert.ok(f[0].descripcion.includes('mi-tool'))
   assert.ok(f[0].descripcion.includes('db-sql'))
 })
 
@@ -85,9 +85,9 @@ test('no vuelca todas de una: propone cinco y cuenta las que faltan', () => {
 test('los modos de --help no se fichan uno por uno: tienen su propia ficha', () => {
   const r = core.candidatas({
     rotas: 0,
-    gaps: [{ modo: 'kove-tarea --help (exit 2)', tool: 'kove-tarea', veces: 12, ejemplo: '--help' }],
+    gaps: [{ modo: 'mi-tool --help (exit 2)', tool: 'mi-tool', veces: 12, ejemplo: '--help' }],
     casiSiempreFalla: [],
-    ayudaRota: [{ tool: 'kove-tarea', modo: 'kove-tarea --help (exit 2)' }],
+    ayudaRota: [{ tool: 'mi-tool', modo: 'mi-tool --help (exit 2)' }],
   }, [])
   assert.equal(r.fichas.length, 1)
   assert.equal(r.fichas[0].id, 'HN-AYUDA-CUENTA-COMO-FALLO')

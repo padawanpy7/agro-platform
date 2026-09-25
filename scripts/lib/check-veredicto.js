@@ -2,7 +2,7 @@
 //
 // POR QUE EXISTE: `check` cerraba con "OK check: todo verde" aunque hubiera salteado gates, y el
 // veredicto no distinguia "paso" de "no corrio". Fichado el 27/08 en ICC-150 y re-reproducido el
-// mismo dia: una tanda que solo tocaba .md salteaba los TRES gates de PL/SQL -lint, compila y
+// mismo dia: una tanda que solo tocaba .md salteaba los TRES gates del esquema -lint, compila y
 // tests contra la base- y terminaba igual con "todo verde". El salteo esta bien y es deliberado;
 // lo que mentia es la ultima linea, que es justo la que lee el que cierra la tanda.
 //

@@ -44,8 +44,11 @@ function parsear(nombreArchivo, texto) {
 // Las rutas DE ESTE REPO que el hecho cita. Solo las comprobables: entre backticks, con carpeta y
 // con una extension conocida. Se dejan afuera, a proposito:
 //
-//   - los [[enlaces]] entre hechos: un [[nombre]] que todavia no existe es valido, marca algo que
-//     vale la pena escribir;
+//   - los [[enlaces]] ENTRE hechos, dentro de `memory/hechos/`: un [[nombre]] que todavia no
+//     existe es valido ahi, marca algo que vale la pena escribir. Esta excepcion es solo para
+//     hecho-a-hecho: un [[enlace]] en una fuente de contrato (AGENTS.md, CLAUDE.md, MEMORY.md,
+//     playbooks, skills, roles) NO cuelga gratis -lo verifica `extraerWikilinks` mas abajo, y lo
+//     hace cumplir `scripts/calidad/hechos.js`-;
 //   - las URLs;
 //   - un nombre suelto sin carpeta (`README.md`), que no se resuelve sin adivinar contra que raiz;
 //   - las rutas ABSOLUTAS (/archivos_aplicacion/... en el server de la base) y las que SALEN del
@@ -67,8 +70,54 @@ function rutasCitadas(texto) {
 }
 
 
+// Un wikilink `[[algo]]` puede citar un hecho de varias formas validas en prosa: con alias
+// (`[[slug|texto]]`), con seccion (`[[slug#seccion]]`), con la extension puesta (`[[slug.md]]`) o
+// con la carpeta delante (`[[hechos/slug]]`, `[[memory/hechos/slug]]`). El regex viejo
+// (`[A-Za-z0-9_-]+`) NO reconocia ninguna de esas formas -ni un espacio adentro, `[[ slug ]]`- y
+// las dejaba pasar SIN CITAR: el gate no las veia y un wikilink roto en cualquiera de esas formas
+// quedaba invisible. Normalizar antes de comparar es lo unico que las hace contar.
+function normalizarSlugWikilink(crudo) {
+  let s = String(crudo || '').trim()
+  const corte = ['|', '#'].map((c) => s.indexOf(c)).filter((i) => i >= 0).sort((a, b) => a - b)[0]
+  if (corte !== undefined) s = s.slice(0, corte)
+  s = s.trim().replace(/\.md$/i, '').trim()
+  s = s.replace(/^(memory\/hechos\/|hechos\/)/i, '')
+  return s.trim()
+}
+
+// Los wikilinks `[[...]]` de un texto, con su numero de linea (1-based) y el slug YA
+// NORMALIZADO. Si tras normalizar el resultado no es un slug valido, sigue siendo un wikilink
+// ROTO -no se descarta aca, lo reporta quien lo cruza contra el disco (scripts/calidad/hechos.js)-.
+//
+// Ignora los que estan dentro de un bloque de codigo (``` o ~~~, el que se haya abierto) o entre
+// backticks inline -simples o dobles, `` `[[x]]` `` incluido-: un doc tiene que poder NOMBRAR la
+// sintaxis `[[nombre]]` (para explicarla) sin que eso cuente como una cita real. Un bloque
+// indentado 4 espacios tambien es codigo en Markdown.
+function extraerWikilinks(texto) {
+  const lineas = String(texto || '').split('\n')
+  const out = []
+  let fence = null
+  for (let i = 0; i < lineas.length; i++) {
+    const linea = lineas[i]
+    const m = /^\s*(`{3,}|~{3,})/.exec(linea)
+    if (m) {
+      const ch = m[1][0]
+      if (!fence) { fence = ch; continue }
+      if (fence === ch) { fence = null; continue }
+    }
+    if (fence) continue
+    if (/^(?: {4}|\t)/.test(linea)) continue
+    const sinDoble = linea.replace(/``(.+?)``/g, '')
+    const sinInline = sinDoble.replace(/`[^`]*`/g, '')
+    for (const w of sinInline.matchAll(/\[\[([^\]\n]+)\]\]/g)) {
+      out.push({ slug: normalizarSlugWikilink(w[1]), linea: i + 1 })
+    }
+  }
+  return out
+}
+
 // Un hecho puede NOMBRAR un comando muerto sin mandarte a correrlo: "no uses `scripts/_python.sh`",
-// "importaban `tests/e2e/lib/apex`, ya inexistente". Esos son justamente los hechos que existen
+// "importaban `web/lib/cliente-viejo`, ya inexistente". Esos son justamente los hechos que existen
 // PARA avisar que eso murio, y reescribirlos los destruye -pasa a decir que uses lo que vino
 // despues, y se pierde el aviso-.
 //
@@ -112,7 +161,7 @@ function validar(hechos, { existe = () => true, indice = [] } = {}) {
     // Lo archivado NO va en el indice: el indice es lo que se lee en toda tarea, y lo archivado no
     // es autoridad de lo que pasa hoy.
     if (h.estado === 'archivado' && enIndice.has(h.slug)) {
-      problemas.push({ archivo: h.archivo, regla: 'archivado-en-el-indice', detalle: 'esta archivado y sigue en MEMORY.md: lo archivado no es autoridad de lo actual' })
+      problemas.push({ archivo: h.archivo, regla: 'archivado-en-el-indice', detalle: 'esta archivado y sigue enlazado desde un indice o doc de contrato: lo archivado no es autoridad de lo actual' })
     }
     if (h.estado !== 'archivado' && indice.length && !enIndice.has(h.slug)) {
       problemas.push({ archivo: h.archivo, regla: 'fuera-del-indice', detalle: 'no tiene linea en MEMORY.md: se lee el indice, no la carpeta' })
@@ -136,6 +185,7 @@ const BLOQUEANTES = new Set([
   'sin-frontmatter', 'sin-name', 'name-no-coincide', 'sin-description',
   'estado-invalido', 'superado-sin-sucesor', 'sucesor-no-existe',
   'archivado-en-el-indice', 'ruta-citada-no-existe', 'comando-muerto',
+  'wikilink-sin-hecho',
 ])
 
-module.exports = { ESTADOS, BLOQUEANTES, parsear, rutasCitadas, validar, esMencionHistorica }
+module.exports = { ESTADOS, BLOQUEANTES, parsear, rutasCitadas, extraerWikilinks, normalizarSlugWikilink, validar, esMencionHistorica }

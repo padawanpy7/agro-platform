@@ -37,9 +37,9 @@ const argv = process.argv.slice(2)
 const ARCHIVO = 'HECHO_CUANDO.md'
 
 // `--help` se contesta ANTES que nada y sale con 0: pedir ayuda no es un error. Sin esto la tool
-// caia en "no se cual es el ticket" y salia con 2, que es lo que hoy hacen varias kove-* -aparecio
-// al agrupar los fallos del log el 31/08: 40+ corridas contadas como fallo eran gente pidiendo
-// ayuda-.
+// caia en "no se cual es el ticket" y salia con 2, que es lo que hoy hacen varias tools de accion
+// -aparecio al agrupar los fallos del log el 31/08: 40+ corridas contadas como fallo eran gente
+// pidiendo ayuda-.
 if (argv.includes('--help') || argv.includes('-h')) {
   console.log('Uso: node agro.js aceptacion [--ticket <CLAVE>] [--json] [--listar] [--todos]')
   console.log('')
@@ -57,7 +57,7 @@ function tomar(bandera) {
 // de ticket la rama ES la clave, asi que no hace falta repetirla.
 //
 // NO se pasa a mayusculas a ciegas. Se probo primero tal cual y despues en mayusculas, por este
-// orden, porque las dos formas existen: los tickets de Jira son `ICC-83` y un change puede llamarse
+// orden, porque las dos formas existen: un codigo de ticket es `ICC-83` y un change puede llamarse
 // `production-platform`. Pasar todo a mayusculas funcionaba SOLO en Windows -que ignora las
 // mayusculas en las rutas- y rompia en Linux, que es donde corre la mitad de este loop. Salio el
 // 31/08 al estrenar la tool en el repo de infra desde WSL.
@@ -109,7 +109,7 @@ if (argv.includes('--todos')) {
   if (sin.length) {
     console.log('')
     console.log(`  ·  ${sin.length} sin HECHO_CUANDO: ${sin.join(' ')}`)
-    console.log('     Los viejos avisan y no rompen; uno nuevo nace con el archivo (task-start).')
+    console.log('     Los viejos avisan y no rompen; uno nuevo nace con el archivo (cambio-nuevo).')
   }
   process.exit(malEscritos.length ? 1 : 0)
 }

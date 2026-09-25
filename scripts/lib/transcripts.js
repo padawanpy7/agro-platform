@@ -7,8 +7,7 @@
 //   - el transcript de un subagente (VIVE):   <PROYECTOS>/<carpeta>/<sesion>/subagents/agent-<id>.jsonl
 //   - el mismo subagente, en Temp (se limpia): <tmp>/claude/<carpeta>/<sesion>/tasks/<id>.output
 // La carpeta sale de la ruta del repo con separadores Y PUNTOS cambiados por guiones: es como
-// Claude Code nombra la carpeta del proyecto ("C:\bffamiliar\bf-db-workspace" ->
-// "C--bffamiliar-bf-db-workspace").
+// Claude Code nombra la carpeta del proyecto ("C:\repos\agro-platform" -> "C--repos-agro-platform").
 //
 // EL PUNTO ENTRA, y no es cosmetico. Aca no se notaba porque esta ruta no tiene ninguno; salio al
 // llevar `traza` al repo de infra, que vive en "C:/Users/ian.delvalle/Downloads/infra-platform":

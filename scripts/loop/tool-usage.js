@@ -9,8 +9,9 @@
 // metrics/tool-runs.log suma el resultado (fecha, tool, exit, ms, argumentos).
 //
 // La columna de TIEMPO es la que faltaba: hasta que existio, "optimizar las tools" se decidia por
-// cuantas veces se usa cada una, que no dice nada de cuanto cuesta. La primera medicion con este
-// dato mostro que el 93 % de plsql-compila era el loop de bash y no la JVM.
+// cuantas veces se usa cada una, que no dice nada de cuanto cuesta. En el repo de origen la primera
+// medicion con este dato mostro que la mayor parte del tiempo de una tool de compilacion era el
+// loop de shell alrededor, no el proceso que hacia el trabajo.
 //
 // "Que tools hay" sale del registro compartido (scripts/lib/tools-registro.js) y ya no de grepear
 // `_count.sh` dentro de los `*.sh`: esos wrappers se fueron.
@@ -40,12 +41,12 @@ const comoTiempo = (ms) => (ms == null ? '' : ms >= 1000 ? `${(ms / 1000).toFixe
 
 // Una corrida de mas de 10 minutos es un proceso que quedo colgado, no trabajo de la tool: la
 // sesion se interrumpio y el cronometro siguio contando hasta que el proceso murio. Medido el
-// 17/08 sobre 1619 corridas: la mas larga LEGITIMA es kove-cargar-horas con 399 s, y arriba del
-// umbral hay exactamente dos, las dos con exit != 0 (check 14 h el 11/08, apex-import 32 min el
-// 12/08). Cuentan igual en la mediana -donde un outlier no molesta- pero NO en el total, que es
-// una suma y por eso un solo zombi la decide: ese unico check de 14 h era el 95% de los 53.042 s
-// que la tool le atribuia, y lo dejaba primero en "donde se va el tiempo" siendo que su corrida
-// tipica son 5,8 s.
+// 17/08 sobre 1619 corridas del repo de origen: la mas larga LEGITIMA fue una tool de accion con
+// 399 s, y arriba del umbral hubo exactamente dos, las dos con exit != 0 (un gate de 14 h y una
+// tool de accion de 32 min). Cuentan igual en la mediana -donde un outlier no molesta- pero NO en
+// el total, que es una suma y por eso un solo zombi la decide: ese unico gate de 14 h era el 95%
+// de los 53.042 s que la tool le atribuia, y lo dejaba primero en "donde se va el tiempo" siendo
+// que su corrida tipica son 5,8 s.
 const ZOMBI_MS = 10 * 60 * 1000
 
 const usos = new Map()   // tool -> { n, ultimo }

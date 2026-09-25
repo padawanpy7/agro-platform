@@ -6,6 +6,7 @@
 const fs = require('fs')
 const path = require('path')
 const { spawnSync } = require('child_process')
+const cambios = require('../lib/carpeta-cambios')
 
 const leer = (f) => { try { return fs.readFileSync(f, 'utf8') } catch { return '' } }
 const existe = (f) => fs.existsSync(f)
@@ -22,7 +23,7 @@ else bien('placeholders')
 
 const proyecto = leer('project.yml')
 if (/^name: ""/m.test(proyecto)) mal('project.yml: name vacio')
-if (/^\s+build: ""/m.test(proyecto)) mal('project.yml: commands.build vacio')
+if (/^\s+build: ""/m.test(proyecto)) info('project.yml: commands.build vacio (a proposito, sin comandos declarados todavia hasta que haya codigo)')
 
 // El registry se regenera y se compara: si cambio, es que estaba desactualizado. Va por un proceso
 // aparte a proposito -skill-sync escribe y hace su propio print- en vez de requerirlo y silenciar
@@ -59,23 +60,22 @@ barrer('memory/playbooks')
 if (viejos.length) console.log(`  ! sin actualizar hace >${DIAS}d (revisar que no mientan): ${viejos.join(' ')}`)
 
 for (const [f, que] of [
-  ['scripts/db/plsql-compila.js', 'gate de sintaxis'],
-  ['scripts/db/plsql-lint.js', 'gate de convenciones'],
   ['scripts/loop/features.js', 'ledger del build'],
   ['agro.js', 'punto de entrada de las tools'],
 ]) {
   if (!existe(f)) mal(`falta ${f} (${que})`)
 }
 
-const PUENTE = 'jira/META/PROGRESO.md'
+const PUENTE = cambios.archivoDelLoop('PROGRESO.md')
 if (existe(PUENTE)) bien(PUENTE)
 else info('sin ' + PUENTE + ' (el puente entre sesiones del loop; empezalo al cerrar)')
 
-const ledgers = existe('jira')
-  ? fs.readdirSync('jira').filter((c) => existe(`jira/${c}/FEATURES.json`)).length
+const CARPETA_CAMBIOS = cambios.carpeta()
+const ledgers = existe(CARPETA_CAMBIOS)
+  ? fs.readdirSync(CARPETA_CAMBIOS).filter((c) => existe(path.join(CARPETA_CAMBIOS, c, 'FEATURES.json'))).length
   : 0
-if (ledgers) bien(`${ledgers} ledger(s) por-ticket (jira/<id>/FEATURES.json)`)
-else info('sin ledgers por-ticket (los builds grandes crean jira/<id>/FEATURES.json)')
+if (ledgers) bien(`${ledgers} ledger(s) por-ticket (${CARPETA_CAMBIOS}/<id>/FEATURES.json)`)
+else info(`sin ledgers por-ticket (los builds grandes crean ${CARPETA_CAMBIOS}/<id>/FEATURES.json)`)
 
 info('Regla 10: al salir un modelo nuevo, re-examina el loop y desmonta andamiaje viejo')
 

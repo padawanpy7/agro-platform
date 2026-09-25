@@ -45,9 +45,9 @@ function encabezadoDeCaso(n, titulo) {
   return `${numero} - ${oracion}`
 }
 
-// Lee el veredicto POR CASO del TAP que deja apex-e2e. Existe porque una captura sola no prueba
-// nada: el 11/08 el caso 14 de la pagina 189 corto por timeout y su captura era la del caso 13,
-// byte a byte -y el documento la mostraba como evidencia de algo que nunca se vio-.
+// Lee el veredicto POR CASO del TAP que deja una tool de e2e. Existe porque una captura sola no
+// prueba nada: el 11/08 un caso corto por timeout y su captura era la del caso anterior, byte a
+// byte -y el documento la mostraba como evidencia de algo que nunca se vio-.
 //
 // En el TAP los casos son subtests indentados:  "    not ok 14 - 14. T3 - el estado tiene etiqueta"
 // La descripcion repite el numero, que es como se los nombra en el spec (`caso(14, '...')`).

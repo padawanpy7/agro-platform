@@ -17,32 +17,32 @@ function correr(raiz, args) {
 
 test('cambio-nuevo crea el change bajo la carpeta_cambios declarada, no "cambios" clavado', () => {
   const raiz = fixture()
-  fs.writeFileSync(path.join(raiz, 'project.yml'), 'carpeta_cambios: jira\n')
+  fs.writeFileSync(path.join(raiz, 'project.yml'), 'carpeta_cambios: tickets\n')
 
   const r = correr(raiz, ['mi-cambio', '--que', 'probar'])
 
   assert.equal(r.status, 0)
-  assert.match(r.stdout, /==> jira\/mi-cambio\//)
-  assert.ok(fs.existsSync(path.join(raiz, 'jira', 'mi-cambio', 'HECHO_CUANDO.md')))
+  assert.match(r.stdout, /==> tickets\/mi-cambio\//)
+  assert.ok(fs.existsSync(path.join(raiz, 'tickets', 'mi-cambio', 'HECHO_CUANDO.md')))
   assert.ok(!fs.existsSync(path.join(raiz, 'cambios')))
 })
 
 test('cambio-nuevo escribe la carpeta_cambios declarada adentro del HECHO_CUANDO.md, no clavada', () => {
   const raiz = fixture()
-  fs.writeFileSync(path.join(raiz, 'project.yml'), 'carpeta_cambios: jira\n')
+  fs.writeFileSync(path.join(raiz, 'project.yml'), 'carpeta_cambios: tickets\n')
 
   correr(raiz, ['mi-cambio', '--que', 'probar'])
-  const hechoCuando = fs.readFileSync(path.join(raiz, 'jira', 'mi-cambio', 'HECHO_CUANDO.md'), 'utf8')
+  const hechoCuando = fs.readFileSync(path.join(raiz, 'tickets', 'mi-cambio', 'HECHO_CUANDO.md'), 'utf8')
 
-  assert.match(hechoCuando, /jira\/mi-cambio/)
+  assert.match(hechoCuando, /tickets\/mi-cambio/)
   assert.doesNotMatch(hechoCuando, /cambios\/mi-cambio/)
 })
 
-test('cambio-nuevo cae al default de carpeta-cambios.js ("jira") si no hay project.yml', () => {
+test('cambio-nuevo cae al default de carpeta-cambios.js ("cambios") si no hay project.yml', () => {
   const raiz = fixture()
 
   const r = correr(raiz, ['mi-cambio'])
 
   assert.equal(r.status, 0)
-  assert.ok(fs.existsSync(path.join(raiz, 'jira', 'mi-cambio', 'FEATURES.json')))
+  assert.ok(fs.existsSync(path.join(raiz, 'cambios', 'mi-cambio', 'FEATURES.json')))
 })

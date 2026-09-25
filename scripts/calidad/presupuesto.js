@@ -28,8 +28,8 @@ const lineasDe = (rel) => {
 }
 
 // La lista de documentos sale de `project.yml` si el proyecto la declara, y si no del default del
-// core. Antes estaba clavada con los nombres de ESTE proyecto -apex.md, kove.md, el PROGRESO del
-// META-, asi que llevar la tool a otro repo arrastraba nuestros archivos: medidos como
+// core. Antes estaba clavada con los nombres del repo de origen -sus playbooks, el PROGRESO de su
+// change del loop-, asi que llevar la tool a otro repo arrastraba esos archivos: medidos como
 // "no existe" y sin medir los suyos. El presupuesto es del proyecto; la tool solo lo hace cumplir.
 function leerPresupuesto(texto) {
   const doc = require('yaml').parse(texto)
@@ -156,9 +156,8 @@ if (!argv.includes('--sin-delta')) {
     console.log(core.informeDelta(d))
     if (!d.ok) {
       console.log('')
-      console.log('Un aprendizaje nuevo entra como UNA fila de indice y el detalle nace en el hermano:')
-      console.log('  db.md -> db-hechos.md / db-consultas.md      apex.md -> apex-recetas.md / apex-hechos.md')
-      console.log('  kove.md -> kove-hechos.md                     MEMORY.md -> memory/hechos/<nombre>.md')
+      console.log('Un aprendizaje nuevo entra como UNA fila de indice y el detalle nace en el archivo')
+      console.log('hermano que diga el `porque` de arriba (ej. memory/hechos/<nombre>.md).')
       console.log('Si de verdad estas reorganizando (moviendo secciones), repetí con --reorg.')
       salida = 1
     }

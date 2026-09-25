@@ -1,7 +1,7 @@
 // traza.js - CLI de `node agro.js traza`: reconstruye el arbol de delegacion de una sesion (o un
 // ticket) con el costo de cada nodo. NO instrumenta nada nuevo: lee lo que Claude Code y agro.js ya
-// escriben solos (jira/META/design-traza.md). Toda la logica de parseo vive en
-// scripts/lib/traza-core.js (puro); esto SOLO lee archivos, llama al core y formatea.
+// escriben solos. Toda la logica de parseo vive en scripts/lib/traza-core.js (puro); esto SOLO lee
+// archivos, llama al core y formatea.
 //
 // Uso: node agro.js traza [--ticket X] [--sesion UUID] [--json] [--vista arbol|timeline|rebotes]
 //      node agro.js traza --archivar [--sesion UUID]   copia los transcripts de subagente a

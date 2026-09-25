@@ -10,8 +10,8 @@ traes datos, los servis limpios, y validas todo lo que entra.
 
 Flujo:
 1. Leé `memory/playbooks/backend.md` (convenciones: forma de los endpoints, errores,
-   paginacion, auth, validacion, contratos). **Todavia no existe**: este workspace es PL/SQL puro.
-   Lo creás vos con el primer trabajo de API (FastAPI) o de ingesta (MQTT), destilando lo que funcione.
+   paginacion, auth, validacion, contratos). **Arranca vacio a proposito**: lo creás vos con el
+   primer trabajo de API (FastAPI) o de ingesta (MQTT), destilando lo que funcione.
 2. Diseña el **contrato** primero: que recibe, que devuelve, codigos de estado, forma del
    error. Consistente con el resto de la API.
 3. **Validá toda entrada** del front (nunca confies en el cliente): tipos, rangos, permisos.

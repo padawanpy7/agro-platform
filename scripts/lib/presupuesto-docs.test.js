@@ -49,11 +49,9 @@ test('el presupuesto cubre los documentos de arranque Y los playbooks', () => {
   assert.deepEqual(p.PRESUPUESTO.map((x) => x.archivo), [
     'AGENTS.md',
     'memory/MEMORY.md',
-    'jira/META/PROGRESO.md',
-    'memory/playbooks/db.md',
-    'memory/playbooks/apex.md',
     'memory/playbooks/lead.md',
-    'memory/playbooks/kove.md',
+    'memory/playbooks/backend.md',
+    'memory/playbooks/database.md',
   ])
 })
 
@@ -70,33 +68,33 @@ const core = p
 
 // --- delta: cuanto crecio, no cuanto mide -------------------------------------------------------
 test('un playbook que crece poco pasa', () => {
-  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/db.md', crecio: 2 }])
+  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/backend.md', crecio: 2 }])
   assert.strictEqual(r.ok, true)
 })
 
 test('justo en el tope pasa; una linea mas, no', () => {
-  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/db.md', crecio: 3 }]).ok, true)
-  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/db.md', crecio: 4 }]).ok, false)
+  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/backend.md', crecio: 3 }]).ok, true)
+  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/backend.md', crecio: 4 }]).ok, false)
 })
 
 test('volcar una seccion entera en un playbook FALLA, y se dice cual', () => {
-  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/apex.md', crecio: 22 }])
+  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/database.md', crecio: 22 }])
   assert.strictEqual(r.ok, false)
-  assert.deepStrictEqual(r.excedidos.map((f) => f.archivo), ['memory/playbooks/apex.md'])
+  assert.deepStrictEqual(r.excedidos.map((f) => f.archivo), ['memory/playbooks/database.md'])
   assert.ok(core.informeDelta(r).includes('+22'))
 })
 
 test('SACAR lineas nunca falla: podar siempre esta permitido', () => {
-  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/db.md', crecio: -80 }])
+  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/backend.md', crecio: -80 }])
   assert.strictEqual(r.ok, true)
   assert.ok(core.informeDelta(r).includes('-80'))
 })
 
 test('un archivo que no se toco no aparece en el informe', () => {
-  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/db.md', crecio: 1 }])
-  assert.deepStrictEqual(r.tocados.map((f) => f.archivo), ['memory/playbooks/db.md'])
-  assert.ok(core.informeDelta(r).includes('db.md'))
-  assert.ok(!core.informeDelta(r).includes('kove.md'))
+  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/backend.md', crecio: 1 }])
+  assert.deepStrictEqual(r.tocados.map((f) => f.archivo), ['memory/playbooks/backend.md'])
+  assert.ok(core.informeDelta(r).includes('backend.md'))
+  assert.ok(!core.informeDelta(r).includes('database.md'))
 })
 
 test('sin cambios, el informe lo dice en vez de quedarse mudo', () => {
@@ -104,15 +102,15 @@ test('sin cambios, el informe lo dice en vez de quedarse mudo', () => {
 })
 
 test('el mensaje del que se paso nombra el archivo hermano, que es la accion', () => {
-  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/kove.md', crecio: 30 }])
-  assert.ok(core.informeDelta(r).includes('kove-hechos.md'), 'el porque del presupuesto dice a donde va')
+  const r = core.evaluarDelta([{ archivo: 'memory/playbooks/database.md', crecio: 30 }])
+  assert.ok(core.informeDelta(r).includes('database-hechos.md'), 'el porque del presupuesto dice a donde va')
 })
 
 // --- el maximo es un PARAMETRO, con tres niveles ------------------------------------------------
 test('sin nada, cada documento usa el default del proyecto', () => {
   assert.strictEqual(core.CRECIMIENTO_MAXIMO, 3)
-  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/db.md', crecio: 3 }]).ok, true)
-  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/db.md', crecio: 4 }]).ok, false)
+  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/backend.md', crecio: 3 }]).ok, true)
+  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/backend.md', crecio: 4 }]).ok, false)
 })
 
 test('un documento puede traer su propio maximo, sin tocar a los demas', () => {
@@ -133,8 +131,8 @@ test('el tope de la corrida pisa al del documento y al default', () => {
 })
 
 test('tope 0 es un tope, no "sin tope": ninguna linea de mas', () => {
-  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/db.md', crecio: 1 }], { tope: 0 }).ok, false)
-  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/db.md', crecio: 0 }], { tope: 0 }).ok, true)
+  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/backend.md', crecio: 1 }], { tope: 0 }).ok, false)
+  assert.strictEqual(core.evaluarDelta([{ archivo: 'memory/playbooks/backend.md', crecio: 0 }], { tope: 0 }).ok, true)
 })
 
 test('el informe dice el maximo que se aplico, no uno generico', () => {

@@ -81,7 +81,7 @@ test('citar un archivo que no existe manda al proximo agente a buscar humo', () 
 })
 
 test('un placeholder con <> no cuenta como referencia rota', () => {
-  const h = a.referenciasColgadas('en `jira/<T>/algo.md`', { existeRuta: nada })
+  const h = a.referenciasColgadas('en `cambios/<T>/algo.md`', { existeRuta: nada })
   assert.equal(h.length, 0)
 })
 

@@ -11,26 +11,21 @@
 // Rompe a proposito (decision del dueño, 12/08): "mejor que rompa, y lo arreglamos ya". Un aviso
 // que no frena se saltea; y el loop es la herramienta con la que se construye todo lo demas.
 
-// Los topes viven ACA y no en cada tool: son una decision del proyecto, no un detalle de `check`.
+// Este default es solo el FALLBACK para un repo que todavia no declaro `presupuesto:` en su
+// project.yml: `presupuesto.js` siempre prefiere el del proyecto y solo cae aca si no hay ninguno.
+// Por eso los nombres de acá son GENERICOS y no los de ningun proyecto en particular -clavar los
+// de un proyecto real fue justo el problema que esta tool vino a resolver: llevarla a otro repo
+// arrastraba archivos que ahi no existen (ver el comentario de `presupuesto.js`).
 const PRESUPUESTO = [
   { archivo: 'AGENTS.md', tope: 500, porque: 'se lee en CADA tarea; lo que no aplica a todas va a una skill o playbook' },
   { archivo: 'memory/MEMORY.md', tope: 200, porque: 'es un INDICE de punteros; lo de un ticket va a su aprendizajes.md' },
-  { archivo: 'jira/META/PROGRESO.md', tope: 150, porque: 'es el puente entre sesiones: las entradas viejas se archivan por mes' },
 
-  // Los PLAYBOOKS entran el 25/08. Estaban afuera y eran el gasto fijo mas grande del loop:
-  // `db.md` llego a 1381 lineas (26.027 tokens) y `AGENTS.md` manda leerlo ANTES de tocar cualquier
-  // objeto de la base -o sea que una tarea de BD arrancaba con ese peso, cada vez-. Medir tres
-  // archivos mientras 3.449 lineas de playbooks quedan sin techo es el mismo agujero que motivo
-  // esta tool: un techo que nadie mide no es un techo.
-  //
-  // El tope de cada uno esta puesto un poco arriba de lo que mide HOY, no en un ideal: sirve para
-  // que no vuelva a crecer, no para dejarlo en rojo desde el dia uno. Cuando uno se pase, la salida
-  // dice que sacar; para db.md el camino ya esta hecho -lo consultable a `db-hechos.md` y
-  // `db-consultas.md`, con un indice de una linea en el playbook-.
-  { archivo: 'memory/playbooks/db.md', tope: 500, porque: 'se lee antes de tocar CUALQUIER objeto: lo consultable va a db-hechos.md / db-consultas.md / memory-hechos' },
-  { archivo: 'memory/playbooks/apex.md', tope: 520, porque: 'se lee antes de tocar una pantalla: las recetas van a apex-recetas.md y los datos a apex-hechos.md' },
+  // Los PLAYBOOKS entran el 25/08: son el gasto fijo mas grande del loop cuando un agente los
+  // manda leer ANTES de tocar su area, y sin techo crecen sin limite -un techo que nadie mide no
+  // es un techo. Los nombres de aca son de ejemplo: cada proyecto declara los suyos.
   { archivo: 'memory/playbooks/lead.md', tope: 320, porque: 'lo lee el lead al arrancar y al cerrar CADA sesion' },
-  { archivo: 'memory/playbooks/kove.md', tope: 400, porque: 'se lee al cargar horas; los casos medidos y los gotchas de una tool van a kove-hechos.md' },
+  { archivo: 'memory/playbooks/backend.md', tope: 400, porque: 'se lee antes de tocar el backend; los casos medidos van a un archivo hermano' },
+  { archivo: 'memory/playbooks/database.md', tope: 400, porque: 'se lee antes de tocar el esquema; los casos medidos van a database-hechos.md' },
 ]
 
 // `medidos` es [{ archivo, lineas }]. Devuelve el veredicto y, por archivo, cuanto sobra.
@@ -110,8 +105,8 @@ function informeDelta(resultado) {
 // --- subir un techo es una salida VALIDA, y se paga con un motivo -------------------------------
 //
 // Hasta el 31/08 la tool trataba el techo como sagrado: cuando saltaba, el unico consejo era sacar
-// contenido. Ese dia se rompio TRES veces -db.md 519/500, apex.md 523/520, MEMORY.md +34- y las
-// tres se podo a las apuradas en medio de un merge, que es la peor situacion para decidir que se
+// contenido. Ese dia se rompio TRES veces en el repo de origen -dos playbooks y MEMORY.md- y las
+// tres se podaron a las apuradas en medio de un merge, que es la peor situacion para decidir que se
 // tira. deepseek-harness tiene el mismo gate y contempla lo que a nosotros nos faltaba: "raise a
 // ceiling when the required content genuinely needs more space".
 //

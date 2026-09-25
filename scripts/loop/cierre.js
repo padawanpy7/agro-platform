@@ -8,8 +8,8 @@
 //
 // SOLO LEE. No commitea, no pushea, no mergea: dice QUE falta y con que comando se arregla, y sale
 // 1 si el cierre esta incompleto (sirve de compuerta). Todo lo que mide es local -git y archivos-,
-// asi que corre en menos de un segundo y no necesita ni base ni red. Lo que si necesita conexion
-// -los page locks de APEX- se recuerda al final, sin pretender chequearlo.
+// asi que corre en menos de un segundo y no necesita ni base ni red. Lo que si necesita conexion se
+// recuerda al final, sin pretender chequearlo.
 //
 // Uso:
 //   node agro.js cierre                  la rama actual
@@ -49,7 +49,7 @@ const flag = (nombre) => {
 
 const RAMA = g.ramaActual() || '(detached)'
 // `main` cierra el ticket META (ver features.js). El regex pide CLAVE-numero y META no lo
-// cumple a proposito: es el unico ticket sin Jira, porque el cliente somos nosotros.
+// cumple a proposito: es el unico ticket sin clave externa, porque el cliente somos nosotros.
 const TICKET = flag('--ticket') || (/^[A-Z]+-\d+$/.test(RAMA) ? RAMA : (RAMA === 'main' ? 'META' : null))
 // La lista REAL de tools, del disco. Con esto el chequeo de comandos muertos deja de conocer solo
 // los tres patrones de la migracion de julio y caza cualquier `node agro.js <tool>` que ya no exista.
@@ -57,10 +57,10 @@ const TICKET = flag('--ticket') || (/^[A-Z]+-\d+$/.test(RAMA) ? RAMA : (RAMA ===
 // inventar un verde-.
 const RAIZ = path.join(__dirname, '..', '..')
 //
-// Los ALIAS entran tambien: son invocaciones validas y NO viven en el disco. `lint` es el nombre de
-// uso de `plsql-lint` y esta escrito asi en AGENTS.md, en project.yml y en la cabeza de todos; sin
-// esto el gate lo marcaba como tool inexistente. Salio al probar el chequeo contra el repo REAL, no
-// contra sus tests: un gate nuevo hay que ejercitarlo con los archivos de verdad.
+// Los ALIAS entran tambien: son invocaciones validas y NO viven en el disco. Sin esto, el gate
+// marcaba cualquier alias declarado en `agro.js` como tool inexistente. Salio al probar el chequeo
+// contra el repo REAL, no contra sus tests: un gate nuevo hay que ejercitarlo con los archivos de
+// verdad.
 let TOOLS = null
 try {
   TOOLS = new Set(require('../lib/tools-registro').descubrirTools(RAIZ).keys())
@@ -83,8 +83,8 @@ const sinPushear = tieneRemoto ? Number(g.git('rev-list', '--count', `origin/${R
 chequeos.push(core.chequearPusheado(RAMA, sinPushear, tieneRemoto))
 
 // --- 2b. main tambien: una mejora de loop sin pushear no le llega a nadie --------------------
-// Se mira el repo, no este worktree: main casi siempre esta en otro (regla del dueño, ver
-// [[main-con-commits-se-pushea-siempre]]).
+// Se mira el repo, no este worktree: main casi siempre esta en otro (regla del dueño: main con
+// commits se pushea siempre).
 if (RAMA !== 'main' && g.existeRama('main')) {
   const mainSinPushear = Number(g.git('rev-list', '--count', 'origin/main..main') || 0)
   chequeos.push(core.chequearPusheado('main', mainSinPushear, true))
@@ -160,7 +160,7 @@ if (!TICKET) {
   const fechas = [...texto.matchAll(/^##\s+(\d{4}-\d{2}-\d{2})/gm)].map((m) => m[1])
   // Se le pasa el CONTENIDO: el chequeo mide que la entrada de hoy DIGA algo, no solo que
   // exista con la fecha correcta.
-  chequeos.push(core.chequearProgreso(rutaProgreso, fechas, HOY, texto))
+  chequeos.push(core.chequearProgreso(rutaProgreso, fechas, HOY, texto, carpeta.replace(/\\/g, '/')))
 }
 
 // --- 6. los docs del ticket no citan un loop muerto -----------------------------------------
@@ -171,14 +171,12 @@ function archivosDeTexto(dir) {
     try { entradas = fs.readdirSync(d, { withFileTypes: true }) } catch { return }
     for (const e of entradas) {
       const p = path.join(d, e.name)
-      // Lista PROPIA, a proposito distinta de la de los gates (estructura-cambio.js): este
-      // chequeo mide PROSA (que un .md/.js/.sql no cite una tool muerta), no sintaxis PL/SQL ni
-      // convenciones de codigo, asi que el criterio de que carpeta excluir es otro. backup/,
-      // app/ y objetos/ son copias verbatim (fuente viva, exports de APEX, snapshots de objetos):
-      // su contenido no es prosa nuestra y dispara falsos por todos lados -los gates SI gatean
-      // app/ y objetos/ (son PL/SQL/APEX de verdad) y no excluyen node_modules/ (no existe en un
-      // change). docs/, entrega/ y PASE_* SI quedan adentro aca: son justamente donde vive la
-      // prosa del ticket (el ER, notas del analista) que puede citar una tool que ya no existe.
+      // Lista PROPIA de exclusiones: este chequeo mide PROSA (que un .md/.js/.sql no cite una
+      // tool muerta), no sintaxis ni convenciones de codigo. backup/, app/ y objetos/ son
+      // copias verbatim de otra fuente (codigo generado, snapshots): su contenido no es prosa
+      // nuestra y dispara falsos por todos lados. docs/, entrega/ y PASE_* SI quedan adentro aca:
+      // son justamente donde vive la prosa del ticket (notas del analista) que puede citar una
+      // tool que ya no existe.
       if (e.isDirectory()) {
         if (['backup', 'app', 'node_modules', 'objetos'].includes(e.name)) continue
         caminar(p)
@@ -195,8 +193,8 @@ if (carpeta && fs.existsSync(carpeta)) {
     // HECHO_CUANDO.md queda AFUERA de este chequeo, y es la unica excepcion. Todos los demas docs
     // describen lo que ES; ese describe lo que TIENE QUE LLEGAR A SER, y el loop pide escribirlo
     // ANTES de construir. Un criterio para una tool que todavia no existe es la definicion del
-    // trabajo, no una instruccion rota: el 01/09 el gate marco `node agro.js kove-arranque` -escrito
-    // esa manana como criterio de HN-ARRANQUE-TRAMO- y exigir que la tool exista primero es
+    // trabajo, no una instruccion rota: en el repo de origen el gate marco como muerta una tool
+    // escrita esa misma mañana como criterio de una ficha, y exigir que la tool exista primero es
     // exactamente lo contrario de escribir el criterio antes.
     //
     // No se pierde nada: si el criterio nombra una tool que no existe, `aceptacion` lo corre igual
@@ -215,7 +213,7 @@ if (carpeta && fs.existsSync(carpeta)) {
 if (carpeta) {
   const ruta = path.join(carpeta, 'PREGUNTAS.md')
   const contenido = fs.existsSync(ruta) ? fs.readFileSync(ruta, 'utf8') : null
-  chequeos.push(core.chequearPreguntas(contenido))
+  chequeos.push(core.chequearPreguntas(contenido, carpeta.replace(/\\/g, '/')))
 
   // La regla de parada del ticket. Se corre la tool en vez de repetir su logica aca: es la misma
   // que se usa a mano durante la tanda, asi que el cierre no puede dar un veredicto distinto del
@@ -254,52 +252,6 @@ if (carpeta) {
   let modos = null
   try { modos = JSON.parse(f.stdout) } catch { modos = null }
   chequeos.push(core.chequearModosDeFalla(modos))
-}
-
-// --- Kove: el cierre MIRA lo que hay para entregar, y NO lo mueve -----------------------------
-// El 01/09 este barrido corria con `--guardar` en cada cierre. A las 14:18, con el tramo de la
-// tarde EN CURSO, paso la tarea de ICC-124 a Entregado: la fila salio de la grilla de hoy, y
-// `kove-actividad cerrar` -que busca la fila en esa grilla- se quedo sin donde impactar. A las
-// 17:50 no habia nada que cerrar y la actividad hubo que cerrarla a mano.
-//
-// El orden correcto es CERRAR y despues ENTREGAR, nunca al reves, y quien lo garantiza es
-// `kove-jornada` (cierra la actividad, carga las horas y recien ahi entrega). Un cierre del repo
-// no tiene forma de saber si el tramo del dia termino: por eso ya no mueve nada.
-//
-// Decision del dueño (02/09): "eliminar los cron que mueven tareas, ya nos mordio y prefiero no
-// tener mas" y "el problema es que pasas a entregado antes de cerrar y ahi se rompe porque ya no
-// encontras". La tarea programada de Windows se borro el mismo dia; esto es la otra mitad.
-//
-// Queda el AVISO, que es lo que de verdad servia: decir cuantas hay para entregar y el comando.
-// `entregar` sin `--guardar` es EN SECO: lee la grilla y no toca nada.
-if (!args.includes('--sin-kove')) {
-  console.log('')
-  console.log('==> Kove: que hay para entregar (solo mira, NO mueve)')
-  const b = spawnSync(process.execPath, ['agro.js', 'kove-actividad', 'entregar', '--hasta-hoy'],
-    { encoding: 'utf8', maxBuffer: g.CAPACIDAD })
-  const salida = String(b.stdout || '') + String(b.stderr || '')
-  for (const l of salida.trim().split('\n').slice(-12)) if (l.trim()) console.log('   ' + l)
-  const nadaQueEntregar = /no hay ninguna tarea vencida para entregar/i.test(salida)
-  if (b.status !== 0) {
-    chequeos.push({
-      id: 'kove-barrido',
-      estado: 'aviso',
-      titulo: 'no se pudo mirar Kove: puede haber tareas por entregar y no lo sabemos',
-      detalle: ['correlo solo para ver el motivo: node agro.js kove-actividad entregar --hasta-hoy'],
-    })
-  } else if (!nadaQueEntregar) {
-    chequeos.push({
-      id: 'kove-barrido',
-      estado: 'aviso',
-      titulo: 'hay tareas para pasar a Entregado, y el cierre NO las mueve',
-      detalle: [
-        'primero cerra la actividad del tramo, y recien despues entrega:',
-        '  node agro.js kove-actividad cerrar <TICKET> --hice "..." --guardar',
-        '  node agro.js kove-actividad entregar --hasta-hoy --guardar',
-        'entregar antes de cerrar saca la fila de la grilla y la actividad queda sin poder cerrarse.',
-      ],
-    })
-  }
 }
 
 // --- 8..12. los gaps que hasta hoy solo encontraba la simulacion a mano ------------------------
@@ -362,7 +314,7 @@ if (carpeta && fs.existsSync(carpeta)) {
   chequeos.push(core.chequearDiasSinEntrada(diasConCommits(RAMA, desde, carpeta), fechasEscritas, DIAS))
 
   // Los HN-* viven en el ledger del META, sea cual sea el ticket que los nombre.
-  const LEDGER_LOOP = path.join('jira', 'META', 'FEATURES.json')
+  const LEDGER_LOOP = cambios.archivoDelLoop('FEATURES.json')
   let ledgerHN = null
   try {
     const j = JSON.parse(fs.readFileSync(LEDGER_LOOP, 'utf8'))
@@ -460,14 +412,12 @@ console.log(`\n  ${r.ok} ok, ${r.faltan} falta/n, ${r.avisos} aviso/s`)
 
 // Lo que esta tool NO puede ver, y por eso no simula ver.
 console.log('\n  Esto no lo mide (necesita la BD, o criterio):')
-console.log('    - page locks de APEX .......... node agro.js apex-lock mias')
-console.log('    - el repo contra la base ...... node agro.js db-drift <sql>  /  node agro.js apex-drift <export>')
 console.log('    - el ledger del ticket ........ node agro.js features' + (TICKET ? ` ${TICKET}` : ''))
 console.log('    - lo aprendido a memory/ y al playbook, y corregir lo que quedo falso')
 console.log('    - los transcripts de subagente de esta sesion, antes de que Temp los limpie:')
 console.log('        node agro.js traza --archivar')
 console.log('      (traza los lee para reconstruir el arbol de delegacion; sin archivar, el')
-console.log('       insumo dura lo que dure Temp -ver jira/META/design-traza.md-)')
+console.log('       insumo dura lo que dure Temp)')
 // Este es el unico que caza un archivo que MIENTE. Los chequeos de arriba miden que los
 // documentos existan y esten versionados, no que lo que dicen siga siendo cierto. Va ULTIMO y
 // con mayusculas porque es el que mas se saltea, y con el pedido explicito de REPORTARLO: sin el
@@ -481,7 +431,6 @@ console.log('         - lo que solo se entiende habiendo estado en la conversaci
 console.log('         - una entrada que dice lo CONTRARIO de lo que paso (el texto, no las cifras)')
 console.log('         - una decision que se tomo en el chat y nunca bajo a PREGUNTAS.md')
 console.log('       Despues DECIR QUE SE ENCONTRO, aunque sea "nada".')
-console.log('       Detalle y que suele aparecer: memory/playbooks/lead.md, seccion del cierre.')
 
 if (!r.completo) {
   console.log('\nEl cierre esta INCOMPLETO: arregla lo que dice FALTA y volve a correr.')

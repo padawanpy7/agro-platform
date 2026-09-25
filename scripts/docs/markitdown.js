@@ -5,11 +5,10 @@
 //
 // Existe como tool -y no como una linea de bash a mano- porque el binario es la parte dificil:
 // este equipo no tiene Python usable en el PATH (`python3` es el stub de la Microsoft Store, que
-// existe, no ejecuta nada y sale 0). El interprete bueno es el portable de ../tools/python-*-embed-*/,
-// el mismo que usa apex-bootstrap. Ver [[un-binario-del-path-puede-ser-un-stub]].
+// existe, no ejecuta nada y sale 0). El interprete bueno es el portable de ../tools/python-*-embed-*/.
 //
-// El flujo tipico: los adjuntos de un Jira se convierten a .md y el binario se borra
-// (no se versiona lo pesado y re-descargable). Ver [[adjuntos-jira-convertir-y-borrar]].
+// El flujo tipico: un adjunto pesado (PDF, Word, Excel) se convierte a .md y el binario se borra
+// (no se versiona lo pesado y re-descargable).
 
 const fs = require('fs')
 const path = require('path')
@@ -53,7 +52,7 @@ if (!py) {
 }
 
 // -o en vez de redirigir: con la redireccion, las figuras que markitdown extrae con pdfminer +
-// ImageWriter no encuentran donde escribir. Ver [[markitdown-python-portable]].
+// ImageWriter no encuentran donde escribir.
 const r = spawnSync(py, ['-m', 'markitdown', entrada, '-o', salida], { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 })
 
 if (r.status !== 0) {

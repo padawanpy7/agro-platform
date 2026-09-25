@@ -4,16 +4,17 @@
 // ("no test specified") y check.js no lo invocaba en ningun lado -un test que nadie corre es lo
 // mismo que no tener tests, y asi llego un test falso verde a main sin que ningun gate lo note.
 //
-// NO CONFUNDIR con `plsql-test` (scripts/db/plsql-test.js): eso corre tests de PL/SQL CONTRA LA
-// BASE real via SQLcl, necesita .env y conectividad. Esto corre los tests de JS del loop
-// (scripts/lib/*.test.js), sin credenciales ni conectividad -por eso, y solo esto, entra en
-// `check`, que tiene que poder correr en una maquina sin credenciales (AGENTS.md §10).
+// NO CONFUNDIR con los tests que corren CONTRA infraestructura real (base de datos, navegador):
+// esos necesitan .env y conectividad y viven en `project.yml -> commands.test` cuando el
+// proyecto los declare. Esto corre los tests de JS del loop (scripts/lib/*.test.js), sin
+// credenciales ni conectividad -por eso, y solo esto, entra en `check`, que tiene que poder
+// correr en una maquina sin credenciales (AGENTS.md §10).
 //
 // Uso: node agro.js test-js
 //
-// Que NO entra: los e2e de Playwright (`apex-e2e`, necesitan navegador) ni `plsql-test`
-// (necesita la BD). Esa division es la politica del proyecto (AGENTS §10): estaticos en check,
-// BD/navegador en el verifier.
+// Que NO entra: los tests end-to-end que necesitan navegador o base de datos real. Esa division
+// es la politica del proyecto (AGENTS §10): estaticos en check, infraestructura real en el
+// verifier.
 //
 // --test-isolation=none (node 24): sin esto, el runner arranca UN PROCESO POR ARCHIVO -medido
 // (work/loop-tests-en-check.md): ~700ms de arranque por archivo, 37 archivos, ~25s de puro
@@ -34,7 +35,7 @@ const args = process.argv.slice(2)
 if (args.includes('--help') || args.includes('-h')) {
   console.log('Uso: node agro.js test-js')
   console.log('  corre `node --test` sobre scripts/lib/*.test.js: unidad pura, sin BD ni navegador.')
-  console.log('  no confundir con plsql-test (tests de PL/SQL contra la base real).')
+  console.log('  no confundir con los tests que corren contra infraestructura real (BD, navegador).')
   process.exit(0)
 }
 

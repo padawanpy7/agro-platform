@@ -3,10 +3,9 @@
 //
 // Uso: node agro.js control-negativo [--listar]
 //
-// Por que existe: los controles negativos ya estaban -uno por gate, en
-// `jira/META/scripts/*-control-negativo.js`- pero sueltos: habia que acordarse de
-// cual existe y correrlo a mano. Un control que nadie corre no protege nada, igual que el gate que
-// viene a probar.
+// Por que existe: los controles negativos ya estaban -uno por gate, en el `scripts/` del change
+// del loop- pero sueltos: habia que acordarse de cual existe y correrlo a mano. Un control que
+// nadie corre no protege nada, igual que el gate que viene a probar.
 //
 // Un gate verde no prueba que mire: prueba que no encontro nada, que es distinto. Los tests de
 // unidad prueban la REGLA; esto prueba la MEDIDA contra el repo real, que es donde los gates se

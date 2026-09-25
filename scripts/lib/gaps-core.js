@@ -58,8 +58,8 @@ function candidatas(informe = {}, existentes = [], { cuantas = CUANTAS, tools = 
   const ya = new Set(existentes)
   // Una falla de una tool que YA NO EXISTE tampoco es un defecto de hoy: no se puede reproducir ni
   // arreglar, y nunca va a volver a correr en verde -asi que `sigueRoto` la daria por viva para
-  // siempre-. Salio el 09/09/2026: proponia fichar `kove-cargar-horas` dos veces, una tool podada
-  // el 04/09. Si no se pasa la lista de tools, no se filtra: sin dato no se descarta nada.
+  // siempre-. Salio el 09/09/2026: proponia fichar dos veces una tool de accion podada el 04/09.
+  // Si no se pasa la lista de tools, no se filtra: sin dato no se descarta nada.
   const existeTool = (t) => !tools || !t || tools.has(t)
   const out = []
   const agregar = (f) => { if (!ya.has(f.id) && !out.some((x) => x.id === f.id)) out.push(f) }

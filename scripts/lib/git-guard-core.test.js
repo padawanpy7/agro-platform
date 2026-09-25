@@ -7,7 +7,7 @@ const { revisar } = require('./git-guard-core')
 const PIDEN = [
   'git reset --hard',
   'git reset --hard origin/main',
-  'git -C C:/bffamiliar/bf-db-workspace-ICC-124 reset --hard HEAD~1',
+  'git -C C:/repos/agro-platform-ICC-124 reset --hard HEAD~1',
   'git -c core.quotepath=false reset --hard',
   'git clean -fd',
   'git clean -xdf',

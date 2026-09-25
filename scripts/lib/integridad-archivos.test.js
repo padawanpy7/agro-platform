@@ -56,7 +56,7 @@ test('un json roto devuelve el motivo', () => {
 test('el caso real del 26/08: FEATURES.json con marcadores da UN hallazgo, el de conflicto', () => {
   // Estaba roto por las dos razones a la vez. Se reporta la causa, no el sintoma: arreglar el
   // conflicto arregla el JSON.
-  const h = hallazgos([{ ruta: 'jira/META/FEATURES.json', contenido: CONFLICTO }])
+  const h = hallazgos([{ ruta: 'cambios/META/FEATURES.json', contenido: CONFLICTO }])
   assert.equal(h.length, 1)
   assert.equal(h[0].tipo, 'conflicto')
 })

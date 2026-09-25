@@ -7,7 +7,7 @@ when: traer main a una rama de ticket atrasada; resolver un merge o rebase con c
 
 Un conflicto se resuelve por la **intención** de cada cambio, no por la carpeta donde vive el archivo.
 Nace del 14/09/2026: cuatro ramas con 55-77 conflictos cada una, y la regla por ubicación pisó un
-arreglo real ([[archivo-de-otro-ticket-puede-ser-de-la-rama]]). Técnica tomada de
+arreglo real (un archivo de otro ticket puede ser en verdad de la rama). Técnica tomada de
 `mattpocock/skills` (`resolving-merge-conflicts`); detalle en `docs/research-2026-09-14-10-repos-fazt.md`.
 
 ## Pasos
@@ -35,8 +35,8 @@ arreglo real ([[archivo-de-otro-ticket-puede-ser-de-la-rama]]). Técnica tomada 
    diga que es de otro.
 
 5. **Si la rama mejoró el loop y main no lo tiene, eso va a main primero**, una sola vez para todas las
-   ramas; recién después se trae main a cada rama. Así no quedan cuatro versiones del loop
-   ([[promover-por-copia-pisa-la-rama]]).
+   ramas; recién después se trae main a cada rama. Promoverlo por copia en cada rama, en vez de una
+   vez a main, deja cuatro versiones del loop divergiendo solas.
 
 6. **Controlar pérdidas después del merge.** Para cada archivo que la rama cambió de verdad, su versión
    (normalizando los renames de layout: `openspec/changes` -> `cambios`, `harness` -> `loop`) está en el

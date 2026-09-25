@@ -57,7 +57,7 @@
 5. **Busca antes de escribir.** Entiende el código antes de tocarlo. El grafo de relaciones REAL
    del esquema sale de `information_schema`/`pg_catalog`, nunca de grepear texto de migraciones.
    Para el resto (Python, TS, scripts del loop), `Grep`/`Read` alcanza: no hay MCP de código
-   instalado (ver `docs/herramientas.md`).
+   instalado ni configurado para este proyecto.
 6. **Pocas herramientas, afiladas.** Un agente con 30 tools elige peor que uno con 8
    (lección de Vercel con su agente: la superficie de tools degrada el razonamiento). Cada
    rol carga **solo lo que necesita** (mira su frontmatter). Las herramientas nicho van
@@ -118,14 +118,16 @@ completo en §7).
 
 - Sub-tareas independientes: lanzá especialistas **en paralelo**.
 - Cada agente devuelve **datos/conclusión**, no relata el proceso.
-- Las cinco piezas de una vuelta -trigger, goal, verification, **stopping rule**, memory-: [[loop-spec-cinco-piezas]].
+- Toda vuelta tiene cinco piezas -trigger, goal, verification, **stopping rule** y memory-; sin
+  alguna, no es un loop controlado (Regla 9).
 - Lo que se decide y por qué -> `memory/MEMORY.md` (una línea por hecho, ver §6).
 
 ### Cierre de tanda (formato obligatorio del reporte)
 
-El **formato de cierre de cada tanda** (bloques Decisiones/Preguntas/Proximas tareas, con sus
-reglas) vive en `memory/playbooks/lead.md`. Es lectura del **lead**: siempre, antes de reportar
-al cerrar una tanda.
+Todo cierre de tanda va en tres bloques, sin mezclarlos: **Decisiones** (qué se resolvió y por
+qué), **Preguntas** (qué quedó abierto) y **Próximas tareas**. El **lead** los completa siempre
+antes de reportar; los patrones que funcionen se destilan a `memory/playbooks/lead.md` (hoy
+vacío, crece con lo aprobado).
 
 ### Modos: escala la ceremonia a la tarea
 La disciplina cuesta; aplicala según el riesgo/tamaño. El **lead elige el modo** al empezar.
@@ -139,10 +141,9 @@ La disciplina cuesta; aplicala según el riesgo/tamaño. El **lead elige el modo
 Ante la duda, subí un escalón, no bajes. Así lo trivial no paga ceremonia y lo riesgoso no
 queda corto: la sobre-ingeniería y el overhead dejan de ser un problema.
 
-El **protocolo de sesión** para builds largos multi-sesión (checklist de arranque con los gates
-como baseline, cierre por feature, los dos niveles de cierre -checkpoint y final-, y el ledger
-`FEATURES.json` por ticket) está en `memory/playbooks/lead.md`, junto con el formato de cierre de
-tanda. Léelo el lead **al arrancar y al cerrar** una sesión que abarca más de una tanda.
+Para builds largos multi-sesión, el lead arranca y cierra con los gates como baseline (`check`
+en verde antes de tocar nada) y cierra por feature contra el `FEATURES.json` de ese ticket (§5).
+Los patrones de sesión que se aprueben se destilan a `memory/playbooks/lead.md`, hoy vacío.
 
 Por qué este protocolo no es burocracia sino un **AI loop** (Objetivo -> Contexto -> Acción ->
 Verificación -> Memoria) y qué pieza del loop cubre cada paso: `docs/el-loop-del-harness.md`.
@@ -157,37 +158,36 @@ Léelo para entender el fundamento, no para ejecutar una tarea puntual.
 | `.claude/agents/` | definición de los roles (lead/implementer/verifier). |
 | `work/` | salida de cada tarea: plan, hallazgos, veredictos. **Efímero y NO versionado** (`.gitignore`), sin excepciones desde el 18/08: el puente del loop se mudó a su propio change (fila de abajo). |
 | `cambios/<id>/PROGRESO.md` | **la bitácora de ESE ticket**: el puente entre sesiones de la tarea. Vive con el ticket, no en un archivo compartido. |
-| `cambios/META/` | **el loop tratado como un ticket** (18/08): el cliente somos nosotros. Su `PROGRESO.md` es el puente entre sesiones de lo que se hace en `main` y sirve a todos los tickets -solo las **dos entradas más nuevas**; el resto se archiva en `progreso/<AAAA-MM>.md`-, su `FEATURES.json` es el backlog del loop y su `PREGUNTAS.md` lo que quedó abierto. `features` y `cierre` lo deducen solos parados en `main`. |
+| `cambios/META/` | **el loop tratado como un ticket** (18/08): el cliente somos nosotros. Su `PROGRESO.md` es el puente entre sesiones de lo que se hace en `main` y sirve a todos los tickets -solo las **dos entradas más nuevas**; el resto se archiva en `progreso/<AAAA-MM>.md`-. Si suma un ledger, es un `FEATURES.json` con el mismo formato que el de cualquier otro ticket (fila de abajo); `features` y `cierre` lo deducen solos parados en `main`. |
 | `memory/MEMORY.md` | memoria persistente entre sesiones. Índice de hechos durables. |
-| `memory/playbooks/` | best practices por disciplina (ui/backend/db/lead). Crecen con el uso. |
+| `memory/playbooks/` | best practices por disciplina (ui-designer/backend/database/lead). Crecen con el uso. |
 | `skills/` | skills cargadas por necesidad + `REGISTRY.md` (sdd, tdd). |
-| `cambios/` | cambios (`changes/<id>/`) del flujo SDD, uno por ticket. |
+| `cambios/` | cambios (`cambios/<id>/`) del flujo SDD, uno por ticket. |
 | `cambios/<id>/scripts/` | utilitarios de esa tarea (setup/corrida/verificación contra la BD). Van **versionados**: el scratchpad de la sesión es efímero y se pierde. |
 | `cambios/<id>/tests/` | **los tests de ese cambio** (unidad, integración y e2e de pantalla). No hay carpeta de tests del loop: cada prueba vive con la tarea que la pidió. Los del loop son `scripts/lib/*.test.js` y los corre `test-js`. |
 | `cambios/<id>/entrega/` | **lo que se le da a quien recibe la tarea**, y nada más: `manual-entrega.md` (qué se hizo, qué instalar y en qué orden, cómo probarlo), `evidencia-pruebas.md` (una captura por caso de uso) y sus dos PDF. **No existe hasta que hace falta**: la crea `md-a-pdf` (`mkdir -p`), no el scaffold. La evidencia de pruebas con capturas se arma cuando exista el helper e2e del front (ver `desarrollo/revision-bf-db-workspace.md`). Se versionan los `.md`; los `.pdf` y `capturas/` van al `.gitignore` porque se regeneran con un comando. Es carpeta aparte de `docs/` a propósito: ahí adentro está **solo** el paquete de entrega, sin el ER ni las specs de trabajo. |
 | `scripts/lib/` | **librerías**: lógica pura que se importa, sin `argv` ni prints (por eso se testea con `node --test` al lado, en `*.test.js`). Cada `*.js` tiene su `*.test.js` al lado. |
-| `docs/` | documentos **durables**: docs externas convertidas con markitdown, y decisiones de fondo que sobreviven a la tarea que las produjo (ej. `auditoria-loop.md`). |
+| `docs/` | documentos **durables**: docs externas convertidas con markitdown, y decisiones de fondo que sobreviven a la tarea que las produjo (ej. `el-loop-del-harness.md`). |
 
-**Estructura de un change** (la arranca `node agro.js task-start` y se completa a medida que la tarea avanza).
-Cada archivo nuevo entra por su carpeta; en la raíz del change vive solo el canon de OpenSpec:
+**Estructura de un change** (la arranca `node agro.js cambio-nuevo` y se completa a medida que
+la tarea avanza). Cada archivo nuevo entra por su carpeta; en la raíz del change vive solo lo
+que crea `cambio-nuevo`.
 
 | Dentro de `cambios/<id>/` | Qué |
 |---|---|
-| `README.md` `proposal.md` `design.md` `tasks.md` `hallazgos.md` `FEATURES.json` | el SDD del cambio y su ledger. Nada más va en la raíz. |
-| `sql/` | **lo que se despliega**: objetos (`sql/PACKAGES/`, `PROCEDURES/`, ...) y scripts de datos/DDL que van a la base. |
-| `backup/` | fuente inicial de cada objeto que se pisó (la deja `db-compilar` la primera vez y nunca la pisa). |
-| `data/` | evidencia de DML (`cambios-datos.md`, §1.9) y seeds de datos. |
+| `proposal.md` `design.md` `tasks.md` `HECHO_CUANDO.md` `FEATURES.json` | el SDD del cambio y su ledger, los crea `cambio-nuevo`. Nada más va en la raíz. |
+| `sql/` | **lo que se despliega**: las migraciones de Postgres (up/down) y scripts de datos/DDL que van a la base. |
+| `data/` | evidencia de escritura de datos (qué cambió y por qué) y seeds. |
 | `docs/` | material del cambio: el modelo de datos, notas de campo, papers y manuales de sensores convertidos a md con `markitdown`. |
 | `scripts/` | utilitarios **de esta tarea**. Lo genérico va a `scripts/` de la raíz: cuando una tool genérica lo cubre, el script por-cambio se borra en vez de quedar como copia vieja. |
 
-**Por qué `work/` no se versiona**: ensayo completo en `docs/work-no-se-versiona.md`. Leelo si
-dudás si algo va a `work/` o a un lugar durable; la regla corta: **si mañana puede ser falso, no
-va a git.**
+**Por qué `work/` no se versiona**: si dudás si algo va a `work/` o a un lugar durable, la regla
+corta manda: **si mañana puede ser falso, no va a git.**
 
 ## 6. Memoria (`memory/`)
 
 **Vive en el REPO, no en la carpeta de una herramienta**: se versiona, la respalda git y la lee
-cualquier agente. El por que -y de donde se mudo- esta en `memory/hechos/donde-vive-la-memoria.md`.
+cualquier agente, a diferencia de la memoria de una tool que se pierde entre maquinas.
 
 | Que | Donde |
 |---|---|
@@ -202,8 +202,9 @@ escribe pensando en eso, no como titulo decorativo.
 
 **Antes de guardar**, revisa si ya existe algo parecido y actualizalo en vez de duplicar.
 
-Un hecho tiene **ciclo de vida** y una decision no se reescribe encima: el como esta en
-[[hecho-tiene-ciclo-de-vida]], y lo verifica `node agro.js hechos` dentro de `check`.
+Un hecho tiene **ciclo de vida** y una decision no se reescribe encima: se actualiza el archivo
+existente o se agrega uno nuevo que lo supera, nunca se edita por debajo la decision vieja. Lo
+verifica `node agro.js hechos` dentro de `check`.
 
 **Lo que sirve a UN solo ticket NO va aca**: el indice se lee en **toda** tarea, asi que cada linea
 de mas la pagan todos los demas tickets (paso con ICC-13: 420 lineas del motor de ofertas que no le
@@ -220,7 +221,7 @@ con 8).
 |---|---|
 | **Que tools hay** | `node agro.js` las lista todas, agrupadas por area. Sale del disco: no puede mentir sobre que existe. |
 | **Como se usa una** | `node agro.js <tool> --help` |
-| **Por que existe y que gotcha tiene** | **`docs/herramientas.md`** - ahi vive el detalle, y ahi va la entrada de una tool nueva. |
+| **Por que existe y que gotcha tiene** | el encabezado del script (`scripts/<area>/<tool>.js`) y `node agro.js <tool> --help`. |
 
 Aca queda solo lo que **no** es de una tool en particular:
 
@@ -244,20 +245,16 @@ la que el modelo recuerda, que esta vieja.
 ANTES de que este gate existiera, habia llegado a 892: un techo que nadie mide no es un techo.
 Cuando salte, ver que sacar en el orden que imprime.
 **Y mide el CRECIMIENTO de tu diff: +3 lineas por documento, no mas.** Un aprendizaje nuevo entra
-como UNA fila de indice y el detalle nace en el hermano (`backend-hechos.md`, `database-hechos.md`,
-`memory/hechos/`). Sacar nunca falla; para mover secciones, `--reorg`.
+como UNA fila de indice en `memory/MEMORY.md` y el detalle nace en `memory/hechos/<nombre>.md`.
+Sacar nunca falla; para mover secciones, `--reorg`.
 
 ## 8. Convenciones del proyecto
 
 Las convenciones del esquema (nombres, tipos, precisión, particionado por tiempo, políticas RLS)
-viven en `memory/playbooks/database.md` y las hace
-cumplir `node agro.js lint`. Leelo **antes de escribir o tocar un objeto**, sea nuevo o existente.
-
-Lo que NO hace falta para escribir un objeto salio de ahi el 25/08 y se consulta cuando aparece el
-caso: **`db-consultas.md`** (planes de ejecución, índices, procesos que esperan) y
-**`db-hechos.md`** (privilegios de cada base, conteos, gotchas de una tool puntual). `db.md` cierra
-con un índice de una línea por tema que dice cuándo ir a cada uno. Motivo: `db.md` llegó a 1381
-líneas -26.027 tokens- y esta sección manda leerlo en toda tarea de base.
+viven en `memory/playbooks/database.md`; hoy arranca vacío y crece con lo que se apruebe en cada
+cambio (no se rellena con folklore del repo de origen). Leelo **antes de escribir o tocar un
+objeto**, sea nuevo o existente. Lo hace cumplir `check` vía `project.yml` -> `commands.lint`
+(hoy sin comando declarado: se llena cuando exista código que lintear).
 
 Mira `project.yml` -> `conventions` para la lista completa.
 

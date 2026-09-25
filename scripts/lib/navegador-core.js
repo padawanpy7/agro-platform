@@ -75,16 +75,15 @@ function debeApagarse({ clientesVivos: vivos = 0, ultimoUso = 0, ahora = 0, ttlM
   return ahora - ultimoUso >= ttlMs
 }
 
-// `kove-explorar` y `envx-explorar` SOLO LEEN por default; `--click` es la unica escritura
-// posible (el propio codigo de cada uno avisa "ESCRIBE en la pantalla SI ese link hace algo").
-// No es ambiguo, es CONDICIONAL a ese flag: se centraliza aca para no repetir el criterio entre
-// los dos exploradores y para poder testearlo sin abrir un browser.
+// Un explorador de paginas SOLO LEE por default; `--click` es la unica escritura posible (el
+// propio codigo de la tool avisa "ESCRIBE en la pantalla SI ese link hace algo"). No es ambiguo,
+// es CONDICIONAL a ese flag: se centraliza aca para poder testearlo sin abrir un browser.
 function propioParaExplorador(clicPedido) {
   return Boolean(clicPedido)
 }
 
 // Mismo fallback que `agro.js` (que lo fija al arrancar cualquier tool): los browsers de Playwright
-// viven fuera del repo, HERMANOS de la raiz (junto a jdk/pmd/python/sqlcl), no adentro.
+// viven fuera del repo, HERMANOS de la raiz, no adentro.
 function rutaBrowsersPorDefecto(raiz) {
   return path.join(path.dirname(raiz), 'tools', 'playwright-browsers')
 }

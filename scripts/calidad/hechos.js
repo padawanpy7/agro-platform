@@ -19,6 +19,10 @@
 //   4. Toda ruta de ESTE repo que un hecho cita existe. El 31/08, mover un archivo dejo 8 punteros
 //      rotos -uno dentro de un script que corre- y nada lo noto; al encender el gate aparecieron
 //      otros 40, casi todos de cuando las tools eran `.sh` sueltos.
+//   5. Todo wikilink `[[slug]]` en una fuente de CONTRATO (AGENTS.md, CLAUDE.md, MEMORY.md,
+//      playbooks, skills, roles) apunta a un hecho que existe. Sin esto, `hechos` podia dar OK
+//      sobre un universo vacio (0 en disco) mientras esas fuentes citaban hechos que nunca se
+//      escribieron: cambios/META/LIMPIEZA.md §4.
 //
 // El indice NO es solo `memory/MEMORY.md`: un hecho de una disciplina se enlaza desde su playbook
 // (`memory/playbooks/db.md` enlaza 41), y eso es lo correcto -al indice global solo va lo que sirve
@@ -47,7 +51,7 @@ if (!fs.existsSync(DIR)) {
 const archivos = fs.readdirSync(DIR).filter((f) => f.endsWith('.md')).sort()
 const hechos = archivos.map((f) => core.parsear(f, fs.readFileSync(path.join(DIR, f), 'utf8')))
 
-// Todo lo que enlaza hechos: el indice global mas los playbooks.
+// Todo lo que enlaza hechos con la sintaxis `hechos/<slug>.md`: el indice global mas los playbooks.
 function indices() {
   const fuentes = [path.join(RAIZ, 'memory', 'MEMORY.md')]
   const pb = path.join(RAIZ, 'memory', 'playbooks')
@@ -60,13 +64,44 @@ function indices() {
   return [...slugs]
 }
 
-const indice = indices()
+// Las fuentes que se leen como CONTRATO: si citan un [[slug]] es una instruccion, no una nota
+// suelta que puede colgar (esa excepcion es solo entre hechos, ver rutasCitadas en hechos-core).
+// Este es el hueco que describe cambios/META/LIMPIEZA.md §4: `hechos` daba OK sobre un universo
+// vacio mientras 7 wikilinks de AGENTS.md y skills/ apuntaban a hechos inexistentes.
+function fuentesContrato() {
+  const fuentes = [path.join(RAIZ, 'AGENTS.md'), path.join(RAIZ, 'CLAUDE.md'), path.join(RAIZ, 'memory', 'MEMORY.md')]
+  for (const dir of ['memory/playbooks', 'skills', '.claude/agents']) {
+    const abs = path.join(RAIZ, dir)
+    if (!fs.existsSync(abs)) continue
+    for (const f of fs.readdirSync(abs).filter((x) => x.endsWith('.md'))) fuentes.push(path.join(abs, f))
+  }
+  return fuentes.filter((f) => fs.existsSync(f))
+}
+
+const rutasContrato = fuentesContrato()
+const wikilinksContrato = []
+for (const f of rutasContrato) {
+  const rel = path.relative(RAIZ, f)
+  for (const w of core.extraerWikilinks(fs.readFileSync(f, 'utf8'))) wikilinksContrato.push({ archivo: `${rel}:${w.linea}`, slug: w.slug })
+}
+
+const indiceTextual = indices()
 const enDisco = new Set(hechos.map((h) => h.slug))
 // Un enlace a un hecho que ya no existe: el lector lo sigue y no encuentra nada. Bloquea siempre.
-const huerfanas = indice.filter((s) => !enDisco.has(s))
+const huerfanas = indiceTextual.filter((s) => !enDisco.has(s))
+
+// El indice cuenta las dos formas de citar un hecho: `hechos/<slug>.md` y el wikilink `[[slug]]`
+// desde una fuente de contrato. Las dos dicen lo mismo: esto se lee en toda tarea.
+const indice = [...new Set([...indiceTextual, ...wikilinksContrato.map((w) => w.slug)])]
 
 const existe = (rel) => fs.existsSync(path.join(RAIZ, rel))
 const todos = core.validar(hechos, { existe, indice })
+
+for (const w of wikilinksContrato) {
+  if (!enDisco.has(w.slug)) {
+    todos.push({ archivo: w.archivo, regla: 'wikilink-sin-hecho', detalle: `cita [[${w.slug}]], y memory/hechos/${w.slug}.md no existe` })
+  }
+}
 
 // La lista REAL de tools sale del disco. Si no se puede leer, este chequeo NO corre y se dice: un
 // gate que no encuentra su material no inventa un verde.
@@ -74,9 +109,8 @@ let TOOLS = null
 try {
   TOOLS = new Set(require('../lib/tools-registro').descubrirTools(RAIZ).keys())
   const alias = /const ALIAS = \{([^}]*)\}/.exec(fs.readFileSync(path.join(RAIZ, 'agro.js'), 'utf8'))
-  // Los ALIAS entran tambien: `lint` es el nombre de uso de `plsql-lint` y esta escrito asi en
-  // AGENTS.md, en project.yml y en la cabeza de todos. No vive en el disco, pero es una invocacion
-  // valida.
+  // Los ALIAS entran tambien: hoy `ALIAS = {}` en agro.js, pero si alguna vez se agrega un
+  // nombre corto para una tool, esa entrada no vive en el disco y aun asi es una invocacion valida.
   if (alias) for (const m of alias[1].matchAll(/(\w[\w-]*)\s*:/g)) TOOLS.add(m[1])
 } catch { TOOLS = null }
 if (!TOOLS) console.error('  (no pude leer la lista de tools: el chequeo de comandos muertos NO corrio)')
@@ -96,11 +130,19 @@ const bloquean = todos.filter((p) => core.BLOQUEANTES.has(p.regla))
 const avisos = todos.filter((p) => !core.BLOQUEANTES.has(p.regla))
 
 if (argv.includes('--json')) {
-  console.log(JSON.stringify({ hechos: hechos.length, indice: indice.length, bloquean, avisos, huerfanas }, null, 2))
+  console.log(JSON.stringify({
+    hechos: hechos.length,
+    indice: indice.length,
+    wikilinksContrato: wikilinksContrato.length,
+    docsContrato: rutasContrato.length,
+    bloquean,
+    avisos,
+    huerfanas,
+  }, null, 2))
   process.exit(bloquean.length || huerfanas.length ? 1 : 0)
 }
 
-console.log(`==> hechos: ${hechos.length} en disco, ${indice.length} enlazados (MEMORY.md + playbooks)`)
+console.log(`==> hechos: ${hechos.length} en disco, ${indice.length} enlazados (MEMORY.md + playbooks + wikilinks); ${wikilinksContrato.length} wikilinks en ${rutasContrato.length} docs de contrato`)
 for (const h of huerfanas) console.log(`  X  un indice enlaza hechos/${h}.md, que no existe`)
 for (const p of bloquean) console.log(`  X  ${p.archivo}  [${p.regla}]  ${p.detalle}`)
 
@@ -111,6 +153,7 @@ else {
   console.log('  ruta-citada-no-existe   -> el archivo se movio: actualizar el hecho EN EL MISMO cambio')
   console.log('  archivado-en-el-indice  -> sacar la linea: lo archivado no es autoridad de lo actual')
   console.log('  superado-sin-sucesor    -> `superado_por: <slug>` del hecho que lo reemplaza')
+  console.log('  wikilink-sin-hecho      -> escribir memory/hechos/<slug>.md, o sacar el [[enlace]]')
 }
 
 if (avisos.length) {

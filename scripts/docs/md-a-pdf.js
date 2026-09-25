@@ -3,8 +3,8 @@
 // (el analista, el banco) sin pedirle que lea markdown.
 //
 // No agrega infraestructura: el markdown lo parsea `marked` y el PDF lo imprime el **Chromium de
-// Playwright** que ya usan las tools de APEX. Sin servicios online: el documento nunca sale de la
-// maquina.
+// Playwright** que ya usan las demas tools del repo. Sin servicios online: el documento nunca
+// sale de la maquina.
 //
 // Uso:  node agro.js md-a-pdf <archivo.md> [otro.md ...] [--out <archivo.pdf>] [--horizontal]
 //       --out solo vale con UN archivo; por default el PDF queda al lado del .md.
@@ -26,7 +26,7 @@ function ayuda() {
   --horizontal    hoja apaisada, para documentos con tablas anchas
 
 Ejemplo:
-  node agro.js md-a-pdf jira/ICC-102/entrega/manual-entrega.md`)
+  node agro.js md-a-pdf cambios/riego-de-precision/entrega/manual-entrega.md`)
 }
 
 // Estilos de impresion: sobrios, legibles en papel, sin depender de fuentes externas.

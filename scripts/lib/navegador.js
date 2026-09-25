@@ -1,10 +1,9 @@
 // El navegador COMPARTIDO del loop: un solo Chromium para todas las tools.
 //
-// El problema que resuelve. Hasta el 11/08 habia CUATRO modulos de sesion -`e2e-apex` (apps del
-// banco), `apex-builder` (el Builder), `kove-sesion` (las apps de Kove) y `envx-sesion`- y cada uno
-// hacia su `chromium.launch()`. Como cada tool es un proceso aparte, eso es un Chromium nuevo por
-// invocacion: `kove-jornada` spawnea 4-6 tools por corrida y levantaba 4-6 navegadores, uno detras
-// del otro, para hablar con la misma app.
+// El problema que resuelve. En el repo de origen habia varios modulos de sesion, cada uno con su
+// `chromium.launch()`. Como cada tool es un proceso aparte, eso es un Chromium nuevo por
+// invocacion: una tool que spawnea varias tools por corrida levantaba un navegador por cada una,
+// uno detras del otro, para hablar con la misma app.
 //
 // Medido en esta maquina (11/08), por invocacion y de proceso a proceso:
 //
@@ -31,29 +30,28 @@
 //   AGRO_NAVEGADOR_AUTO=0     no levanta el servidor solo; usa el que haya y si no, uno propio.
 //   AGRO_NAVEGADOR_TTL_MIN=N  minutos sin clientes antes de que el servidor se apague (default 20).
 //
-// `propio:true` (por invocacion, no por env var): desde el 12/08, TODO CALL SITE QUE ESCRIBE EN UN
-// SISTEMA REAL pide su browser propio con `abrirContexto({ propio: true }, ...)` en vez de tocar
+// `propio:true` (por invocacion, no por env var): TODO CALL SITE QUE ESCRIBE EN UN SISTEMA REAL
+// pide su browser propio con `abrirContexto({ propio: true }, ...)` en vez de tocar
 // `AGRO_NAVEGADOR=0` -esa env var apaga el compartido para TODA la sesion, lecturas incluidas-.
 //
-// Por que la regla es "escribe" y no "los que ya fallaron": la muestra confirmada son 3 fallos
-// (`apex-import`, `kove-actividad entregar`, el modal de `kove-tarea` crear/editar - los tres SOLO
-// anduvieron con el compartido apagado, causa raiz nunca diagnosticada), pero esos 3 son la MUESTRA,
-// no la lista completa de lo que puede fallar.
+// Por que la regla es "escribe" y no "los que ya fallaron": en el repo de origen la muestra
+// confirmada eran 3 fallos de flujos de escritura, que SOLO anduvieron con el compartido apagado
+// -causa raiz nunca diagnosticada-, pero esos 3 son la MUESTRA, no la lista completa de lo que
+// puede fallar.
 //
-// REVISADA Y CONFIRMADA el 17/08, midiendo. La duda era legitima: los 3 fallos se atribuyeron al
-// compartido cuando el compartido NO ANDABA NUNCA (el `detached` mataba su Chromium, 14/08), asi
-// que la evidencia que fundaba la regla estaba viciada y quedo anotado revisarla. Se midio abriendo
-// contextos de las dos formas, dos rondas de 4 y 6: **propio p50 194-343 ms, compartido p50
-// 20-212 ms**. El compartido ahorra **0,13 a 0,17 s por corrida**, no los ~2,2 s que decia este
-// mismo comentario -ese numero salio de medir con el compartido roto-.
+// REVISADA Y CONFIRMADA midiendo. La duda era legitima: los 3 fallos se atribuyeron al compartido
+// cuando el compartido NO ANDABA NUNCA (`detached` mataba su Chromium), asi que la evidencia que
+// fundaba la regla estaba viciada y quedo anotado revisarla. Se midio abriendo contextos de las
+// dos formas, dos rondas de 4 y 6: **propio p50 194-343 ms, compartido p50 20-212 ms**. El
+// compartido ahorra **0,13 a 0,17 s por corrida**, no los ~2,2 s que decia este mismo comentario
+// -ese numero salio de medir con el compartido roto-.
 //
 // O sea que devolver los flujos de escritura al compartido compra 0,15 s en tools que tardan 10 a
 // 28 s -0,6% de la corrida- a cambio de reabrir un fallo cuya causa raiz nunca se supo, en el medio
-// de una escritura sobre el sistema del banco. La regla se queda.
+// de una escritura sobre un sistema real. La regla se queda.
 //
-// Lectura y exports (`apex-export`, `apex-drift`, `kove-actividad estado/ver/auditar`, `kove-hoy`,
-// `kove-proyectos`, `envx-explorar`, etc.) siguen en el compartido. Ahi el ahorro es el mismo por
-// corrida, pero son muchas mas corridas y ninguna arriesga una escritura a medio hacer.
+// Lectura y exports siguen en el compartido. Ahi el ahorro es el mismo por corrida, pero son
+// muchas mas corridas y ninguna arriesga una escritura a medio hacer.
 
 const fs = require('fs')
 const path = require('path')

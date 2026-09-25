@@ -24,9 +24,8 @@ test('AGRO_NAVEGADOR=0 abre el propio y lo dice', () => {
   assert.match(r.motivo, /AGRO_NAVEGADOR=0/)
 })
 
-// Los flujos de escritura (apex-import, kove-actividad entregar, el modal de Kove) piden su
-// browser propio POR INVOCACION, sin tocar AGRO_NAVEGADOR (que apagaria el compartido para toda
-// la sesion, lecturas incluidas).
+// Los flujos de escritura piden su browser propio POR INVOCACION, sin tocar AGRO_NAVEGADOR (que
+// apagaria el compartido para toda la sesion, lecturas incluidas).
 test('se pide propio explicitamente: abre el suyo aunque el compartido este vivo y compatible', () => {
   const r = decidir({ endpoint: servidor(), quiere: { headless: true }, vivo: true, propio: true })
   assert.equal(r.accion, 'propio')
@@ -131,9 +130,9 @@ test('sin intentos previos, se intenta', () => {
   assert.equal(puedeIntentarArranque({ ultimoIntento: 0, ahora: 1770000000000 }), true)
 })
 
-// `kove-explorar` y `envx-explorar` SOLO LEEN por default; `--click` es la unica escritura
-// posible (el propio codigo de cada uno avisa "ESCRIBE en la pantalla SI ese link hace algo").
-// No es ambiguo, es CONDICIONAL: se pide propio si y solo si se pidio --click.
+// Un explorador de paginas SOLO LEE por default; `--click` es la unica escritura posible (el
+// propio codigo de la tool avisa "ESCRIBE en la pantalla SI ese link hace algo"). No es ambiguo,
+// es CONDICIONAL: se pide propio si y solo si se pidio --click.
 test('propioParaExplorador: sin --click, no pide propio (solo lee)', () => {
   assert.equal(propioParaExplorador(undefined), false)
 })
@@ -145,6 +144,6 @@ test('propioParaExplorador: con --click, pide propio (puede escribir)', () => {
 // Mismo fallback que `agro.js` (agro.js:110-112): si nadie fijo PLAYWRIGHT_BROWSERS_PATH, los
 // browsers estan en `tools/playwright-browsers`, HERMANA del repo (no adentro).
 test('rutaBrowsersPorDefecto cuelga de tools/, hermana de la raiz del repo', () => {
-  const raiz = path.join('C:', 'bffamiliar', 'bf-db-workspace')
-  assert.equal(rutaBrowsersPorDefecto(raiz), path.join('C:', 'bffamiliar', 'tools', 'playwright-browsers'))
+  const raiz = path.join('C:', 'repos', 'agro-platform')
+  assert.equal(rutaBrowsersPorDefecto(raiz), path.join('C:', 'repos', 'tools', 'playwright-browsers'))
 })

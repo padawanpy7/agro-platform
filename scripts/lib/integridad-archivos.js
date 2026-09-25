@@ -1,7 +1,7 @@
 // integridad-archivos.js - dos cosas que rompen un archivo versionado y que ningun gate miraba.
 //
 // Por que existe: el 26/08/2026 paso DOS VECES en el mismo dia, sobre los dos archivos que TODAS
-// las sesiones tocan a la vez. `jira/META/FEATURES.json` quedo commiteado en main
+// las sesiones tocan a la vez. El FEATURES.json del change del loop quedo commiteado en main
 // con 6 marcadores de conflicto -o sea, JSON invalido: el ledger del proyecto no se podia leer- y
 // `PROGRESO.md` quedo commiteado con otros 6 por el merge de otra sesion. No lo cazo nada: ni
 // `check`, ni `cierre`, ni el commit. Se descubrio a ojo, buscando otra cosa.

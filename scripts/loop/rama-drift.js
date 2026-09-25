@@ -7,7 +7,7 @@
 // Distingue dos clases de choque, porque no valen lo mismo:
 //   LOOP  scripts/, db/, memory/, AGENTS.md, project.yml, agro.js -> compartido por TODAS las
 //            ramas. Es el que rompe main. Si aparece, se mergea YA.
-//   TICKET   jira/<CLAVE>/ -> de una sola tarea. Chocan poco y no urgen.
+//   TICKET   <carpeta-de-cambios>/<CLAVE>/ -> de una sola tarea. Chocan poco y no urgen.
 //
 // SOLO LEE. Sale 1 si hay choque de LOOP (sirve de compuerta), 0 si no.
 // Uso: node agro.js rama-drift [RAMA]     (default: la rama actual)

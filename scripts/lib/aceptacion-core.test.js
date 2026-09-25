@@ -101,7 +101,7 @@ test('un "> manual:" que sigue en las lineas de abajo se junta entero', () => {
 })
 
 // El 2 es la convencion de "no pude medir" en todo este loop. Aparecio en un criterio real el
-// 31/08: plsql-test de ICC-83 salio 2 porque la base no respondia.
+// 31/08: una tool de test de ICC-83 salio 2 porque la base no respondia.
 test('exit 2 es "no se pudo medir": no es rojo, y tampoco deja cerrar', () => {
   const p = core.parsear('## Uno\n```sh\ncmd\n```\n')
   const v = core.veredicto(p, [{ titulo: 'Uno', exit: 2 }])

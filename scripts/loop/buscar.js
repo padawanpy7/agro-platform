@@ -20,8 +20,10 @@
 
 const fs = require('fs')
 const path = require('path')
+const { execFileSync } = require('child_process')
 
-const { PROYECTOS } = require('../lib/transcripts')
+const { PROYECTOS, carpetaDelProyecto } = require('../lib/transcripts')
+const { ticketDeCarpeta } = require('../lib/buscar-core')
 
 const args = process.argv.slice(2)
 const tiene = (n) => args.includes(n)
@@ -58,13 +60,33 @@ const soloClaude = tiene('--claude')
 const normalizar = (s) => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
 const aguja = normalizar(texto)
 
-// El nombre de la carpeta del proyecto es la ruta del worktree con los separadores cambiados:
-// "C--bffamiliar-bf-db-workspace-ICC-13" -> ICC-13. La carpeta del principal queda como "main",
-// que es la rama que tiene chequeada.
+// El nombre de la carpeta del proyecto es la ruta ABSOLUTA del repo con los separadores
+// cambiados por '-' (scripts/lib/transcripts.js): "/home/devops/agro-platform" ->
+// "-home-devops-agro-platform". Un worktree es una carpeta HERMANA del repo, nombrada
+// "<repo>-<ticket>". Matchear solo el NOMBRE del repo, sin anclarlo contra su carpeta padre, deja
+// pasar cualquier proyecto que TERMINE en esas letras -"...-old-agro-platform" daba "main" siendo
+// un repo distinto-. La logica de anclar de verdad, pura, vive en buscar-core.js.
+//
+// Desde un worktree ("agro-platform-ICC-13") esta carpeta NO es la del repo principal: hay que
+// derivarla. `git rev-parse --git-common-dir` siempre apunta al `.git` del checkout PRINCIPAL,
+// se corra desde el o desde uno de sus worktrees; su carpeta padre es la raiz del repo principal.
+// Si git falla (no hay git, o no es un repo), se cae a la raiz de ESTE checkout, que es lo que
+// habia antes.
+function raizPrincipal() {
+  const raiz = path.join(__dirname, '..', '..')
+  try {
+    const salida = execFileSync('git', ['rev-parse', '--git-common-dir'], { cwd: raiz, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim()
+    const gitDir = path.isAbsolute(salida) ? salida : path.join(raiz, salida)
+    return path.dirname(gitDir)
+  } catch {
+    return raiz
+  }
+}
+
+const CARPETA_PRINCIPAL = carpetaDelProyecto(raizPrincipal())
+
 function ticketDe(carpeta) {
-  const m = carpeta.match(/bf-db-workspace-(.+)$/i)
-  if (!m) return /bf-db-workspace$/i.test(carpeta) ? 'main' : carpeta
-  return m[1]
+  return ticketDeCarpeta(carpeta, CARPETA_PRINCIPAL) || carpeta
 }
 
 function* transcripts() {

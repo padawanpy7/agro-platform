@@ -7,11 +7,11 @@
 // modos de falla son historia y no se arreglan de una. Lo corre el cierre para decir que huecos
 // del loop aparecieron en la tanda, que es lo que hasta hoy solo salia si alguien se acordaba.
 //
-// Por que existe: escribimos este log desde el 10/08 y nunca lo leimos. La primera vez que se
-// agrupo -31/08- salieron tres cosas en cinco minutos: 194 lineas rotas por un SQL multilinea,
-// `--help` saliendo con 2 en varias tools (pedir ayuda contado como fallo), y kove-cargar-horas
-// fallando en 59 de sus 62 corridas. Ninguna de las tres necesitaba una herramienta nueva: solo
-// que alguien mirara.
+// Por que existe: en el repo de origen se escribio este log desde el 10/08 y nunca se leyo. La
+// primera vez que se agrupo -31/08- salieron tres cosas en cinco minutos: 194 lineas rotas por un
+// SQL multilinea, `--help` saliendo con 2 en varias tools (pedir ayuda contado como fallo), y una
+// tool de accion fallando en 59 de sus 62 corridas. Ninguna de las tres necesitaba una herramienta
+// nueva: solo que alguien mirara.
 //
 // La logica vive en `scripts/lib/fallos-core.js` y se prueba sola.
 

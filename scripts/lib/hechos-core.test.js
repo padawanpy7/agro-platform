@@ -1,7 +1,7 @@
 const { test } = require('node:test')
 const assert = require('node:assert/strict')
 const core = require('./hechos-core')
-const { BLOQUEANTES, parsear, rutasCitadas, validar } = core
+const { BLOQUEANTES, parsear, rutasCitadas, extraerWikilinks, validar } = core
 
 const hecho = (slug, campos = {}, cuerpo = '') => parsear(slug + '.md', [
   '---',
@@ -115,7 +115,7 @@ test('un conjunto sano no reporta nada', () => {
 // --- comando muerto vs. aviso de que murio (01/09) -----------------------------------------------
 test('una linea que AVISA que algo murio no es una instruccion rota', () => {
   assert.equal(core.esMencionHistorica('**No uses** `. scripts/_python.sh`: cae al stub'), true)
-  assert.equal(core.esMencionHistorica('los specs importaban `tests/e2e/lib/apex` (ya inexistente)'), true)
+  assert.equal(core.esMencionHistorica('los specs importaban `tests/e2e/lib/cliente-viejo` (ya inexistente)'), true)
   assert.equal(core.esMencionHistorica('el wrapper `scripts/lint.sh` ya no existe'), true)
 })
 
@@ -129,4 +129,73 @@ test('una historia contada con palabras ambiguas NO se excusa sola', () => {
 test('una linea que manda correr algo SI es una instruccion', () => {
   assert.equal(core.esMencionHistorica('correr `bash scripts/db-sql.sh --base replica`'), false)
   assert.equal(core.esMencionHistorica('el grafo sale de `node agro.js db-deps X`'), false)
+})
+
+// --- extraerWikilinks (el hueco de gate de cambios/META/LIMPIEZA.md §4) ---------------------------
+test('extraerWikilinks encuentra un [[slug]] y su numero de linea', () => {
+  const t = 'primera linea\nver [[un-hecho]] aca\notra mas'
+  assert.deepEqual(extraerWikilinks(t), [{ slug: 'un-hecho', linea: 2 }])
+})
+
+test('extraerWikilinks encuentra varios, incluso mas de uno por linea', () => {
+  const t = '[[uno]] y [[dos]] en la misma linea'
+  assert.deepEqual(extraerWikilinks(t), [{ slug: 'uno', linea: 1 }, { slug: 'dos', linea: 1 }])
+})
+
+test('extraerWikilinks ignora un [[slug]] dentro de backticks inline: nombrar la sintaxis no cuenta', () => {
+  const t = 'la sintaxis es `[[nombre]]` y se usa asi'
+  assert.deepEqual(extraerWikilinks(t), [])
+})
+
+test('extraerWikilinks ignora un [[slug]] dentro de un bloque de codigo', () => {
+  const t = [
+    'texto normal [[fuera]]',
+    '```',
+    'ejemplo: [[adentro]]',
+    '```',
+    'de nuevo [[fuera-tambien]]',
+  ].join('\n')
+  assert.deepEqual(extraerWikilinks(t), [{ slug: 'fuera', linea: 1 }, { slug: 'fuera-tambien', linea: 5 }])
+})
+
+test('extraerWikilinks sobre texto vacio no rompe', () => {
+  assert.deepEqual(extraerWikilinks(''), [])
+  assert.deepEqual(extraerWikilinks(undefined), [])
+})
+
+// El regex viejo (`[A-Za-z0-9_-]+`) dejaba pasar SIN CITAR cualquier forma con alias, seccion,
+// extension, carpeta delante o espacios adentro: el gate no los veia. cambios/META/LIMPIEZA.md S2.
+test('extraerWikilinks reconoce [[slug|alias]] y normaliza al slug', () => {
+  assert.deepEqual(extraerWikilinks('ver [[no-existe|alias]] aca'), [{ slug: 'no-existe', linea: 1 }])
+})
+
+test('extraerWikilinks reconoce [[slug#seccion]] y normaliza al slug', () => {
+  assert.deepEqual(extraerWikilinks('ver [[no-existe#seccion]] aca'), [{ slug: 'no-existe', linea: 1 }])
+})
+
+test('extraerWikilinks reconoce [[slug.md]] y saca la extension', () => {
+  assert.deepEqual(extraerWikilinks('ver [[no-existe.md]] aca'), [{ slug: 'no-existe', linea: 1 }])
+})
+
+test('extraerWikilinks reconoce [[hechos/slug]] y [[memory/hechos/slug]] y saca la carpeta', () => {
+  assert.deepEqual(extraerWikilinks('ver [[hechos/no-existe]] aca'), [{ slug: 'no-existe', linea: 1 }])
+  assert.deepEqual(extraerWikilinks('ver [[memory/hechos/no-existe]] aca'), [{ slug: 'no-existe', linea: 1 }])
+})
+
+test('extraerWikilinks reconoce [[ slug ]] con espacios adentro', () => {
+  assert.deepEqual(extraerWikilinks('ver [[ no-existe ]] aca'), [{ slug: 'no-existe', linea: 1 }])
+})
+
+test('extraerWikilinks ignora un [[slug]] dentro de un bloque ~~~', () => {
+  const t = ['texto [[fuera]]', '~~~', '[[adentro]]', '~~~', 'de nuevo [[fuera-tambien]]'].join('\n')
+  assert.deepEqual(extraerWikilinks(t), [{ slug: 'fuera', linea: 1 }, { slug: 'fuera-tambien', linea: 5 }])
+})
+
+test('extraerWikilinks ignora un [[slug]] entre backticks dobles', () => {
+  assert.deepEqual(extraerWikilinks('la sintaxis es ``[[nombre]]`` y se usa asi'), [])
+})
+
+test('extraerWikilinks ignora un [[slug]] en un bloque indentado 4 espacios', () => {
+  const t = ['texto [[fuera]]', '    [[adentro]]', 'de nuevo [[fuera-tambien]]'].join('\n')
+  assert.deepEqual(extraerWikilinks(t), [{ slug: 'fuera', linea: 1 }, { slug: 'fuera-tambien', linea: 3 }])
 })

@@ -24,7 +24,8 @@ Dónde buscarlo, en este orden:
 
 1. un test en `scripts/lib/*.test.js` o `cambios/<nombre>/tests/`;
 2. la tool con un argumento fijo, comparando su salida contra una buena conocida;
-3. una consulta de solo lectura (`node agro.js db-sql`) que muestre el estado malo en la base;
+3. una consulta de solo lectura contra la base que muestre el estado malo (sin tool declarada
+   para esto todavía: se corre directo con las credenciales del `.env`);
 4. un spec de Playwright que afirme sobre el DOM de la pantalla;
 5. volver a pasar una captura real (un payload MQTT guardado, una respuesta de la API, un log) por el camino aislado;
 6. el mismo input por la versión vieja y la nueva (`git stash`, un commit anterior) y comparar salidas;
@@ -40,8 +41,8 @@ cambiar tiempos), no esperar a que salga solo.
 
 ## Fase 2: reproducir y achicar
 
-- Confirmá que el rojo es el síntoma reportado y no otro que está al lado
-  ([[un-bloqueante-puede-tapar-a-otro]]).
+- Confirmá que el rojo es el síntoma reportado y no otro que está al lado: un bloqueante puede
+  tapar a otro.
 - Achicá el caso de a un elemento por vez (datos, pasos, parámetros), corriendo el loop después de cada
   corte. Termina cuando sacar cualquier elemento lo pone en verde.
 
@@ -54,9 +55,9 @@ cambiar tiempos), no esperar a que salga solo.
 
 ## Fase 4: arreglo y cierre
 
-- El loop pasa a ser el test de regresión: verlo **rojo contra el código viejo** y verde con el arreglo
-  ([[test-que-no-falla-contra-el-codigo-viejo]]).
-- Correrlo contra el caso REAL, no el imaginado ([[verificar-el-fix-contra-el-caso-real]]).
+- El loop pasa a ser el test de regresión: verlo **rojo contra el código viejo** y verde con el
+  arreglo, para probar que el test de verdad detecta el bug.
+- Correrlo contra el caso REAL, no el imaginado.
 - Escribir la causa, no "se arregló". Si antes quedó escrita una causa que resultó falsa, se corrige.
 
 ## Lo que se muestra

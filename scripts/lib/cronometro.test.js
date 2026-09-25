@@ -37,8 +37,8 @@ test('paso devuelve lo que devuelve la funcion y lo deja registrado', async () =
   assert.deepEqual(linea.contexto, { app: 158 })
 })
 
-// El caso que motiva envolver en vez de start/stop: en apex-import el export del "antes" falla a
-// proposito cuando la pagina es un alta. Ese paso tiene que quedar medido y marcado, no perdido.
+// El caso que motiva envolver en vez de start/stop: un paso puede fallar a proposito como parte
+// del flujo normal de una tool. Ese paso tiene que quedar medido y marcado, no perdido.
 test('un paso que explota queda medido, marcado ok:false, y el error sigue viaje', async () => {
   const c = crono.arrancar('prueba', {}, { archivo: tmp(), alSalir: false })
   await assert.rejects(

@@ -10,9 +10,9 @@ test('un worktree sin cambios pasa', () => {
 })
 
 test('un archivo sin commitear FALTA, y se nombra', () => {
-  const r = c.chequearLimpio(['jira/X/PROGRESO.md'])
+  const r = c.chequearLimpio(['cambios/X/PROGRESO.md'])
   assert.strictEqual(r.estado, 'falta')
-  assert.ok(r.detalle.includes('jira/X/PROGRESO.md'),
+  assert.ok(r.detalle.includes('cambios/X/PROGRESO.md'),
     'el detalle tiene que decir CUAL archivo, o no se puede actuar')
 })
 
@@ -42,43 +42,55 @@ test('en main no hay atraso que medir', () => {
 
 // --- promocion del loop ---------------------------------------------------------------------
 test('tocar loop en una rama y no promoverlo FALTA', () => {
-  const r = c.chequearPromocion('GMCC-261', ['scripts/loop/cierre.js', 'jira/X/sql/A.sql'], ['scripts/loop/cierre.js', 'jira/X/sql/A.sql'])
+  const r = c.chequearPromocion('GMCC-261', ['scripts/loop/cierre.js', 'cambios/X/sql/A.sql'], ['scripts/loop/cierre.js', 'cambios/X/sql/A.sql'])
   assert.strictEqual(r.estado, 'falta')
   assert.ok(r.detalle.includes('scripts/loop/cierre.js'))
-  assert.ok(!r.detalle.includes('jira/X/sql/A.sql'),
+  assert.ok(!r.detalle.includes('cambios/X/sql/A.sql'),
     'lo del ticket NO es loop: no se promueve')
 })
 
 test('tocar solo archivos del ticket no pide promocion', () => {
-  assert.strictEqual(c.chequearPromocion('GMCC-261', ['jira/X/sql/A.sql'], ['jira/X/sql/A.sql']).estado, 'ok')
+  assert.strictEqual(c.chequearPromocion('GMCC-261', ['cambios/X/sql/A.sql'], ['cambios/X/sql/A.sql']).estado, 'ok')
 })
 
 test('reconoce como loop lo compartido, no solo scripts/', () => {
   const r = c.archivosDeLoop([
     'memory/MEMORY.md', 'entornos.yml', 'AGENTS.md', 'package.json', 'agro.js',
-    'skills/sdd.md', 'apex/static/appCustom.js',
-    'jira/X/docs/nota.md', 'jira/LOOP/PROGRESO.md',
+    'skills/sdd.md',
+    'cambios/X/docs/nota.md', 'cambios/META/PROGRESO.md',
   ])
   assert.deepStrictEqual(r, [
     'memory/MEMORY.md', 'entornos.yml', 'AGENTS.md', 'package.json', 'agro.js',
-    'skills/sdd.md', 'apex/static/appCustom.js',
+    'skills/sdd.md',
   ])
 })
 
 // --- PROGRESO ----------------------------------------------------------------------------------
 test('un PROGRESO con entrada de hoy pasa', () => {
-  const r = c.chequearProgreso('jira/X/PROGRESO.md', ['2026-08-12', '2026-08-11'], '2026-08-12')
+  const r = c.chequearProgreso('cambios/X/PROGRESO.md', ['2026-08-12', '2026-08-11'], '2026-08-12')
   assert.strictEqual(r.estado, 'ok')
 })
 
 test('un PROGRESO sin la entrada de hoy FALTA: el puente mentiria', () => {
-  const r = c.chequearProgreso('jira/X/PROGRESO.md', ['2026-08-11'], '2026-08-12')
+  const r = c.chequearProgreso('cambios/X/PROGRESO.md', ['2026-08-11'], '2026-08-12')
   assert.strictEqual(r.estado, 'falta')
   assert.ok(r.titulo.includes('2026-08-11'))
 })
 
 test('sin PROGRESO, FALTA', () => {
   assert.strictEqual(c.chequearProgreso(null, [], '2026-08-12').estado, 'falta')
+})
+
+// P4 (cambios/META/LIMPIEZA.md): el mensaje decia el PLACEHOLDER en la corrida real. El core
+// recibe la ruta real del change como parametro opcional; sin ella, cae al placeholder de siempre.
+test('sin PROGRESO, el detalle usa la carpeta REAL del change si se la pasan', () => {
+  const r = c.chequearProgreso(null, [], '2026-08-12', undefined, 'cambios/ICC-13')
+  assert.deepEqual(r.detalle, ['crealo en cambios/ICC-13/PROGRESO.md'])
+})
+
+test('sin PROGRESO y sin carpeta real, cae al placeholder (no rompe a los llamadores viejos)', () => {
+  const r = c.chequearProgreso(null, [], '2026-08-12')
+  assert.deepEqual(r.detalle, ['crealo en <carpeta-de-cambios>/<TICKET>/PROGRESO.md'])
 })
 
 test('entradas fuera de orden avisan (el encabezado pide la mas nueva arriba)', () => {
@@ -88,14 +100,14 @@ test('entradas fuera de orden avisan (el encabezado pide la mas nueva arriba)', 
 
 // --- comandos obsoletos --------------------------------------------------------------------------
 test('detecta el loop viejo en la prosa de un ticket', () => {
-  const h = c.buscarComandosObsoletos('correr: bash scripts/apex-e2e.sh tests/e2e/mi.test.js')
+  const h = c.buscarComandosObsoletos('correr: bash scripts/mi-tool.sh tests/e2e/mi.test.js')
   assert.ok(h.length >= 2, 'tiene que ver el wrapper .sh Y la carpeta tests/e2e/')
-  assert.ok(h.some((x) => x.fragmento.includes('apex-e2e.sh')))
+  assert.ok(h.some((x) => x.fragmento.includes('mi-tool.sh')))
   assert.ok(h.some((x) => x.fragmento === 'tests/e2e/'))
 })
 
 test('no marca un comando actual', () => {
-  const h = c.buscarComandosObsoletos('correr: node agro.js apex-e2e jira/X/tests/mi.test.js')
+  const h = c.buscarComandosObsoletos('correr: node agro.js mi-tool cambios/X/tests/mi.test.js')
   assert.deepStrictEqual(h, [])
 })
 
@@ -189,6 +201,17 @@ test('sin archivo NO afirma que no hay preguntas: avisa que no se pudo medir', (
   assert.match(r.titulo, /no se puede medir/)
 })
 
+// P4: mismo caso que chequearProgreso, para PREGUNTAS.md.
+test('sin archivo, el detalle usa la carpeta REAL del change si se la pasan', () => {
+  const r = c.chequearPreguntas(null, 'cambios/ICC-13')
+  assert.ok(r.detalle.some((d) => d === 'si la sesion dejo alguna, crealo en cambios/ICC-13/PREGUNTAS.md'))
+})
+
+test('sin archivo y sin carpeta real, cae al placeholder', () => {
+  const r = c.chequearPreguntas(null)
+  assert.ok(r.detalle.some((d) => d === 'si la sesion dejo alguna, crealo en <carpeta-de-cambios>/<TICKET>/PREGUNTAS.md'))
+})
+
 test('un archivo sin seccion Abiertas tampoco se da por bueno', () => {
   const r = c.chequearPreguntas('# PREGUNTAS\n\nalgo suelto, sin la estructura\n')
   assert.notStrictEqual(r.estado, 'ok')
@@ -196,7 +219,7 @@ test('un archivo sin seccion Abiertas tampoco se da por bueno', () => {
 
 // --- comandos que ya no existen ------------------------------------------------------------------
 test('caza una tool que ya no existe, no solo los wrappers .sh de julio', () => {
-  const tools = new Set(['db-check', 'lint', 'apex-e2e'])
+  const tools = new Set(['db-check', 'lint', 'mi-tool'])
   const h = c.buscarComandosObsoletos('el grafo sale de `node agro.js db-deps SCHEMA.OBJETO`', tools)
   assert.strictEqual(h.length, 1)
   assert.match(h[0].porque, /no existe la tool "db-deps"/)
@@ -227,15 +250,15 @@ test('una sola falta deja el cierre incompleto', () => {
 // --- docs: bitacora vs instrucciones -------------------------------------------------------------
 test('si solo la bitacora cita comandos viejos, avisa: es historia, no instrucciones', () => {
   const r = c.chequearDocs({
-    'jira/X/PROGRESO.md': [{ fragmento: 'bash scripts/db-sql.sh', porque: 'ya no existe' }],
+    'cambios/X/PROGRESO.md': [{ fragmento: 'bash scripts/db-sql.sh', porque: 'ya no existe' }],
   })
   assert.strictEqual(r.estado, 'aviso')
 })
 
 test('un doc de instrucciones con comandos viejos SI frena el cierre', () => {
   const r = c.chequearDocs({
-    'jira/X/PROGRESO.md': [{ fragmento: 'bash scripts/db-sql.sh', porque: 'ya no existe' }],
-    'jira/X/docs/pruebas.md': [{ fragmento: 'bash scripts/apex-e2e.sh', porque: 'ya no existe' }],
+    'cambios/X/PROGRESO.md': [{ fragmento: 'bash scripts/db-sql.sh', porque: 'ya no existe' }],
+    'cambios/X/docs/pruebas.md': [{ fragmento: 'bash scripts/mi-tool.sh', porque: 'ya no existe' }],
   })
   assert.strictEqual(r.estado, 'falta')
   assert.ok(r.detalle.some((d) => d.includes('docs/pruebas.md')))
@@ -244,21 +267,21 @@ test('un doc de instrucciones con comandos viejos SI frena el cierre', () => {
 })
 
 // El archivo POR MES del progreso es la MISMA bitacora, ya archivada. Al mudar el puente del
-// loop a jira/LOOP/ (18/08) el gate empezo a exigirle a la historia de julio que
+// loop a cambios/META/ (18/08) el gate empezo a exigirle a la historia de julio que
 // hablara del loop de hoy, y frenaba el cierre por dos archivos que no se pueden arreglar sin
 // falsear el registro.
 test('el archivo por mes del progreso tambien es bitacora: avisa, no frena', () => {
   const r = c.chequearDocs({
-    'jira/LOOP/progreso/2026-07.md': [{ fragmento: 'scripts/task-start.sh', porque: 'ya no existe' }],
-    'jira/LOOP/progreso/2026-08.md': [{ fragmento: 'scripts/pase-prod.sh', porque: 'ya no existe' }],
+    'cambios/META/progreso/2026-07.md': [{ fragmento: 'scripts/task-start.sh', porque: 'ya no existe' }],
+    'cambios/META/progreso/2026-08.md': [{ fragmento: 'scripts/pase-prod.sh', porque: 'ya no existe' }],
   })
   assert.strictEqual(r.estado, 'aviso')
 })
 
 test('un doc que NO es bitacora sigue frenando aunque este al lado del progreso', () => {
   const r = c.chequearDocs({
-    'jira/LOOP/progreso/2026-07.md': [{ fragmento: 'scripts/task-start.sh', porque: 'ya no existe' }],
-    'jira/LOOP/README.md': [{ fragmento: 'bash scripts/check.sh', porque: 'ya no existe' }],
+    'cambios/META/progreso/2026-07.md': [{ fragmento: 'scripts/task-start.sh', porque: 'ya no existe' }],
+    'cambios/META/README.md': [{ fragmento: 'bash scripts/check.sh', porque: 'ya no existe' }],
   })
   assert.strictEqual(r.estado, 'falta')
   assert.ok(r.detalle.some((d) => d.includes('README.md')))
@@ -267,24 +290,24 @@ test('un doc que NO es bitacora sigue frenando aunque este al lado del progreso'
 
 // --- promocion: las dos medidas cruzadas ---------------------------------------------------------
 test('lo que toque pero YA esta igual en main no se pide promover', () => {
-  // apex.md lo edito la rama, pero se copio a main en otro commit: hoy no difiere.
-  const r = c.chequearPromocion('GMCC-261', ['memory/playbooks/apex.md'], [])
+  // backend.md lo edito la rama, pero se copio a main en otro commit: hoy no difiere.
+  const r = c.chequearPromocion('GMCC-261', ['memory/playbooks/backend.md'], [])
   assert.strictEqual(r.estado, 'ok')
 })
 
 test('lo que main avanzo por su cuenta no es cosa mia que promover', () => {
   // La rama esta atrasada: db/graph/* difiere, pero la rama nunca lo toco.
-  const r = c.chequearPromocion('GMCC-261', [], ['db/graph/X.json', 'scripts/kove/kove-tarea.js'])
+  const r = c.chequearPromocion('GMCC-261', [], ['db/graph/X.json', 'scripts/otro/otra-tarea.js'])
   assert.strictEqual(r.estado, 'ok')
 })
 
 test('lo que toque Y main no tiene igual, SI se promueve', () => {
   const r = c.chequearPromocion('GMCC-261',
     ['scripts/loop/cierre.js', 'db/graph/X.json'],
-    ['scripts/loop/cierre.js', 'db/graph/X.json', 'scripts/kove/otro.js'])
+    ['scripts/loop/cierre.js', 'db/graph/X.json', 'scripts/otro/otro.js'])
   assert.strictEqual(r.estado, 'falta')
   assert.ok(r.detalle.includes('scripts/loop/cierre.js'))
-  assert.ok(!r.detalle.includes('scripts/kove/otro.js'), 'eso lo movio main, no yo')
+  assert.ok(!r.detalle.includes('scripts/otro/otro.js'), 'eso lo movio main, no yo')
 })
 
 // --- aportaContenido: reordenar no es aportar ----------------------------------------------------
@@ -305,9 +328,9 @@ test('si mi lado solo QUITA lineas, no aporta nada que promover', () => {
 // --- parseo del status -----------------------------------------------------------------------
 test('parsea el status aunque el helper le haya comido el espacio inicial', () => {
   // Asi llega despues del trim() de git(): la primera linea pierde su espacio de la izquierda.
-  const salida = 'M jira/X/a.md\n M jira/X/b.md\n?? nuevo.sql'
+  const salida = 'M cambios/X/a.md\n M cambios/X/b.md\n?? nuevo.sql'
   assert.deepStrictEqual(core.parsearStatus(salida), [
-    'jira/X/a.md', 'jira/X/b.md', 'nuevo.sql',
+    'cambios/X/a.md', 'cambios/X/b.md', 'nuevo.sql',
   ])
 })
 
@@ -324,9 +347,9 @@ test('una palabra de prosa despues de "node agro.js" NO es una tool que falta', 
 })
 
 test('un ALIAS es una invocacion valida: se pasa en la lista de conocidas', () => {
-  // `lint` no existe como archivo -es el nombre de uso de plsql-lint- y esta escrito asi en
-  // AGENTS.md y en project.yml. La tool lo agrega leyendo el mapa de alias de agro.js.
-  const tools = new Set(['plsql-lint', 'lint'])
+  // `lint` no existe como archivo del disco: es un alias declarado en agro.js. La tool lo agrega
+  // leyendo el mapa de alias, y desde afuera se pasa en la misma lista que las tools reales.
+  const tools = new Set(['mi-tool', 'lint'])
   assert.deepStrictEqual(c.buscarComandosObsoletos('corre `node agro.js lint`', tools), [])
 })
 
@@ -342,8 +365,8 @@ test('un encabezado suelto NO es contenido', () => {
   assert.strictEqual(c.lineasDeLaUltimaEntrada('## 2026-08-26 - t\n\n### Hecho\n\n### Verificado\n'), 0)
 })
 
-test('la marca de kove y los separadores tampoco cuentan', () => {
-  assert.strictEqual(c.lineasDeLaUltimaEntrada('## 2026-08-26 - t\n<!-- kove-cargado: 2026-08-26 id=1 -->\n---\n'), 0)
+test('un comentario HTML y los separadores tampoco cuentan', () => {
+  assert.strictEqual(c.lineasDeLaUltimaEntrada('## 2026-08-26 - t\n<!-- generado: 2026-08-26 id=1 -->\n---\n'), 0)
 })
 
 test('se cuentan solo las lineas de la entrada MAS NUEVA, no las de abajo', () => {
@@ -376,7 +399,7 @@ test('cada dia con commits tiene su entrada: verde', () => {
 
 test('un dia trabajado sin entrada FALTA, y se dice cual', () => {
   const r = c.chequearDiasSinEntrada(
-    [{ fecha: '2026-08-27', commits: 9, muestra: 'loop: la cuelga de sqlcl' }, { fecha: '2026-08-28', commits: 4 }],
+    [{ fecha: '2026-08-27', commits: 9, muestra: 'loop: la cuelga del build' }, { fecha: '2026-08-28', commits: 4 }],
     ['2026-08-28'])
   assert.strictEqual(r.estado, 'falta')
   assert.ok(r.detalle.some((d) => d.includes('2026-08-27') && d.includes('9 commit')))
@@ -436,11 +459,11 @@ test('sin pendientes que nombren fichas, no hay nada que cruzar', () => {
 // --- rutas citadas -----------------------------------------------------------------------------
 test('extrae rutas de los backticks y descarta lo que no es una ruta', () => {
   const rutas = c.rutasCitadas([
-    'ver `scripts/lib/cierre-core.js` y `jira/LOOP/PROGRESO.md`',
-    'el playbook `db.md` seccion 8, la plantilla `jira/<TICKET>/tasks.md`',
+    'ver `scripts/lib/cierre-core.js` y `cambios/META/PROGRESO.md`',
+    'el playbook `db.md` seccion 8, la plantilla `cambios/<TICKET>/tasks.md`',
     'el sitio `https://example.com/x/y` y el objeto `INGRES.PR_X`',
   ].join('\n')).map((r) => r.ruta)
-  assert.deepStrictEqual(rutas.sort(), ['jira/LOOP/PROGRESO.md', 'scripts/lib/cierre-core.js'])
+  assert.deepStrictEqual(rutas.sort(), ['cambios/META/PROGRESO.md', 'scripts/lib/cierre-core.js'])
 })
 
 test('una cita en pasado se marca como historica; una instruccion viva no', () => {
@@ -460,7 +483,7 @@ test('un N/M de la prosa no es una ruta, aunque tenga barra', () => {
 test('la cabecera de la bitacora son instrucciones vivas; las entradas con fecha, historia', () => {
   const texto = [
     '# PROGRESO',
-    'El resto se archiva en `jira/LOOP/progreso/`.',
+    'El resto se archiva en `cambios/META/progreso/`.',
     '',
     '## 2026-08-28 - una tanda',
     'este PROGRESO citaba `work/progreso/` desde el 18/08.',
@@ -487,7 +510,7 @@ test('todas las rutas existen: verde', () => {
 })
 
 test('una ruta inventada FALTA, y se dice en que documento estaba', () => {
-  const r = c.chequearRutasCitadas([{ doc: 'jira/LOOP/PROGRESO.md', ruta: 'scripts/no-existe.js' }], 12)
+  const r = c.chequearRutasCitadas([{ doc: 'cambios/META/PROGRESO.md', ruta: 'scripts/no-existe.js' }], 12)
   assert.strictEqual(r.estado, 'falta')
   assert.ok(r.detalle.some((d) => d.includes('PROGRESO.md') && d.includes('scripts/no-existe.js')))
 })
@@ -509,7 +532,7 @@ test('una historica no tapa a una viva en el mismo documento', () => {
 
 // --- caracteres de control ---------------------------------------------------------------------
 test('un backspace en una ruta se caza y se dice la linea', () => {
-  const h = c.caracteresDeControl('linea sana\nC:\\bffamiliar\bf-db-workspace\notra')
+  const h = c.caracteresDeControl('linea sana\nC:\\repo\bworkspace\notra')
   assert.ok(h.length >= 1)
   assert.strictEqual(h[0].linea, 2)
   assert.strictEqual(h[0].codigo, '0x08')
@@ -708,17 +731,17 @@ test('un pendiente de verdad, escrito en varios renglones, se sigue leyendo ente
 // Un dia de trabajo del LOOP cuenta para el cierre de cualquier ticket (`diasConCommits` mira
 // tambien `archivosDeLoop`), pero su entrada vive en la bitacora del change del loop. Mirar solo la
 // del ticket daba "sin entrada en la bitacora" para todo dia de loop: el 18/09/2026 el cierre de
-// ICC-13 marcaba 13, 14, 16 y 17/09 en rojo con las cuatro entradas escritas en jira/META.
+// ICC-13 marcaba 13, 14, 16 y 17/09 en rojo con las cuatro entradas escritas en cambios/META.
 test('las carpetas de bitacora incluyen la del loop, no solo la del ticket', () => {
-  assert.deepEqual(c.carpetasDeBitacora('jira/ICC-13', 'jira/META'), ['jira/ICC-13', 'jira/META'])
+  assert.deepEqual(c.carpetasDeBitacora('cambios/ICC-13', 'cambios/META'), ['cambios/ICC-13', 'cambios/META'])
 })
 
 test('cuando el ticket ES el change del loop, la carpeta no se repite', () => {
-  assert.deepEqual(c.carpetasDeBitacora('jira/META', 'jira/META'), ['jira/META'])
+  assert.deepEqual(c.carpetasDeBitacora('cambios/META', 'cambios/META'), ['cambios/META'])
 })
 
 test('sin carpeta de ticket, queda la del loop', () => {
-  assert.deepEqual(c.carpetasDeBitacora('', 'jira/META'), ['jira/META'])
+  assert.deepEqual(c.carpetasDeBitacora('', 'cambios/META'), ['cambios/META'])
 })
 
 // El cierre traducia a VERDE lo que `aceptacion` no pudo medir: aceptacion-core exige

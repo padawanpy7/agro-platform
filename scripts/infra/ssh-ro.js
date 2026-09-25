@@ -1,9 +1,9 @@
 // ssh-ro.js - runner SSH de SOLO LECTURA contra los servidores de las bases.
 //
 // Por que existe: DIR_CAJA (`/archivos_aplicacion/caja`) vive en el disco del servidor, no en la
-// base. Hasta hoy se leia con UTL_FILE desde PL/SQL, que sirve pero es indirecto: no ve permisos,
-// ni fechas, ni el listado del directorio, y un archivo binario hay que adivinarlo. Con acceso
-// SSH se mira el archivo tal cual.
+// base. Leerlo solo con consultas a la base es indirecto: no ve permisos, ni fechas, ni el
+// listado del directorio, y un archivo binario hay que adivinarlo. Con acceso SSH se mira el
+// archivo tal cual.
 //
 // Credenciales: las MISMAS de la base (`LDAP_USUARIO` / `LDAP_CONTRASENA` del `.env`), y el host sale del
 // DSN de la base elegida. No se agrega ningun secreto nuevo al repo.

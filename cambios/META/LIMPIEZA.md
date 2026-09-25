@@ -104,3 +104,8 @@ son del repo de origen.
 
 **Y despues**: hay **3 commits sin subir** en este repo. `git push` -desde esta sesion funciona,
 porque este es su directorio de trabajo-.
+
+## Estado (25/09/2026)
+
+Hecho, verificado (ver `cambios/META/PROGRESO.md`). Quedan afuera a proposito: `ssh-ro.js` (reescribirlo
+es decidir como se mira el VPS de agro) y el hook de `db-sql` en `.claude/settings.json`.

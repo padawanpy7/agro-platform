@@ -7,8 +7,8 @@
 //   parar     lo apaga ya, sin esperar el TTL
 //
 // El motivo y los numeros estan en la cabecera de `scripts/lib/navegador.js`. En corto: cada tool
-// es un proceso aparte y hasta el 11/08 cada una levantaba su propio Chromium (~3,1 s por
-// invocacion); `kove-jornada` spawnea 4-6 tools por corrida.
+// es un proceso aparte y cada una levantaba su propio Chromium (~3,1 s por invocacion); una tool
+// que spawnea varias tools por corrida pagaba eso varias veces.
 
 const nav = require('../lib/navegador')
 

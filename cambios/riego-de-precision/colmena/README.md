@@ -9,6 +9,7 @@ fuentes publicas.
 |---|---|
 | [00-resumen.md](00-resumen.md) | la sintesis y por que esta zona |
 | [07-vacios.md](07-vacios.md) | **el guion del relevamiento**: lo que se busco y NO aparecio |
+| **[guia-relevamiento.pdf](guia-relevamiento.pdf)** | **las preguntas para imprimir y llevar**, con casillas y espacio para notas (3 paginas) |
 | [08-tu-tabla-revisada.md](08-tu-tabla-revisada.md) | la tabla de 16 filas contrastada contra lo investigado |
 | [04-riego-agua.md](04-riego-agua.md) | el tema central, y donde menos fuente publica hay |
 | [05-clima-riesgos.md](05-clima-riesgos.md) | las perdidas documentadas, con fecha |

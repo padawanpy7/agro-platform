@@ -132,16 +132,104 @@ el establecimiento promedio paraguayo tiene **110 cabezas**. A USD 50 por collar
 anio para un productor promedio, sobre un hato cuyo valor bruto total ronda los USD 114.000. **Es
 producto de estancia grande.**
 
+## CORRECCION del 27/09/2026: en software de gestion SI hay competencia
+
+Ayer se escribio que la trazabilidad era la tercera oportunidad. **Es mas debil de lo que se dijo**,
+y hay que corregirlo antes de usarlo en una conversacion.
+
+**Ya existen apps de gestion ganadera disponibles en Paraguay**, y una de ellas cubre justo lo que
+se habia marcado como hueco:
+
+| | que hace |
+|---|---|
+| **GanApp** | gestion + trazabilidad: potreros geocercados, movimientos fechados, sanidad, pesajes, lectura RFID, iOS y Android, prueba gratis de 30 dias. **Declara explicitamente cubrir lo que RETSA y el EUDR piden** |
+| **Agribusiness Paraguay** | software agricola y ganadero con tableros, reportes financieros, control de hato y costos |
+| **Control Ganadero, BovControl, VacAPP** | internacionales, usadas en Paraguay |
+| **Huella, GanSoft** | argentinas, pensadas para chico, mediano y grande |
+
+Fuentes: [InfoNegocios](https://infonegocios.com.py/infoganaderia/tres-apps-que-todo-ganadero-debe-conocer),
+[GanApp](https://ganapp.net/), [Agribusiness PY](https://agribusiness.com.py/html/).
+
+**Esto es lo contrario de lo que pasa en fruta.** Alla no se encontro ningun software de riego,
+turnos o acopio operando. **Aca hay varios, maduros y con prueba gratis.** Entrar a competir con un
+registro de rodeo es entrar tarde y por abajo.
+
+**Lo que NO hacen** -y es donde queda el hueco-: **ninguna mide el pasto ni el agua.** Registran lo
+que el productor carga a mano. Nadie le dice cuanta biomasa tiene el potrero 3 ni que el tajamar
+bajo 40 cm esta semana.
+
+## Los numeros del dolor, ahora con nombre
+
+| indicador | Paraguay | la region | las unidades elite del pais |
+|---|---|---|---|
+| **Carcasa por animal y anio** | **37,6 kg** | Argentina 57,7 &middot; Brasil 54,6 | -- |
+| **Tasa de extraccion** | **16,4%**, la mas baja | Brasil 16,7 &middot; Uruguay 20,4 &middot; Argentina **27** | -- |
+| **Tasa de procreo** | **50 a 53 terneros** por cada 100 vientres | -- | -- |
+| **Tasa de destete** | **~52%** | -- | **~75%** |
+| Ganancia de peso | -- | -- | ~180 kg/cabeza/anio, venta a 24-30 meses |
+
+Fuentes: [ABC Rural](https://www.abc.com.py/negocios/abc-campo/2026/08/04/paraguay-produce-menos-carne-por-animal-que-uruguay-brasil-y-argentina-que-explica-la-brecha/),
+[La Prensa](https://www.laprensaparaguay.com/2026/09/16/la-eficiencia-reproductiva-puede-impulsar-el-crecimiento-de-la-ganaderia-paraguaya/),
+[Ultima Hora](https://www.ultimahora.com/gremio-plantea-elevar-tasa-de-procreo-bovino-al-menos-5).
+
+> **El numero que vende es este: de cada 100 vacas, el promedio paraguayo saca 52 terneros y las
+> unidades elite del MISMO pais sacan 75.** No es una brecha contra Argentina: es contra el vecino.
+> Veintitres terneros de diferencia, con el mismo clima y el mismo suelo.
+
+Y la causa documentada no es misteriosa: **disponibilidad de forraje, sequias y estres termico**
+afectan crecimiento, indices reproductivos y peso de faena. Mas **poca inversion en tecnologia** y
+**baja produccion de terneros**.
+
+**Las tres primeras se miden.** Forraje: satelite. Sequia: el agua. Estres termico: la estacion.
+
+## Que sirve en un establecimiento de ~130 cabezas
+
+Es el caso concreto que se planteo, y **esta apenas arriba del promedio nacional de 110**. A esa
+escala **casi todo el hardware de ganaderia de precision queda afuera por precio**:
+
+| | a 130 cabezas | veredicto |
+|---|---|---|
+| Collares GPS / cercos virtuales | USD 50/collar/anio x 130 = **USD 6.500/anio** | **NO** |
+| Sensor por animal (rumia, celo) | peor todavia | **NO** |
+| Balanza electronica con caravana | **una sola**, no por animal | tal vez, mas adelante |
+| **Satelite de pasturas** | **cero hardware** | **SI, primero** |
+| **Nivel de agua** | **1 a 3 sensores** para todo el establecimiento | **SI** |
+| **Estacion meteorologica** | **una sola** | SI, barata |
+| Registro del rodeo | ya hay apps con prueba gratis | **no competir** |
+
+### La cuenta de lo que esta en juego
+
+**Estimacion, con los supuestos a la vista:**
+
+```
+130 cabezas, ~75 vientres
+Destete actual al promedio nacional (52%)  ->  39 terneros
+Destete al 65% (ni siquiera el 75% elite)  ->  49 terneros
+                                               ---------------
+                                               +10 terneros/anio
+```
+
+Un ternero destetado vale, **estimado**, entre **USD 400 y 500** -del orden del 40-50% del valor
+bruto de una cabeza faenada, que son ~USD 1.035 (ver arriba)-. Entonces:
+
+**+10 terneros = USD 4.000 a 5.000 al anio = Gs 32 a 40 millones.**
+
+> **El precio del ternero al destete NO esta verificado.** Es derivacion propia y es la primera
+> cifra a confirmar con el productor: *que te pagan por un ternero destetado?*
+
 ## Veredicto
 
 **Si, hay negocio, pero es OTRO producto** -- y eso es una ventaja, no un problema: reusa el 80% de
 lo construido y no compite con el riego por el mismo cliente.
 
-**El orden que yo seguiria:**
+**El orden que yo seguiria, corregido el 27/09:**
 
-1. **Agua en el Chaco** -- el dolor mas caro, la tecnologia que ya tenemos, y **avisar si resuelve**.
-2. **Pasturas por satelite** -- cero hardware, entra gratis, y funciona mejor que en horticultura.
-3. **Trazabilidad** -- obligacion regulatoria, 70% del hato sin identificar, y es software.
+1. **Pasturas por satelite** -- cero hardware, y **es lo unico del hueco que nadie cubre hoy**: las
+   apps de gestion registran lo que el productor carga, ninguna le dice cuanto pasto tiene.
+2. **Agua** -- 1 a 3 sensores por establecimiento. El dolor mas caro en el Chaco, y **avisar si
+   resuelve** -al reves que con las heladas en fruta-.
+3. **Trazabilidad** -- **BAJA de prioridad**: GanApp ya lo cubre, con prueba gratis. Solo tiene
+   sentido si se llega por el frigorifico y no por el productor.
 4. **Cercos virtuales** -- cuando haya clientes grandes, y revendiendo, no fabricando.
 
 **Lo que NO hay que hacer**: llevar el modelo de cuota por hectarea. Con Gs 3,1 millones de bruto
@@ -155,3 +243,20 @@ de agua o el establecimiento.
 - Si los grandes frigorificos -que exportan y dependen del EUDR- **pagarian por trazabilidad de sus
   proveedores**. Seria el mismo patron que la cooperativa: **un contrato en vez de N**.
 - Cuanto cuesta un sensor de nivel ultrasonico puesto, y si se consigue local.
+- **Que le pagan por un ternero destetado.** Es la cifra que convierte la brecha de destete en
+  guaranies y hoy es derivacion propia.
+- **Cual es SU tasa de destete.** Casi seguro no la tiene medida, y esa es la conversacion: no se
+  puede mejorar lo que no se cuenta.
+- Cuantos potreros tiene, de cuantas hectareas, y como rota.
+- Cuantas aguadas tiene y si alguna vez se le seco una.
+- **Si ya usa alguna app** y por que la dejo, si la dejo.
+
+## La advertencia sobre el tamanio del ticket
+
+**Un establecimiento de 130 cabezas no sostiene el negocio por si solo.** Si la mejora vale Gs 32 a
+40 millones al anio, una cuota razonable seria del orden de Gs 300.000 a 500.000 al mes -el 10-15%
+del valor creado-, contra los Gs 600.000 de un horticultor de 3 ha.
+
+**Sirve como puerta y como aprendizaje, no como modelo.** El negocio en ganaderia esta en
+establecimientos mas grandes, en una cooperativa o en un frigorifico que necesite el dato de sus
+proveedores. **Igual que en fruta: el escenario que importa es quien firma, no quien usa.**

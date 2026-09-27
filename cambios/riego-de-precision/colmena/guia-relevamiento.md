@@ -6,7 +6,52 @@ Fecha: ____ / ____ / 2026 &nbsp;&nbsp;·&nbsp;&nbsp; Con quien: ________________
 
 ---
 
-## 1. El agua
+> **Dos sombreros, y conviene no mezclarlos.** Algunas preguntas son para el **como productor**
+> -su hacienda, su arroz, sus potreros-. Otras son para el **como vecino que conoce La Colmena**
+> -la cooperativa, el riego, quien tiene goteo-. Las segundas valen mas.
+
+## 0. Su situacion -- empezar por aca
+
+> Dejo el arroz porque **"se le murio"**. Esa es la conversacion, y hay que entenderla antes de
+> ofrecer nada. Si se le murio por plata, ofrecerle tecnologia es no haber escuchado.
+
+- [ ] **Que le paso al arroz?** Falto agua, sobro agua, plaga, precio?
+
+- [ ] En que anio fue? Cuantas hectareas tenia?
+
+- [ ] Regaba por inundacion o de otra forma? De donde sacaba el agua?
+
+- [ ] Volveria a sembrar si tuviera con que asegurarlo?
+
+- [ ] Que perdio, mas o menos, en plata?
+
+---
+
+## 1. Su hacienda (130 cabezas)
+
+- [ ] Cuantos vientres tiene de las 130?
+
+- [ ] **Cual es su tasa de destete?** De cada 100 vacas, cuantos terneros saca?
+
+> Si no la tiene medida, **esa ES la conversacion**: el promedio paraguayo saca 52 terneros por
+> cada 100 vacas y las unidades elite del mismo pais sacan 75. No se puede mejorar lo que no se
+> cuenta.
+
+- [ ] **Que le pagan por un ternero destetado?**
+
+- [ ] Cuantos potreros tiene y de cuantas hectareas?
+
+- [ ] Como rota la hacienda? Por calendario o por como ve el pasto?
+
+- [ ] **Cuantas aguadas tiene? Alguna vez se le seco una?**
+
+- [ ] Lleva registro de algo: cuaderno, Excel, alguna app?
+
+- [ ] Ya probo alguna app ganadera? La dejo? Por que?
+
+---
+
+## 2. El agua
 
 > Es el tema central. **No hay ninguna fuente publica sobre el sistema de riego de La Colmena.**
 > Segun como sea el problema, el producto que sirve es otro.
@@ -37,7 +82,7 @@ Fecha: ____ / ____ / 2026 &nbsp;&nbsp;·&nbsp;&nbsp; Con quien: ________________
 
 ---
 
-## 2. La cooperativa
+## 3. La cooperativa
 
 - [ ] **Cuantos socios tiene CAICA?**
 
@@ -57,7 +102,7 @@ Fecha: ____ / ____ / 2026 &nbsp;&nbsp;·&nbsp;&nbsp; Con quien: ________________
 
 ---
 
-## 3. Los numeros del negocio
+## 4. Los numeros del negocio
 
 > Sin estos, no se puede cotizar. Son los que faltan para pasar de estimacion a dato.
 
@@ -75,7 +120,7 @@ Fecha: ____ / ____ / 2026 &nbsp;&nbsp;·&nbsp;&nbsp; Con quien: ________________
 
 ---
 
-## 4. Clima y conectividad
+## 5. Clima y conectividad
 
 - [ ] Cual es la estacion meteorologica mas cercana? Miran sus datos?
 
@@ -89,7 +134,7 @@ Fecha: ____ / ____ / 2026 &nbsp;&nbsp;·&nbsp;&nbsp; Con quien: ________________
 
 ---
 
-## 5. Tecnologia y competencia
+## 6. Tecnologia y competencia
 
 - [ ] **Alguien ya les ofrecio un sistema de riego, sensores o software?**
 
@@ -103,7 +148,7 @@ Fecha: ____ / ____ / 2026 &nbsp;&nbsp;·&nbsp;&nbsp; Con quien: ________________
 
 ---
 
-## 6. Lo que NO hay que prometer
+## 7. Lo que NO hay que prometer
 
 > Tenerlo a mano, porque es lo primero que van a preguntar.
 

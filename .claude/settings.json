@@ -5,7 +5,10 @@
       "Bash(node agro.js presupuesto*)",
       "Bash(git checkout --detach *)",
       "Bash(node agro.js check*)",
-      "Bash(node agro.js rama-drift*)"
+      "Bash(node agro.js rama-drift*)",
+      "Bash(git push origin main)",
+      "Bash(git commit *)",
+      "Bash(git add *)"
     ],
     "deny": [
       "PowerShell"

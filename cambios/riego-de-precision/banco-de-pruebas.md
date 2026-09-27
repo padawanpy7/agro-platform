@@ -85,8 +85,17 @@ Ninguna es sobre el cultivo. Son las que deciden si se puede:
 - Esta trabajado o en descanso?
 - A que distancia esta de donde vivimos? Si son 4 horas, cada iteracion cuesta un dia.
 
-## Una convergencia que conviene mirar
+## NO hay convergencia con el contacto ganadero (corregido el 27/09)
 
-**San Juan Bautista (Misiones) es zona ganadera.** El contacto de las 130 cabezas, si esta por ahi,
-**quedaria en la misma zona que el banco**. Eso permitiria probar las dos lineas -horticola y
-ganadera- con un solo viaje y un solo gateway. Vale preguntarlo.
+Se habia anotado que el contacto de las 130 cabezas podria estar cerca del banco. **Es falso: el
+señor es de La Colmena (Paraguari)**, a unos 200 km de Misiones.
+
+O sea que son **dos frentes separados y hay que tratarlos como tales**:
+
+| | donde | que es |
+|---|---|---|
+| **Banco de pruebas** | Misiones, terreno familiar | valida el **software**. Sin cliente, sin presion |
+| **La Colmena** | Paraguari | donde esta el **cliente posible** y la cooperativa |
+
+**No se pueden cubrir con un viaje ni con un gateway.** Y esta bien que sea asi: el banco no
+necesita cliente y el cliente no necesita esperar al banco.

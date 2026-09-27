@@ -55,3 +55,36 @@ precio** tiene el incentivo alineado con medir. El argumento de venta no es "pro
 | **MIC** | citado como fuente de **obstaculos burocraticos** para el reconocimiento de productos ([La Nacion, 2021](https://www.lanacion.com.py/negocios/2021/11/03/la-colmena-entre-la-creciente-produccion-de-frutas-y-las-limitaciones-a-nivel-pais/)) |
 | **SENATUR** | declaro la Expo Frutas de interes turistico nacional |
 | **Itaipu y Yacyreta** | apoyan la Expo Frutas ([ABC, 19/12/2025](https://www.abc.com.py/nacionales/2025/12/19/la-colmena-con-mas-de-50-feriantes-arranca-manana-la-xv-expo-frutas/)) |
+
+## El contacto concreto (27/09/2026)
+
+La primera reunion **no es con la cooperativa**: es con un conocido del dueño, de La Colmena.
+
+| | |
+|---|---|
+| Que tiene | **~130 cabezas de ganado** |
+| Que hacia antes | **cultivaba arroz y lo dejo: "se le murio"** |
+| Por que importa | **ya intento agricultura bajo riego y le fallo** |
+
+**El arroz que se muere es el dato mas cargado de toda la conversacion**, y **no se sabe por que
+se murio**. Las causas posibles son opuestas y llevan a productos distintos:
+
+| si fue... | entonces |
+|---|---|
+| **falta de agua** (seca, bomba rota, turno perdido) | es exactamente nuestro caso: medir y avisar |
+| **exceso de agua** (inundacion, mal drenaje) | tambien lo detecta el sensor, pero el producto es otro |
+| **plaga o enfermedad** | no es nuestro producto |
+| **precio o plata** | tampoco: no lo arregla ningun sensor |
+
+**Preguntarlo primero, antes de ofrecer nada.** Si se le murio por plata, ofrecerle tecnologia es
+no haber escuchado.
+
+**Y ojo con el sesgo que deja**: es alguien **quemado** con una inversion productiva. Va a evaluar
+lo que se le proponga con desconfianza y con razon. **Ir con el numero, no con la promesa.**
+
+## Los dos roles del contacto, que conviene no mezclar
+
+| como... | que puede contestar | cuanto vale |
+|---|---|---|
+| **Ganadero de 130 cabezas** | su tasa de destete, sus aguadas, sus potreros | cliente posible, **ticket chico** (ver [economia/ganaderia.md](../economia/ganaderia.md)) |
+| **Vecino que conoce la zona** | el sistema de riego, CAICA, quien tiene goteo, a quien mas le interesa | **vale mas**: es la puerta a las 114 ha de uva |

@@ -59,3 +59,4 @@ uva, durazno y ciruela **no se puede derivar sin preguntar cuanto pesa la caja**
 | [hortalizas-varias.md](hortalizas-varias.md) | papa, cebolla, zanahoria, locote |
 | [arroz.md](arroz.md) | **por que NO**, con el numero |
 | [ganaderia.md](ganaderia.md) | **mercado vecino**: otro producto que reusa el 80% de lo construido |
+| [tierra.md](tierra.md) | **cuanto CUESTA la hectarea** en Misiones, y si el cultivo la paga |

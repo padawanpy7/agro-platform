@@ -17,7 +17,7 @@ fuentes publicas.
 | [01-produccion.md](01-produccion.md) | cultivos, hectareas, rindes, calendario |
 | [03-comercializacion.md](03-comercializacion.md) | el canal, Expo Frutas, precios |
 | [06-fuentes.md](06-fuentes.md) | todo lo consultado, **incluido lo que fallo y por que** |
-| `crudo/` | un `.md` por documento capturado, con frontmatter |
+| `crudo/` | **vacia todavia**: el relevamiento se hizo leyendo a mano. La llena `capturar.py` cuando haga falta re-verificar |
 
 **Reejecutable**: `python3 capturar.py` lee `fuentes.yml` -las fuentes viven ahi, no en el codigo-.
 Respeta `robots.txt`, 1 request por segundo por dominio, backoff ante 429/5xx, e **idempotencia por

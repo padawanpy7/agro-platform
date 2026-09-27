@@ -70,7 +70,7 @@ sobreestimaba la cobertura del capital en ~50%.
 
 | concepto | USD |
 |---|---|
-| **Fijo por finca**: gateway Heltec 62 + antena, caja, poste, instalacion ~80 | **~145** |
+| **Fijo por finca**: gateway Heltec 62 + antena, caja, poste, instalacion ~80 | **~142** |
 | **Por hectarea**: 2 nodos de valvula armados (~120) + 1 nodo sensor armado (~45) | **~165** |
 
 Con 1.700 USD: `(1.700 - 142) / 165` = **~9,4 ha** a precio local -- **estas piezas se compran en

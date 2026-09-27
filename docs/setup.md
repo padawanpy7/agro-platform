@@ -16,7 +16,7 @@ ignorarlo. Se llenan cuando haya codigo.
 
 | para | necesitas |
 |---|---|
-| mirar el VPS (`ssh-ro`) | `VPS_HOST` / `VPS_USUARIO` / `VPS_SSH_KEY` en `.env` |
+| mirar el VPS (`ssh-ro`) | **no funciona todavia**: el script es el del repo de origen y pide `LDAP_USUARIO`/`ORA_DSN_*`. Las `VPS_*` del `.env.example` son para cuando se adapte |
 | la base | Postgres + TimescaleDB + PostGIS (en local, docker) y las `PG*` del `.env` |
 | tests de pantalla | `npx playwright install chromium` |
 | `gitleaks` (gate de secretos) | binario portable en `../tools/gitleaks-<version>/` |

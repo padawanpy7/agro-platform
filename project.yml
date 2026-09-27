@@ -45,7 +45,8 @@ structure:
      Copiado de infra-platform; si la plataforma cambia, se actualiza alla y se vuelve a copiar."
   - "memory/playbooks/ - best practices por disciplina. Arrancan VACIOS: los hechos del repo de
      origen eran de Oracle y APEX, y copiarlos convertiria hechos medidos en folklore."
-  - "scripts/ - el loop. scripts/infra/ssh-ro.js mira el VPS en SOLO LECTURA."
+  - "scripts/ - el loop. scripts/infra/ssh-ro.js MIRARA el VPS en solo lectura: hoy sigue siendo
+     el script del repo de origen y pide credenciales LDAP/Oracle. Adaptarlo esta pendiente."
 
 links:
   repo: "git@github.com:padawanpy7/agro-platform.git"

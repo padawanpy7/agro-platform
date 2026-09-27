@@ -237,7 +237,8 @@ Cada paso deja algo que se puede probar solo. El detalle por tarea va en `tasks.
 | 6 | NDVI de Sentinel-2 por parcela | un poligono nuevo trae su serie de NDVI |
 | 7 | Estacion meteorologica | sus variables entran al mismo modelo de medicion |
 
-El paso 4 es el primero que necesita hardware, y son **~63 USD** (ver `ECONOMIA.md`). Los tres
+El paso 4 es el primero que necesita hardware, y son **~72 USD** -- Gs 592.000 con caudalimetro,
+comprado entero en Asuncion (ver [PREGUNTAS.md](PREGUNTAS.md), no ECONOMIA.md). Los tres
 primeros no necesitan comprar nada.
 
 ## Cuando mudarse a un VPS propio

@@ -40,7 +40,9 @@
 6. **Todo archivo nuevo va en la carpeta de su cambio.** La raíz no acumula sueltos. Algo sube a
    la raíz solo si sirve para *todos* los cambios.
 7. **Nada destructivo sin autorización explícita**, y el VPS se mira en **solo lectura** desde
-   acá (`node agro.js ssh-ro`). Escribir en la plataforma es trabajo de `infra-platform`.
+   acá. Escribir en la plataforma es trabajo de `infra-platform`. **`node agro.js ssh-ro` TODAVÍA
+   NO SIRVE**: es el script del repo de origen y pide `LDAP_USUARIO` / `ORA_DSN_*`. Adaptarlo está
+   pendiente; hasta entonces, mirar el VPS es pedírselo a la sesión de `infra-platform`.
 8. **Credenciales solo en `.env`** (gitignored) o variables de entorno. Nunca en el repo.
 
 ## 2. Reglas de oro

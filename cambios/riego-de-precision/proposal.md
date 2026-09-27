@@ -2,8 +2,16 @@
 
 producto agro multi-cliente: riego por goteo autonomo, con el dato preciso para ML
 
-> **Estado: en la compuerta del dueño.** Esto es la fase 1 del SDD -el objetivo, y nada mas-. El
-> `design.md` y el `tasks.md` se escriben DESPUES de que esto se apruebe.
+> **Estado: la compuerta se paso DE HECHO, no formalmente (25-27/09/2026).**
+>
+> Este documento se escribio como fase 1 del SDD, con `design.md` y `tasks.md` pendientes hasta la
+> aprobacion. **El dueño nunca dijo "aprobado"**: dirigio el trabajo hacia el diseño, la economia
+> por cultivo, el relevamiento de campo y la presentacion. En los hechos la compuerta paso, y se
+> registra asi -y no como una aprobacion formal- porque **inventar una aprobacion que no ocurrio es
+> peor que no tenerla**.
+>
+> Consecuencia practica: **`design.md` esta escrito y completo; `tasks.md` sigue siendo el
+> placeholder** que dejo `cambio-nuevo`, igual que `HECHO_CUANDO.md`. Esos dos son lo que falta.
 
 > Los dos diagramas que acompañan a esta ficha viven en `desarrollo/diagramas/`:
 > la infraestructura completa (del sensor enterrado al VPS) y el modelo de datos.
@@ -25,7 +33,7 @@ El producto es un **sistema de agricultura de precision multi-cliente**, vendido
 | 4 | **Imagen satelital** | NDVI por parcela desde Sentinel-2 | estado del terreno, sin hardware |
 
 **Los cultivos objetivo, decididos el 25/09/2026: horticultura y frutales. Soja NO.** El analisis
-esta en `MERCADO.md`; el resumen es que el tomate factura **26 veces mas por hectarea** que la soja
+esta en `MERCADO.md`; el resumen es que el tomate factura **~23 veces mas por hectarea** que la soja
 y que instalar goteo en soja cuesta **3 a 4 años del bruto entero** del cultivo. Ademas horticultura
 y frutales estan **desatendidos** en Paraguay, mientras que en extensivo compiten Kilimo -que ya
 opera aca-, Solinftec, Agrosmart y las multinacionales. **La ventaja de este proyecto es estar donde

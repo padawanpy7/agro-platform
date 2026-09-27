@@ -36,7 +36,8 @@ es quien firma. **Nada de lo construido se tira si gana B en vez de A** -- lo un
 es `ECONOMIA.md`.
 
 
-Tres. Ninguna es tecnica: las tres dependen de plata, de un campo real o del negocio.
+**Una bloqueante -la 0- y dos abiertas.** La 2 se contesto el 27/09. Ninguna es tecnica: dependen
+de plata, de un campo real o del negocio.
 
 ## 1. Donde corre el producto: este VPS o uno nuevo
 
@@ -56,7 +57,11 @@ cliente real en una maquina compartida.
 
 **Si no se contesta**: el diseño asume A y deja escrito el disparador de la mudanza.
 
-## 2. Hay un lote real donde instalar, o se arranca en banco
+## 2. ~~Hay un lote real donde instalar, o se arranca en banco~~ CONTESTADA (27/09)
+
+> **Respuesta: banco primero, en el terreno familiar de Misiones.** Decidido el 27/09/2026; el
+> detalle y el por que de esa zona estan en [banco-de-pruebas.md](banco-de-pruebas.md). El lote
+> real queda para cuando haya cliente. Lo de abajo es el analisis con el que se decidio.
 
 El lazo de control no se puede dar por bueno en una simulacion: **un sensor enterrado miente de
 formas que no se inventan** -contacto con el suelo, temperatura, deriva de calibracion-.

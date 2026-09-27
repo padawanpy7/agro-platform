@@ -14,6 +14,21 @@
 // se escribe, se resuelve en la misma tanda, y nadie vuelve a borrarlo.
 const VERBOS_DE_PENDIENTE = /\b(falta|faltan|sin (empezar|hacer|crear|traer|portar)|pendiente|queda por|hay que (crear|hacer|traer|portar))\b/i
 
+// PERO la contradiccion solo se puede afirmar si el texto dice que algo NO EXISTE. "pendiente" y
+// "queda por" son MARCADORES de pendiente: no afirman nada sobre existencia. Con ellos solos, el
+// gate emitia "dice que falta X, pero X existe" sobre textos que nunca dijeron que faltara -uno
+// decia "sin adaptar", otro "sigue pensado para el server del origen"-. Las dos veces la frase del
+// gate era FALSA, y un gate que afirma algo falso ensenia a ignorarlo
+// (ver `cambios/META/LIMPIEZA.md`). Medido el 27/09/2026.
+//
+// Por eso esto es una lista BLANCA de lo que si afirma ausencia, y no una lista negra de verbos de
+// modificacion: la lista negra siempre queda corta -"sin adaptar" se puede escribir de diez formas-
+// y cada forma nueva vuelve a producir la afirmacion falsa.
+//
+// NO se aflojo el gate para que pase un texto: se le saco una afirmacion que no podia sostener. Lo
+// que si mide -"falta crear X" con X existiendo- sigue dando rojo, y hay un test que lo fija.
+const VERBOS_DE_AUSENCIA = /\b(falta|faltan|sin (empezar|crear|traer|portar)|hay que (crear|traer|portar))\b/i
+
 // Rutas y tools citadas en un texto: `algo/asi.js`, `node agro.js <tool>`.
 const RUTA = /`([\w./-]+\/[\w./-]+)`/g
 const TOOL = /`node [\w.-]+\.js ([a-z][\w-]*)`/g
@@ -45,7 +60,9 @@ function citasDe(texto) {
 function contradicciones(pendientes, { existeRuta, esToolConocida }) {
   const hallazgos = []
   for (const p of pendientes) {
-    if (!VERBOS_DE_PENDIENTE.test(p.texto)) continue
+    // Solo se contradice lo que AFIRMA ausencia. Un "pendiente: adaptar X" no se desmiente
+    // mirando si X existe: que exista no prueba que este adaptado.
+    if (!VERBOS_DE_AUSENCIA.test(p.texto)) continue
     const { rutas, tools } = citasDe(p.texto)
 
     for (const r of rutas) {

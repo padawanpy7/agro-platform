@@ -218,8 +218,8 @@ una vez por cultivo y se reusa en todos los clientes de ese cultivo.
 
 No es no encontrar clientes. Es el **techo**, y ahora tiene numero: para figurar como **mediana
 empresa** en Paraguay hay que facturar **Gs 3.230 millones al año**, que son **~700 ha bajo
-gestion** (ver ECONOMIA.md). Sobre 3.500 ha de horticultura eso es el **19% del pais** -imposible-;
-sobre 32.400 ha con frutales es el **2,1%** -la misma proporcion que hace facil el piso-.
+gestion** (ver ECONOMIA.md). Sobre 3.500 ha de horticultura eso es el **20% del pais** -imposible-;
+sobre 32.400 ha con frutales es el **2,2%** -la misma proporcion que hace facil el piso-.
 
 **Por eso los frutales no son una linea opcional: son lo que hace que el techo sea alcanzable.**
 Las tres salidas siguen siendo las mismas, pero ya no valen lo mismo:

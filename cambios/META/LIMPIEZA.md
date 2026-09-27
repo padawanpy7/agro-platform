@@ -1,4 +1,9 @@
-# Limpieza pendiente del workspace (cambios/META/LIMPIEZA.md)
+# Limpieza del workspace -- HECHA (25/09/2026)
+
+> **Este documento describe trabajo YA TERMINADO.** Se conserva porque explica **por que** el
+> workspace quedo como quedo, no porque falte hacerlo. El criterio de cierre esta al final y se
+> verifico: el grep de restos del repo de origen sale vacio. Lo que sigue esta escrito en presente
+> porque era el estado al empezar.
 
 Este repo es una copia de `bf-db-workspace` (Oracle / APEX / Jira / Kove) con ese dominio borrado
 el 25/09/2026. Un verificador adversarial reviso el resultado y encontro **restos del repo de

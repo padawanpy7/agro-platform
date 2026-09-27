@@ -95,3 +95,28 @@ test('el resumen agrupa por tipo', () => {
   assert.equal(r.ok, false)
   assert.deepStrictEqual(r.porTipo, { x: 2, y: 1 })
 })
+
+// 27/09/2026. El gate decia "dice que falta `scripts/infra/ssh-ro.js`, pero existe" sobre un
+// pendiente que decia "sin adaptar". Nunca dijo que faltara: dijo que no estaba adaptado, y que el
+// archivo exista no prueba lo contrario. Un gate que afirma algo falso ensenia a ignorarlo.
+test('un pendiente de ADAPTAR no se contradice porque el archivo exista', () => {
+  const pend = [{ linea: 1, texto: '  - Pendiente: `scripts/infra/ssh-ro.js` sin adaptar.' }]
+  const h = a.contradicciones(pend, { existeRuta: () => true, esToolConocida: () => false })
+  assert.deepStrictEqual(h, [], 'un pendiente de modificacion no es una contradiccion')
+})
+
+// El control negativo: el caso que el gate SI tiene que seguir cazando.
+test('un pendiente de CREAR sigue dando rojo si el archivo ya existe', () => {
+  const pend = [{ linea: 1, texto: '  - Pendiente: falta crear `scripts/infra/nuevo.js`.' }]
+  const h = a.contradicciones(pend, { existeRuta: () => true, esToolConocida: () => false })
+  assert.strictEqual(h.length, 1)
+  assert.strictEqual(h[0].tipo, 'pendiente-ya-hecho')
+})
+
+// La forma que la lista negra no cubria, y por la que se paso a lista blanca: "sigue pensado para"
+// no es ninguno de los verbos de modificacion previstos, y volvia a producir la frase falsa.
+test('un pendiente redactado de cualquier otra forma tampoco se contradice', () => {
+  const pend = [{ linea: 1, texto: '- Pendiente: `scripts/infra/ssh-ro.js` sigue pensado para el server del origen.' }]
+  const h = a.contradicciones(pend, { existeRuta: () => true, esToolConocida: () => false })
+  assert.deepStrictEqual(h, [], 'solo se contradice lo que afirma AUSENCIA')
+})

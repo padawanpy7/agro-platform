@@ -5,6 +5,36 @@ metido en `cambios/META/PROGRESO.md`, que es para lo que se hace en `main` y tie
 **+8 lineas por sesion** -pensado para la bitacora del loop, no para un producto de quince
 documentos-. Aca hay lugar. La mas nueva ARRIBA.
 
+## 2026-09-27 -- localizar hacienda sin GPS, anotado como opcion futura
+
+Pregunta del dueño: *hay otra forma de rastrear las vacas por radiofrecuencia, para no pagar GPS?*
+Evaluado y anotado en [economia/ganaderia.md](economia/ganaderia.md), **como opcion a futuro, no
+como tarea**: ganaderia sigue siendo otro producto sin ficha propia.
+
+Lo que la evaluacion cambio:
+
+- **El GPS no es lo que cuesta.** El modulo GNSS son 4-8 USD. Caro es el abono mensual -que LoRaWAN
+  ya elimina- mas bateria, panel, caja y correa, que se pagan igual. Sacarle el GNSS al nodo ahorra
+  ~5 USD de ~40 y te deja sin posicion.
+- **Y por eso el "NO" a los collares se sostiene**: a precio local el nodo LoRa es Gs 290.000
+  (~35 USD), o **~4.550 USD a 130 cabezas** -- el mismo orden que los collares GPS. **Cualquier
+  dispositivo activo por animal queda afuera a esa escala, lleve GNSS o no.** El unico que cierra es
+  el que no tiene bateria ni radio: la **caravana leida en un paso obligado**, que la trazabilidad ya
+  obliga a poner.
+- **TDoA de LoRa descartado**: necesita gateways con fine timestamping, que el Heltec local no hace,
+  y entrega 100-250 m de error. Peor precision que clasificar por RSSI, y mas caro.
+- **RSSI sirve para zona, no para coordenadas** (±6-10 dB de sombreado). "Potrero 3" es justo el dato
+  que pide la rotacion, que es la misma pregunta que contesta el NDVI.
+- **La advertencia que mas importa, y sale del contrato**: un punto derivado de RSSI **no se guarda
+  como lat/lon**. Se guarda el RSSI crudo por ancla y la zona, con su incertidumbre. Si no, en dos
+  anios es indistinguible de un punto de GPS en `medicion` -- regla 1, y para ML es peor que no
+  tenerlo porque el modelo le cree.
+
+**Correccion sobre la marcha**: la primera respuesta estimo ~10-15 USD por baliza y era optimista
+contra la tabla de precios locales que el repo **ya tenia verificada** en `PREGUNTAS.md`. Con el
+precio real la conclusion se da vuelta: la radiofrecuencia sola **no** reemplaza al collar a 130
+cabezas.
+
 ## 2026-09-27 -- el SDD completo: regla de parada y plan por fases
 
 Los dos archivos que faltaban desde el 25/09 dejaron de ser el placeholder de `cambio-nuevo`.

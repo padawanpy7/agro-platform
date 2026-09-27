@@ -132,6 +132,83 @@ el establecimiento promedio paraguayo tiene **110 cabezas**. A USD 50 por collar
 anio para un productor promedio, sobre un hato cuyo valor bruto total ronda los USD 114.000. **Es
 producto de estancia grande.**
 
+## Localizar la hacienda sin pagar GPS -- evaluado el 27/09/2026
+
+Anotado porque puede hacerse **en el futuro**: no es plan ni tarea, es la evaluacion de una opcion
+para no volver a razonarla desde cero. La pregunta que lo disparo: *hay otra forma de rastrear las
+vacas por radiofrecuencia, para no pagar GPS?*
+
+### Lo primero: el GPS no es lo que cuesta
+
+El modulo GNSS son **4 a 8 USD**. Lo que cuesta de un collar es el abono mensual del que lleva GSM
+o satelite -- y **LoRaWAN ya lo elimina**: no hay costo por animal por mes -- mas la bateria, el
+panel, la caja y la correa, **que se pagan igual con GPS o sin GPS**.
+
+> **Sacarle el GNSS a un nodo ahorra ~5 USD de ~40 y te deja sin posicion.** El ahorro esta en otro
+> lado: en **cuantos dispositivos activos** pones, no en que lleva cada uno.
+
+### La cuenta que decide, a los precios locales ya verificados
+
+El nodo LoRa CubeCell HTCC-AB02 902-928 sale **Gs 290.000 (~35 USD)** en electronica.com.py
+(tabla de [PREGUNTAS.md](../PREGUNTAS.md) §3, consultada el 25/09; sin stock ese dia).
+
+| opcion por animal | 130 cabezas | veredicto |
+|---|---|---|
+| Nodo LoRa activo a precio local (35 USD) | **~4.550 USD** + bateria, caja y correa | **NO** |
+| Nodo LoRa importado en volumen (~10-15 USD, **sin verificar**) | ~1.300-1.950 USD + lo mismo | **NO** a esta escala |
+| Collar GPS comercial (50 USD/anio) | **6.500 USD/anio** | **NO** (ya estaba en la tabla de arriba) |
+| **Caravana RFID leida en un paso obligado** | **~130-390 USD** + un lector | **SI** |
+
+**La conclusion es la misma que para los collares, y por la misma razon**: a 130 cabezas **cualquier
+dispositivo activo por animal queda afuera, lleve GPS o no**. El unico que cierra es el que **no
+tiene bateria ni radio propia**: la caravana, leida donde el animal pasa igual.
+
+### Las cuatro tecnicas RF, y cual sirve
+
+| tecnica | que entrega | veredicto |
+|---|---|---|
+| **RSSI por zona** (2-3 anclas en postes conocidos) | *"potrero 3"*, no coordenadas | **la que usaria**: es el dato que pide la rotacion |
+| **Radiogoniometria a pie** (baliza + antena Yagi) | una **direccion**, no un punto en el mapa | **si**, para ir a buscar al que falta |
+| **Multilateracion LoRa por TDoA** | 100-250 m de error real | **no** -- ver abajo |
+| **UWB** | 10 cm, pero 50-100 m de alcance | inutil en el potrero; **bueno en la manga o el corral** |
+
+**Por que TDoA no**: necesita gateways con *fine timestamping* sincronizados por GPS. El Heltec de
+**Gs 490.000 (~59 USD)** que vende la tienda local **no lo hace**, y los que si cuestan varios
+cientos. Pagarias gateways caros para tener **peor** precision que clasificando por RSSI gratis.
+Semtech la empujo y quedo en nada.
+
+**Por que RSSI alcanza y a la vez no es preciso**: el sombreado en campo abierto es de **±6 a 10 dB**,
+y el cuerpo del animal, el pasto mojado y la orientacion de la antena lo empeoran. No se puede
+trilaterar con eso. **Si** se puede clasificar en que potrero esta, que es la pregunta que el
+ganadero se hace todas las semanas -- la misma que contesta el NDVI.
+
+### La arquitectura que sale de todo esto
+
+El dato que cambia el diseno: **el ganado es rodeo, no individuos dispersos.** Andan juntos. No hacen
+falta 130 posiciones: hace falta **una posicion y 130 presencias**.
+
+1. **Los pasos obligados primero.** Lector en la aguada, en la manga y en el saladero. La vaca
+   **tiene** que tomar agua todos los dias. Da quien bebio, **quien no bebio** -- primer sintoma de
+   animal enfermo -- y quien no aparece. Sin una sola cuenta de trilateracion, y **se apoya en la
+   caravana que la trazabilidad ya obliga a poner**.
+2. **Un solo collar GPS, en el animal guia.** Dos a cinco por lote. El rodeo esta donde esta la
+   madrina.
+3. **Baliza barata solo si se justifica**, para buscar con la Yagi al que falta. A precio local hoy
+   no cierra por animal; si cierra para un puniado de animales problematicos.
+
+Esto **no contradice** el veredicto de la tabla de 130 cabezas: la sigue confirmando. Lo que agrega
+es **por que** los collares quedan afuera -- no por el GPS, por el dispositivo activo -- y **que se
+pone en su lugar**.
+
+### La advertencia que sale del contrato, y es la que mas importa
+
+**Si se mide por RSSI, el resultado NO se guarda como un punto lat/lon.** Se guarda el **RSSI crudo
+de cada ancla** y la zona derivada, **con su incertidumbre**.
+
+Un punto inventado a partir de RSSI se ve **identico** a un punto de GPS en `medicion`, y en dos
+anios nadie va a poder distinguirlos. Es exactamente la regla 1 del contrato -- *un dato mal
+guardado no se arregla despues* -- y para ML es **peor que no tenerlo**, porque el modelo le cree.
+
 ## CORRECCION del 27/09/2026: en software de gestion SI hay competencia
 
 Ayer se escribio que la trazabilidad era la tercera oportunidad. **Es mas debil de lo que se dijo**,
@@ -197,6 +274,11 @@ escala **casi todo el hardware de ganaderia de precision queda afuera por precio
 | **Estacion meteorologica** | **una sola** | SI, barata |
 | Registro del rodeo | ya hay apps con prueba gratis | **no competir** |
 
+> **El "NO" a los collares no es por el GPS**, y por eso se evaluo aparte si la radiofrecuencia sola
+> los reemplaza: **no los reemplaza a esta escala**. Lo que cuesta es el dispositivo activo por
+> animal, lleve GNSS o no. La evaluacion completa, con lo que **si** se pone en su lugar, esta en
+> [Localizar la hacienda sin pagar GPS](#localizar-la-hacienda-sin-pagar-gps----evaluado-el-27092026).
+
 ### La cuenta de lo que esta en juego
 
 **Estimacion, con los supuestos a la vista:**
@@ -250,6 +332,16 @@ de agua o el establecimiento.
 - Cuantos potreros tiene, de cuantas hectareas, y como rota.
 - Cuantas aguadas tiene y si alguna vez se le seco una.
 - **Si ya usa alguna app** y por que la dejo, si la dejo.
+- **Cual de las cinco preguntas de localizacion le importa** -- encontrar un animal perdido, saber
+  en que potrero esta el rodeo, quien tomo agua, el recorrido de pastoreo, o la posicion de cada
+  uno. Cada una pide otra tecnologia y otro precio, y **desde el escritorio no se sabe cual le
+  duele**.
+- **Si hay lectores UHF o modulos UWB en electronica.com.py**, con stock y a que precio. No
+  verificado: la consulta del 25/09 fue por el Nivel 0 del riego, no por esto.
+- **Que banda habilita CONATEL** para una baliza fuera de 902-928, si alguna vez hiciera falta.
+- **Cuanto sale una caravana RFID UHF puesta** en Paraguay, y si el lector se consigue local. El
+  ~1-3 USD por caravana de la tabla de arriba es **referencia internacional, no precio verificado
+  aca**.
 
 ## La advertencia sobre el tamanio del ticket
 

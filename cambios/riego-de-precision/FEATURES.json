@@ -1,5 +1,176 @@
 {
   "proyecto": "riego-de-precision",
   "nota": "Ledger del cambio. Solo se cambia 'passes'; no se borra ni se edita descripcion/pasos. Lo que dice estar hecho lleva su evidencia.",
-  "features": []
+  "features": [
+    {
+      "id": "RP-00-entorno",
+      "categoria": "fase-0",
+      "descripcion": "Postgres local con TimescaleDB y PostGIS levantada y documentada en docs/setup.md. Es lo que necesita el verifier para probar contra base real.",
+      "pasos": [
+        "Levantar Postgres con las dos extensiones",
+        "Documentar el arranque en docs/setup.md",
+        "Dejar .env.example al dia con lo que hace falta"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-00-gates",
+      "categoria": "fase-0",
+      "descripcion": "Declarar lint, test y build en project.yml. Hoy estan vacios a proposito porque no hay codigo; mientras esten vacios, check saltea sus gates y no mide nada.",
+      "pasos": [
+        "pyproject.toml con versiones fijas (check-dep por paquete, lockfile, sin rangos abiertos)",
+        "Llenar commands.lint / test / build en project.yml",
+        "node agro.js check deja de decir salteado en los tres"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-00-playbook-db",
+      "categoria": "fase-0",
+      "descripcion": "memory/playbooks/database.md con las convenciones del esquema, escrito ANTES de la primera migracion. Arranca vacio y el contrato pide leerlo antes de tocar un objeto: un playbook vacio no dice nada.",
+      "pasos": [
+        "Nombres, tipos, precision, particionado por tiempo y politicas RLS",
+        "Nada de folklore del repo de origen: solo lo que se decide en este cambio"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-01-esquema",
+      "categoria": "fase-1",
+      "descripcion": "Migracion up/down de las doce tablas del design.md, con tenant_id en todas y comentarios obligatorios de que dato queda y que se pierde.",
+      "pasos": [
+        "Las doce tablas, incluida calibracion con procedencia obligatoria",
+        "calibracion sin UPDATE: se cierra la vigente y se inserta otra",
+        "medicion y riego_evento como hypertables de Timescale; el resto no"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-01-rls",
+      "categoria": "fase-1",
+      "descripcion": "Row-Level Security: un cliente no ve la parcela de otro y una query sin tenant no devuelve filas. El aislamiento lo hace cumplir el motor, nunca el front.",
+      "pasos": [
+        "Policies de RLS sobre las doce tablas",
+        "scripts/verificar-rls.sh con dos tenants cargados",
+        "El esquema se compara contra information_schema/pg_catalog, no contra el archivo"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-01-precision",
+      "categoria": "fase-1",
+      "descripcion": "El dato se guarda sin perder precision: hora de medicion y de llegada separadas, crudo junto a calibrado, punto geografico no nulo.",
+      "pasos": [
+        "Columnas separadas para medicion y llegada",
+        "scripts/verificar-precision.sh contra la base real"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-02-ingesta",
+      "categoria": "fase-2",
+      "descripcion": "Ingesta MQTT a la base: worker que consume el topico, valida y escribe en lote, con ChirpStack entre el gateway y el broker.",
+      "pasos": [
+        "Broker MQTT y ChirpStack levantados en local",
+        "Worker de ingesta, sin promediar nada en el camino"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-02-dedup",
+      "categoria": "fase-2",
+      "descripcion": "Deduplicacion por (dispositivo, hora de medicion). El gateway hace store-and-forward y reenvia lo que ya mando.",
+      "pasos": [
+        "Clave de dedup en la ingesta",
+        "scripts/verificar-dedup.sh: el mismo payload tres veces, una fila"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-03-politica",
+      "categoria": "fase-3",
+      "descripcion": "API de politica: la nube entrega umbrales, ventanas y duracion maxima, y nunca un comando de abrir o cerrar una valvula.",
+      "pasos": [
+        "Las tres superficies como deployments separados (ingesta, aplicacion, politica)",
+        "politica_riego versionada: no se edita la vigente"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-03-autonomia",
+      "categoria": "fase-3",
+      "descripcion": "Controlador simulado que decide con lo que mide aunque lleve dias sin señal, y cae al programa conservador pasados N dias sin politica nueva.",
+      "pasos": [
+        "Guardar la ultima politica y su fecha",
+        "Caida al conservador registrada, no silenciosa",
+        "scripts/verificar-autonomia.sh: se corta el enlace y sigue regando"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-03-riego-evento",
+      "categoria": "fase-3",
+      "descripcion": "Cada decision entera en riego_evento: la condicion que la causo, la decision, la politica vigente y el resultado. Es lo que convierte el historico en dataset supervisado.",
+      "pasos": [
+        "Litros medidos y estimados, los dos",
+        "Sin la accion y su contexto el ML describe pero no predice"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-04-banco",
+      "categoria": "fase-4",
+      "descripcion": "Controlador real en el banco de Misiones: ESP32 con sensor capacitivo V1.2 y valvula de 12V. La valvula abre por humedad medida, no por reloj.",
+      "pasos": [
+        "COMPUERTA DEL DUEÑO: aprobar la compra (~72 USD)",
+        "Sensor capacitivo V1.2, NO el FC-28 resistivo, que se corroe y deriva",
+        "Calibracion con procedencia escrita en comentario",
+        "Firmware que lee el sensor localmente y decide",
+        "Verificacion a mano: ninguna tool nuestra ve una valvula fisica"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-04-dos-sensores",
+      "categoria": "fase-4",
+      "descripcion": "Dos sensores a un metro de distancia en la misma parcela, para ver si dicen lo mismo. No es funcionalidad, es metodo: decide si se vende uno por parcela o tres, y cambia el precio de la instalacion.",
+      "pasos": [
+        "Correr los dos en paralelo el tiempo suficiente",
+        "Medir la diferencia, no mirarla"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-05-front",
+      "categoria": "fase-5",
+      "descripcion": "Front con el mapa de parcelas como pantalla principal, series de humedad y clima, historial de riego y reportes. Web responsive, sin app nativa.",
+      "pasos": [
+        "Diseño con Claude Design antes de codear (rol ui-designer)",
+        "Los dispositivos caen dentro del poligono por geometria, no a mano",
+        "Verificacion a mano hasta que exista el helper e2e del front"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-06-ndvi",
+      "categoria": "fase-6",
+      "descripcion": "NDVI de Sentinel-2 por parcela en indice_espacial: un poligono nuevo trae su serie. Sentinel-2 es gratis.",
+      "pasos": [
+        "Ingesta del indice por parcela y fecha",
+        "La salida a Copernicus es una CCNP declarada en git y se le pasa a infra-platform",
+        "scripts/verificar-ndvi.sh"
+      ],
+      "passes": false
+    },
+    {
+      "id": "RP-07-meteo",
+      "categoria": "fase-7",
+      "descripcion": "Estacion meteorologica cuyas variables entran al MISMO modelo de medicion, no a una tabla aparte. Habilita ETo, balance hidrico, grados-dia y horas de frio.",
+      "pasos": [
+        "Decision de compra pendiente: Dragino 346 USD contra comercial WiFi 150-200 sin LoRa",
+        "Las variables al modelo de medicion existente"
+      ],
+      "passes": false
+    }
+  ]
 }

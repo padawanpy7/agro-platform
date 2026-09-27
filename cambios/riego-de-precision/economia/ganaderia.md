@@ -138,6 +138,17 @@ Anotado porque puede hacerse **en el futuro**: no es plan ni tarea, es la evalua
 para no volver a razonarla desde cero. La pregunta que lo disparo: *hay otra forma de rastrear las
 vacas por radiofrecuencia, para no pagar GPS?*
 
+> **Veredicto, y va primero porque el titulo de esta seccion sugiere lo contrario: SI, el GPS es
+> mejor.** El arbol tiene dos ramas y no hay medio:
+>
+> | | que poner |
+> |---|---|
+> | **Le colgas un dispositivo activo** | **GPS + LoRa.** La RF sola no ahorra nada relevante |
+> | **No le colgas nada** | **Caravana + lector en la aguada.** Aca no hay GPS posible, y es la rama barata |
+>
+> **"LoRa sin GPS por animal" no gana en ningun escenario**: pagas el dispositivo activo entero y no
+> te llevas la posicion. El camino barato **no es "RF en vez de GPS"**, es **menos dispositivos**.
+
 ### Lo primero: el GPS no es lo que cuesta
 
 El modulo GNSS son **4 a 8 USD**. Lo que cuesta de un collar es el abono mensual del que lleva GSM
@@ -146,6 +157,13 @@ panel, la caja y la correa, **que se pagan igual con GPS o sin GPS**.
 
 > **Sacarle el GNSS a un nodo ahorra ~5 USD de ~40 y te deja sin posicion.** El ahorro esta en otro
 > lado: en **cuantos dispositivos activos** pones, no en que lleva cada uno.
+
+**Lo que si hay que descontarle al GPS, para no quedar corto**: los ~5 USD son **el modulo**. Una
+fijacion consume del orden de **25-40 mA durante 10-35 segundos**, y eso empuja a panel solar y
+bateria mas grande. El delta real contra una baliza tonta es de **10 a 20 USD, no 5**.
+
+Pero eso deja el collar en **~50-60 USD**, que es **el precio del collar comercial que la tabla de
+130 cabezas ya descarto**. No cambia el veredicto: lo confirma por el otro lado.
 
 ### La cuenta que decide, a los precios locales ya verificados
 
@@ -191,8 +209,11 @@ falta 130 posiciones: hace falta **una posicion y 130 presencias**.
    **tiene** que tomar agua todos los dias. Da quien bebio, **quien no bebio** -- primer sintoma de
    animal enfermo -- y quien no aparece. Sin una sola cuenta de trilateracion, y **se apoya en la
    caravana que la trazabilidad ya obliga a poner**.
-2. **Un solo collar GPS, en el animal guia.** Dos a cinco por lote. El rodeo esta donde esta la
-   madrina.
+2. **Collar GPS solo en el animal guia.** Dos a cinco por lote. El rodeo esta donde esta la madrina.
+   **Y aca el GPS se paga sin discutir**, porque son cinco y no 130: a 50 USD por collar y por anio
+   son **~250 USD**, contra los 6.500 de ponerselo a todos. Sumale las ~125 caravanas
+   (**~125-375 USD**, sin verificar) y un lector, y el establecimiento entero queda en el orden de
+   **unos cientos de dolares**, no de miles.
 3. **Baliza barata solo si se justifica**, para buscar con la Yagi al que falta. A precio local hoy
    no cierra por animal; si cierra para un puniado de animales problematicos.
 

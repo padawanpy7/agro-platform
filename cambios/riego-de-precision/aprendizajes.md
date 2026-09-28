@@ -1,5 +1,32 @@
 # Aprendizajes de riego-de-precision
 
+## Diseño de front — segunda pasada (28/09/2026)
+
+**El error de la primera pasada, y vale más que todo lo que salió bien: se diseñaron doce
+pantallas sin saber quién las usa.** El perfil llegó después
+([docs/quien-usa-esto.md](docs/quien-usa-esto.md)) y obligó a rehacerlo entero. Lo que se aprende
+no es "traducir la jerga": es que **el perfil del usuario es contexto de arranque, no una revisión
+posterior**. Un brief sin usuario produce una app correcta para nadie.
+
+Los cuatro cambios que importaron:
+
+1. **La respuesta arriba y grande; el gráfico abajo, plegado, como justificación.** Estaba al revés.
+2. **El rol decide el TAMAÑO de la app, no solo los permisos.** El capataz ve tres pantallas; el
+   dueño, doce. Es la misma app: lo hace posible el modelo de permisos que ya estaba diseñado.
+3. **Icono + palabra siempre, y las palabras del campo** — lote, potrero, manguera, pila, seco,
+   regar, cantero, testigo. La jerga no se simplifica: se saca y se pone lo que la persona hace.
+4. **Al sol, en un teléfono barato, con las manos sucias**: 18 px de base (21 con un botón),
+   56 px de toque, contraste alto, cinco figuras distintas de estado, y *"última lectura hace 3
+   días"* arriba y en grande.
+
+Y dos que se mantuvieron sin discusión: **no hay botón de válvula** y el cartel de datos de ejemplo
+no se cierra.
+
+**Bug real encontrado en el navegador, no en el código:** el override de contraste del capataz
+(`:root[data-role="capataz"]`) pisaba al tema oscuro, porque los dos selectores pesan igual y el
+del rol iba después. El texto quedaba casi negro sobre fondo negro. **Un tema oscuro solo se
+verifica mirándolo.**
+
 ## Diseño de front — primera pasada (28/09/2026)
 
 **Estado: PENDIENTE DE APROBACIÓN.** Nada de esto sube a `memory/playbooks/ui-designer.md`

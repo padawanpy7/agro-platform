@@ -38,7 +38,11 @@
 }
 /* La vista del capataz es mas grande y mas contrastada: se usa al sol, en un telefono
    barato, con las manos sucias. No es una preferencia: es el caso de uso. */
-:root[data-role="capataz"]{ --fs:18px; --tap:56px; --ink:#07120C; --ink-2:#2C3D33; --line:#BECABE; }
+:root[data-role="capataz"]{ --fs:18px; --tap:56px; }
+/* El contraste extra del capataz se declara por tema. Sin esto pisaba al tema oscuro,
+   porque los dos selectores pesan igual y este va despues. */
+:root[data-theme="light"][data-role="capataz"]{ --ink:#07120C; --ink-2:#2C3D33; --line:#BECABE; }
+:root[data-theme="dark"][data-role="capataz"]{ --ink:#FFFFFF; --ink-2:#CCD9D0; --line:#3B4A43; }
 :root[data-role="capataz"][data-big="1"]{ --fs:21px; --tap:62px; }
 
 *{box-sizing:border-box}
@@ -1191,7 +1195,7 @@ DUE.riegos = () => ({
       ${tile("Agua esperada", nf(28400), "litros", "minutos por lo que tira cada gotero")}
       ${tile("Agua que salió", nf(30130), "litros", "contada por el aparato de la línea")}
       ${tile("Diferencia", "+6", "%", "La diferencia es el diagnóstico")}
-      ${tile("Costo de bombeo", gs(284000), "", "estimado de ejemplo · 7 días")}
+      ${tile("Costo de bombeo", gs(284000), "", "de ejemplo · 7 días")}
     </div>
 
     <div class="panel">
@@ -1543,7 +1547,7 @@ DUE.hidro = () => ({
       <div class="panel"><div class="body">${gauge(SOL.nivel, "Cuánta agua queda", 0)}</div></div>
       <div class="panel"><div class="body">${gauge(SOL.ec, "Sales en el agua (EC)", 2)}</div></div>
       <div class="panel"><div class="body">${gauge(SOL.ph, "Acidez (pH)", 1)}
-        <div class="btnrow" style="margin-top:12px"><button class="btn">${ico("lapiz", 20)}Cargar la medición de hoy</button></div></div></div>
+        <div class="btnrow" style="margin-top:12px"><button class="btn">${ico("lapiz", 20)}Cargar lo que midió hoy</button></div></div></div>
     </div>
 
     <div class="cols c2">

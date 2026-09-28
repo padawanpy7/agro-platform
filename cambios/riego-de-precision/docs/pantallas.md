@@ -1,295 +1,408 @@
 # Inventario de pantallas y principios de UI
 
-**28/09/2026.** El front de la fase 1, diseñado antes de escribir la primera línea de Next.js.
-Hoy **no existe código de front**: esto es diseño, y su entregable clickeable es
-[`mockup/index.html`](mockup/index.html) -- un solo archivo, sin backend, con datos de ejemplo.
+**28/09/2026, segunda vuelta.** La primera versión de este documento se escribió **sin saber quién
+usa el producto**, y se notaba: `ST_Contains` en la pantalla principal, `tenant` diez veces, NDVI
+treinta y cuatro. El perfil real está en [quien-usa-esto.md](quien-usa-esto.md) y es la restricción
+más dura que tiene este producto:
 
-Contra qué se escribió: [`proposal.md`](../proposal.md) (objetivo y no-objetivos),
-[`design.md`](../design.md) §1 (las doce tablas) y §4 (el front),
-[`iot-hidroponia.md`](iot-hidroponia.md), [`el-patio-de-casa.md`](el-patio-de-casa.md),
+> *"Esto lo van a usar estancieros o capataces que jamás vinieron a Asunción y no saben de lo que es
+> capaz la IA ni la informática."*
+
+Esta versión está reescrita contra eso. **Leé ese documento antes que este.**
+
+Contra qué más se escribió: [`proposal.md`](../proposal.md) (objetivo y no-objetivos),
+[`design.md`](../design.md) §1 y §4, [`usuarios-roles-permisos.md`](usuarios-roles-permisos.md)
+(el modelo de permisos, que es lo que hace posible §3), [`iot-hidroponia.md`](iot-hidroponia.md),
+[`el-patio-de-casa.md`](el-patio-de-casa.md),
 [`satelite-dron-y-cualquier-cultivo.md`](satelite-dron-y-cualquier-cultivo.md) y
 [`como-aprender-de-cada-ciclo.md`](como-aprender-de-cada-ciclo.md).
 
-> **No hay app móvil nativa.** Es no-objetivo declarado del proposal. Todo esto es **web
-> responsive**, y el caso de uso que manda el layout es **un teléfono al sol, con una mano**.
-> El escritorio es el caso fácil y se resuelve solo; el teléfono no.
+El entregable clickeable es [`mockup/index.html`](mockup/index.html): un solo archivo, sin backend,
+con un interruptor arriba para mirarlo **como capataz** o **como dueño**.
+
+> **No hay app móvil nativa.** Es no-objetivo declarado del proposal. Es web responsive, y el caso
+> de uso que manda el layout es **un teléfono barato, al sol, con una mano y las manos sucias**. El
+> escritorio se resuelve solo; el teléfono no.
 
 ---
 
-## 1. Los principios de UI, que salen del producto y no del gusto
+## 1. Los principios de UI
 
-Cada uno sale de una regla del contrato o de una decisión ya tomada. Si una pantalla los
-contradice, la pantalla está mal.
+Los nueve primeros son las nueve reglas de [quien-usa-esto.md](quien-usa-esto.md) llevadas a
+pantalla. Los cinco últimos salen del modelo de datos y del lazo de control. Si una pantalla
+contradice alguno, la pantalla está mal.
 
-### 1.1 No hay un botón "abrir válvula". Nunca.
+### 1.1 La pantalla contesta una pregunta; no muestra datos
 
-La regla 3 del contrato: **el lazo de control vive en el campo; la nube manda la política**.
-Consecuencia directa en la UI, y no es negociable:
+**La respuesta arriba y grande; el gráfico abajo, como justificación.** Cada pantalla abre con una
+frase que se puede leer de un vistazo —*"Regá hoy temprano"*, *"Andá a mirar la manguera"*, *"No
+hace falta nada"*— más **qué hacer** y **cuándo**. El gráfico, cuando existe, va después, y en la
+vista del capataz va **plegado**: se abre si alguien lo quiere.
 
-- La única escritura que la app hace sobre el riego es **una fila nueva de `politica_riego`**:
-  umbral de humedad, ventana horaria, duración máxima, caudal.
-- La pantalla de política muestra **tres tiempos distintos**: cuándo se guardó, cuándo el
-  controlador la **acusó recibo**, y desde cuándo **rige**. Un control que parece inmediato y no
-  lo es, miente -- y acá el atraso puede ser de días.
-- Lo más parecido a un botón de acción que existe es **"Forzar programa conservador"**, que
-  también es política, no una orden.
+Era exactamente al revés en la primera versión: el gráfico arriba y la conclusión en ninguna parte.
 
-### 1.2 Todo número muestra de dónde salió
+### 1.2 Icono + palabra, nunca icono solo
 
-`medicion` guarda `valor_crudo`, `valor_calibrado` y `calibracion_id`. La UI **muestra el
-calibrado y deja el crudo y la fórmula a un toque**, con su procedencia: fabricante, ensayo
-propio, fecha. Es la regla 7 del contrato llevada a pantalla: *un número de calibración sin
-procedencia no es un número, es una superstición*. En hidroponía esto se gana el sueldo -- un pH
-falso mata el cultivo en horas.
+Un icono solo es una adivinanza. Cada estado, cada botón y cada ítem del menú llevan figura **y**
+palabra. Y la palabra es la del campo: *lote*, *potrero*, *manguera*, *pila*, *seco*, *mojado*,
+*regar*, *bicho*, *cantero*.
 
-### 1.3 Dos relojes, siempre
+### 1.3 El color nunca es el único canal
 
-`medido_en` es el eje de todo gráfico. `recibido_en` **no se esconde**: cuando el atraso pasa de
-un umbral, la serie lo dice ("llegó 3 d después"). El atraso no es un detalle técnico: es la
-calidad del enlace, y es una variable del modelo.
+Al sol un verde y un naranja se parecen, y un daltónico no los distingue nunca. Cada estado lleva
+**figura distinta** (círculo / triángulo / rombo / gota / círculo punteado) **y** palabra, además
+del color. Las barras de "seco" llevan trama rayada además del color.
 
-### 1.4 `NULL` no es `0`
+### 1.4 Se usa al sol, en un teléfono barato, con las manos sucias
 
-Un sensor que no reportó **no midió humedad cero**. Un hueco se dibuja como **hueco**: la línea
-se corta y la franja se pinta como "sin dato". Rellenar con cero en un gráfico le enseña lo mismo
-al ojo que a un modelo: que el suelo se seca de golpe.
+La vista del capataz sube la tipografía base a 18 px, los blancos de toque a 56 px, y sube el
+contraste de la tinta. Tiene además un botón **"Letra más grande"** que la lleva a 21 px. Nada
+depende del hover ni de apuntar fino.
 
-### 1.5 El polígono es el índice, y no se asigna nada a mano
+### 1.5 La señal es mala y el dato llega viejo
 
-Los dispositivos caen adentro de la parcela por `ST_Contains`. La UI **no ofrece** "asignar
-sensor a parcela". Si un sensor aparece en la parcela equivocada, lo que se corrige es **el
-polígono** (pantalla 12), y todo lo demás se recalcula solo: qué NDVI le toca, qué mediciones
-entran en su serie, qué eventos de riego le pertenecen.
+**"Última lectura: hace 3 días" va arriba, en grande, no en letra chica.** Está en cada fila de la
+lista de lotes y en una franja propia arriba del lote. Un dato viejo presentado como fresco es la
+peor mentira que puede decir esta app.
 
-### 1.6 Estar sin señal es un estado normal, no un error
+### 1.6 Las unidades son las de ellos
 
-El controlador riega días sin enlace, por diseño. "Sin señal 3 d -- regando con la última
-política" es **informativo**. El rojo se reserva para lo que obliga a subirse a la camioneta:
-batería agotada, humedad por debajo del punto de marchitez, delta de caudal que dice fuga. Si
-todo es rojo, nada es rojo.
+**Litros, no metros cúbicos.** Hectáreas. Guaraníes con separador de miles. Minutos. Milímetros de
+lluvia. Nada de notación científica y nada de decimales que no se puedan leer de un vistazo.
 
-### 1.7 El resultado se anota donde se cosecha
+### 1.7 Escribir en un teléfono en el campo es un castigo
 
-Sin `campania.rendimiento` la serie es entrada sin salida y **no se puede aprender**. Y si
-anotarlo cuesta media hora, se deja de anotar en dos semanas
-([como-aprender-de-cada-ciclo.md](como-aprender-de-cada-ciclo.md)). Por eso la pantalla de
-cosecha es **de teléfono, de un pulgar, con teclado numérico**, y vive a un toque desde la
-parcela: peso, cuántas, cuántas se descartaron y por qué, y el síntoma.
+La pantalla de anotar es **toda de elección**: lote de una lista, motivo de descarte de cinco
+botones, cantidad de un desplegable. Lo único que se teclea son los kilos, con teclado numérico. La
+foto de la trampa **no pide escribir nada**: el lugar y la hora los pone el teléfono.
 
-### 1.8 Comparar es la operación primaria, no una vista secundaria
+### 1.8 Ninguna acción peligrosa a un toque
 
-Bloques entre sí, potreros entre sí, un año contra los nueve anteriores. El layout por defecto de
-esas pantallas es **lado a lado**, no uno-a-la-vez con un selector.
+Guardar una cosecha pasa por una pantalla de confirmación que muestra **exactamente lo que se va a
+guardar** antes de guardarlo. Nada se ejecuta con el resultado invisible.
 
-### 1.9 El tenant no es un filtro de la interfaz
+### 1.9 Nada de IA visible
 
-RLS hace que una query sin tenant no devuelva filas. Por lo tanto **la UI nunca ofrece "ver todos
-los clientes"**: esa consulta no existe. Quien opera varios clientes **cambia de contexto**, y el
-cambio se ve en el encabezado, no en un combo de filtro perdido en una tabla.
+El sistema dice **"regá"** o **"no riegues"**. Nunca *"el modelo predice con 87 % de confianza"*, ni
+*"probabilidad"*, ni *"algoritmo"*, ni *"predicción"*. La persona no sabe qué puede hacer un modelo
+y no tiene por qué saberlo: tiene que saber qué hacer hoy.
 
-### 1.10 Una pantalla, una decisión
+### 1.10 No hay un botón para abrir la válvula, y no lo va a haber
 
-Cada pantalla declara arriba qué decisión habilita. Si no se puede escribir esa frase, la
-pantalla no debería existir.
+El lazo de control vive en el campo (regla 3 del contrato). Lo único que la nube manda es **la
+regla**: con qué tierra arranca, a qué hora, cuántos minutos. La pantalla lo dice en un cartel
+arriba, en palabras, para que nadie lo busque. Y muestra **tres momentos distintos**: cuándo se
+escribió, cuándo el aparato del lote avisó que la recibió, y desde cuándo la está usando.
 
-### 1.11 Las unidades son parte del número, y la EC va en mS/cm
+### 1.11 Todo número dice de dónde salió
 
-Nunca ppm: el factor de conversión varía entre fabricantes y las recetas de hidroponía están en
-EC ([iot-hidroponia.md](iot-hidroponia.md)). Humedad en % v/v, tensión en kPa, lluvia y lámina en
-mm, agua en litros, plata en guaraníes.
+El ajuste de un aparato se muestra con **quién lo comprobó** —nosotros o el fabricante—, cómo y
+cuándo. En la pantalla no dice "calibración": dice *"ajuste del aparato"*. Un ajuste sin decir de
+dónde salió no es un número, es una creencia.
 
-### 1.12 El color dice estado; la forma y el texto lo repiten
+### 1.12 Un hueco es un hueco, nunca un cero
 
-Nada se comunica solo por color. Cada estado lleva **etiqueta** además de color, y toda serie con
-dos o más líneas lleva leyenda **y** rótulo directo. La profundidad se codifica con una rampa de
-un solo tono (más oscuro = más profundo), no con cuatro colores distintos: la profundidad es un
-orden, no una identidad.
+Un aparato que no reportó **no midió tierra seca**. La línea se corta y la franja dice *"no llegó
+nada"*. Rellenar con cero le enseña lo mismo al ojo que a una cuenta: que la tierra se seca de
+golpe.
 
----
+### 1.13 Estar sin señal es normal, no es un error
 
-## 2. El inventario
+El aparato del lote riega días sin enlace, por diseño. *"Sin noticias hace 3 días — el riego sigue
+andando solo"* es **gris**, no rojo. El rojo se guarda para lo que obliga a subirse a la camioneta:
+pila agotada, tierra tan seca que la planta sufre, agua que se está perdiendo. **Si todo es rojo,
+nada es rojo.**
 
-Doce pantallas. Las nueve que el pedido exigía, más tres que faltaban y se justifican en §3.
-La columna **tabla** es contra qué objeto de [`design.md`](../design.md) §1 lee o escribe.
+### 1.14 Nada se asigna a mano, y eso no se explica con el nombre de una función
 
-### 1. Mapa de parcelas -- `#/mapa`
+Los aparatos caen adentro del lote por su posición. En la pantalla dice *"el sistema sabe cuál está
+adentro de cuál"*; **no dice `ST_Contains`**. Si un aparato aparece en el lote equivocado, lo que se
+corrige es **el dibujo del lote**, y todo lo demás se acomoda solo — y la pantalla de dibujo muestra
+qué cambia **antes** de guardar.
 
-| | |
-|---|---|
-| **Para qué sirve** | Es **LA** pantalla. La parcela es la unidad de análisis: todo se navega desde acá. |
-| **Qué muestra** | Los polígonos del campo con su estado, los dispositivos como puntos adentro, y una lista lateral sincronizada con el mapa. Un tile por estado arriba: cuántas parcelas bien, en atención, críticas y sin señal. |
-| **Tablas** | `parcela` (geom), `dispositivo` (punto, estado), última `medicion` por parcela, `riego_evento` del día, `campania` vigente. |
-| **Quién la usa** | Todos. Es la home. El productor la abre al levantarse. |
-| **Qué decisión permite** | **A qué lote hay que ir hoy, y a cuál no.** El mapa contesta "¿dónde está el problema?" y manda al detalle, que contesta "¿cuál es?". |
+### 1.15 Quién ve qué no se decide en la interfaz
 
-El polígono se pinta por estado, no por cultivo: el cultivo ya está escrito y el estado es lo que
-cambia. Los dispositivos sin señal se dibujan huecos, no rojos (principio 1.6).
-
-### 2. Detalle de parcela -- `#/parcela`
-
-| | |
-|---|---|
-| **Para qué sirve** | Todo lo que se sabe de un polígono, en el orden en que se pregunta. |
-| **Qué muestra** | Encabezado con cultivo, campaña, superficie y estado. Después, en este orden: humedad **por profundidad** (10 / 30 / 60 cm) con la política dibujada encima como banda; lluvia y riego en la misma barra de tiempo; NDVI de los últimos 12 meses contra la mediana de 9 años; los eventos de riego recientes; los dispositivos de adentro; el último análisis de suelo. |
-| **Tablas** | `parcela`, `medicion`, `riego_evento`, `indice_espacial`, `analisis_suelo`, `campania`, `politica_riego`, `dispositivo`. |
-| **Quién la usa** | Productor y técnico agrónomo. |
-| **Qué decisión permite** | **Si el agua llegó a la raíz o pasó de largo** -- y eso decide si se sube o se baja la duración del riego, que es plata y es agua. La profundidad es la pantalla: si los 60 cm suben después de cada riego, el agua se está tirando abajo de la zona radicular. |
-
-El gráfico de humedad se dibuja **hacia abajo**: la superficie arriba, los 60 cm al fondo. La
-profundidad se dibuja como profundidad.
-
-### 3. Series de mediciones -- `#/series`
-
-| | |
-|---|---|
-| **Para qué sirve** | El explorador crudo, para cuando el detalle no alcanza. Cualquier magnitud, cualquier dispositivo, cualquier rango. |
-| **Qué muestra** | Selector de parcela / dispositivo / magnitud / rango, y la serie. Con un interruptor **crudo vs calibrado** y el `calibracion_id` vigente a la vista. Huecos como huecos. Atraso de llegada marcado. Exporta CSV. |
-| **Tablas** | `medicion` (la hypertable), `calibracion`, `dispositivo`, `magnitud` (el catálogo angosto). |
-| **Quién la usa** | Técnico. No es una pantalla de productor. |
-| **Qué decisión permite** | **Si el sensor está diciendo la verdad.** Comparar crudo contra calibrado es la forma de detectar que una fórmula quedó mal, y es lo que habilita recalcular el histórico en vez de tirarlo. |
-
-### 4. Historial de riego -- `#/riego`
-
-| | |
-|---|---|
-| **Para qué sirve** | La auditoría del lazo de control: qué decidió el controlador y **por qué**. |
-| **Qué muestra** | Una fila por evento con las cuatro piezas juntas: **condición** (qué humedad leyó y de qué sensores), **decisión** (regar / no regar, cuánto), **política vigente** en ese momento (con su versión), y **resultado** (minutos efectivos, `litros_estimados` y `litros_medidos`). La columna que importa es el **delta** entre estimado y medido: de más es fuga, de menos es gotero tapado o filtro sucio. |
-| **Tablas** | `riego_evento` (hypertable), `politica_riego`, `dispositivo` (caudalímetro), `medicion`. |
-| **Quién la usa** | Técnico y productor. Y es la pantalla que se le muestra al cliente para **probar el ahorro**. |
-| **Qué decisión permite** | Dos: **mandar a alguien a revisar la línea** cuando el delta se abre, y **cambiar la política** cuando el controlador está decidiendo bien pero con el umbral equivocado. |
-
-Incluye las decisiones de **no regar**: un evento que dijo "no" con su condición vale tanto como
-uno que regó. Y muestra en su propia franja los tramos en que el controlador cayó al **programa
-conservador** por falta de política nueva.
-
-### 5. Política de riego -- `#/politica`
-
-| | |
-|---|---|
-| **Para qué sirve** | Lo único que la nube manda al campo. |
-| **Qué muestra** | La política vigente (umbral de humedad de arranque y de corte, profundidad de referencia, ventana horaria, duración máxima por evento, litros máximos por día, días de gracia antes de caer al programa conservador) y **el historial de versiones**, que nunca se edita: se cierra una y se abre otra. Y el estado de propagación: guardada / acusada por el controlador / rigiendo. |
-| **Tablas** | `politica_riego` (catálogo versionado), `parcela`, `riego_evento` para el "qué habría pasado". |
-| **Quién la usa** | Técnico agrónomo, con permiso de escritura. El productor la ve. |
-| **Qué decisión permite** | **Regar antes o después, más o menos.** Con una simulación al lado: "con este umbral, en los últimos 30 días se habría regado 9 veces en vez de 14". |
-
-**No hay acción sobre la válvula.** Esta pantalla es el techo de lo que la UI puede hacer sobre el
-riego, y está dicho en la propia pantalla para que nadie lo busque.
-
-### 6. Dispositivos y calibración -- `#/dispositivos`
-
-| | |
-|---|---|
-| **Para qué sirve** | El estado de la flota, y la procedencia de cada número. |
-| **Qué muestra** | Tabla por dispositivo: tipo (sensor de humedad, estación, trampa, controlador, caudalímetro, nodo de hidroponía), parcela en la que cae, **batería**, **última vez que reportó**, atraso medio de llegada, firmware, y la **calibración vigente** con su fórmula y su procedencia (fabricante / ensayo propio / fecha). Un panel aparte lista el historial de calibraciones, que no se borra. |
-| **Tablas** | `dispositivo`, `calibracion`, última `medicion` por dispositivo. |
-| **Quién la usa** | Técnico de mantenimiento. |
-| **Qué decisión permite** | **A qué dispositivo hay que ir a cambiarle la pila o recalibrarle la sonda**, y si un dato viejo hay que **recalcularlo** con una fórmula corregida. |
-
-Una sonda de pH lleva además **cuándo se calibró con buffers 4,0 y 7,0** y cuánto falta: se
-degrada en uno o dos años y no se puede dejar secar.
-
-### 7. Índice espacial -- satélite y dron -- `#/satelite`
-
-| | |
-|---|---|
-| **Para qué sirve** | NDVI por parcela, de Sentinel-2 y de dron, en la misma serie. |
-| **Qué muestra** | Tres vistas: **hoy, los potreros ordenados por NDVI** (a cuál mover la hacienda); **la serie de un potrero contra la banda p10-p90 de 9 años** (si es un año malo o un pedazo malo); y el **coeficiente de variación** dentro de la parcela, que es lo que dice cuántos sensores lleva. Cada punto muestra `fuente` y `resolucion_m`. |
-| **Tablas** | `indice_espacial` (media, p10, p90, CV, `fuente`, `resolucion_m`), `parcela`. |
-| **Quién la usa** | Productor ganadero y técnico. |
-| **Qué decisión permite** | **A qué potrero mover la hacienda esta semana**, **cuál se está degradando año contra año**, y **dónde enterrar el próximo sensor**. |
-
-Dice **dónde y cuándo, nunca por qué**: la pantalla lo declara y manda a caminar al lugar
-correcto. Y avisa cuando el polígono es demasiado chico: 1.000 m² son 10 píxeles, y ahí el
-satélite no sirve -- el patio de casa no tiene NDVI, y la pantalla lo dice en vez de mostrar un
-número inservible.
-
-### 8. Hidroponía: tablero de solución -- `#/solucion`
-
-| | |
-|---|---|
-| **Para qué sirve** | El segundo caso de uso. La solución es el único sustento de la planta: acá un número falso mata el cultivo, y rápido. |
-| **Qué muestra** | Cuatro lecturas en vivo con su rango objetivo: **EC (mS/cm)**, **pH**, **temperatura de solución (°C)** y **nivel (cm)**. La temperatura lleva la línea de **24 °C** marcada, que es donde la lechuga se espiga. El nivel va al lado de la EC a propósito: al bajar el nivel la EC se concentra, y sin nivel la EC se interpreta mal. Debajo, la **receta vigente** (`solucion_nutritiva`) con la fecha de la última renovación, y el registro de dosificaciones y recirculaciones. |
-| **Tablas** | `medicion` (magnitudes `ec`, `ph`, `temp_solucion`, `nivel`), `solucion_nutritiva` (tabla nueva), `riego_evento` con tipo `recirculacion` / `dosificacion`, `calibracion`. |
-| **Quién la usa** | El dueño, todos los días, desde el teléfono, parado al lado del tanque. |
-| **Qué decisión permite** | **Si hay que renovar la solución, agregar agua, corregir pH o poner media sombra.** Y con el nivel al lado de la EC, si la EC subió porque falta agua o porque falta nutriente -- que son respuestas opuestas. |
-
-El pH figura como **lectura manual con portátil** hasta que la sonda automática sea confiable:
-la pantalla tiene su campo de carga a mano y lo marca como tal. Automatizar una decisión que
-todavía no se sabe tomar a mano es el error que este producto evita a propósito.
-
-### 9. Bloques experimentales -- `#/bloques`
-
-| | |
-|---|---|
-| **Para qué sirve** | El método de [como-aprender-de-cada-ciclo.md](como-aprender-de-cada-ciclo.md) hecho pantalla. Sin esto, un experimento que no se puede consultar **no existe**. |
-| **Qué muestra** | Los bloques del ciclo lado a lado, cada uno con **la variable que se varió**, cuál es el **control**, y el **resultado**: peso cosechado, cuántas, cuántas se descartaron y por qué, días hasta cosecha, síntomas. Arriba, el **objetivo declarado del ciclo** -- uno solo, escrito antes de arrancar. |
-| **Tablas** | `bloque_experimental` (tabla nueva), `campania`, `medicion`, `riego_evento`. |
-| **Quién la usa** | El dueño. Y es el prototipo de lo que después se le vende a un cliente. |
-| **Qué decisión permite** | **Qué se cambia en el ciclo siguiente**, con atribución limpia: la planta que se murió dice por qué se murió. |
-
-Muestra siempre la **comparación contra el control**, no los cuatro valores sueltos, y advierte
-cuando hay más de una variable distinta entre dos bloques -- porque ahí la comparación no prueba
-nada y es mejor que la pantalla lo diga que descubrirlo en 45 días.
-
-### 10. Alertas -- `#/alertas`
-
-| | |
-|---|---|
-| **Para qué sirve** | La cola de lo que exige una acción, ordenada por lo que cuesta no atenderla. |
-| **Qué muestra** | Una fila por alerta con **qué pasó**, **el dato que la disparó** (con enlace a la serie en ese instante), **desde cuándo**, y **qué hacer**. Tres niveles y nada más: crítico (ir al lote), atención (mirar hoy) e informativo (sin señal, atraso de llegada, cuota de satélite). |
-| **Tablas** | `medicion`, `riego_evento`, `dispositivo`, `captura_trampa`, `indice_espacial`, `politica_riego`. |
-| **Quién la usa** | Quien está de guardia. Es la pantalla que se abre desde una notificación. |
-| **Qué decisión permite** | **Qué se atiende primero.** Una alerta sin "qué hacer" no es una alerta: son malas noticias más temprano. |
-
-Cada alerta se puede **silenciar con motivo y con vencimiento**, y el motivo queda. Silenciar sin
-motivo convierte la cola en ruido en dos semanas.
-
-### 11. Usuarios, roles y permisos -- `#/usuarios`
-
-| | |
-|---|---|
-| **Para qué sirve** | Quién puede ver qué y quién puede escribir política. |
-| **Qué muestra** | Usuarios del cliente actual con su rol, sus campos alcanzados y su último acceso. Cuatro roles: **dueño** (todo, incluye usuarios), **técnico** (escribe política y calibración), **operario** (carga cosecha y lecturas manuales, no toca política) y **lectura** (mira y exporta). Una matriz rol x acción, explícita. |
-| **Tablas** | `usuario`, `rol`, `cliente`, `campo`. El `tenant_id` sale del token, nunca del formulario. |
-| **Quién la usa** | El dueño del cliente, y nosotros como operadores de la plataforma. |
-| **Qué decisión permite** | **A quién se le da la llave de la política de riego**, que es la única escritura con consecuencia física. |
-
-La pantalla dice en texto plano que el aislamiento **lo hace cumplir la base** y no esta pantalla:
-quitar un permiso acá no es lo que impide ver los datos de otro cliente -- eso lo impide RLS.
-
-### 12. Alta y mensura de parcela -- `#/parcelas-alta`
-
-| | |
-|---|---|
-| **Para qué sirve** | Dibujar o importar el polígono, que es de donde cuelga todo lo demás. |
-| **Qué muestra** | Importar KML / GeoJSON / shapefile, o dibujar sobre el mapa; superficie calculada proyectada (nunca guardada proyectada); validación de geometría; qué dispositivos quedan adentro con el polígono nuevo **antes** de guardar; y el historial de versiones del límite. |
-| **Tablas** | `parcela.geom` (Polygon, 4326), `dispositivo.punto`, `campo`, `cliente`. |
-| **Quién la usa** | El técnico, en la instalación. Una vez por parcela, y después cuando el límite se corrige. |
-| **Qué decisión permite** | **Cuál es la unidad de análisis**, literalmente. Y muestra el efecto antes de confirmarlo: corregir un límite recalcula qué dispositivos, qué NDVI y qué mediciones le pertenecen. |
+Los datos de un cliente no se le muestran a otro, y eso lo hace cumplir la base de datos, no una
+pantalla. La app **nunca ofrece "ver todos los clientes"**: esa pregunta no se puede hacer. La
+pantalla de permisos decide qué puede **hacer** cada uno, y lo dice con esas palabras.
 
 ---
 
-## 3. Las tres pantallas que faltaban en el pedido, y por qué entran
+## 2. Qué ve el capataz, qué ve el dueño, y por qué
 
-| pantalla | por qué no podía no estar |
-|---|---|
-| **7. Índice espacial (satélite/dron)** | El pedido la daba por dentro del detalle de parcela, pero las dos preguntas que el NDVI contesta de verdad son **entre parcelas** ("a cuál potrero mover la hacienda") y **entre años** ("¿es un año malo o un pedazo malo?"). Un detalle de parcela es de una sola parcela y de un solo año: la comparación no cabe ahí. Y la serie de **9 años** que habilita la API de Copernicus no se lee en un panel de tarjeta. |
-| **9b. Campañas y cosecha** (dentro de `#/bloques` y accesible desde la parcela) | **Todo el mundo loguea los sensores y nadie loguea el resultado.** `campania.rendimiento` es *la etiqueta de ML* del diseño, y sin ella el histórico describe pero no predice. Además tiene un requisito de forma propio: tiene que entrar **en el momento de cosechar, en un teléfono**, o no se va a cargar. |
-| **12. Alta y mensura de parcela** | Sin polígono no hay nada: ni `ST_Contains`, ni NDVI, ni serie. Era el único objeto del modelo que ninguna pantalla del pedido creaba, y es el que calibra a todos los demás. |
+Esta es la sección que la primera versión no tenía, y es la que más cambia el producto.
 
-Dos que **no** son pantalla, a propósito: **análisis de suelo** es un panel del detalle de parcela
-(es un evento raro, no un espacio) y **capturas de trampa** es una franja más en la barra de
-tiempo de la parcela más una fila en alertas. Darles pantalla propia sería inventarles tráfico.
+### 2.1 No son dos aplicaciones: es una, de dos tamaños
+
+Lo que hace posible esto ya está diseñado: el modelo de
+[usuarios-roles-permisos.md](usuarios-roles-permisos.md) da permisos como pares
+*(sobre qué, qué acción)* y roles como bolsas de permisos, con alcance por campo. **Los permisos no
+son solo seguridad: son la densidad de información.** La misma app, con el rol `capataz`, muestra
+tres pantallas; con el rol de dueño o técnica, muestra doce.
+
+**No se construye una app aparte para el capataz.** Dos aplicaciones se desincronizan, cuestan el
+doble y la del campo siempre queda vieja.
+
+### 2.2 El capataz ve TRES pantallas
+
+| | pantalla | qué es | qué decide |
+|---|---|---|---|
+| 1 | **Hoy** | La lista de lotes ordenada **por urgencia**, con la acción escrita en cada fila. Arriba, cuántos necesitan algo. | **Por dónde empiezo el día.** |
+| 2 | **El lote** | La respuesta para ese lote, cuándo llegó la última lectura, el agua en la tierra **en palabras** (seco / bien / mojado a tres hondos), qué pasó estos días, y el gráfico **plegado**. | **Qué hago en este lote, y cuánto.** |
+| 3 | **Anotar** | Cuatro botones grandes: anotar cosecha, sacar foto de la trampa, avisar que revisó la línea, avisar que regó a mano. | **Que lo que él sabe entre al sistema.** |
+
+**Y no ve nada más.** Nada de reglas de riego, nada de ajustes de aparatos, nada de permisos, nada
+de hidroponía, nada de dibujar lotes, nada de la pantalla de números crudos.
+
+**Por qué esas tres y no otras.** Porque son las tres cosas que él hace: *mirar qué pasa*, *ir a un
+lote*, y *contar lo que vio*. Todo lo demás son decisiones que no le tocan y que, puestas en su
+menú, no le agregan poder: le agregan doce lugares donde perderse. **Mostrarle doce es el fracaso.**
+
+**Lo que sí ve, y es importante que vea:** el estado de todos los lotes, incluidos los que no
+necesitan nada. Saber que cuatro están bien es información, no relleno.
+
+### 2.3 El dueño y la técnica ven DOCE
+
+Las tres del capataz —con más detalle— más nueve que son decisiones de gestión, de plata o de
+configuración. La lista completa está en §3.
+
+**El corte no es por confianza, es por trabajo.** El dueño mira litros por kilo, costo de bombeo y
+si conviene mover la hacienda. La técnica escribe las reglas de riego y anota los ajustes de los
+aparatos. Ninguna de esas decisiones se toma parado en el lote con el teléfono en la mano.
+
+### 2.4 Lo que ve un tercero que solo mira
+
+Un comprador o una cooperativa que audita ve **dos**: el estado de los lotes y el historial de
+riego. Alcanza para lo que le importa —cuánta agua se usó y cuándo— y no expone nada más.
+
+### 2.5 Cómo se prueba, y es gratis
+
+**El capataz del señor existe, planta tomate y sandía, y ya se ofreció a ayudar.** El plan está en
+[quien-usa-esto.md](quien-usa-esto.md): dale el teléfono con el mockup abierto **y callate**. Lo que
+busque y no encuentre, y lo que toque esperando otra cosa, es el diseño. En el mockup el
+interruptor de arriba arranca en **capataz** justamente para eso.
 
 ---
 
-## 4. Qué del mockup es diseño y qué es relleno
+## 3. El inventario
+
+La columna **de dónde sale** dice contra qué objeto de [`design.md`](../design.md) §1 lee o escribe
+cada pantalla. **Esos nombres son para nosotros y no aparecen nunca en la interfaz** (principio
+1.14): acá están porque este documento lo leemos nosotros, no el capataz.
+
+### Las tres del capataz
+
+#### C1. Hoy — `#/capataz/hoy`
+
+| | |
+|---|---|
+| **Para qué sirve** | Es la primera pantalla del día, y muchas veces la única. |
+| **Qué muestra** | Una frase arriba con cuántos lotes necesitan algo. Después, un renglón grande por lote con: el nombre, **la acción escrita** (*"Regá hoy temprano"*, *"Andá a mirar la manguera"*), lo sembrado, el tamaño y **hace cuánto llegó la última lectura**. Ordenados por urgencia, no por nombre ni por fecha. |
+| **De dónde sale** | `parcela`, última `medicion` por parcela, `riego_evento` del día, `dispositivo`, `captura_trampa`. |
+| **Qué decisión permite** | **Por dónde empezar.** Y también: qué lotes puede dejar tranquilos. |
+
+Abajo lleva un recuadro corto que dice que **si lo que él ve con los ojos no coincide con la
+pantalla, gana lo que él ve**: que lo anote y avise. Un aparato se ensucia o queda mal enterrado, y
+una app que no admite eso pierde al usuario el primer día que se equivoca.
+
+#### C2. El lote — `#/capataz/lote`
+
+| | |
+|---|---|
+| **Para qué sirve** | Todo lo que hace falta saber de un lote, en el orden en que se pregunta. |
+| **Qué muestra** | La respuesta arriba y grande, con **cuándo hacerlo**. Una franja con la última lectura. **El agua en la tierra a tres hondos, en palabras** — arriba (10 cm), en la raíz (30 cm), abajo (60 cm), cada una con una barra y la palabra *seco* / *bien* / *mojado*. Qué pasó estos días, en renglones. Y el gráfico de 21 días **plegado**, que se abre si lo quiere. |
+| **De dónde sale** | `parcela`, `medicion`, `riego_evento`, `politica_riego`, `dispositivo`. |
+| **Qué decisión permite** | **Si riega y cuántos minutos.** La lectura de los tres hondos es lo que evita el error caro: si abajo todavía hay agua, veinte minutos alcanzan; regar de más manda el agua abajo de la raíz y se pierde. |
+
+Tiene un desplegable arriba para cambiar de lote sin volver a Hoy.
+
+#### C3. Anotar — `#/capataz/anotar`
+
+| | |
+|---|---|
+| **Para qué sirve** | Que lo que el capataz sabe —y los aparatos no— entre al sistema. |
+| **Qué muestra** | Cuatro botones grandes: **anotar lo que se cosechó**, **sacar foto de la trampa**, **avisar que revisó la manguera**, **avisar que regó a mano**. La cosecha se carga eligiendo: lote de una lista, kilos con teclado numérico, cuántos cajones se tiraron de un desplegable, y por qué de cinco botones. Después, **una pantalla de confirmación** con todo escrito antes de guardar. |
+| **De dónde sale** | `campania` (rendimiento), `captura_trampa`, `riego_evento` (riego manual), nota de mantenimiento. |
+| **Qué decisión permite** | Ninguna, y es a propósito: **es la pantalla que alimenta a todas las demás.** Sin el resultado anotado, los números describen y no enseñan. |
+
+Si no hay señal, lo anotado **se guarda y se manda solo** cuando vuelva. La pantalla lo dice.
+
+### Las doce del dueño y la técnica
+
+#### D1. Los lotes — `#/duenio/lotes`
+
+Mapa con los polígonos pintados por **cómo está** cada lote, los aparatos adentro como puntos
+—llenos si están mandando, punteados si no—, y al lado la misma lista ordenada por urgencia del
+capataz. Arriba, la respuesta: qué lotes necesitan algo hoy. Cinco números de cabecera, entre ellos
+**litros de agua usados hoy**.
+**De dónde sale:** `parcela` (geometría), `dispositivo`, última `medicion`, `riego_evento`, `campania`.
+**Decide:** a qué lote hay que ir hoy.
+
+#### D2. Un lote por dentro — `#/duenio/lote`
+
+La versión larga de C2. Además del agua a tres hondos con el gráfico **abierto**: la lluvia y el
+riego en la misma barra de tiempo, **cuánto verde hay** este año contra los nueve anteriores, los
+últimos riegos con el agua esperada y la que salió, los aparatos del lote, y el último análisis de
+tierra —que es el que fija la franja verde del gráfico—.
+**De dónde sale:** `parcela`, `medicion`, `riego_evento`, `indice_espacial`, `analisis_suelo`, `campania`, `politica_riego`, `dispositivo`.
+**Decide:** si el agua llegó a la raíz o pasó de largo, y por lo tanto si suben o bajan los minutos.
+
+> **El gráfico de la humedad se dibuja hacia abajo porque la profundidad es hacia abajo.** Tres
+> paneles apilados que comparten el tiempo, con una rampa de un solo tono donde más oscuro es más
+> hondo: la profundidad es un **orden**, no cuatro identidades. Es la apuesta visual del producto y
+> es lo que hace visible el sobre-riego.
+
+#### D3. Qué regó y por qué — `#/duenio/riegos`
+
+Una fila por riego con las cuatro piezas juntas: **por qué** (qué tierra leyó y de qué aparatos),
+**qué hizo** (regó tantos minutos, o no regó), **con qué regla**, y **cuánta agua esperaba contra
+cuánta salió**. La columna que importa es la diferencia: de más es pérdida, de menos es gotero
+tapado o filtro sucio. Incluye las veces que decidió **no** regar, y marca los tramos en que el
+aparato se puso solo en modo cuidadoso.
+**De dónde sale:** `riego_evento`, `politica_riego`, `dispositivo` (caudalímetro), `medicion`.
+**Decide:** mandar a alguien a caminar la línea, o cambiar la regla.
+
+#### D4. Cuándo regar — `#/duenio/cuando`
+
+La regla que el lote está usando, en palabras: con qué tierra arranca y con cuál corta, a qué hora,
+cuántos minutos como máximo, cuántos litros por día, qué pasa si llovió, y a los cuántos días sin
+noticias se pone en modo cuidadoso. Al lado, **cuándo le llegó al lote** (tres momentos) y una
+comparación: *"con este número habría regado 9 veces en vez de 14"*. Abajo, las reglas anteriores,
+que no se corrigen: se cierran y se escribe otra.
+**De dónde sale:** `politica_riego`, `parcela`, `riego_evento`.
+**Decide:** regar antes o después, más o menos. **Y no hay botón de válvula** (principio 1.10).
+
+#### D5. Cuánto pasto hay — `#/duenio/verde`
+
+Lo que antes se llamaba NDVI. Tres vistas: los potreros ordenados **de más a menos pasto** hoy; un
+potrero contra **lo peor y lo mejor de sus nueve años**; y **si el lote es parejo o disparejo**, que
+es lo que decide cuántos aparatos lleva. Cada dato dice si vino del satélite o de un vuelo de dron.
+**De dónde sale:** `indice_espacial` (media, p10, p90, coeficiente de variación, fuente, resolución), `parcela`.
+**Decide:** a qué potrero mover la hacienda, cuál se está gastando, y dónde enterrar el próximo aparato.
+
+Y dice **dónde no sirve**: 38 m² de patio son menos de un píxel del satélite. La pantalla lo escribe
+en vez de mostrar un número que no significa nada.
+
+#### D6. Los números con detalle — `#/duenio/numeros`
+
+El explorador crudo, para la técnica. Cualquier aparato, cualquier medición, cualquier rango, con un
+interruptor **sin tocar / con el ajuste / los dos**, el hueco dibujado como hueco, y el ajuste
+vigente a la vista con su procedencia. Baja planilla.
+**De dónde sale:** `medicion`, `calibracion`, `dispositivo`, el catálogo de magnitudes.
+**Decide:** si el aparato está diciendo la verdad — y por lo tanto si hay que recalcular el histórico
+en vez de tirarlo.
+
+#### D7. Los aparatos — `#/duenio/aparatos`
+
+Cada aparato con qué hace, dónde está, **pila**, **hace cuánto mandó algo**, cuánto tarda en llegar,
+las últimas lecturas en miniatura y **el ajuste que usa, con quién lo comprobó**. Debajo, todos los
+ajustes anteriores, que no se borran nunca. Y una ficha aparte para la sonda de acidez del patio,
+que es la más delicada.
+**De dónde sale:** `dispositivo`, `calibracion`, última `medicion`.
+**Decide:** a qué aparato hay que ir a cambiarle la pila o comprobarle la sonda.
+
+#### D8. Dibujar un lote — `#/duenio/dibujar`
+
+Traer el archivo del GPS, dibujar sobre el mapa o cargar los mojones. Muestra el límite viejo y el
+nuevo superpuestos, y **qué cambia si se guarda** —cuántos aparatos quedan adentro y cuál queda
+afuera, cuántas lecturas se reasignan— **antes** de guardar.
+**De dónde sale:** `parcela.geom`, `dispositivo.punto`, `campo`, `cliente`.
+**Decide:** cuál es la unidad de análisis. Todo lo demás cuelga de acá.
+
+#### D9. El agua de la hidroponía — `#/duenio/hidro`
+
+El segundo caso de uso, y la única pantalla donde sobreviven las unidades técnicas (mS/cm), porque
+**el capataz no la abre nunca**. Cuatro lecturas con su rango: **calor del agua** (con la raya de los
+24 °C, que es donde la lechuga se va a semilla), **cuánta agua queda**, **sales** y **acidez**. Las
+sales y el nivel se muestran juntos a propósito: si baja el agua, las sales se concentran solas — y
+eso se arregla con agua, no con abono. Debajo, la receta vigente y lo que se hizo en la mesa.
+**De dónde sale:** `medicion`, `solucion_nutritiva` (tabla nueva), `riego_evento` con tipo recirculación o dosificación, `calibracion`.
+**Decide:** si hay que cambiar el agua, agregarle, corregir la acidez o poner media sombra.
+
+La acidez entra **a mano**, con el aparatito, y la pantalla lo marca como tal. No se automatiza una
+decisión que todavía no se sabe tomar a mano.
+
+#### D10. Las pruebas — `#/duenio/pruebas`
+
+El método de bloques de [como-aprender-de-cada-ciclo.md](como-aprender-de-cada-ciclo.md), en
+palabras: **canteros**, no "bloques experimentales". Cada uno con **qué se cambió**, cuál es el
+testigo, y cómo salió: peso por planta, cuántas se cosecharon, cuántas se tiraron y por qué, cuántos
+días. Arriba, **qué se buscaba en este ciclo, escrito antes de plantar** — uno solo. Y una
+advertencia cuando entre dos canteros cambió más de una cosa, porque ahí la comparación no prueba
+nada.
+**De dónde sale:** `bloque_experimental` (tabla nueva), `campania`, `medicion`, `riego_evento`.
+**Decide:** qué se cambia en el ciclo siguiente, sabiendo qué lo causó.
+
+#### D11. Avisos — `#/duenio/avisos`
+
+Una fila por aviso con **qué pasó**, **qué se vio** (el dato que lo disparó), **desde cuándo** y
+**qué hacer**. Tres niveles: urgente (ir al lote), para mirar (hoy) y para saber (sin noticias,
+cuota del satélite). Se pueden callar, pero **pidiendo el motivo y hasta cuándo**.
+**De dónde sale:** `medicion`, `riego_evento`, `dispositivo`, `captura_trampa`, `indice_espacial`, `politica_riego`.
+**Decide:** qué se atiende primero.
+
+#### D12. Quién entra y qué puede hacer — `#/duenio/gente`
+
+Las personas del cliente con su rol, su alcance, su última entrada y —la columna que importa—
+**cuántas pantallas ve cada una**. Debajo, una tabla explícita de qué puede hacer cada rol. Y un
+recuadro que dice, en palabras, que **sacarle un permiso a alguien no es lo que esconde los datos de
+otro cliente**: eso lo hace la base de datos.
+**De dónde sale:** `usuario`, `membresia`, `rol`, `permiso`, `campo`, `cliente`.
+**Decide:** a quién se le da la llave de cuándo riega, que es lo único que mueve agua de verdad.
+
+---
+
+## 4. Qué NO es pantalla, a propósito
+
+- **El análisis de tierra** es un panel dentro del lote. Es un evento raro, no un espacio.
+- **Las capturas de trampa** son un renglón en Hoy y un aviso. Darles pantalla propia sería
+  inventarles tráfico.
+- **La lista de aparatos** no existe para el capataz: si un aparato falla, lo que él ve es
+  *"sin noticias de ese lote"*, que es lo que le sirve. Los números de serie son de la técnica.
+
+---
+
+## 5. La traducción, aplicada
+
+Salida de la tabla de [quien-usa-esto.md](quien-usa-esto.md). **Nada de la columna izquierda aparece
+en el mockup**, verificado contando.
+
+| en vez de | en la pantalla dice |
+|---|---|
+| `ST_Contains` | *"el sistema sabe cuál está adentro de cuál"* |
+| tenant / inquilino | no se nombra. El selector dice *"Estás viendo"* |
+| NDVI | **"cuánto pasto hay"** / *"cuánto verde hay"*, y el número de 0 a 100 |
+| p10 / p90 | *"entre lo peor y lo mejor de los últimos 9 años"* |
+| coeficiente de variación | **"¿el lote es parejo o disparejo?"** |
+| calibración, `calibracion_id` | *"el ajuste del aparato"* y *"quién lo comprobó"* |
+| política de riego | **"la regla"** / *"cuándo regar"* |
+| programa conservador | *"se pone solo en modo cuidadoso"* |
+| dispositivo | **"aparato"** |
+| parcela | **"lote"** / *"potrero"* |
+| bloque experimental | **"cantero"**, y el control es **"el testigo"** |
+| umbral | *"cuando la tierra baja de"* |
+| litros estimados / medidos | **"agua esperada" / "agua que salió"** |
+| m³ | **litros** |
+| EC, mS/cm | se quedan **solo en la pantalla de hidroponía** |
+| sin señal | *"sin noticias"* — ya estaba bien |
+
+---
+
+## 6. Qué del mockup es diseño y qué es andamio
 
 [`mockup/index.html`](mockup/index.html) es **un mockup**: un archivo, sin backend, sin API, sin
-estado que sobreviva a un refresh. Sirve para discutir jerarquía, densidad, orden de lectura y
-comportamiento en teléfono -- no para probar datos.
+estado que sobreviva a un refresh. Sirve para discutir jerarquía, orden de lectura, tamaño de toque
+y comportamiento en teléfono — no para probar datos.
 
-**Los datos son de ejemplo y están marcados como tal en la propia pantalla.** Los nombres de
-parcela, los cultivos (tomate, sandía, lechuga hidropónica), las unidades y los guaraníes son
-verosímiles a propósito para que el layout se vea con texto real; **ninguna cifra salió de una
-medición**. El cartel superior lo dice y no se puede cerrar.
+**Es andamio, y no va a estar en el producto:** el interruptor *Capataz / Dueño* de arriba (en la
+app de verdad el rol sale del permiso de la persona, no de un botón), el rol en la dirección
+(`#/capataz/hoy`), el cambiador de tema y el cartel amarillo.
+
+**Los datos son de ejemplo y están marcados en la propia pantalla.** Los nombres de lote, los
+cultivos, las unidades y los guaraníes son verosímiles a propósito para que el layout se vea con
+texto real; **ninguna cifra salió de una medición**. El cartel de arriba lo dice y no se puede
+cerrar.
+
+**Lo que sí es diseño y hay que aprobar o rechazar:** el orden respuesta-primero, el corte de tres
+pantallas contra doce, el agua en la tierra dicha en palabras, el gráfico plegado, los tamaños de
+toque, y el vocabulario entero.

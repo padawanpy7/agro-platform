@@ -56,9 +56,10 @@ escenarios A a D siguen siendo los que la contestan.
 
 **Una bloqueante -la 0- y tres abiertas.** La 2 se contesto el 27/09.
 
-**Actualizado el 28/09**: la frase que estaba aca decia *"ninguna es tecnica"*. **Dejo de ser cierto**:
-la pregunta **4** es tecnica y **bloquea la Fase 1**, y se contesta sin esperar a nadie. Las otras tres
-siguen dependiendo de plata, de un campo real o del negocio.
+**Actualizado el 28/09**: la frase que estaba aca decia *"ninguna es tecnica"*. Dejo de ser cierto con
+la pregunta **4**, que era tecnica y bloqueaba la Fase 1 -- **y que el mismo dia se contesto: ANGOSTA**.
+**Vuelve a ser cierto**: las tres que quedan abiertas dependen de plata, de un campo real o del negocio,
+y ninguna se decide desde el escritorio.
 
 ## 1. Donde corre el producto: este VPS o uno nuevo
 
@@ -214,7 +215,26 @@ Lo que la tienda **no** tiene: paneles solares (solo controladores de carga, sin
 meteorologica LoRaWAN, ni solenoide latching con stock -los que hay son solenoides comunes, que
 consumen mientras estan abiertos y por eso no sirven a bateria-.
 
-## 4. `medicion` angosta o ancha -- ABIERTA (28/09/2026), y BLOQUEA la Fase 1
+## 4. ~~`medicion` angosta o ancha~~ CONTESTADA (28/09/2026): **ANGOSTA**
+
+> **Respuesta del dueño, textual: *"medicion angosta"*.** Con eso **se desbloquea la Fase 1**: ya se
+> puede escribir la primera migracion.
+>
+> **Una fila por (dispositivo, momento, magnitud, valor)**, con `magnitud` como catalogo -- codigo,
+> unidad y rango valido --. Cada magnitud nueva es **una FILA**, nunca una migracion.
+>
+> **Llego con cinco argumentos independientes**, y ninguno era de estilo:
+>
+> 1. **Hidroponia**: EC, pH, temperatura de solucion y nivel serian cuatro migraciones.
+> 2. **Ganaderia**: peso, kilos consumidos y litros tomados, tres mas.
+> 3. **Arroz**: la lamina de agua es otra magnitud, no otra tabla.
+> 4. **El producto es un ERP**: con la ancha los modulos **no se cruzan solos** y hay que programar
+>    cada cruce a mano, para siempre ([docs/el-producto-es-un-erp.md](docs/el-producto-es-un-erp.md)).
+> 5. **La prueba del diseño**: *si agregar un cultivo obliga a una migracion, el diseño fallo.*
+>
+> Lo de abajo es el analisis con el que se decidio.
+
+### El analisis original -- ABIERTA hasta el 28/09/2026
 
 **Es tecnica, a diferencia de las otras tres, y por eso se contesta sin esperar a nadie.** Pero se
 anota aca porque **decide si el sistema sirve "para cualquier tipo de cultivo"**, que es lo que el

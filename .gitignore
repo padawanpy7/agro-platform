@@ -49,3 +49,6 @@ __pycache__/
 # Datos de la Postgres de desarrollo. Es un volumen de docker montado en el repo cuando se corre
 # con `--local`; el esquema se reconstruye con las migraciones de cambios/<id>/sql/.
 datos-postgres/
+
+# Metadatos que deja `pip install -e`. Se regeneran solos.
+*.egg-info/

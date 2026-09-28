@@ -41,10 +41,19 @@ que en Linux moria con `ENOENT` y dejaba `md-a-pdf` y toda tool con navegador ro
 se desarrolla aca, sin nada abierto a internet, y se despliega despues con la infra.
 
 ```sh
-docker compose -f desarrollo/postgres-dev.yml up -d     # levantar
-docker compose -f desarrollo/postgres-dev.yml down       # parar, conservando los datos
-docker compose -f desarrollo/postgres-dev.yml down -v    # parar y BORRAR los datos
+docker compose --env-file .env -f desarrollo/postgres-dev.yml up -d     # levantar
+docker compose --env-file .env -f desarrollo/postgres-dev.yml down      # parar, conservando datos
+docker compose --env-file .env -f desarrollo/postgres-dev.yml down -v   # parar y BORRAR los datos
 ```
+
+**El `--env-file .env` no es opcional**: compose busca el `.env` **al lado del archivo de compose**,
+no en la raiz. Sin el flag falla con *"required variable PGPASSWORD is missing a value"*, que suena a
+que falta el `.env` cuando en realidad esta y no lo mira.
+
+**Verificado el 29/09 contra la base corriendo**, no contra la documentacion de la imagen:
+PostgreSQL **17.11**, TimescaleDB **2.30.1**, PostGIS **3.6.4**, `pgcrypto` y `timescaledb_toolkit`.
+Y se probo lo que importa: **crear una hypertable y guardar y leer un `POINT` con SRID 4326 en la
+misma tabla**.
 
 La imagen es `timescaledb-ha`, que trae **TimescaleDB y PostGIS juntos**: el diseño necesita los dos
 y separarlos es un problema ya resuelto rio arriba.

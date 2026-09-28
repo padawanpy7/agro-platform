@@ -29,7 +29,7 @@ Hoy `project.yml` tiene `build`, `test`, `lint` y `run` **vacíos a propósito**
 código. La Fase 1 crea el primero, y sin estos comandos declarados `check` saltea sus gates y no
 mide nada.
 
-- [x] Postgres local con TimescaleDB + PostGIS: **compose escrito** (`desarrollo/postgres-dev.yml`) y documentado en `docs/setup.md`. **Falta levantarla**: esperando respuesta de infra por el disco al 84%
+- [x] Postgres local con TimescaleDB + PostGIS **LEVANTADA Y VERIFICADA** el 29/09: PG 17.11, Timescale 2.30.1, PostGIS 3.6.4, atada a `127.0.0.1`. Probada creando una hypertable y guardando un `POINT` 4326
       (es lo que necesita el verifier: los estáticos corren en cualquier máquina, los tests contra
       base real necesitan `.env` y una base levantada).
 - [x] `lint` y `test` declarados en `project.yml`; `check` ya los corre (9 en verde). **`build` sigue vacio A PROPOSITO**: hoy no hay artefacto que construir, y poner uno falso es el rojo-que-se-ignora que el propio archivo venia evitando.

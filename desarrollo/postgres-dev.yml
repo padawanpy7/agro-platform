@@ -25,22 +25,28 @@
 # `timescaledb` a secas justamente por PostGIS: el diseño necesita los dos, y montarlos por separado
 # es un problema que ya esta resuelto rio arriba.
 #
-# LA ETIQUETA ESTA SIN VERIFICAR contra el registry: se confirma al primer `docker compose pull`.
-# Si no existe, se ajusta aca y se anota cual quedo.
+# LA ETIQUETA ESTA VERIFICADA contra el registry el 29/09 (API de Docker Hub), y quedo anotado
+# porque la primera version de este archivo llevaba `pg17.4-ts2.19.0`, que **NO EXISTE**: era una
+# etiqueta inventada de memoria. La forma real es `pg<version-pg>-ts<version-timescale>`.
 #
 # Y OJO CON EL DIGEST: para DESARROLLO alcanza la etiqueta. Para el DESPLIEGUE la admision exige
 # `@sha256`, version fija y registry en allowlist (docker.io, quay.io, mirror.gcr.io), mas
 # `requests`/`limits` y PSA restricted. Esa version la arma infra-platform, no este archivo.
 #
-#   levantar:  docker compose -f desarrollo/postgres-dev.yml up -d
-#   parar:     docker compose -f desarrollo/postgres-dev.yml down
-#   borrar:    docker compose -f desarrollo/postgres-dev.yml down -v   <-- se lleva los datos
+#   levantar:  docker compose --env-file .env -f desarrollo/postgres-dev.yml up -d
+#   parar:     docker compose --env-file .env -f desarrollo/postgres-dev.yml down
+#   borrar:    docker compose --env-file .env -f desarrollo/postgres-dev.yml down -v   <-- datos incluidos
+#
+# EL `--env-file .env` NO ES OPCIONAL y cuesta diez minutos descubrirlo: compose busca el `.env`
+# **al lado del archivo de compose** (o sea `desarrollo/.env`), no en la raiz del repo. Sin el flag
+# falla con "required variable PGPASSWORD is missing a value", que suena a que falta el `.env`
+# cuando en realidad esta y no lo mira.
 
 name: agro-dev
 
 services:
   postgres:
-    image: timescale/timescaledb-ha:pg17.4-ts2.19.0
+    image: timescale/timescaledb-ha:pg17.11-ts2.30.1
     container_name: agro-postgres
     restart: unless-stopped
 
@@ -61,7 +67,7 @@ services:
       # espacio, ve `${PG_PASSWORD:?falta` sin cerrar, no lo reconoce como plantilla y lo marca como
       # secreto versionado. El gate tiene razon en desconfiar de un valor que no puede parsear; el
       # arreglo es de este lado, no aflojar el gate.
-      POSTGRES_PASSWORD: "${PG_PASSWORD:?falta PG_PASSWORD en el .env}"
+      POSTGRES_PASSWORD: "${PGPASSWORD:?falta PGPASSWORD en el .env}"
 
     volumes:
       - datos:/home/postgres/pgdata/data

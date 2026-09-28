@@ -54,8 +54,11 @@ que exista mercado** -- que es exactamente lo que la pregunta 0 busca. Sigue **A
 escenarios A a D siguen siendo los que la contestan.
 
 
-**Una bloqueante -la 0- y dos abiertas.** La 2 se contesto el 27/09. Ninguna es tecnica: dependen
-de plata, de un campo real o del negocio.
+**Una bloqueante -la 0- y tres abiertas.** La 2 se contesto el 27/09.
+
+**Actualizado el 28/09**: la frase que estaba aca decia *"ninguna es tecnica"*. **Dejo de ser cierto**:
+la pregunta **4** es tecnica y **bloquea la Fase 1**, y se contesta sin esperar a nadie. Las otras tres
+siguen dependiendo de plata, de un campo real o del negocio.
 
 ## 1. Donde corre el producto: este VPS o uno nuevo
 
@@ -210,3 +213,25 @@ y aguante a la intemperie. **Se cambia dinero por trabajo de ingenieria y por ri
 Lo que la tienda **no** tiene: paneles solares (solo controladores de carga, sin stock), estacion
 meteorologica LoRaWAN, ni solenoide latching con stock -los que hay son solenoides comunes, que
 consumen mientras estan abiertos y por eso no sirven a bateria-.
+
+## 4. `medicion` angosta o ancha -- ABIERTA (28/09/2026), y BLOQUEA la Fase 1
+
+**Es tecnica, a diferencia de las otras tres, y por eso se contesta sin esperar a nadie.** Pero se
+anota aca porque **decide si el sistema sirve "para cualquier tipo de cultivo"**, que es lo que el
+dueño pidio explicitamente.
+
+`design.md` muestra las columnas de valor de `medicion` -- `valor_crudo`, `valor_calibrado`,
+`calibracion_id`, `medido_en`, `recibido_en` -- pero **nunca dice como se distingue una humedad de un
+pH**.
+
+| | consecuencia |
+|---|---|
+| **A) Angosta**: una fila por (dispositivo, momento, **magnitud**, valor), con `magnitud` como catalogo | **cada magnitud nueva es una FILA.** EC, pH, oxigeno disuelto y temperatura de solucion entran **sin tocar el esquema** |
+| **B) Ancha**: una columna por variable | **cada magnitud nueva es una MIGRACION.** Sumar hidroponia serian cuatro |
+
+**Recomendacion: A**, con `magnitud` como catalogo (codigo, unidad, rango valido). **La prueba del
+diseño es esta: si agregar frutilla o hidroponia obliga a una migracion, el diseño fallo.**
+
+**Si no se contesta**: no se puede escribir la primera migracion, porque es la forma de la tabla
+central. Detalle y lo que falta agregar para hidroponia -- `solucion_nutritiva` y
+`bloque_experimental` -- en [docs/satelite-dron-y-cualquier-cultivo.md](docs/satelite-dron-y-cualquier-cultivo.md).

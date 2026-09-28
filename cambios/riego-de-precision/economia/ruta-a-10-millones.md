@@ -99,6 +99,11 @@ orden importa mas que el presupuesto:**
 > **No automatices un proceso que todavia no corriste a mano.** Si lo haces, construis una maquina que
 > hace mal la cosa, de forma confiable y a escala. Y en hidroponia eso se paga en cultivo muerto.
 
+> **CORREGIDO el 28/09**: el orden de abajo dice "ciclo 1 y 2 a mano", y **con presencia diaria en la
+> casa eso es demasiado lento**. El metodo bueno es **automatizar todo por BLOQUES**, para que cada
+> cosa automatizada tenga su control y la planta que se muere diga por que.
+> Ver [docs/como-aprender-de-cada-ciclo.md](../docs/como-aprender-de-cada-ciclo.md).
+
 1. **Ciclo 1 y 2 a mano, con TODO logueado.** Medir temperatura de solucion, pH, EC y nivel, y anotar
    que se hizo y por que. **Eso es el dataset** y es lo que despues entrena cualquier decision
    automatica.

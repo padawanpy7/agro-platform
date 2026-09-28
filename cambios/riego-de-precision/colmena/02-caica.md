@@ -120,6 +120,63 @@ a discutirle al sistema ni a preferir su corazonada. **En contra, no puede decir
 equivoca.** Hace falta una referencia agronomica que no sea el -- CAICA, la cooperativa o el IPTA -- o
 el primer error del software no lo va a ver nadie.
 
+## El SEGUNDO contacto, y puede ser mas importante que el primero (28/09/2026)
+
+**El capataz del señor se ofrecio a ayudar con el tomate. Y tiene plantacion propia de tomate y
+sandia en su chacra.**
+
+| | |
+|---|---|
+| Que ofrece | **dar una mano** con el tomate |
+| Que tiene | **plantacion propia de tomate Y sandia** -- los dos cultivos que se iban a plantar |
+| Por que se ofrece | *"seguro que quiere ver tambien"*: **curiosidad, que es la señal de adopcion** |
+
+**Resuelve tres cosas que este repo tenia marcadas como faltantes:**
+
+1. **La mano de obra**, que era el limite real del tomate. 18.000 plantas tutoradas no las maneja una
+   persona ([economia/inversion-inicial-tomate.md](../economia/inversion-inicial-tomate.md)); con un
+   capataz experimentado, el tomate deja de estar descartado por trabajo.
+2. **La referencia agronomica que no sea el dueño del campo.** Arriba quedo escrito que el señor no es
+   agricultor y que *"no puede decirte si el sistema se equivoca"*. **El capataz si puede.**
+3. **El precio EN FINCA del tomate**, que [economia/README.md](../economia/README.md) declara como el
+   unico que importa y el que **"casi nunca se publica"**. **El lo cobra.** Es el dato mas buscado de
+   toda la carpeta y esta a una pregunta de distancia.
+
+### Y lo que vale mas que todo eso: su chacra es el GRUPO DE CONTROL
+
+**Misma zona, misma temporada, mismos dos cultivos, manejo tradicional.**
+
+> Sin eso, el resultado del piloto es *"nuestra parcela rindio X"* -- una anecdota. Con eso es
+> *"nuestra parcela rindio X y la de al lado rindio Y, con el mismo clima y la misma semana"*. **Es la
+> diferencia entre una anecdota y una prueba, y sale gratis.**
+
+Es el mismo razonamiento de los bloques de
+[docs/como-aprender-de-cada-ciclo.md](../docs/como-aprender-de-cada-ciclo.md), pero a escala de parcela
+y sin tener que montarlo: **ya existe**.
+
+**Ademas es cliente posible, y de mejor calidad que el señor**: el señor tiene la tierra y no planta;
+**el capataz planta**. Quien tiene el problema es quien compra la solucion.
+
+### La precaucion, dicha una vez
+
+**El capataz trabaja para el señor.** Una mano en tiempo de su patron no es un favor gratuito: es
+tiempo que ya tiene dueño. **Que el señor lo sepa y este de acuerdo, desde el principio** -- y si es
+trabajo de verdad, que se pague. No por formalismo: porque es la clase de cosa que enturbia una
+relacion que hoy es el activo principal del proyecto.
+
+### Preguntarle a el, no buscarlo en internet
+
+Todo esto lo sabe y no esta publicado en ninguna parte:
+
+- [ ] **A cuanto le pagan el kilo de tomate en finca**, y quien le compra.
+- [ ] **Cuanto rinde** su hectarea, de verdad, no el promedio del MAG.
+- [ ] **Que variedad** de tomate y de sandia, y por que esa.
+- [ ] **Cuando siembra y cuando cosecha** -- el calendario real de la zona, no el de Agrotec.
+- [ ] **Que plaga o enfermedad le pega**, y que usa.
+- [ ] **Por que se murio el arroz del señor.** El estaba ahi. Probablemente sea la mejor fuente.
+- [ ] **El pedazo ofrecido es alto o bajo? Se inunda?** El conoce el terreno.
+- [ ] **Cuanta gente hace falta** para una hectarea de tomate, y cuanto se le paga al jornal.
+
 ## Los dos roles del contacto, que conviene no mezclar
 
 | como... | que puede contestar | cuanto vale |

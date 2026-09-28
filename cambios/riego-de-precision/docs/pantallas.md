@@ -185,8 +185,8 @@ campo es un error de carga y conviene que salte al dibujarlo. **Se agrega en la 
 
 | nivel | qué es | en el mapa | contesta |
 |---|---|---|---|
-| **Campo** | El establecimiento entero | **El fondo.** Borde grueso, relleno neutro, **no se toca** | *"cuánta tierra tengo y dónde termina"* |
-| **Potrero / lote** | La división de adentro | **Lo que se toca.** Pintado por cómo está, clickeable | *"a cuál muevo la hacienda", "dónde riego"* |
+| **Campo** | El establecimiento entero | **El fondo.** Borde grueso, relleno neutro, **no se toca y no se apaga** | *"cuánta tierra tengo y dónde termina"* |
+| **Potrero / lote** | La división de adentro | **Lo que se toca.** Pintado por cómo está, clickeable, con su código (`P1`…`P6`) | *"a cuál muevo la hacienda", "dónde riego"* |
 
 ### 3.1 La trampa: sumar los potreros no da el campo
 
@@ -204,7 +204,56 @@ La pantalla **El campo entero** lo dice con esas palabras, al lado del reparto d
 una nota al pie: es un recuadro de advertencia, porque es el error que un tablero mal hecho induce
 solo.
 
-### 3.2 Los dos niveles no se dibujan a mano
+### 3.2 La leyenda está afuera del dibujo, y es un panel de capas
+
+**Adentro del dibujo escribir el nombre completo no entra: se solapa todo.** Por eso:
+
+- **Adentro van códigos cortos.** `P1`…`P6` para potreros y lotes, `S1`…`S18` para aparatos, `A1` y
+  `A2` para aguadas y tajamar. El código va en una chapita con borde, no suelto sobre el polígono.
+- **El nombre largo vive afuera**, en el panel, al lado de su código. Y aparece entero **al tocar**:
+  tocar el polígono o su renglón en el panel muestra una franja debajo del mapa con el código, el
+  nombre completo, qué es y qué hay que hacer, más un botón para abrirlo. **El primer toque muestra;
+  el segundo abre** — nada se ejecuta sin que se vea antes qué es (principio 1.8).
+- **El panel va al costado cuando el mapa tiene lugar y abajo cuando no.** No depende del ancho de
+  la ventana sino del ancho que le queda al mapa, que es lo que de verdad importa.
+
+**El panel es un árbol de dos niveles con casilla de verdad en cada uno:**
+
+```
+[x] Potreros y lotes (6)     <- apaga los seis de una
+    [x] P1 · Potrero Yvyra'i     potrero · 42,0 ha
+    [x] P2 · Potrero Costa Guasu potrero · 58,4 ha
+    ...
+[x] Aparatos (18)
+    [x] S1 · humedad · en P1
+    ...
+[x] Aguadas (2)
+[x] Monte              26,0 ha
+[x] Caminos             4,8 ha
+[x] Casco y corral      1,5 ha
+```
+
+- El grupo se despliega con su flecha y se apaga de a uno adentro.
+- **Si algunos hijos están apagados, el padre queda en estado intermedio** —la casilla con guión—,
+  no apagado. Volver a tocar el padre enciende todo; tocarlo con todo encendido apaga todo.
+- **Casilla de verdad, no un color que hay que adivinar** (principio 1.3). Cada renglón es un blanco
+  de toque de 56 px arriba y 46 px adentro del grupo, y la casilla y el nombre son **dos blancos
+  separados**: uno apaga, el otro muestra el nombre.
+- **El campo —el borde de afuera— no está en la lista**: no se apaga nunca, porque es el marco.
+
+### 3.3 Apagar esconde, no borra — y la cuenta no cambia
+
+Apagar una capa **la saca del dibujo y nada más**. La tabla de hectáreas de la derecha **no se
+mueve**, porque esa es la tierra que hay, no lo que se está mirando. El panel lo dice en su pie, con
+esas palabras.
+
+> **Una duda honesta para el dueño:** que el mapa cambie y la cuenta no puede leerse como un error.
+> La alternativa sería que la tabla siguiera a las capas, y eso sería peor: convertiría un número de
+> superficie —que es un hecho del campo— en una consecuencia de qué casillas quedaron tocadas.
+> Se eligió que la cuenta sea el hecho. **Si al probarlo con alguien esto confunde, se cambia** —
+> pero conviene probarlo antes de decidir.
+
+### 3.4 Los dos niveles no se dibujan a mano
 
 El archivo que el dueño arma con Google Earth trae los dos: el perímetro es el campo y cada división
 es un potrero. La pantalla de dibujo los trata por separado —el borde se carga una vez y casi no se
@@ -223,7 +272,7 @@ en la interfaz** (principio 1.14).
 | | |
 |---|---|
 | **Para qué sirve** | Es la primera pantalla del día, y muchas veces la única. |
-| **Qué muestra** | Arriba, cuántos lugares necesitan algo. Después, un renglón grande por potrero o lote con el nombre, **la acción escrita** (*"Andá a mirar la manguera"*), qué es y de qué, el tamaño y **hace cuánto llegó la última lectura** — ordenados por urgencia. Al lado, **el mapa de los dos niveles**. |
+| **Qué muestra** | Arriba, cuántos lugares necesitan algo. Después, un renglón grande por potrero o lote con el nombre, **la acción escrita** (*"Andá a mirar la manguera"*), qué es y de qué, el tamaño y **hace cuánto llegó la última lectura** — ordenados por urgencia. Debajo, **el mapa de los dos niveles con su panel de capas**. |
 | **De dónde sale** | `campo.geom`, `parcela`, última `medicion` por parcela, `riego_evento` del día, `dispositivo`, `captura_trampa`. |
 | **Qué decisión permite** | **Por dónde empezar el día**, y qué se puede dejar tranquilo. |
 
@@ -236,7 +285,7 @@ admite eso pierde al usuario el primer día que se equivoca.
 | | |
 |---|---|
 | **Para qué sirve** | El contexto: cuánta tierra hay y dónde termina. |
-| **Qué muestra** | El mapa con los potreros en plano —no pintados por estado, porque acá el estado no es el tema— y **el reparto de hectáreas**: potreros y lotes, monte, caminos, bajos, tajamar, casco. Más la advertencia de §3.1 y de dónde salió el borde. |
+| **Qué muestra** | El mapa a todo el ancho con su **panel de capas** al costado, y debajo **el reparto de hectáreas**: potreros y lotes, monte, caminos, bajos, tajamar, casco. Más la advertencia de §3.1 y de dónde salió el borde. |
 | **De dónde sale** | `campo` + `campo.geom` (nuevo), `parcela.geom`. |
 | **Qué decisión permite** | Cuánta tierra hay de verdad en producción, y **no confundir el verdor del campo con el del potrero**. |
 
@@ -376,6 +425,8 @@ en el mockup**, verificado contando.
 | m³ | **litros** |
 | EC, mS/cm | sólo en la pantalla de hidroponía |
 | rol, vista, perfil | **no se nombran.** El menú simplemente tiene menos cosas |
+| leyenda | **"qué se ve en el mapa"** |
+| capa | no se nombra: cada renglón es *"potreros y lotes"*, *"monte"*, *"caminos"* |
 
 ---
 
@@ -393,5 +444,10 @@ unidades y guaraníes son verosímiles a propósito para que el layout se vea co
 **ninguna cifra salió de una medición**.
 
 **Lo que sí es diseño y hay que aprobar o rechazar:** el orden respuesta-primero, el mapa de dos
-niveles con el campo como fondo, el agua en la tierra dicha en palabras, los gráficos plegados, el
-menú que se arma con permisos y sin rótulos de rol, los tamaños de toque, y el vocabulario entero.
+niveles con el campo como fondo, **el panel de capas afuera del dibujo y los códigos cortos
+adentro**, el agua en la tierra dicha en palabras, los gráficos plegados, el menú que se arma con
+permisos y sin rótulos de rol, los tamaños de toque, y el vocabulario entero.
+
+**Y una pregunta abierta, en §3.3:** apagar una capa cambia el dibujo pero **no** cambia la tabla de
+hectáreas. Es a propósito, y está argumentado — pero es lo primero que conviene mirarle a alguien
+cuando lo pruebe.

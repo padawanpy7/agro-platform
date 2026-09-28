@@ -1,5 +1,28 @@
 # Aprendizajes de riego-de-precision
 
+## Diseño de front — cuarta pasada: el mapa (28/09/2026)
+
+**La leyenda salió del dibujo y se volvió un panel de capas.** Lo encontró el dueño mirando, no
+leyendo: *"se solapa todo"*. Y tenía razón — escribir "Tomatal Ka'aguy · Tomate · 1,8 ha" encima de
+un polígono de 100 px es garantizar el choque.
+
+La regla que queda: **adentro del dibujo, códigos cortos; afuera, el nombre completo.** `P1`…`P6`,
+`S1`…`S18`, `A1`, `A2`. El nombre entero aparece **al tocar**, en una franja debajo del mapa —
+primer toque muestra, segundo abre, que además cumple la regla de no ejecutar nada a ciegas.
+
+El panel es un **árbol de dos niveles con casilla de verdad en cada uno**, con estado intermedio en
+el padre cuando hay hijos apagados. Y va **al costado cuando el mapa tiene lugar**: eso no se
+resuelve con el ancho de la ventana sino con `@container`, porque en "Hoy" el mapa compartía fila y
+la media query de viewport lo apretaba igual.
+
+**Decisión declarada, y es la que conviene mirarle a alguien cuando pruebe:** apagar una capa
+esconde el dibujo pero **no cambia la tabla de hectáreas**. La superficie es un hecho del campo, no
+una consecuencia de qué casillas quedaron tocadas. Si confunde, se cambia — pero se decidió así a
+propósito y está escrito en `docs/pantallas.md` §3.3.
+
+Y una de teléfono: **el mapa no se achica hasta dejar de leerse, se desliza.** A 390 px se dibuja a
+640 px de ancho con scroll horizontal y un cartel que lo dice, como cualquier mapa.
+
 ## Diseño de front — tercera pasada (28/09/2026)
 
 **Decisión del dueño: una sola app.** Se sacó la vista capataz como vista separada y el interruptor

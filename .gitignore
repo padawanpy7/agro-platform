@@ -36,3 +36,16 @@ cambios/*/entrega/*.pdf
 cambios/*/entrega/capturas/
 # Los diagramas de desarrollo/ viajan como .html + .json; las capturas de visual-check no.
 desarrollo/diagramas/*.visual-check.*
+
+# Entorno de Python. Se reconstruye con `python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"`
+# y pesa ~200 MB: no va a git. Las versiones exactas viven en pyproject.toml, que SI va.
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Datos de la Postgres de desarrollo. Es un volumen de docker montado en el repo cuando se corre
+# con `--local`; el esquema se reconstruye con las migraciones de cambios/<id>/sql/.
+datos-postgres/

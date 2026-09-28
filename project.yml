@@ -14,16 +14,21 @@ stack:
   infra: "k3s + Argo CD en el VPS de staging (ver desarrollo/README.md)"
 
 commands:
-  # Vacios A PROPOSITO hasta que exista codigo. Un comando en blanco hace que el gate de `check`
-  # diga "sin comando declarado en project.yml", que es la verdad; poner un comando que no corre
-  # daria un rojo permanente y se aprende a ignorarlo. Se llenan cuando haya que llenarlos:
-  #   build: "npm --prefix web run build"
-  #   test:  "pytest -q && npm --prefix web test"
-  #   lint:  "ruff check . && mypy . && npm --prefix web run lint"
+  # Llenados el 29/09/2026, cuando aparecio el primer codigo (Fase 0 del ticket
+  # riego-de-precision). Se usa la ruta del venv y no `ruff` pelado: asi el gate corre igual
+  # sin activar nada, que es como lo corre `check`.
+  lint: ".venv/bin/ruff check . && .venv/bin/mypy"
+  test: ".venv/bin/pytest"
+  run: ".venv/bin/uvicorn api.principal:app --host 127.0.0.1 --port 8000 --reload"
+
+  # BUILD SIGUE VACIO A PROPOSITO, y no es un olvido: hoy no hay nada que construir. No hay
+  # front todavia y el servicio se corre desde el fuente. Poner aca un `python -m build` seria
+  # inventar un artefacto que nadie consume, que es exactamente el rojo-que-se-aprende-a-ignorar
+  # que este bloque venia evitando. Se llena el dia que haya imagen de contenedor o front.
   build: ""
-  test: ""
-  run: ""
-  lint: ""
+
+  # DEPLOY vacio por contrato, no por pendiente: este repo NO despliega. Arma lo que hay que
+  # desplegar y se lo pasa a infra-platform (AGENTS.md §1).
   deploy: ""
 
 conventions:

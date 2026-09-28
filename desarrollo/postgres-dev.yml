@@ -1,0 +1,87 @@
+# Postgres de DESARROLLO para agro-platform.
+#
+# NO EXPONE NADA: escucha solo en 127.0.0.1. Decision del dueño el 29/09/2026 -- se desarrolla en
+# esta maquina, sin nada abierto a internet, y se despliega despues con la infra.
+#
+# DONDE CORRE ESTO, porque la primera version de este archivo lo tenia MAL (corregido el 29/09 con
+# datos de la sesion de infra-platform). Son DOS maquinas distintas y conviene no mezclarlas:
+#
+#   vmi2900083  <- ACA. Nodo de CONTROL. 96G de disco, 11G de RAM. NO corre k3s.
+#                  Corre SIRA en docker (frontend, api, keycloak, postgres, nginx).
+#   srv1943767  <- el VPS de STAGING. 387G de disco, 32G de RAM. Ahi viven k3s, Argo
+#                  y `primavera-nati`. Y ahi paso el incidente del fsync de 3 segundos del 07/09,
+#                  NO aca.
+#
+# EL DISCO DE ESTA MAQUINA estaba al 84% el 29/09, y ~50 de los 80 GB usados son basura de docker
+# recuperable (imagenes y build cache). **NO se corre `docker system prune` desde aca**: hay 14
+# volumenes en uso y varios son de SIRA. Esa limpieza la decide y la hace el dueño.
+# Con los 17 GB libres alcanza de sobra para la Fase 1 -- doce tablas vacias y mediciones de prueba.
+# Lo que NO entra con 17 GB es meses de serie sintetica.
+#
+# NO TOCAR SIRA: regla explicita del dueño del 24/09 -- "dejar solo que ande lo que es sira". Por eso
+# todo aca lleva prefijo `agro-` y red propia: nada puede colisionar con sus contenedores ni su red.
+#
+# La imagen `timescaledb-ha` trae TimescaleDB *y* PostGIS en el mismo contenedor. Se usa esa y no
+# `timescaledb` a secas justamente por PostGIS: el diseño necesita los dos, y montarlos por separado
+# es un problema que ya esta resuelto rio arriba.
+#
+# LA ETIQUETA ESTA SIN VERIFICAR contra el registry: se confirma al primer `docker compose pull`.
+# Si no existe, se ajusta aca y se anota cual quedo.
+#
+# Y OJO CON EL DIGEST: para DESARROLLO alcanza la etiqueta. Para el DESPLIEGUE la admision exige
+# `@sha256`, version fija y registry en allowlist (docker.io, quay.io, mirror.gcr.io), mas
+# `requests`/`limits` y PSA restricted. Esa version la arma infra-platform, no este archivo.
+#
+#   levantar:  docker compose -f desarrollo/postgres-dev.yml up -d
+#   parar:     docker compose -f desarrollo/postgres-dev.yml down
+#   borrar:    docker compose -f desarrollo/postgres-dev.yml down -v   <-- se lleva los datos
+
+name: agro-dev
+
+services:
+  postgres:
+    image: timescale/timescaledb-ha:pg17.4-ts2.19.0
+    container_name: agro-postgres
+    restart: unless-stopped
+
+    networks: [agro]
+
+    ports:
+      # 127.0.0.1 y no 0.0.0.0. Sin esto el puerto queda escuchando en todas las interfaces --
+      # que es exactamente lo que el dueño dijo que no. El 5432 del host esta libre: `sira-postgres`
+      # expone 5432 pero NO publicado al host, o sea que vive solo en su red de docker.
+      - "127.0.0.1:5432:5432"
+
+    environment:
+      POSTGRES_DB: agro
+      POSTGRES_USER: agro_admin
+      # Sale del .env, que esta en .gitignore. El `:?` hace que NO arranque si falta, en vez de
+      # arrancar con una contraseña vacia.
+      # VA ENTRE COMILLAS A PROPOSITO: sin ellas, el gate de secretos corta el valor en el primer
+      # espacio, ve `${PG_PASSWORD:?falta` sin cerrar, no lo reconoce como plantilla y lo marca como
+      # secreto versionado. El gate tiene razon en desconfiar de un valor que no puede parsear; el
+      # arreglo es de este lado, no aflojar el gate.
+      POSTGRES_PASSWORD: "${PG_PASSWORD:?falta PG_PASSWORD en el .env}"
+
+    volumes:
+      - datos:/home/postgres/pgdata/data
+
+    # Esta maquina tiene 11 GB de RAM y ademas corre SIRA. El limite no es optimizacion prematura:
+    # es que una base de desarrollo no se lleve puesta la maquina de otro.
+    # `mem_limit` y no solo `deploy.resources`: `deploy` es de swarm y se ignora en varios caminos.
+    mem_limit: 2g
+    shm_size: 256mb
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agro_admin -d agro"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  agro:
+    name: agro
+
+volumes:
+  datos:
+    name: agro-datos-dev

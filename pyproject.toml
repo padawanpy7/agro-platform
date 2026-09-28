@@ -1,0 +1,55 @@
+[project]
+name = "agro-api"
+version = "0.1.0"
+description = "API de agro-platform: control, ingesta y politica"
+requires-python = ">=3.12"
+
+# VERSIONES FIJAS, no rangos (AGENTS.md regla 8). Cada una paso por
+# `node agro.js check-dep pypi <pkg>` el 29/09/2026: todas en su ultima
+# estable y sin vulnerabilidades en OSV.
+dependencies = [
+  "fastapi==0.141.1",
+  "uvicorn==0.54.0",
+  "psycopg[binary]==3.3.6",
+  "pydantic==2.13.5",
+  "pydantic-settings==2.13.0",
+  "argon2-cffi==25.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==9.1.1",
+  "ruff==0.16.9",
+  "mypy==2.3.1",
+]
+
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["api*"]
+
+[tool.pytest.ini_options]
+# Los tests NO viven en una carpeta global: viven con el cambio que los pidio
+# (AGENTS.md §5). Cuando haya un segundo cambio con tests, se agrega su ruta aca.
+testpaths = ["cambios/riego-de-precision/tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# E,F: errores y pyflakes. I: imports ordenados. UP: sintaxis moderna.
+# B: bugs probables. S: seguridad (bandit).
+select = ["E", "F", "I", "UP", "B", "S"]
+
+[tool.ruff.lint.per-file-ignores]
+# En los tests, assert es la herramienta, no un problema de seguridad.
+"cambios/*/tests/*" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["api"]

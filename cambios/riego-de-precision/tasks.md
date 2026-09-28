@@ -29,15 +29,12 @@ Hoy `project.yml` tiene `build`, `test`, `lint` y `run` **vacíos a propósito**
 código. La Fase 1 crea el primero, y sin estos comandos declarados `check` saltea sus gates y no
 mide nada.
 
-- [ ] Postgres local con TimescaleDB + PostGIS, levantada y documentada en `docs/setup.md`
+- [x] Postgres local con TimescaleDB + PostGIS: **compose escrito** (`desarrollo/postgres-dev.yml`) y documentado en `docs/setup.md`. **Falta levantarla**: esperando respuesta de infra por el disco al 84%
       (es lo que necesita el verifier: los estáticos corren en cualquier máquina, los tests contra
       base real necesitan `.env` y una base levantada).
-- [ ] Declarar `lint`, `test` y `build` en `project.yml` apuntando al esqueleto de la Fase 1.
-- [ ] Esqueleto del repo: `pyproject.toml` con versiones fijas (regla 8: `check-dep` antes de
-      agregar cada paquete, lockfile, nunca rangos abiertos).
-- [ ] `memory/playbooks/database.md` con las convenciones del esquema **antes** de escribir la
-      primera migración. Arranca vacío y hoy nadie lo llenó; el contrato pide leerlo antes de tocar
-      un objeto, y un playbook vacío no dice nada.
+- [x] `lint` y `test` declarados en `project.yml`; `check` ya los corre (9 en verde). **`build` sigue vacio A PROPOSITO**: hoy no hay artefacto que construir, y poner uno falso es el rojo-que-se-ignora que el propio archivo venia evitando.
+- [x] Esqueleto: `pyproject.toml` con **versiones fijas**, las ocho pasadas por `check-dep` el 29/09 -- todas en ultima estable y sin vulnerabilidades. Mas `api/config.py` y sus dos tests.
+- [x] `memory/playbooks/database.md` escrito el 28/09, **antes** de la primera migracion.
 
 **Prueba de que la fase sirvió**: `node agro.js check` deja de decir "salteado" en lint, build y
 tests.

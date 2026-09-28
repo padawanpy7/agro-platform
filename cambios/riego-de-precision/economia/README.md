@@ -61,3 +61,4 @@ uva, durazno y ciruela **no se puede derivar sin preguntar cuanto pesa la caja**
 | [ganaderia.md](ganaderia.md) | **mercado vecino**: otro producto que reusa el 80% de lo construido |
 | [tierra.md](tierra.md) | **cuanto CUESTA la hectarea** en Misiones, y si el cultivo la paga |
 | [misiones-tajamar.md](misiones-tajamar.md) | **que plantar con un tajamar**: la lista por precio/ha, y por que el agua la reordena |
+| [inversion-inicial-tomate.md](inversion-inicial-tomate.md) | **1 ha de tomate partiendo de cero**: que se alquila, que se compra, y con o sin tajamar |

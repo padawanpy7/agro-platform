@@ -11,6 +11,20 @@
 Tierra propia es **ideal para el primero** -se puede romper, iterar y equivocarse sin costo de
 relacion- y **floja para el segundo**: prueba que la tecnologia anda, no que alguien la compra.
 
+> **NOVEDAD del 28/09/2026, y cambia el alcance de este documento.** El dueño planteo que *"a lo
+> mejor"* hace **su propia plantacion piloto** en el terreno. Si eso pasa, esto deja de ser solo un
+> banco: **el primer productor es el dueño**.
+>
+> **Lo que gana**: el producto entero probado sin convencer a nadie, y el **historico propio** que el
+> ML necesita y que hoy no existe. **Lo que sigue sin probar es lo mismo que antes**: que alguien
+> pague. Un piloto propio no es una referencia comercial -- sigue siendo tierra propia.
+>
+> La fila de arriba que dice "sin cliente, sin presion" **deja de ser cierta** si hay una plantacion
+> real adentro: una cosecha propia si mete presion, y el software que decide el riego pasa a tener
+> plata en juego. La inversion y la maquinaria estan costeadas en
+> [economia/inversion-inicial-tomate.md](economia/inversion-inicial-tomate.md); el efecto sobre quien
+> es el cliente, en [PREGUNTAS.md](PREGUNTAS.md) pregunta 0.
+
 ## Lo que Misiones tiene, y por que importa
 
 | | dato | fuente |

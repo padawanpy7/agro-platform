@@ -35,6 +35,24 @@ la primera reunion**, y las preguntas estan en [colmena/07-vacios.md](colmena/07
 es quien firma. **Nada de lo construido se tira si gana B en vez de A** -- lo unico que se reescribe
 es `ECONOMIA.md`.
 
+### Agregado el 28/09/2026: un quinto escenario, y NO cierra la pregunta
+
+| | quien decide | quien paga | que cambia |
+|---|---|---|---|
+| **E. El dueño mismo, como productor** | el dueño | el dueño | **no hay venta que cerrar.** El producto se prueba entero sin convencer a nadie y **genera el historico propio** que el ML necesita y hoy no existe |
+
+Salio de que el dueño planteo hacer **su propia plantacion piloto** en el terreno de Misiones
+([banco-de-pruebas.md](banco-de-pruebas.md), y el costeo en
+[economia/inversion-inicial-tomate.md](economia/inversion-inicial-tomate.md)).
+
+**Por que es bueno**: es el unico escenario que no depende de que un tercero diga si. Arranca cuando
+el dueño quiera.
+
+**Por que NO cierra la pregunta 0**: la pregunta es *quien paga por esto*, y el escenario E la
+**esquiva** en vez de contestarla. Un piloto propio prueba que la tecnologia funciona y **no prueba
+que exista mercado** -- que es exactamente lo que la pregunta 0 busca. Sigue **ABIERTA**, y los
+escenarios A a D siguen siendo los que la contestan.
+
 
 **Una bloqueante -la 0- y dos abiertas.** La 2 se contesto el 27/09. Ninguna es tecnica: dependen
 de plata, de un campo real o del negocio.

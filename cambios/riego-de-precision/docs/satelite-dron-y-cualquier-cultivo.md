@@ -108,6 +108,102 @@ paso 6 del orden de construccion de semanas a dias.
 - **Dice donde y cuando, nunca por que.** El NDVI te manda a caminar al lugar correcto; el diagnostico
   lo hace el sensor o la persona.
 
+## 3b. Se puede traer la serie de 5 años? Se puede traer NUEVE -- y eso cambia el calendario de ML
+
+**Si, y mucho mas de lo que se pidio.**
+
+| | desde cuando | resolucion |
+|---|---|---|
+| Sentinel-2 **L1C** | **junio 2015** (lanzamiento del 2A, el 23/06/2015) | 10 m |
+| **Sentinel-2 L2A global** | **enero 2017** | 10 m |
+| Revisita de **5 dias** (con el 2B, lanzado 07/03/2017) | **marzo 2017** | 10 m |
+| **Landsat** | **1984** | 30 m |
+
+Fuentes: [Sentinel-2 (Wikipedia/ESA)](https://en.wikipedia.org/wiki/Sentinel-2),
+[USGS EROS](https://www.usgs.gov/centers/eros/science/usgs-eros-archive-sentinel-2),
+[disponibilidad global 1984-2023](https://www.sciencedirect.com/science/article/pii/S2352340924010163).
+
+**A septiembre de 2026 eso son ~9 años y 9 meses de L2A**, con revisita de 5 dias desde 2017.
+
+> **Y para la pregunta de degradacion de potreros, Landsat a 30 m sirve igual**: 120 ha son ~1.333
+> pixeles a 30 m. **Cinco años pueden no mostrar una tendencia; cuarenta la muestran sin discusion.**
+> Sentinel para el detalle reciente, Landsat para la tendencia larga.
+
+### Cuanto ocupa ese historico? Casi nada, y por eso se trae ENTERO el primer dia
+
+```
+Revisita 5 dias              ->  ~73 pasadas/año
+Menos nubes (Paraguay)       ->  ~30 a 45 fechas usables/año
+10 potreros x 40 x 10 años   ->  ~4.000 filas
+100 parcelas x 40 x 10 años  ->  ~40.000 filas
+```
+
+**Son unos pocos miles de filas.** Los gigabytes son los rasters, y el diseño ya decidio **no
+guardarlos**. Guardar el agregado por parcela hace que **el historico completo de toda la tierra
+entre en una tabla chica**.
+
+> **No hay ninguna razon para empezar desde hoy. Se hace backfill de los diez años el primer dia.**
+
+### Y aca esta lo que de verdad importa
+
+El [proposal.md](../proposal.md) dice que **"entrenar sin historico propio es inventar"**, y que esta
+ficha *"construye el dataset y deja el lugar donde el modelo se va a enchufar"*. Eso asumia **esperar
+años** a que los sensores acumulen.
+
+> **Pero el satelite lleva nueve años acumulando historico sobre esa misma tierra, gratis, y es
+> retroactivo. No hay que esperar: el dataset espacial ya existe y se baja en un rato.**
+
+**Con la honestidad correspondiente**: es historico de **vigor vegetal**, no de humedad de suelo, ni de
+eventos de riego, ni de rendimiento. **Es el esqueleto espacio-temporal, no el dataset completo.** Lo
+que falta es justamente lo que los sensores y `campania` van a aportar.
+
+### Que se puede hacer HOY con esos nueve años, sin una sola etiqueta
+
+Todo esto es **no supervisado**: no necesita saber cuanto rindio nada.
+
+| analisis | que contesta | valor |
+|---|---|---|
+| **Zonificacion estable**: promedio por pixel sobre 9 años | los pixeles que estan **SIEMPRE** bajos son problema de **suelo o terreno**, no de clima | **el de mas valor.** Separa el problema **permanente** del **pasajero**, y dice **donde poner el sensor** y donde no invertir |
+| **Banda historica de percentiles** por semana del año | si el NDVI de esta semana esta dentro o fuera de lo normal de esa semana | deteccion de anomalias **sin ML**, solo percentiles |
+| **Pendiente del pico anual** a lo largo de los años | **cual potrero se degrada**, 1% por año | no se ve mirando: baja demasiado despacio |
+| **Fenologia por campaña**: fecha de emergencia, fecha de pico, **integral bajo la curva** | biomasa acumulada del ciclo | la integral es lo que mejor correlaciona con rendimiento |
+| **NDVI cruzado con lluvia historica** | **cuanto cae ESE potrero por mm que no llovio** | sensibilidad a sequia **por potrero**: dice cual descargar primero en un año seco |
+
+**Lo que NO se puede hacer todavia: predecir rendimiento.** Eso necesita la **etiqueta** -- kilos
+cosechados -- y de eso no hay historico. **El capataz puede tener registros de su chacra**, y
+`campania` esta diseñada exactamente para guardarlos.
+
+### Dos cosas que hay que agregar a `indice_espacial`, y la API ya las da
+
+**1. La fraccion de pixeles validos.** La Statistical API devuelve **`sampleCount` y `noDataCount`**
+por intervalo, ademas de min, max, media y desviacion.
+
+> **Una media de NDVI calculada sobre 3 pixeles validos porque las nubes taparon el resto se ve
+> IDENTICA a una buena.** Sin guardar `sampleCount` y `noDataCount`, **dentro de dos años no hay forma
+> de distinguirlas** -- y es exactamente la clase de error irreversible que la regla 1 del contrato
+> prohibe. `design.md` lista media, p10, p90 y coeficiente de variacion; **falta esto.**
+
+**2. La version del evalscript.** El evalscript es la formula del indice y de la mascara de nubes.
+
+> **El evalscript ES la calibracion del satelite.** Si mañana se cambia la formula o la mascara, hay
+> que saber que filas salieron de que version -- igual que `medicion.calibracion_id`. Se cierra la
+> vigente y se inserta otra; **nunca se edita**. Con eso el historico **se puede recalcular**; sin eso,
+> se mezcla y se pierde.
+
+### Detalles de la API que conviene saber antes de programar el backfill
+
+- **`aggregationInterval` minimo de un dia** (`P1D`, `P5D`, `P30D`). Para fenologia conviene `P1D` o
+  `P5D`; para tendencia larga, `P30D` baja mucho el consumo.
+- **`lastIntervalBehavior`**: `SKIP` por default descarta el ultimo intervalo incompleto. Con
+  `SHORTEN` o `EXTEND` no se pierde el tramo final.
+- **Filtro de nubosidad por tile** (`maxCloudCoverage` en %): por ejemplo 20 usa solo tiles con hasta
+  20% de nubes. **Ojo: es del tile entero, no de la parcela** -- una parcela despejada dentro de un
+  tile nublado se descarta igual. Por eso hace falta igual el `noDataCount`.
+- **La cuota se reinicia el dia 1 y no se acumula**: conviene hacer el backfill de diez años **en un
+  mes** y despues solo el incremental.
+
+Documentacion: [Statistical API](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Statistical.html).
+
 ## 4. El dron con camara termica de USD 2.000
 
 **Para que sirve una termica, de verdad:**
@@ -168,3 +264,10 @@ agregado por parcela con puntero al archivo. **No hay que rehacer nada.**
   ficha aparte de hidroponia.
 - **Si se usa NDRE ademas de NDVI** en el pasto. Sentinel-2 tiene las bandas; es una linea de
   evalscript.
+- **Agregar a `indice_espacial`: `sample_count`, `no_data_count` y `evalscript_version`.** Los dos
+  primeros los devuelve la API y sin ellos no se distingue una media buena de una calculada sobre tres
+  pixeles; el tercero es el `calibracion_id` del satelite. **Entra en la Fase 1, con la migracion.**
+- **Si el backfill arranca en 2017 (L2A global) o en 2015 (L1C).** L2A viene corregido
+  atmosfericamente; L1C no, y mezclarlos sin decirlo ensucia la serie. **Recomendacion: L2A desde
+  2017, y si hace falta ir mas atras, Landsat -- pero en una `fuente` distinta, nunca mezclado en la
+  misma serie.**

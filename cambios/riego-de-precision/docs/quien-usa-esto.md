@@ -81,12 +81,25 @@ PostGIS en la pantalla principal.**
 **Y es la misma persona que es la referencia agronomica y el grupo de control.** El mismo viaje del
 sabado.
 
-## Una aclaracion sobre "Claude Design"
+## Que hay y que no hay de "Claude Design" -- verificado el 28/09/2026
 
-`.claude/agents/ui-designer.md` dice que el rol *"diseña con Claude Design"* y que **si no hay skill
-o MCP disponible, el humano lo lleve a Claude Design en el navegador**.
+`.claude/agents/ui-designer.md` dice que el rol *"diseña con Claude Design"* si hay skill o MCP
+disponible. **Se reviso en serio en vez de suponer**, y la respuesta tiene tres partes:
 
-**En esta sesion NO hay skill ni MCP de Claude Design.** El mockup se hizo con las skills que si
-estan: `frontend-design` y `dataviz`. **Es el mismo patron que `ssh-ro`**: la definicion del rol
-nombra una herramienta que en esta maquina no esta conectada. Queda anotado para no volver a
-preguntarlo.
+| para | herramienta | estado |
+|---|---|---|
+| **Diseñar pantallas en un canvas** (artboards en vivo) | **Artifact, tipo "Design"** | **DISPONIBLE AHORA.** Es lo mas parecido a lo que el dueño pide |
+| **Subir NUESTRA libreria de componentes** a claude.ai/design, para que el agente de diseño arme todo con nuestras piezas | `DesignSync` + skill `/design-sync` | **pide `/design-login`** (solo lo puede correr el dueño) **Y una libreria compilada, que este repo no tiene** |
+| Figma u otro MCP de diseño | -- | **ninguno conectado.** Los MCP de esta sesion son Claude Docs, Gmail, Calendar y Drive |
+
+**Correccion de lo que decia antes este documento**: se habia escrito *"no hay skill ni MCP de Claude
+Design"*. **Es impreciso.** La herramienta `DesignSync` existe y esta cableada; lo que falta son la
+autorizacion y **la libreria de componentes**. Y para **hacer** un diseño la herramienta correcta
+nunca fue `DesignSync` -- su propia descripcion lo dice: *"nunca la uses para hacer un diseño, deck o
+prototipo: eso se hace con un tipo Slides o Design del Artifact"*.
+
+**Y el dato que ordena el orden de las cosas**: la cuenta **no tiene ningun design system cargado**.
+Sincronizar uno **no tiene nada que sincronizar hasta que exista el front**, que es la **Fase 5** de
+[tasks.md](../tasks.md). Antes de eso, `/design-sync` crearia un proyecto vacio.
+
+El mockup actual se hizo con `frontend-design` y `dataviz`, que si estan.

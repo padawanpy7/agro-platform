@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es-PY" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo queda una hectárea con goteo, todo instalado</title>
+<style>
+:root{
+  color-scheme: light;
+  --paper:#F3F5F2; --panel:#fff; --panel-2:#E9EDE8;
+  --ink:#0C1811; --ink-2:#3B4D42; --ink-3:#69796E;
+  --line:#C9D3C8; --brand:#0B4A56; --brand-wash:#DDEBEE;
+  --agua:#0284A8; --warn:#9C5504; --warn-wash:#F6E7D3; --ok:#216B3A;
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#101512; --panel:#1A211D; --panel-2:#232C27;
+  --ink:#F1F6F1; --ink-2:#BCC9C0; --ink-3:#93A399;
+  --line:#3A463F; --brand:#67C2D2; --brand-wash:#17302F;
+  --agua:#4FB6D6; --warn:#DFA02C; --warn-wash:#2F2615; --ok:#57BA76;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#101512; --panel:#1A211D; --panel-2:#232C27;
+    --ink:#F1F6F1; --ink-2:#BCC9C0; --ink-3:#93A399;
+    --line:#3A463F; --brand:#67C2D2; --brand-wash:#17302F;
+    --agua:#4FB6D6; --warn:#DFA02C; --warn-wash:#2F2615; --ok:#57BA76;
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+  font-size:17px; line-height:1.55; font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:1000px; margin:0 auto; padding:24px 16px 80px}
+header{border-bottom:2px solid var(--line); padding-bottom:16px; margin-bottom:24px;
+  display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap}
+h1{font-size:1.75rem; margin:0; line-height:1.15; letter-spacing:-.02em; flex:1 1 320px}
+h2{font-size:1.2rem; margin:36px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--line)}
+h3{font-size:1rem; margin:22px 0 6px}
+p{margin:0 0 12px; max-width:68ch}
+.lead{color:var(--ink-2)}
+button{font:inherit; cursor:pointer; background:var(--panel); color:var(--ink-2);
+  border:2px solid var(--line); border-radius:4px; padding:8px 14px; min-height:44px}
+figure{margin:20px 0 8px; background:var(--panel); border:1px solid var(--line);
+  border-radius:6px; padding:14px}
+figure svg{display:block; width:100%; max-width:100%; height:auto}
+figcaption{margin-top:10px; font-size:.9rem; color:var(--ink-2); line-height:1.45}
+figcaption b{color:var(--ink)}
+table{border-collapse:collapse; width:100%; margin:12px 0 18px; font-size:.92rem}
+th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top}
+th{background:var(--panel-2); font-weight:650}
+td b{color:var(--ink)}
+.nota{border:2px solid var(--brand); background:var(--brand-wash); border-radius:6px;
+  padding:14px 16px; margin:18px 0}
+.ojo{border:2px solid var(--warn); background:var(--warn-wash); border-radius:6px;
+  padding:14px 16px; margin:18px 0}
+.nota p:last-child,.ojo p:last-child{margin-bottom:0}
+.big{font-size:1.15rem; font-weight:700}
+.flag{background:repeating-linear-gradient(135deg,var(--warn-wash) 0 12px,transparent 12px 24px);
+  border-bottom:2px solid var(--line); padding:10px 16px; font-size:.85rem; color:var(--ink-2)}
+.flag b{color:var(--ink)}
+code{background:var(--panel-2); padding:1px 5px; border-radius:3px; font-size:.9em}
+</style>
+</head>
+<body>
+<div class="flag"><b>Dibujo explicativo.</b> Las medidas son de una hectárea típica de tomate; los precios están en la lista de compras, no acá.</div>
+<div class="wrap">
+
+<header>
+  <h1>Cómo queda una hectárea con goteo, todo instalado</h1>
+  <button onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">Tema oscuro</button>
+</header>
+
+<p class="lead">Preguntaste si se compran caños. <b>Sí, y son tres tipos distintos</b> — uno grueso que trae el agua, uno mediano que la reparte en la cabecera, y una cinta fina que va al lado de cada planta. Esto es cómo se conectan.</p>
+
+<h2>1. El agua, desde la fuente hasta la planta</h2>
+
+<figure>
+<svg viewBox="0 0 900 430" role="img" aria-label="Esquema de un riego por goteo de una hectárea: el agua sale del tajamar o pozo, pasa por la bomba, el filtro de arena y el filtro de malla, llega al cabezal con la válvula y el manómetro, sigue por la tubería principal enterrada, se reparte por el portalaterales en la cabecera del lote, y de ahí salen las cintas de goteo que corren al lado de cada hilera de plantas.">
+  <defs>
+    <marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,0 10,5 0,10" fill="var(--agua)"/>
+    </marker>
+    <marker id="flk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <polygon points="0,0 10,5 0,10" fill="currentColor"/>
+    </marker>
+  </defs>
+
+  <!-- fuente -->
+  <ellipse cx="62" cy="120" rx="46" ry="26" fill="none" stroke="var(--agua)" stroke-width="2.5"/>
+  <text x="62" y="118" text-anchor="middle" font-size="12" fill="currentColor">tajamar</text>
+  <text x="62" y="132" text-anchor="middle" font-size="12" fill="currentColor">o pozo</text>
+  <text x="62" y="166" text-anchor="middle" font-size="11" fill="var(--ink-3)">la fuente</text>
+
+  <!-- bomba -->
+  <line x1="110" y1="120" x2="146" y2="120" stroke="var(--agua)" stroke-width="3" marker-end="url(#fl)"/>
+  <circle cx="172" cy="120" r="24" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="172" y="125" text-anchor="middle" font-size="12" fill="currentColor">bomba</text>
+
+  <!-- filtro arena -->
+  <line x1="198" y1="120" x2="228" y2="120" stroke="var(--agua)" stroke-width="3" marker-end="url(#fl)"/>
+  <rect x="230" y="92" width="58" height="56" rx="4" fill="none" stroke="var(--warn)" stroke-width="3"/>
+  <text x="259" y="114" text-anchor="middle" font-size="11" fill="currentColor">filtro de</text>
+  <text x="259" y="128" text-anchor="middle" font-size="11" fill="currentColor">ARENA</text>
+  <text x="259" y="166" text-anchor="middle" font-size="11" fill="var(--warn)">el que se olvida</text>
+
+  <!-- filtro malla -->
+  <line x1="290" y1="120" x2="318" y2="120" stroke="var(--agua)" stroke-width="3" marker-end="url(#fl)"/>
+  <rect x="320" y="100" width="46" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="343" y="117" text-anchor="middle" font-size="11" fill="currentColor">filtro</text>
+  <text x="343" y="130" text-anchor="middle" font-size="11" fill="currentColor">malla</text>
+
+  <!-- cabezal -->
+  <line x1="368" y1="120" x2="396" y2="120" stroke="var(--agua)" stroke-width="3" marker-end="url(#fl)"/>
+  <rect x="398" y="94" width="86" height="52" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="441" y="112" text-anchor="middle" font-size="11" fill="currentColor">cabezal:</text>
+  <text x="441" y="126" text-anchor="middle" font-size="11" fill="currentColor">válvula +</text>
+  <text x="441" y="139" text-anchor="middle" font-size="11" fill="currentColor">manómetros</text>
+
+  <!-- principal -->
+  <line x1="486" y1="120" x2="560" y2="120" stroke="var(--agua)" stroke-width="5" marker-end="url(#fl)"/>
+  <text x="570" y="104" text-anchor="end" font-size="11" fill="currentColor">tubería principal</text>
+  <text x="570" y="144" text-anchor="end" font-size="10.5" fill="var(--ink-3)">PVC, enterrada</text>
+
+  <!-- portalaterales vertical -->
+  <line x1="580" y1="70" x2="580" y2="386" stroke="var(--agua)" stroke-width="5"/>
+  <text x="596" y="64" font-size="11" fill="currentColor">portalaterales (la cabecera)</text>
+
+  <!-- laterales -->
+  <g stroke="var(--agua)" stroke-width="1.8">
+    <line x1="580" y1="96" x2="856" y2="96"/>
+    <line x1="580" y1="136" x2="856" y2="136"/>
+    <line x1="580" y1="176" x2="856" y2="176"/>
+    <line x1="580" y1="216" x2="856" y2="216"/>
+    <line x1="580" y1="256" x2="856" y2="256"/>
+    <line x1="580" y1="296" x2="856" y2="296"/>
+    <line x1="580" y1="336" x2="856" y2="336"/>
+    <line x1="580" y1="376" x2="856" y2="376"/>
+  </g>
+  <!-- goteros -->
+  <g fill="var(--agua)">
+    <circle cx="620" cy="96" r="3"/><circle cx="668" cy="96" r="3"/><circle cx="716" cy="96" r="3"/><circle cx="764" cy="96" r="3"/><circle cx="812" cy="96" r="3"/>
+    <circle cx="620" cy="136" r="3"/><circle cx="668" cy="136" r="3"/><circle cx="716" cy="136" r="3"/><circle cx="764" cy="136" r="3"/><circle cx="812" cy="136" r="3"/>
+    <circle cx="620" cy="176" r="3"/><circle cx="668" cy="176" r="3"/><circle cx="716" cy="176" r="3"/><circle cx="764" cy="176" r="3"/><circle cx="812" cy="176" r="3"/>
+  </g>
+  <!-- plantas -->
+  <g fill="var(--ok)">
+    <circle cx="620" cy="88" r="4"/><circle cx="668" cy="88" r="4"/><circle cx="716" cy="88" r="4"/><circle cx="764" cy="88" r="4"/><circle cx="812" cy="88" r="4"/>
+    <circle cx="620" cy="128" r="4"/><circle cx="668" cy="128" r="4"/><circle cx="716" cy="128" r="4"/><circle cx="764" cy="128" r="4"/><circle cx="812" cy="128" r="4"/>
+  </g>
+
+  <text x="718" y="404" text-anchor="middle" font-size="11.5" fill="currentColor">8 hileras dibujadas · en 1 ha son <tspan font-weight="700">~83 hileras</tspan></text>
+  <text x="872" y="176" font-size="11" fill="currentColor" text-anchor="end">cinta de goteo</text>
+  <text x="872" y="190" font-size="10.5" fill="var(--ink-3)" text-anchor="end">gotero cada 20-30 cm</text>
+</svg>
+<figcaption><b>El agua hace un solo camino y no puede saltearse el filtro.</b> Sale de la fuente, la bomba le da presión, los dos filtros le sacan el barro y las algas, el cabezal la mide y la corta, la tubería principal la lleva hasta el lote, el portalaterales la reparte en la cabecera, y de ahí cada cinta la deja caer gota a gota al pie de cada planta.</figcaption>
+</figure>
+
+<div class="ojo">
+<p class="big">El filtro de arena no es opcional.</p>
+<p>Un gotero tiene un agujero más fino que un alfiler. El agua del tajamar trae barro, algas y bichitos. <b>Sin filtro de arena, los goteros se tapan en una temporada — y un gotero tapado no se destapa: se cambia la cinta entera.</b> Es el ítem que más se olvida y el que más caro sale olvidar.</p>
+</div>
+
+<h2>2. Los caños que se compran, en criollo</h2>
+
+<table>
+<thead><tr><th>Qué</th><th>Para qué</th><th>Cuánto para 1 ha</th></tr></thead>
+<tbody>
+<tr><td><b>Tubería principal</b><br>PVC o polietileno, 50-63 mm</td><td>trae el agua desde la bomba hasta el lote. Va enterrada para que no la pise nadie ni la castigue el sol</td><td>lo que haya de distancia entre la bomba y el lote</td></tr>
+<tr><td><b>Portalaterales</b><br>polietileno, 32-40 mm</td><td>cruza la cabecera del lote y reparte a cada hilera</td><td><b>~100 m</b> (el ancho del lote)</td></tr>
+<tr><td><b>Cinta de goteo</b><br>“drip tape”, con goteros integrados</td><td>corre al lado de la planta. Es una cinta plana que se infla con la presión y larga agua por cada gotero</td><td><b>~8.300 metros</b> — hileras cada 1,2 m</td></tr>
+<tr><td><b>Conectores</b><br>iniciales, uniones, finales</td><td>unen cada cinta al portalaterales, y cierran la punta</td><td>2 por hilera → <b>~166</b></td></tr>
+<tr><td><b>Filtros</b><br>arena + malla o anillos</td><td>que no se tapen los goteros</td><td>1 juego</td></tr>
+<tr><td><b>Bomba + cabezal</b><br>válvula, manómetros, alivio</td><td>presión, corte y control</td><td>1</td></tr>
+<tr><td><b>Inyector de fertilizante</b> (venturi)<br><i>opcional, para después</i></td><td>mete el fertilizante en el agua: eso es <b>fertirriego</b></td><td>1</td></tr>
+</tbody>
+</table>
+
+<div class="nota">
+<p class="big">El número que hace entender la escala: ~8 kilómetros de cinta por hectárea.</p>
+<p>Por eso la cinta se compra <b>por rollo, en metros</b>, y es de los renglones más caros del equipo. <b>Para los 1.000 m² del plan son ~830 metros</b> — una décima parte, y por eso conviene empezar ahí.</p>
+</div>
+
+<h2>3. Dónde se enchufa lo nuestro</h2>
+
+<figure>
+<svg viewBox="0 0 900 300" role="img" aria-label="Dónde se conectan los sensores en el sistema de riego: el sensor de humedad va enterrado a tres profundidades junto a la planta, el caudalímetro va en el cabezal después del filtro, el controlador decide y abre la válvula, y manda las mediciones por wifi o radio al servidor.">
+  <defs>
+    <marker id="fl2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,0 10,5 0,10" fill="currentColor"/>
+    </marker>
+  </defs>
+
+  <!-- suelo -->
+  <line x1="40" y1="120" x2="330" y2="120" stroke="currentColor" stroke-width="2"/>
+  <text x="46" y="112" font-size="11" fill="var(--ink-3)">superficie</text>
+  <!-- planta -->
+  <circle cx="150" cy="106" r="9" fill="var(--ok)"/>
+  <line x1="150" y1="115" x2="150" y2="122" stroke="var(--ok)" stroke-width="2"/>
+  <!-- cinta -->
+  <line x1="120" y1="122" x2="200" y2="122" stroke="var(--agua)" stroke-width="3"/>
+  <text x="212" y="126" font-size="11" fill="currentColor">cinta</text>
+  <!-- sensores 3 profundidades -->
+  <g fill="var(--brand)">
+    <rect x="96" y="150" width="14" height="10" rx="2"/>
+    <rect x="96" y="196" width="14" height="10" rx="2"/>
+    <rect x="96" y="242" width="14" height="10" rx="2"/>
+  </g>
+  <line x1="103" y1="122" x2="103" y2="150" stroke="var(--brand)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <line x1="103" y1="160" x2="103" y2="196" stroke="var(--brand)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <line x1="103" y1="206" x2="103" y2="242" stroke="var(--brand)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="120" y="159" font-size="11" fill="currentColor">10 cm — si la mojó el riego</text>
+  <text x="120" y="205" font-size="11" fill="currentColor">30 cm — <tspan font-weight="700">donde está la raíz</tspan></text>
+  <text x="120" y="251" font-size="11" fill="currentColor">60 cm — si se fue de largo</text>
+  <text x="46" y="285" font-size="11" fill="var(--ink-3)">sensores enterrados</text>
+
+  <!-- controlador -->
+  <rect x="400" y="150" width="120" height="66" rx="5" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <text x="460" y="176" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">controlador</text>
+  <text x="460" y="194" text-anchor="middle" font-size="11" fill="var(--ink-3)">decide acá,</text>
+  <text x="460" y="208" text-anchor="middle" font-size="11" fill="var(--ink-3)">en el lote</text>
+  <line x1="330" y1="183" x2="396" y2="183" stroke="currentColor" stroke-width="2" marker-end="url(#fl2)"/>
+  <text x="363" y="176" text-anchor="middle" font-size="10.5" fill="currentColor">mide</text>
+
+  <!-- valvula -->
+  <rect x="400" y="60" width="120" height="50" rx="5" fill="none" stroke="var(--agua)" stroke-width="2.5"/>
+  <text x="460" y="82" text-anchor="middle" font-size="12" fill="currentColor">válvula</text>
+  <text x="460" y="98" text-anchor="middle" font-size="11" fill="currentColor">+ caudalímetro</text>
+  <line x1="460" y1="148" x2="460" y2="114" stroke="currentColor" stroke-width="2" marker-end="url(#fl2)"/>
+  <text x="472" y="134" font-size="10.5" fill="currentColor">abre y cierra</text>
+
+  <!-- servidor -->
+  <rect x="640" y="150" width="130" height="66" rx="5" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="705" y="178" text-anchor="middle" font-size="12" fill="currentColor">servidor</text>
+  <text x="705" y="196" text-anchor="middle" font-size="11" fill="var(--ink-3)">guarda y grafica</text>
+  <line x1="524" y1="176" x2="634" y2="176" stroke="currentColor" stroke-width="2" marker-end="url(#fl2)"/>
+  <text x="579" y="168" text-anchor="middle" font-size="10.5" fill="currentColor">manda lo medido</text>
+  <line x1="634" y1="200" x2="524" y2="200" stroke="currentColor" stroke-width="2" marker-end="url(#fl2)"/>
+  <text x="579" y="216" text-anchor="middle" font-size="10.5" fill="currentColor">manda la REGLA</text>
+
+  <text x="705" y="252" text-anchor="middle" font-size="11" fill="var(--ink-3)">si se corta el enlace,</text>
+  <text x="705" y="268" text-anchor="middle" font-size="11" fill="var(--ink-3)">el controlador sigue solo</text>
+</svg>
+<figcaption><b>El servidor manda la regla, nunca la orden de abrir.</b> El controlador mide, decide y abre la válvula ahí mismo, en el lote. Si se corta el enlace, sigue regando con la última regla que recibió. El caudalímetro cuenta los litros que salieron de verdad, para poder compararlos con los que se esperaban.</figcaption>
+</figure>
+
+<h2>4. Y el arroz no va así</h2>
+
+<figure>
+<svg viewBox="0 0 900 200" role="img" aria-label="Comparación entre el riego por goteo y el arroz por inundación: el goteo lleva el agua gota a gota al pie de la planta con unos 4.000 a 6.000 metros cúbicos por hectárea al año; el arroz se riega inundando el lote entre taipas, con una bomba puesta en el río o arroyo, y usa un orden de magnitud más de agua.">
+  <!-- goteo -->
+  <rect x="40" y="40" width="360" height="110" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="220" y="34" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">GOTEO — tomate, sandía, hortaliza</text>
+  <g stroke="var(--agua)" stroke-width="2">
+    <line x1="70" y1="70" x2="370" y2="70"/><line x1="70" y1="100" x2="370" y2="100"/><line x1="70" y1="130" x2="370" y2="130"/>
+  </g>
+  <g fill="var(--ok)">
+    <circle cx="110" cy="62" r="5"/><circle cx="190" cy="62" r="5"/><circle cx="270" cy="62" r="5"/><circle cx="350" cy="62" r="5"/>
+    <circle cx="110" cy="92" r="5"/><circle cx="190" cy="92" r="5"/><circle cx="270" cy="92" r="5"/><circle cx="350" cy="92" r="5"/>
+  </g>
+  <text x="220" y="172" text-anchor="middle" font-size="12" fill="currentColor">el agua va <tspan font-weight="700">al pie de cada planta</tspan></text>
+  <text x="220" y="190" text-anchor="middle" font-size="12" fill="currentColor">~4.000 a 6.000 m³ por hectárea al año</text>
+
+  <!-- arroz -->
+  <rect x="500" y="40" width="360" height="110" rx="6" fill="var(--brand-wash)" stroke="var(--warn)" stroke-width="2.5"/>
+  <text x="680" y="34" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">ARROZ — inundación</text>
+  <g stroke="var(--warn)" stroke-width="3">
+    <line x1="500" y1="75" x2="860" y2="75"/><line x1="500" y1="115" x2="860" y2="115"/>
+  </g>
+  <text x="680" y="68" text-anchor="middle" font-size="11" fill="currentColor">taipa</text>
+  <text x="680" y="108" text-anchor="middle" font-size="11" fill="currentColor">taipa</text>
+  <text x="680" y="140" text-anchor="middle" font-size="11" fill="currentColor">el lote entero bajo agua</text>
+  <text x="680" y="172" text-anchor="middle" font-size="12" fill="currentColor">bomba puesta <tspan font-weight="700">en el río o arroyo</tspan></text>
+  <text x="680" y="190" text-anchor="middle" font-size="12" fill="currentColor">un orden de magnitud más de agua</text>
+</svg>
+<figcaption><b>Son dos sistemas distintos, no dos versiones del mismo.</b> El goteo lleva el agua al pie de la planta; el arroz se riega tapando el lote de agua entre taipas, con una bomba en el cauce. Por eso el arroz no entra en el plan del tajamar: el volumen que pide no lo aguanta un reservorio.</figcaption>
+</figure>
+
+<div class="ojo">
+<p><b>Existe el arroz con goteo</b> —lo venden algunas marcas— pero no es como se hace en Paraguay, es un sistema especializado, y no resuelve lo que un tajamar puede dar. <b>Si el plan es arroz, el equipo de este dibujo no es el que hace falta.</b></p>
+</div>
+
+<h2>5. Lo que este dibujo no dice</h2>
+<p>No dice precios: están en <code>docs/lista-de-compras.md</code>, y la mitad siguen a cotizar. No dice presiones ni diámetros exactos: eso lo calcula el proveedor cuando sepa <b>el caudal en m³/hora</b> y la distancia de la bomba al lote. Y no dice cuántos sectores conviene hacer, que depende de cuánta agua da la bomba por vez.</p>
+
+</div>
+</body>
+</html>

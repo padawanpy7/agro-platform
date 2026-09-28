@@ -67,6 +67,8 @@ code{font-family:inherit}
 }
 .flag b{color:var(--ink); font-weight:700; font-variation-settings:"wdth" 108}
 .flag .sp{flex:1 1 20px}
+.flag .sm{display:none}
+@media (max-width:560px){ .flag .lg{display:none} .flag .sm{display:inline} .flag{padding:7px 12px; gap:8px} }
 
 .roleswitch{display:flex; align-items:center; gap:8px; background:var(--panel); border:2px solid var(--line-2); border-radius:3px; padding:3px 4px 3px 9px}
 .roleswitch > span{font-size:.76rem; color:var(--ink-3); font-variation-settings:"wdth" 88}
@@ -82,9 +84,9 @@ code{font-family:inherit}
 .brand{display:flex; gap:10px; align-items:center; padding:16px 16px 14px; border-bottom:1px solid var(--line)}
 .brand .nm{font-weight:750; font-variation-settings:"wdth" 116; letter-spacing:-.02em; font-size:1rem; line-height:1}
 .brand .sub{font-size:.7rem; color:var(--ink-3); font-variation-settings:"wdth" 86; line-height:1.3}
-.tenant{padding:12px 16px; border-bottom:1px solid var(--line)}
-.tenant label{display:block; font-size:.72rem; color:var(--ink-3); font-variation-settings:"wdth" 86; margin-bottom:4px}
-.tenant select{width:100%; font-size:.85rem; background:var(--panel-2); color:var(--ink); border:1px solid var(--line-2); border-radius:2px; padding:7px 8px}
+.cliente{padding:12px 16px; border-bottom:1px solid var(--line)}
+.cliente label{display:block; font-size:.72rem; color:var(--ink-3); font-variation-settings:"wdth" 86; margin-bottom:4px}
+.cliente select{width:100%; font-size:.85rem; background:var(--panel-2); color:var(--ink); border:1px solid var(--line-2); border-radius:2px; padding:7px 8px}
 nav{padding:8px 8px 24px; flex:1}
 .navgroup{font-size:.72rem; color:var(--ink-3); font-variation-settings:"wdth" 86; padding:14px 8px 5px}
 .navlink{display:flex; align-items:center; gap:10px; width:100%; text-align:left; padding:9px 8px; border:0; background:none; color:var(--ink-2); cursor:pointer; font-size:.88rem; border-radius:2px; position:relative; min-height:var(--tap)}
@@ -149,6 +151,8 @@ main{min-width:0; padding:0 0 92px}
 .chip.warn{background:var(--warn-wash); color:var(--warn); border-color:var(--warn)}
 .chip.crit{background:var(--crit-wash); color:var(--crit); border-color:var(--crit)}
 .chip.mute{background:var(--mute-wash); color:var(--ink-2); border-color:var(--line-2)}
+.chip.do{background:var(--brand-wash); color:var(--brand); border-color:var(--brand)}
+.chip.do .g{background:var(--brand); clip-path:polygon(50% 0,100% 62%,78% 100%,22% 100%,0 62%)}
 .chip.ok .g{background:var(--ok); border-radius:50%}
 .chip.warn .g{background:var(--warn); clip-path:polygon(50% 0,100% 100%,0 100%)}
 .chip.crit .g{background:var(--crit); clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
@@ -167,13 +171,13 @@ main{min-width:0; padding:0 0 92px}
 
 /* ---------- el agua en la tierra, en palabras ---------- */
 .wsoil{display:grid; gap:10px}
-.wrow{display:grid; grid-template-columns:8.5rem 1fr auto; gap:10px; align-items:center}
+.wrow{display:grid; grid-template-columns:6.6rem 1fr auto; gap:10px; align-items:center}
 .wrow .lb{font-size:.9rem; font-weight:600}
 .wrow .lb small{display:block; font-weight:400; font-size:.74rem; color:var(--ink-3)}
 .wrow .tk{height:22px; background:var(--panel-2); border:1px solid var(--line-2); border-radius:2px; position:relative; overflow:hidden}
 .wrow .fl{position:absolute; inset:0 auto 0 0; background:var(--d2)}
 .wrow .fl.seco{background:repeating-linear-gradient(135deg,var(--warn) 0 6px,color-mix(in srgb,var(--warn) 70%,#000) 6px 12px)}
-.wrow .vw{font-size:.88rem; font-weight:700; min-width:5.4rem; display:flex; align-items:center; gap:6px}
+.wrow .vw{font-size:.88rem; font-weight:700; min-width:4.4rem; display:flex; align-items:center; gap:6px}
 
 details.disclose{border:1px solid var(--line); border-radius:3px; background:var(--panel); margin-bottom:16px}
 details.disclose > summary{list-style:none; cursor:pointer; padding:13px 14px; display:flex; align-items:center; gap:9px; font-weight:650; min-height:var(--tap); font-size:.95rem}
@@ -276,7 +280,8 @@ td.num,th.num{text-align:right}
 
 <div class="flag">
   <b>Mockup de diseño.</b>
-  <span>No hay nada conectado. Los números, nombres y fechas son <b>de ejemplo</b> y ninguno salió de una medición real.</span>
+  <span class="lg">No hay nada conectado. Los números, nombres y fechas son <b>de ejemplo</b> y ninguno salió de una medición real.</span>
+  <span class="sm">Datos de ejemplo.</span>
   <span class="sp"></span>
   <div class="roleswitch">
     <span>Mirar la app como</span>
@@ -301,9 +306,9 @@ td.num,th.num{text-align:right}
         <div class="sub">riego de precisión · fase 1</div>
       </div>
     </div>
-    <div class="tenant">
-      <label for="tenantsel">Estás viendo</label>
-      <select id="tenantsel">
+    <div class="cliente">
+      <label for="clientesel">Estás viendo</label>
+      <select id="clientesel">
         <option>Estancia Yvoty (ejemplo)</option>
         <option>Huerta del patio (ejemplo)</option>
       </select>
@@ -324,6 +329,1628 @@ td.num,th.num{text-align:right}
 <div class="tip" id="tip" role="status" aria-live="polite"></div>
 
 <script>
+"use strict";
+
+/* ============================ util ============================ */
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const nf = (n, d) => Number(n).toLocaleString("es-PY", { minimumFractionDigits: d || 0, maximumFractionDigits: d === undefined ? 0 : d });
+const gs = n => "Gs " + nf(n);
+function rng(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
+
+/* ============================ iconos ============================
+   Regla 2 del perfil de usuario: icono + palabra, nunca icono solo.
+   Aca vive el dibujo; la palabra la pone cada pantalla al lado.
+================================================================= */
+const ICON = {
+  gota: '<path d="M12 3.2c3.9 5 5.8 7.5 5.8 10A5.8 5.8 0 1 1 6.2 13.2c0-2.5 1.9-5 5.8-10z"/>',
+  gotano: '<path d="M12 3.2c3.9 5 5.8 7.5 5.8 10a5.8 5.8 0 0 1-8.3 5.2"/><path d="M6.6 9.7A9 9 0 0 0 6.2 13.2a5.8 5.8 0 0 0 2 4.4"/><path d="M3.5 3.5 20.5 20.5"/>',
+  alerta: '<path d="M12 3.4 22.2 20.6H1.8z"/><path d="M12 9.6v4.8M12 17.4v.2"/>',
+  ok: '<path d="M20.4 6.3 9.3 17.6 3.6 12"/>',
+  sinsenal: '<path d="M3 20.5h18"/><path d="M6.4 16.6a8.5 8.5 0 0 1 11.2 0" stroke-dasharray="2.6 2.6"/><path d="M9.6 13.1a4.2 4.2 0 0 1 4.8 0" stroke-dasharray="2.6 2.6"/><path d="M4 3.6 20 19.6"/>',
+  lote: '<path d="M3 8.4 10.6 3 21 6.1 19.4 19 7 22z"/>',
+  lista: '<path d="M4 6.5h16M4 12h16M4 17.5h16"/>',
+  reloj: '<circle cx="12" cy="12" r="8.6"/><path d="M12 7v5.3l3.4 2"/>',
+  camara: '<path d="M3 8.6h4.2L8.8 6h6.4l1.6 2.6H21v11H3z"/><circle cx="12" cy="13.8" r="3.3"/>',
+  balanza: '<path d="M12 4v17M5.5 7.5h13"/><path d="M7.5 7.5 4 14.5h7zM16.5 7.5 13 14.5h7z"/>',
+  tilde: '<circle cx="12" cy="12" r="8.6"/><path d="M8.2 12.2l2.6 2.6 5-5.4"/>',
+  lapiz: '<path d="M4 20l1.2-4.2L16.6 4.4a2.1 2.1 0 0 1 3 3L8.2 18.8z"/>',
+  bateria: '<rect x="2.5" y="7.5" width="16" height="9" rx="1.6"/><path d="M21.5 11v2"/><path d="M5.5 10.5h3v3h-3z" fill="currentColor"/>',
+  aparato: '<path d="M12 2.8v5.4"/><path d="M8 8.2h8v4.6a4 4 0 0 1-8 0z"/><path d="M12 16.8v4.4M9 21.2h6"/>',
+  planta: '<path d="M12 21.5V9.5"/><path d="M12 12.8C8.2 12.8 6 9.8 6 6.2c3.8 0 6 2.6 6 6.6z"/><path d="M12 14.6c3.8 0 6-3 6-6.6-3.8 0-6 2.6-6 6.6z"/>',
+  pasto: '<path d="M2.8 20.5h18.4"/><path d="M6.2 20.5c0-5 1-7.4 2.2-9.4"/><path d="M11.4 20.5c0-6.2 1.1-9.6 2.3-11.8"/><path d="M16.6 20.5c0-5 1-7.4 2.2-9.4"/>',
+  tanque: '<path d="M5 3.8h14v16.4H5z"/><path d="M5 12.4c3.2 2.2 5.2-2 7 0s4 2 7 0"/>',
+  gente: '<circle cx="12" cy="8.2" r="3.6"/><path d="M4.6 20.4a7.4 7.4 0 0 1 14.8 0"/>',
+  reglas: '<path d="M3.5 7.6h17M3.5 16.4h17"/><circle cx="9" cy="7.6" r="2.6"/><circle cx="15" cy="16.4" r="2.6"/>',
+  grafico: '<path d="M4 3.6v16.8h16.4"/><path d="M7.2 15.4 11 10.6l3.2 2.6 5.2-5.8"/>',
+  bicho: '<circle cx="12" cy="13.4" r="4.8"/><path d="M12 8.6V5.4M8.8 10 6.2 7.4M15.2 10l2.6-2.6M7.2 13.4H4M17 13.4h3M8.8 16.8l-2.6 2.6M15.2 16.8l2.6 2.6"/>',
+  chevron: '<path d="M6 9.5 12 15.5 18 9.5"/>',
+  flecha: '<path d="M4 12h15M13.5 6.5 19.5 12l-6 5.5"/>',
+  sol: '<circle cx="12" cy="12" r="4.4"/><path d="M12 2.6v2.4M12 19v2.4M2.6 12H5M19 12h2.4M5.3 5.3 7 7M17 17l1.7 1.7M18.7 5.3 17 7M7 17l-1.7 1.7"/>',
+  llave: '<circle cx="8.4" cy="15.6" r="4.2"/><path d="M11.4 12.6 20 4M17 7l2.4 2.4"/>',
+  mano: '<path d="M8.5 12.5V5.8a1.8 1.8 0 0 1 3.6 0v5.2"/><path d="M12.1 10.4V4.6a1.8 1.8 0 0 1 3.6 0v6.4"/><path d="M15.7 11V7.4a1.8 1.8 0 0 1 3.6 0v8.2c0 3.2-2.4 5.8-6 5.8-3.4 0-4.8-1.6-6.4-4.2l-2-3.4a1.8 1.8 0 0 1 3-2l1 1.4"/>'
+};
+function ico(n, size, color) {
+  return `<svg width="${size || 22}" height="${size || 22}" viewBox="0 0 24 24" fill="none" stroke="${color || "currentColor"}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICON[n] || ""}</svg>`;
+}
+
+/* ============================ datos de ejemplo ============================
+   Inventado para mirar el diseño. Ninguna cifra fue medida.
+========================================================================== */
+const EST = { ok: { chip: "ok", lab: "Bien" }, warn: { chip: "warn", lab: "Mirar" }, crit: { chip: "crit", lab: "Urgente" }, mute: { chip: "mute", lab: "Sin noticias" }, do: { chip: "do", lab: "Regar" } };
+const estColor = e => ({ ok: "var(--ok)", warn: "var(--warn)", crit: "var(--crit)", mute: "var(--mute)", do: "var(--brand)" }[e]);
+const estIcon = e => ({ ok: "tilde", warn: "alerta", crit: "alerta", mute: "sinsenal", do: "gota" }[e]);
+const URG = { crit: 0, do: 1, warn: 2, mute: 3, ok: 4 };
+
+const PARCELAS = [
+  { id: "p3", nom: "Huerta Ñu Porâ", cultivo: "Tomate", ha: 0.9, est: "crit",
+    poly: "522,380 622,392 614,472 514,464", disp: 4, verdor: 58, ult: "hace 6 minutos",
+    resp: { t: "Andá a mirar la manguera", s: "Salió <b>mucha más agua</b> de la que tenía que salir, dos riegos seguidos. Puede haber una pérdida en la línea.", w: "Hoy, cuando puedas" } },
+  { id: "p1", nom: "Tomatal Ka'aguy", cultivo: "Tomate", ha: 1.8, est: "do",
+    poly: "96,332 252,318 270,422 120,440", disp: 5, verdor: 74, ult: "hace 11 minutos",
+    agua: [{ n: "Arriba", d: "10 cm", p: 13, w: "seco" }, { n: "En la raíz", d: "30 cm", p: 9, w: "seco" }, { n: "Abajo", d: "60 cm", p: 40, w: "bien" }],
+    resp: { t: "Regá hoy temprano", s: "La tierra está <b>seca hasta la raíz</b>. Abajo todavía hay agua: con 20 minutos alcanza, no le des de más.", w: "Antes de las 8 de la mañana" } },
+  { id: "p6", nom: "Melonar Tape Pytâ", cultivo: "Sandía", ha: 2.4, est: "warn",
+    poly: "662,372 832,358 854,474 674,488", disp: 3, verdor: 66, ult: "hace 1 hora",
+    resp: { t: "Fijate en la trampa", s: "Cayeron <b>4 bichos</b> esta semana. Las otras semanas caían uno. Andá a ver qué son.", w: "Esta semana" } },
+  { id: "p5", nom: "Potrero Costa Guasu", cultivo: "Pasto", ha: 58.4, est: "mute",
+    poly: "424,62 802,46 882,182 838,320 562,342 442,232", disp: 2, verdor: 52, ult: "hace 3 días",
+    resp: { t: "Sin noticias hace 3 días", s: "No llega nada del aparato de ese lote. <b>El riego sigue andando solo</b>: no se para. Si el lunes sigue igual, avisá.", w: "No es urgente" } },
+  { id: "p4", nom: "Potrero Yvyra'i", cultivo: "Pasto", ha: 42.0, est: "ok",
+    poly: "60,74 302,50 374,152 332,268 122,284 48,192", disp: 3, verdor: 68, ult: "hace 2 minutos",
+    resp: { t: "Acá podés meter la hacienda", s: "Es el potrero con <b>más pasto</b> de los cinco.", w: "" } },
+  { id: "p2", nom: "Sandial Tuyutî", cultivo: "Sandía", ha: 3.2, est: "ok",
+    poly: "302,332 472,354 488,472 324,464", disp: 4, verdor: 63, ult: "hace 9 minutos",
+    resp: { t: "No hace falta nada", s: "La tierra está mojada. Regó dos veces hoy temprano.", w: "" } }
+];
+const byId = id => PARCELAS.find(p => p.id === id);
+const ordenados = () => PARCELAS.slice().sort((a, b) => URG[a.est] - URG[b.est]);
+
+const DISPOS_MAPA = [
+  { x: 168, y: 150, t: "sensor", p: "p4" }, { x: 250, y: 205, t: "sensor", p: "p4" }, { x: 210, y: 110, t: "estacion", p: "p4" },
+  { x: 600, y: 160, t: "sensor", p: "p5", off: 1 }, { x: 700, y: 240, t: "ctrl", p: "p5", off: 1 },
+  { x: 150, y: 360, t: "sensor", p: "p1" }, { x: 210, y: 380, t: "sensor", p: "p1" }, { x: 178, y: 415, t: "ctrl", p: "p1" }, { x: 240, y: 345, t: "caudal", p: "p1" },
+  { x: 350, y: 380, t: "sensor", p: "p2" }, { x: 430, y: 420, t: "sensor", p: "p2" }, { x: 390, y: 445, t: "ctrl", p: "p2" },
+  { x: 545, y: 410, t: "sensor", p: "p3" }, { x: 590, y: 440, t: "ctrl", p: "p3" }, { x: 570, y: 395, t: "caudal", p: "p3" },
+  { x: 710, y: 410, t: "sensor", p: "p6" }, { x: 800, y: 430, t: "trampa", p: "p6" }, { x: 760, y: 455, t: "ctrl", p: "p6" }
+];
+
+const RIEGO_IDX = [7, 18, 29, 41, 62, 73];
+function simDepth(seed, o) {
+  const r = rng(seed), n = 84, out = []; let v = o.base;
+  for (let i = 0; i < n; i++) {
+    v -= o.drop * (0.7 + r() * 0.6);
+    if (RIEGO_IDX.includes(i)) v += o.jump * (0.85 + r() * 0.3);
+    v = Math.min(o.cap, Math.max(7, v));
+    out.push(+(v + (r() - 0.5) * o.noise).toFixed(1));
+  }
+  return out;
+}
+const HUM10 = simDepth(11, { base: 31, cap: 33, drop: 1.30, jump: 11.0, noise: 0.8 });
+const HUM30 = simDepth(23, { base: 25, cap: 28, drop: 0.52, jump: 4.6, noise: 0.45 });
+const HUM60 = simDepth(37, { base: 22, cap: 25, drop: 0.14, jump: 1.1, noise: 0.3 });
+for (let i = 44; i <= 51; i++) HUM30[i] = null;
+
+const FECHAS = (() => {
+  const out = [], base = new Date(2026, 8, 7);
+  for (let i = 0; i < 84; i++) {
+    const d = new Date(base.getTime() + i * 6 * 3600e3);
+    out.push(("0" + d.getDate()).slice(-2) + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":00");
+  }
+  return out;
+})();
+const LLUVIA = new Array(84).fill(0);
+[[12, 4], [13, 11], [36, 2], [55, 18], [56, 6], [70, 3]].forEach(([i, v]) => LLUVIA[i] = v);
+const RIEGO_MM = new Array(84).fill(0);
+RIEGO_IDX.forEach((i, k) => RIEGO_MM[i] = [6.2, 5.8, 6.4, 5.1, 6.6, 6.0][k]);
+
+const MESES = ["oct", "nov", "dic", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep"];
+const VERD_ACT = [41, 49, 62, 71, 74, 70, 61, 49, 41, 36, 38, 50];
+const VERD_MIN = [36, 42, 54, 62, 66, 63, 55, 47, 40, 35, 36, 44];
+const VERD_MAX = [52, 60, 72, 79, 81, 78, 70, 61, 53, 49, 53, 66];
+const VERD_MED = [44, 51, 63, 70, 73, 70, 62, 54, 46, 42, 44, 55];
+
+const RIEGOS = [
+  { f: "Hoy 05:40", p: "Tomatal Ka'aguy", cond: "La tierra estaba seca en la raíz", dec: "Regó 22 minutos", pol: "Regla 7", est: 1180, med: 1205, res: "Salió lo que tenía que salir", ok: 1 },
+  { f: "Ayer 18:05", p: "Huerta Ñu Porâ", cond: "La tierra estaba seca arriba", dec: "Regó 18 minutos", pol: "Regla 4", est: 640, med: 902, res: "Salió mucha más agua de la esperada", ok: 0, flag: "262 litros de más · revisar la línea" },
+  { f: "Ayer 06:10", p: "Sandial Tuyutî", cond: "La tierra estaba mojada", dec: "No regó", pol: "Regla 3", est: 0, med: 0, res: "No hizo falta", ok: 1 },
+  { f: "Anteayer 19:30", p: "Potrero Costa Guasu", cond: "Hace 6 días que no le llega ninguna regla nueva", dec: "Regó lo mínimo: 12 minutos", pol: "—", est: 820, med: null, res: "Quedó anotado y se va a mandar cuando vuelva la señal", ok: 1, flag: "Se puso en modo cuidadoso solo" },
+  { f: "Anteayer 05:35", p: "Tomatal Ka'aguy", cond: "La tierra estaba seca en la raíz", dec: "Regó 20 minutos", pol: "Regla 7", est: 1075, med: 1092, res: "Salió lo que tenía que salir", ok: 1 },
+  { f: "25/09 17:50", p: "Melonar Tape Pytâ", cond: "Llovió 18 mm el día anterior", dec: "No regó", pol: "Regla 2", est: 0, med: 0, res: "No hizo falta", ok: 1 },
+  { f: "25/09 06:00", p: "Huerta Ñu Porâ", cond: "La tierra estaba seca arriba", dec: "Regó 18 minutos", pol: "Regla 4", est: 640, med: 848, res: "Salió más agua de la esperada", ok: 0, flag: "208 litros de más" },
+  { f: "24/09 05:45", p: "Sandial Tuyutî", cond: "La tierra estaba seca en la raíz", dec: "Regó 26 minutos", pol: "Regla 3", est: 1490, med: 1441, res: "Salió lo que tenía que salir", ok: 1 }
+];
+
+const POL_VER = [
+  { v: "Regla 7", desde: "22/09/2026", por: "Ramona Ayala", cambio: "Que riegue cuando la tierra esté un poco más seca. Y solo de 4 a 8 de la mañana", est: "En uso" },
+  { v: "Regla 6", desde: "05/09/2026", por: "Ramona Ayala", cambio: "Que no riegue más de 25 minutos seguidos", est: "Vieja" },
+  { v: "Regla 5", desde: "18/08/2026", por: "Derlis Cáceres", cambio: "Primera regla del lote", est: "Vieja" }
+];
+
+const DISPOSITIVOS = [
+  { id: "SE01-0431", t: "Mide la humedad de la tierra", lug: "Tomatal Ka'aguy", bat: 82, ult: "hace 11 minutos", fw: "1.4.2", cal: "Ajustado acá mismo, el 12/08/2026, con tierra del lote", est: "ok", spark: [24, 22, 20, 18, 27, 25, 23, 21, 19, 28] },
+  { id: "SE01-0432", t: "Mide la humedad de la tierra", lug: "Tomatal Ka'aguy", bat: 76, ult: "hace 9 minutos", fw: "1.4.2", cal: "Ajustado acá mismo, el 12/08/2026, con tierra del lote", est: "ok", spark: [25, 23, 21, 19, 28, 26, 24, 22, 20, 29] },
+  { id: "CTRL-0112", t: "Decide y abre el riego", lug: "Tomatal Ka'aguy", bat: null, ult: "hace 4 minutos", fw: "2.1.0", cal: "No lleva ajuste", est: "ok", spark: null },
+  { id: "YFQ-0208", t: "Cuenta el agua que pasa", lug: "Huerta Ñu Porâ", bat: null, ult: "hace 6 minutos", fw: "1.0.7", cal: "Viene ajustado de fábrica. Nunca lo comprobamos nosotros", est: "warn", spark: [30, 31, 34, 38, 41, 44, 47, 49, 52, 55] },
+  { id: "SE01-0440", t: "Mide la humedad de la tierra", lug: "Potrero Costa Guasu", bat: 9, ult: "hace 3 días", fw: "1.3.9", cal: "Viene ajustado de fábrica", est: "crit", spark: [22, 22, 21, 21, 20, 20, null, null, null, null] },
+  { id: "EST-0003", t: "Mide la lluvia, el viento y el calor", lug: "Potrero Yvyra'i", bat: 94, ult: "hace 2 minutos", fw: "3.0.1", cal: "Viene ajustado de fábrica", est: "ok", spark: [18, 19, 22, 26, 29, 27, 24, 21, 19, 18] },
+  { id: "TRP-0017", t: "Cuenta los bichos que caen", lug: "Melonar Tape Pytâ", bat: 61, ult: "hace 1 hora", fw: "1.1.4", cal: "No lleva ajuste. Se cuenta a mano", est: "ok", spark: [0, 1, 0, 2, 1, 0, 3, 2, 4, 4] },
+  { id: "HID-0001", t: "Mide el agua de la hidroponía", lug: "Patio de Asunción", bat: null, ult: "hace 1 minuto", fw: "0.9.3", cal: "Ajustado acá mismo, el 20/09/2026, con agua de referencia", est: "ok", spark: [1.5, 1.5, 1.6, 1.6, 1.7, 1.7, 1.8, 1.7, 1.6, 1.6] }
+];
+const CALIBS = [
+  { disp: "SE01-0431", mag: "Humedad de la tierra", proc: "Lo comprobamos nosotros", detalle: "Se secó y se pesó tierra del lote en 6 puntos, el 12/08/2026", desde: "12/08/2026", est: "En uso" },
+  { disp: "SE01-0431", mag: "Humedad de la tierra", proc: "Venía de fábrica", detalle: "Tabla del fabricante, hoja de 2023", desde: "18/08/2025", est: "Reemplazado el 12/08/2026" },
+  { disp: "HID-0001", mag: "Sales del agua", proc: "Lo comprobamos nosotros", detalle: "Agua de referencia de 1,41, el 20/09/2026", desde: "20/09/2026", est: "En uso" },
+  { disp: "YFQ-0208", mag: "Agua que pasa", proc: "Venía de fábrica", detalle: "7,5 vueltas por litro, hoja de 2024. Nunca lo comprobamos nosotros", desde: "02/09/2026", est: "En uso · sin comprobar" }
+];
+
+const ALERTAS = [
+  { n: "crit", t: "Salió mucha más agua de la que tenía que salir", p: "Huerta Ñu Porâ", dato: "902 litros cuando tenían que ser 640, ayer a las 18:05", desde: "hace 14 horas", que: "Ir al lote y caminar la línea del sector 1. Pasó dos riegos seguidos." },
+  { n: "crit", t: "El aparato se está quedando sin pila", p: "Potrero Costa Guasu", dato: "Le queda el 9 %", desde: "hace 3 días", que: "Llevar 2 pilas grandes de litio. Si se apaga, ese lote riega a ciegas." },
+  { n: "warn", t: "La tierra está seca hace dos días", p: "Tomatal Ka'aguy", dato: "Los dos aparatos del lote dicen lo mismo", desde: "hace 2 días", que: "Regar hoy temprano. Si sigue igual mañana, avisarle a Ramona." },
+  { n: "warn", t: "Están cayendo más bichos que de costumbre", p: "Melonar Tape Pytâ", dato: "4 esta semana. Antes caía uno", desde: "hace 1 día", que: "Caminar el borde del lado del arroyo y ver qué bicho es antes de fumigar." },
+  { n: "mute", t: "Sin noticias de ese lote", p: "Potrero Costa Guasu", dato: "Lo último llegó el 25/09 a las 08:12. El riego sigue andando solo", desde: "hace 3 días", que: "No es urgente. Si pasa el lunes, avisar." }
+];
+
+const SOL = {
+  ec: { v: 1.72, u: "mS/cm", min: 0.6, max: 2.6, okMin: 1.2, okMax: 1.8, est: "ok", nota: "La receta pide entre 1,2 y 1,8" },
+  ph: { v: 6.9, u: "", min: 4.5, max: 8.0, okMin: 5.5, okMax: 6.5, est: "warn", nota: "Medido a mano con el aparatito, hoy 07:15" },
+  temp: { v: 26.4, u: "°C", min: 14, max: 34, okMin: 18, okMax: 24, est: "crit", nota: "Pasando los 24 °C la lechuga se va a semilla" },
+  nivel: { v: 41, u: "cm", min: 0, max: 70, okMin: 45, okMax: 65, est: "warn", nota: "Tanque de 200 litros" }
+};
+const SOL_EC = [1.42, 1.44, 1.46, 1.48, 1.51, 1.55, 1.58, 1.60, 1.63, 1.66, 1.69, 1.72];
+const SOL_NIV = [62, 60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 41];
+const SOL_T = [19.8, 20.4, 22.1, 24.6, 26.9, 27.8, 26.4, 24.1, 22.0, 20.6, 19.9, 19.4];
+const SOL_H = ["00", "02", "04", "06", "08", "10", "12", "14", "16", "18", "20", "22"];
+
+const BLOQUES = [
+  { id: "A", var: "Menos abono en el agua", ctrl: 1, peso: 182, n: 50, desc: 4, dias: 43, sint: "No se fue a semilla. Hoja firme.", col: "var(--s1)" },
+  { id: "B", var: "Más abono en el agua", ctrl: 0, peso: 206, n: 50, desc: 3, dias: 42, sint: "No se fue a semilla. Hoja más gruesa.", col: "var(--s2)" },
+  { id: "C", var: "Con media sombra", ctrl: 0, peso: 221, n: 50, desc: 2, dias: 44, sint: "No se fue a semilla. El agua estuvo 3 grados más fresca.", col: "var(--s3)" },
+  { id: "D", var: "Sin sombra", ctrl: 0, peso: 147, n: 50, desc: 12, dias: 41, sint: "9 se fueron a semilla. Hoja quemada en el borde.", col: "var(--s4)" }
+];
+
+const USUARIOS = [
+  { n: "Derlis Cáceres", m: "derlis@ejemplo.py", rol: "Dueño", amb: "Todo", ult: "hoy 06:12", pant: 12 },
+  { n: "Ramona Ayala", m: "ramona@ejemplo.py", rol: "Técnica", amb: "Estancia Yvoty", ult: "hoy 05:48", pant: 12 },
+  { n: "Aníbal Giménez", m: "anibal@ejemplo.py", rol: "Capataz", amb: "Estancia Yvoty", ult: "ayer 17:30", pant: 3 },
+  { n: "Coop. San Isidro", m: "auditoria@ejemplo.py", rol: "Solo mirar", amb: "2 lotes", ult: "22/09 09:05", pant: 2 }
+];
+const PERMISOS = [
+  ["Ver qué hay que hacer hoy", 1, 1, 1, 1],
+  ["Ver un lote por dentro", 1, 1, 1, 1],
+  ["Anotar la cosecha y sacar fotos", 1, 1, 1, 0],
+  ["Cambiar cuándo riega", 1, 1, 0, 0],
+  ["Anotar el ajuste de un aparato", 1, 1, 0, 0],
+  ["Dibujar o corregir un lote", 1, 1, 0, 0],
+  ["Dar de alta gente", 1, 0, 0, 0]
+];
+
+/* ============================ gráficos ============================ */
+const TIP = $("#tip");
+function tipShow(html, ev) {
+  TIP.innerHTML = html; TIP.style.opacity = "1";
+  const r = TIP.getBoundingClientRect();
+  let x = ev.clientX + 14, y = ev.clientY - r.height - 12;
+  if (x + r.width > innerWidth - 8) x = ev.clientX - r.width - 14;
+  if (y < 8) y = ev.clientY + 18;
+  TIP.style.left = x + "px"; TIP.style.top = y + "px";
+}
+const tipHide = () => { TIP.style.opacity = "0"; };
+const NS = "http://www.w3.org/2000/svg";
+function S(tag, a) { const e = document.createElementNS(NS, tag); for (const k in a) if (a[k] !== undefined && a[k] !== null) e.setAttribute(k, a[k]); return e; }
+
+function drawPanel(g, cfg, geo) {
+  const { x0, y0, w, h } = geo, { yMin, yMax } = cfg;
+  const sy = v => y0 + h - (v - yMin) / (yMax - yMin) * h;
+  const n = cfg.xLen, sx = i => n === 1 ? x0 + w / 2 : x0 + i / (n - 1) * w;
+  (cfg.bands || []).forEach(b => {
+    g.appendChild(S("rect", { x: x0, y: sy(b.to), width: w, height: Math.max(1, sy(b.from) - sy(b.to)), fill: b.color }));
+    if (b.label) g.appendChild(Object.assign(S("text", { x: x0 + 5, y: sy(b.to) + 12, fill: "var(--ink-3)", "font-size": 11, "font-variation-settings": '"wdth" 88' }), { textContent: b.label }));
+  });
+  (cfg.vbands || []).forEach(b => {
+    g.appendChild(S("rect", { x: sx(b.from), y: y0, width: sx(b.to) - sx(b.from), height: h, fill: "var(--panel-2)" }));
+    g.appendChild(S("rect", { x: sx(b.from), y: y0, width: sx(b.to) - sx(b.from), height: h, fill: "none", stroke: "var(--axis)", "stroke-width": 1, "stroke-dasharray": "3 3" }));
+    if (b.label) g.appendChild(Object.assign(S("text", { x: (sx(b.from) + sx(b.to)) / 2, y: y0 + h / 2 + 3, fill: "var(--ink-2)", "font-size": 11, "text-anchor": "middle", "font-variation-settings": '"wdth" 88' }), { textContent: b.label }));
+  });
+  (cfg.yTicks || []).forEach(t => {
+    g.appendChild(S("line", { x1: x0, x2: x0 + w, y1: sy(t), y2: sy(t), stroke: "var(--grid)", "stroke-width": 1 }));
+    g.appendChild(Object.assign(S("text", { x: x0 - 6, y: sy(t) + 3.5, fill: "var(--ink-3)", "font-size": 11, "text-anchor": "end", "font-variation-settings": '"wdth" 86' }), { textContent: cfg.yFmt ? cfg.yFmt(t) : t }));
+  });
+  (cfg.hlines || []).forEach(l => {
+    g.appendChild(S("line", { x1: x0, x2: x0 + w, y1: sy(l.v), y2: sy(l.v), stroke: l.color, "stroke-width": 2, "stroke-dasharray": "6 4" }));
+    if (l.label) g.appendChild(Object.assign(S("text", { x: x0 + w + 5, y: sy(l.v) + 3.5, fill: l.color, "font-size": 11, "font-weight": 700, "font-variation-settings": '"wdth" 88' }), { textContent: l.label }));
+  });
+  (cfg.series || []).forEach(s => {
+    const vals = s.values;
+    if (s.type === "band") {
+      let d = "";
+      for (let i = 0; i < vals.length; i++) d += (i ? "L" : "M") + sx(i).toFixed(1) + " " + sy(vals[i]).toFixed(1) + " ";
+      for (let i = vals.length - 1; i >= 0; i--) d += "L" + sx(i).toFixed(1) + " " + sy(s.lower[i]).toFixed(1) + " ";
+      g.appendChild(S("path", { d: d + "Z", fill: s.color, opacity: s.op || .3 })); return;
+    }
+    if (s.type === "bar") {
+      const bw = Math.max(2.5, Math.min(15, w / n * (s.wide || 0.6)));
+      vals.forEach((v, i) => {
+        if (v === null || v === 0) return;
+        const yv = sy(v), yb = sy(Math.min(yMax, Math.max(yMin, 0)));
+        g.appendChild(S("rect", { x: sx(i) - bw / 2, y: Math.min(yv, yb), width: bw, height: Math.max(2, Math.abs(yb - yv)), fill: s.color, rx: 2, ry: 2 }));
+      }); return;
+    }
+    const segs = []; let cur = [];
+    vals.forEach((v, i) => { if (v === null) { if (cur.length) segs.push(cur); cur = []; } else cur.push(i); });
+    if (cur.length) segs.push(cur);
+    if (s.fill) segs.forEach(seg => {
+      if (seg.length < 2) return;
+      let a = "M" + sx(seg[0]).toFixed(1) + " " + sy(yMin).toFixed(1) + " ";
+      seg.forEach(i => { a += "L" + sx(i).toFixed(1) + " " + sy(vals[i]).toFixed(1) + " "; });
+      a += "L" + sx(seg[seg.length - 1]).toFixed(1) + " " + sy(yMin).toFixed(1) + " Z";
+      g.appendChild(S("path", { d: a, fill: s.color, opacity: s.fillOp || .16 }));
+    });
+    let d = "";
+    segs.forEach(seg => seg.forEach((i, k) => { d += (k ? "L" : "M") + sx(i).toFixed(1) + " " + sy(vals[i]).toFixed(1) + " "; }));
+    g.appendChild(S("path", { d, fill: "none", stroke: s.color, "stroke-width": s.w || 2.4, "stroke-linejoin": "round", "stroke-linecap": "round", "stroke-dasharray": s.dash || null }));
+  });
+  (cfg.marks || []).forEach(m => g.appendChild(S("line", { x1: sx(m.i), x2: sx(m.i), y1: y0 + h, y2: y0 + h - 8, stroke: m.color, "stroke-width": 2.4 })));
+  g.appendChild(S("line", { x1: x0, x2: x0 + w, y1: y0 + h, y2: y0 + h, stroke: "var(--axis)", "stroke-width": 1.4 }));
+  return { sx, sy };
+}
+function thinTicks(ticks, W) {
+  const t = ticks || [], step = W < 380 ? 3 : W < 560 ? 2 : 1;
+  return step === 1 ? t : t.filter((_, k) => k % step === 0 || k === t.length - 1);
+}
+function mountChart(host, build) {
+  if (!host) return;
+  const render = () => { const w = Math.max(250, host.clientWidth || 320); host.innerHTML = ""; host.appendChild(build(w)); };
+  render();
+  let t; new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 90); }).observe(host);
+}
+function laneChart(host, cfg) {
+  mountChart(host, W => {
+    const padL = 46, padR = cfg.padR || 12, padT = 8, padB = 26, gap = cfg.gap === undefined ? 10 : cfg.gap;
+    const lanes = cfg.lanes, lh = cfg.laneH;
+    const H = padT + lanes.length * lh + (lanes.length - 1) * gap + padB;
+    const svg = S("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": cfg.aria || "" });
+    const w = W - padL - padR;
+    lanes.forEach((L, k) => {
+      const y0 = padT + k * (lh + gap), g = S("g", {});
+      svg.appendChild(g);
+      drawPanel(g, Object.assign({ xLen: cfg.xLen }, L), { x0: padL, y0, w, h: lh });
+      svg.appendChild(Object.assign(S("text", { x: padL + 6, y: y0 + 14, fill: "var(--ink-2)", "font-size": 12.5, "font-weight": 700, "font-variation-settings": '"wdth" 96' }), { textContent: L.title }));
+      if (L.sub && W > 520) svg.appendChild(Object.assign(S("text", { x: padL + w - 2, y: y0 + 14, fill: "var(--ink-3)", "font-size": 11, "text-anchor": "end", "font-variation-settings": '"wdth" 88' }), { textContent: L.sub }));
+    });
+    const yBot = padT + lanes.length * lh + (lanes.length - 1) * gap;
+    thinTicks(cfg.xTicks, W).forEach(i => {
+      const x = padL + i / (cfg.xLen - 1) * w;
+      svg.appendChild(Object.assign(S("text", { x, y: yBot + 16, fill: "var(--ink-3)", "font-size": 11, "text-anchor": "middle", "font-variation-settings": '"wdth" 86' }), { textContent: cfg.xLabels[i] }));
+    });
+    const cross = S("line", { y1: padT, y2: yBot, stroke: "var(--ink)", "stroke-width": 1.4, opacity: 0, "pointer-events": "none" });
+    svg.appendChild(cross);
+    const ov = S("rect", { x: padL, y: padT, width: w, height: yBot - padT, fill: "transparent", style: "cursor:crosshair" });
+    svg.appendChild(ov);
+    const move = ev => {
+      const r = svg.getBoundingClientRect();
+      const i = Math.max(0, Math.min(cfg.xLen - 1, Math.round((ev.clientX - r.left - padL) / w * (cfg.xLen - 1))));
+      const x = padL + i / (cfg.xLen - 1) * w;
+      cross.setAttribute("x1", x); cross.setAttribute("x2", x); cross.setAttribute("opacity", .4);
+      let rows = "";
+      lanes.forEach(L => (L.series || []).forEach(s => {
+        if (s.skipTip) return;
+        let v = s.values[i]; if (v !== null && s.abs) v = Math.abs(v);
+        rows += `<div class="r"><span><i style="background:${s.color}"></i>${esc(s.name)}</span><b>${v === null ? "sin dato" : nf(v, s.dec === undefined ? 1 : s.dec) + (s.unit || "")}</b></div>`;
+      }));
+      tipShow(`<div class="t">${esc(cfg.xLabels[i])}</div>${rows}`, ev);
+    };
+    ov.addEventListener("pointermove", move);
+    ov.addEventListener("pointerleave", () => { cross.setAttribute("opacity", 0); tipHide(); });
+    return svg;
+  });
+}
+function lineChart(host, cfg) {
+  mountChart(host, W => {
+    const padL = cfg.padL || 46, padR = cfg.padR || 14, padT = 10, padB = 26, H = cfg.h || 180;
+    const svg = S("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": cfg.aria || "" });
+    const w = W - padL - padR, h = H - padT - padB, g = S("g", {});
+    svg.appendChild(g);
+    drawPanel(g, Object.assign({ xLen: cfg.xLen }, cfg), { x0: padL, y0: padT, w, h });
+    thinTicks(cfg.xTicks, W).forEach(i => {
+      const x = padL + i / (cfg.xLen - 1) * w;
+      svg.appendChild(Object.assign(S("text", { x, y: padT + h + 16, fill: "var(--ink-3)", "font-size": 11, "text-anchor": "middle", "font-variation-settings": '"wdth" 86' }), { textContent: cfg.xLabels[i] }));
+    });
+    const cross = S("line", { y1: padT, y2: padT + h, stroke: "var(--ink)", "stroke-width": 1.4, opacity: 0, "pointer-events": "none" });
+    svg.appendChild(cross);
+    const ov = S("rect", { x: padL, y: padT, width: w, height: h, fill: "transparent", style: "cursor:crosshair" });
+    svg.appendChild(ov);
+    const move = ev => {
+      const r = svg.getBoundingClientRect();
+      const i = Math.max(0, Math.min(cfg.xLen - 1, Math.round((ev.clientX - r.left - padL) / w * (cfg.xLen - 1))));
+      const x = padL + i / (cfg.xLen - 1) * w;
+      cross.setAttribute("x1", x); cross.setAttribute("x2", x); cross.setAttribute("opacity", .4);
+      let rows = "";
+      (cfg.series || []).forEach(s => {
+        if (s.skipTip) return;
+        const v = s.values[i];
+        rows += `<div class="r"><span><i style="background:${s.color}"></i>${esc(s.name)}</span><b>${v === null ? "sin dato" : nf(v, s.dec === undefined ? 2 : s.dec) + (s.unit || "")}</b></div>`;
+      });
+      tipShow(`<div class="t">${esc(cfg.xLabels[i])}</div>${rows}`, ev);
+    };
+    ov.addEventListener("pointermove", move);
+    ov.addEventListener("pointerleave", () => { cross.setAttribute("opacity", 0); tipHide(); });
+    return svg;
+  });
+}
+function rankChart(host, cfg) {
+  mountChart(host, W => {
+    const rowH = 34, padL = cfg.padL || 128, padR = cfg.padR || 56, padT = 6;
+    const H = padT + cfg.rows.length * rowH + 8;
+    const svg = S("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": cfg.aria || "" });
+    const w = Math.max(54, W - padL - padR);
+    cfg.rows.forEach((r, k) => {
+      const y = padT + k * rowH, bw = Math.max(3, r.v / cfg.max * w), g = S("g", { style: "cursor:pointer" });
+      g.appendChild(Object.assign(S("text", { x: padL - 10, y: y + 20, fill: "var(--ink)", "font-size": 13, "text-anchor": "end" }), { textContent: r.lab }));
+      g.appendChild(S("rect", { x: padL, y: y + 7, width: w, height: 19, fill: "var(--panel-2)", rx: 2 }));
+      g.appendChild(S("rect", { x: padL, y: y + 7, width: bw, height: 19, fill: r.color, rx: 4 }));
+      g.appendChild(Object.assign(S("text", { x: padL + bw + 8, y: y + 21, fill: "var(--ink)", "font-size": 13, "font-weight": 700, "font-variation-settings": '"wdth" 104' }), { textContent: r.txt }));
+      g.addEventListener("pointermove", ev => tipShow(`<div class="t">${esc(r.lab)}</div><div class="r"><span>${esc(cfg.metric)}</span><b>${esc(r.txt)}</b></div>${r.extra ? `<div class="r"><span>${esc(r.extra[0])}</span><b>${esc(r.extra[1])}</b></div>` : ""}`, ev));
+      g.addEventListener("pointerleave", tipHide);
+      svg.appendChild(g);
+    });
+    return svg;
+  });
+}
+function sparkline(vals, color) {
+  if (!vals) return "";
+  const w = 76, h = 22, ok = vals.filter(v => v !== null);
+  const mn = Math.min.apply(null, ok), mx = Math.max.apply(null, ok), r = (mx - mn) || 1;
+  let d = "", open = false;
+  vals.forEach((v, i) => {
+    if (v === null) { open = false; return; }
+    const x = i / (vals.length - 1) * w, y = h - (v - mn) / r * (h - 4) - 2;
+    d += (open ? "L" : "M") + x.toFixed(1) + " " + y.toFixed(1) + " "; open = true;
+  });
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true" style="display:block"><path d="${d}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+}
+
+/* ============================ piezas ============================ */
+const chip = e => `<span class="chip ${EST[e].chip}"><span class="g"></span>${EST[e].lab}</span>`;
+const tile = (k, v, u, f) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}${u ? `<small>${u}</small>` : ""}</div>${f ? `<div class="f">${f}</div>` : ""}</div>`;
+function head(crumb, title, decision) {
+  return `<div class="pagehead"><div class="crumb">${esc(crumb)}</div><h1>${esc(title)}</h1>${decision ? `<div class="decision">${decision}</div>` : ""}</div>`;
+}
+/* La respuesta va primero y grande. El grafico es la justificacion, y va abajo. */
+function answer(kind, titulo, sub, cuando) {
+  return `<div class="answer ${kind}">
+    <span class="ic">${ico(estIcon(kind), 34, estColor(kind))}</span>
+    <div class="tx">
+      <div class="big">${titulo}</div>
+      ${sub ? `<div class="sub">${sub}</div>` : ""}
+      ${cuando ? `<div class="when">${ico("reloj", 18)}${esc(cuando)}</div>` : ""}
+    </div>
+  </div>`;
+}
+function freshness(txt, stale) {
+  return `<div class="freshness ${stale ? "stale" : ""}">${ico(stale ? "sinsenal" : "ok", 20, stale ? "var(--mute)" : "var(--ok)")}<span>${txt}</span></div>`;
+}
+function gauge(g, label, dec) {
+  const pct = v => ((v - g.min) / (g.max - g.min) * 100).toFixed(1) + "%";
+  const okW = ((g.okMax - g.okMin) / (g.max - g.min) * 100).toFixed(1) + "%";
+  return `<div class="gauge">
+    <div class="top"><h3>${esc(label)}</h3>${chip(g.est)}</div>
+    <div class="val">${nf(g.v, dec)}${g.u ? `<small>${g.u}</small>` : ""}</div>
+    <div class="track"><div class="ok-range" style="left:${pct(g.okMin)}; width:${okW}"></div><div class="needle" style="left:calc(${pct(g.v)} - 2px)"></div></div>
+    <div class="scale"><span>${nf(g.min, dec)}</span><span style="color:var(--ok)">tiene que estar entre ${nf(g.okMin, dec)} y ${nf(g.okMax, dec)}</span><span>${nf(g.max, dec)}</span></div>
+    <div class="note" style="margin-top:7px">${esc(g.nota)}</div>
+  </div>`;
+}
+function loteRow(p) {
+  return `<button class="bigrow" data-p="${p.id}">
+    <span class="bar" style="background:${estColor(p.est)}"></span>
+    <span class="mid">
+      <span class="nm">${esc(p.nom)}</span>
+      <span class="act">${p.resp.t}</span>
+      <span class="meta">${esc(p.cultivo)} · ${nf(p.ha, 1)} ha · última lectura ${esc(p.ult)}</span>
+    </span>
+    <span class="right">${chip(p.est)}${ico("flecha", 22, "var(--ink-3)")}</span>
+  </button>`;
+}
+
+/* ============================ pantallas del CAPATAZ ============================
+   Tres. No doce. Mostrarle doce es el fracaso.
+============================================================================== */
+const CAP = {};
+
+CAP.hoy = () => {
+  const urg = PARCELAS.filter(p => p.est === "crit" || p.est === "do").length;
+  return {
+    title: "Hoy",
+    html: `<div class="pagehead"><div class="crumb">Estancia Yvoty · lunes 28 de septiembre</div><h1>Lo que hay que hacer hoy</h1></div>
+      ${urg
+        ? answer("do", `${urg} lotes necesitan algo`, "Los otros 4 están bien. Empezá por el de arriba, que es el más urgente.", "")
+        : answer("ok", "Hoy no hace falta nada", "Los 6 lotes están bien.", "")}
+      ${ordenados().map(loteRow).join("")}
+      <div class="panel"><div class="body">
+        <h3>${ico("mano", 20)} Si algo no cierra</h3>
+        <p class="note" style="margin-top:6px">Lo que la pantalla dice sale de los aparatos del lote. Si ves con tus ojos algo distinto a lo que dice acá, <b>lo que ves gana</b>: anotalo y avisá. El aparato se puede ensuciar o quedar mal enterrado.</p>
+        <div class="btnrow"><button class="btn" data-go="anotar">${ico("lapiz", 20)}Anotar algo</button></div>
+      </div></div>`,
+    after(root) {
+      $$(".bigrow", root).forEach(b => b.addEventListener("click", () => go("lote", b.dataset.p)));
+      $$("[data-go]", root).forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
+    }
+  };
+};
+
+CAP.lote = (arg) => {
+  const p = byId(arg) || ordenados()[0];
+  const tieneAgua = !!p.agua;
+  return {
+    title: p.nom,
+    html: `<div class="pagehead"><div class="crumb">Hoy · Estancia Yvoty</div><h1>${esc(p.nom)}</h1>
+        <div class="decision">${esc(p.cultivo)} · ${nf(p.ha, 1)} hectáreas</div></div>
+      <label class="note" style="display:block; margin-bottom:14px">Cambiar de lote<br>
+        <select class="btn" id="cap-lote" style="width:100%; margin-top:5px">${PARCELAS.map(x => `<option value="${x.id}"${x.id === p.id ? " selected" : ""}>${esc(x.nom)}</option>`).join("")}</select></label>
+      ${answer(p.est, p.resp.t, p.resp.s, p.resp.w)}
+      ${freshness("Última lectura: <b>" + p.ult + "</b>", p.est === "mute")}
+
+      ${tieneAgua ? `<div class="panel">
+        <header><h2>${ico("gota", 20)} El agua en la tierra</h2></header>
+        <div class="body">
+          <div class="wsoil">
+            ${p.agua.map(a => `<div class="wrow">
+              <span class="lb">${esc(a.n)}<small>${esc(a.d)} de hondo</small></span>
+              <span class="tk"><span class="fl ${a.w === "seco" ? "seco" : ""}" style="width:${a.p}%; ${a.w === "seco" ? "" : "background:var(--d2)"}"></span></span>
+              <span class="vw">${a.w === "seco" ? ico("alerta", 18, "var(--warn)") : ico("tilde", 18, "var(--ok)")}${esc(a.w)}</span>
+            </div>`).join("")}
+          </div>
+          <p class="note" style="margin-top:12px">Arriba y en la raíz está seco; <b>abajo todavía hay agua guardada</b>. Por eso 20 minutos alcanzan: si regás de más, el agua se va abajo de la raíz y se pierde.</p>
+        </div>
+      </div>` : ""}
+
+      <div class="panel">
+        <header><h2>${ico("lista", 20)} Qué pasó estos días</h2></header>
+        <div class="body flush">
+          <table><tbody>
+            ${RIEGOS.filter(r => r.p === p.nom).slice(0, 4).map(r => `<tr><td style="width:9.5rem">${esc(r.f)}</td><td><b>${esc(r.dec)}</b><span class="why">${esc(r.cond)}</span></td></tr>`).join("")
+              || '<tr><td class="muted">Todavía no hay nada anotado de este lote.</td></tr>'}
+          </tbody></table>
+        </div>
+      </div>
+
+      ${tieneAgua ? `<details class="disclose">
+        <summary>${ico("grafico", 20)} Ver el dibujo de los últimos 21 días <span class="cv">${ico("chevron", 20)}</span></summary>
+        <div class="inner">
+          <p class="note" style="margin:12px 0">La línea que importa es la del medio, la de la raíz. Cuando baja de la raya naranja, el riego arranca solo.</p>
+          <div class="chart" id="c-cap"></div>
+          <p class="note" style="margin-top:10px">El pedazo gris es un día en que el aparato no mandó nada. <b>No quiere decir que la tierra estuvo seca</b>: quiere decir que no sabemos.</p>
+        </div>
+      </details>` : ""}
+
+      <div class="btnrow">
+        <button class="btn block primary" data-go="anotar">${ico("lapiz", 22)}Anotar algo de este lote</button>
+      </div>`,
+    after(root) {
+      $$("[data-go]", root).forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
+      const sel = $("#cap-lote", root);
+      if (sel) sel.addEventListener("change", () => go("lote", sel.value));
+      const det = $("details.disclose", root);
+      if (det) det.addEventListener("toggle", () => { if (det.open) drawCapChart(); });
+    }
+  };
+};
+function drawCapChart() {
+  const okBand = [{ from: 19, to: 28, color: "color-mix(in srgb, var(--ok) 14%, transparent)" }];
+  laneChart($("#c-cap"), {
+    xLen: 84, xLabels: FECHAS, xTicks: [0, 21, 42, 63, 83], laneH: 76, gap: 12, padR: 20,
+    aria: "Humedad de la tierra a tres hondos, en los últimos 21 días",
+    lanes: [
+      { title: "Arriba", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, series: [{ name: "Arriba", color: "var(--d1)", values: HUM10, fill: 1, unit: " %", dec: 1 }], marks: RIEGO_IDX.map(i => ({ i, color: "var(--brand)" })) },
+      { title: "En la raíz", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, vbands: [{ from: 43, to: 52, label: "no llegó nada" }], hlines: [{ v: 19, color: "var(--warn)" }], series: [{ name: "En la raíz", color: "var(--d2)", values: HUM30, fill: 1, unit: " %", dec: 1 }] },
+      { title: "Abajo", yMin: 6, yMax: 36, yTicks: [10, 20, 30], series: [{ name: "Abajo", color: "var(--d3)", values: HUM60, fill: 1, unit: " %", dec: 1 }] }
+    ]
+  });
+}
+
+CAP.anotar = () => ({
+  title: "Anotar",
+  html: `<div class="pagehead"><div class="crumb">Estancia Yvoty</div><h1>Anotar algo</h1>
+      <div class="decision">Elegí qué querés anotar. Casi todo se toca, no se escribe.</div></div>
+    <div id="anotar-menu">
+      <button class="btn block" data-f="cosecha">${ico("balanza", 24)}Anotar lo que se cosechó</button>
+      <div style="height:10px"></div>
+      <button class="btn block" data-f="foto">${ico("camara", 24)}Sacar foto de la trampa</button>
+      <div style="height:10px"></div>
+      <button class="btn block" data-f="revise">${ico("tilde", 24)}Ya revisé la manguera</button>
+      <div style="height:10px"></div>
+      <button class="btn block" data-f="regue">${ico("gota", 24)}Regué a mano</button>
+      <div class="panel" style="margin-top:18px"><div class="body">
+        <p class="note">La foto se guarda con el lugar y la hora solas. <b>No hay que escribir nada.</b></p>
+      </div></div>
+    </div>
+    <div id="anotar-form"></div>`,
+  after(root) {
+    const menu = $("#anotar-menu", root), form = $("#anotar-form", root);
+    const volver = () => { form.innerHTML = ""; menu.style.display = ""; };
+    $$("[data-f]", menu).forEach(b => b.addEventListener("click", () => {
+      menu.style.display = "none";
+      if (b.dataset.f === "cosecha") formCosecha(form, volver);
+      else formSimple(form, volver, b.dataset.f);
+    }));
+  }
+});
+function formCosecha(host, volver) {
+  host.innerHTML = `<div class="panel"><header><h2>${ico("balanza", 20)} Lo que se cosechó</h2></header>
+    <div class="body">
+      <div class="kv" style="grid-template-columns:1fr; gap:14px">
+        <label><span class="note">De qué lote</span><br>
+          <select class="btn" id="f-lote" style="width:100%">${PARCELAS.map(p => `<option>${esc(p.nom)}</option>`).join("")}</select></label>
+        <label><span class="note">Cuántos kilos</span><br>
+          <input class="btn" id="f-kg" inputmode="decimal" value="9,1" style="width:100%"></label>
+        <label><span class="note">Cuántos cajones se tiraron</span><br>
+          <select class="btn" id="f-desc" style="width:100%"><option>Ninguno</option><option selected>1</option><option>2</option><option>3</option><option>Más de 3</option></select></label>
+        <div><span class="note">Por qué se tiraron</span>
+          <div class="btnrow" style="margin-top:6px" id="f-mot">
+            <button class="btn" aria-pressed="false">Bicho</button>
+            <button class="btn" aria-pressed="true">Quemado por el sol</button>
+            <button class="btn" aria-pressed="false">Podrido</button>
+            <button class="btn" aria-pressed="false">Chico</button>
+            <button class="btn" aria-pressed="false">Otra cosa</button>
+          </div>
+        </div>
+      </div>
+      <div class="btnrow" style="margin-top:18px">
+        <button class="btn primary" id="f-seguir">${ico("flecha", 20)}Seguir</button>
+        <button class="btn" id="f-volver">Volver</button>
+      </div>
+    </div></div>`;
+  $$("#f-mot .btn", host).forEach(b => b.addEventListener("click", () => {
+    $$("#f-mot .btn", host).forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  }));
+  $("#f-volver", host).addEventListener("click", volver);
+  $("#f-seguir", host).addEventListener("click", () => {
+    const lote = $("#f-lote", host).value, kg = $("#f-kg", host).value, desc = $("#f-desc", host).value;
+    const mot = ($$("#f-mot .btn", host).find(b => b.getAttribute("aria-pressed") === "true") || {}).textContent || "";
+    /* Ninguna accion queda a un toque: primero se muestra exactamente que se va a guardar. */
+    host.innerHTML = `<div class="panel" style="border:2px solid var(--brand)"><header><h2>¿Está bien así?</h2></header>
+      <div class="body">
+        <dl class="kv" style="font-size:1.05rem">
+          <dt>Lote</dt><dd><b>${esc(lote)}</b></dd>
+          <dt>Kilos</dt><dd><b>${esc(kg)} kg</b></dd>
+          <dt>Se tiraron</dt><dd><b>${esc(desc)}</b> cajones</dd>
+          <dt>Por qué</dt><dd><b>${esc(mot)}</b></dd>
+          <dt>Cuándo</dt><dd>Hoy, 28/09/2026 · lo pone el teléfono solo</dd>
+        </dl>
+        <div class="btnrow" style="margin-top:18px">
+          <button class="btn primary" id="f-ok">${ico("tilde", 20)}Sí, guardar</button>
+          <button class="btn" id="f-no">No, corregir</button>
+        </div>
+      </div></div>`;
+    $("#f-no", host).addEventListener("click", () => formCosecha(host, volver));
+    $("#f-ok", host).addEventListener("click", () => {
+      host.innerHTML = `${answer("ok", "Guardado", "Quedó anotado en <b>" + esc(lote) + "</b>. Si no hay señal, se manda solo cuando vuelva.", "")}
+        <button class="btn block" id="f-fin">${ico("flecha", 22)}Anotar otra cosa</button>`;
+      $("#f-fin", host).addEventListener("click", volver);
+    });
+  });
+}
+function formSimple(host, volver, kind) {
+  const T = {
+    foto: { t: "Foto de la trampa", ic: "camara", body: `<div class="panel"><div class="body" style="text-align:center; padding:34px 14px">
+        ${ico("camara", 56, "var(--ink-3)")}
+        <p class="note" style="margin:12px auto 0">Apuntá a la trampa y sacá la foto. El lugar y la hora los pone el teléfono.</p>
+      </div></div>`, ok: "La foto quedó guardada con el lugar y la hora." },
+    revise: { t: "Ya revisé la manguera", ic: "tilde", body: "", ok: "Quedó anotado que revisaste la línea hoy." },
+    regue: { t: "Regué a mano", ic: "gota", body: "", ok: "Quedó anotado el riego a mano. No cambia lo que hace el aparato." }
+  }[kind];
+  host.innerHTML = `<div class="panel"><header><h2>${ico(T.ic, 20)} ${esc(T.t)}</h2></header>
+    <div class="body">
+      <label><span class="note">De qué lote</span><br>
+        <select class="btn" id="s-lote" style="width:100%; margin-top:5px">${PARCELAS.map(p => `<option>${esc(p.nom)}</option>`).join("")}</select></label>
+      ${kind === "regue" ? `<label style="display:block; margin-top:14px"><span class="note">Cuánto tiempo</span><br>
+        <select class="btn" id="s-min" style="width:100%; margin-top:5px"><option>10 minutos</option><option selected>20 minutos</option><option>30 minutos</option><option>Más de media hora</option></select></label>` : ""}
+    </div></div>
+    ${T.body}
+    <div class="btnrow">
+      <button class="btn primary" id="s-ok">${ico("tilde", 20)}${kind === "foto" ? "Sacar la foto y guardar" : "Guardar"}</button>
+      <button class="btn" id="s-no">Volver</button>
+    </div>`;
+  $("#s-no", host).addEventListener("click", volver);
+  $("#s-ok", host).addEventListener("click", () => {
+    const lote = $("#s-lote", host).value;
+    host.innerHTML = `${answer("ok", "Guardado", T.ok + " Lote: <b>" + esc(lote) + "</b>.", "")}
+      <button class="btn block" id="s-fin">${ico("flecha", 22)}Anotar otra cosa</button>`;
+    $("#s-fin", host).addEventListener("click", volver);
+  });
+}
+
+/* ============================ pantallas del DUEÑO ============================ */
+const DUE = {};
+
+DUE.lotes = () => ({
+  title: "Los lotes",
+  html: head("Estancia Yvoty · La Colmena, Paraguarí", "Los lotes",
+    "<b>Decide a qué lote hay que ir hoy.</b> El mapa dice dónde está el problema; el lote por dentro dice cuál es.") +
+    answer("do", "Dos lotes necesitan algo hoy", "Huerta Ñu Porâ está perdiendo agua y Tomatal Ka'aguy hay que regarlo. Los otros cuatro están bien.", "") +
+    `<div class="tiles">
+      ${tile("Bien", "3", "de 6", "Última lectura hace 2 minutos")}
+      ${tile("Hay que regar", "1", "", "Tomatal Ka'aguy")}
+      ${tile("Urgente", "1", "", "Huerta Ñu Porâ · pierde agua")}
+      ${tile("Sin noticias", "1", "", "Potrero Costa Guasu · hace 3 días")}
+      ${tile("Agua usada hoy", nf(4860), "litros", "6 riegos en 4 lotes")}
+    </div>
+    <div class="cols map">
+      <div>
+        <div class="mapfig">${mapSVG()}</div>
+        <div class="legend" style="margin-top:10px">
+          <span>${ico("tilde", 16, "var(--ok)")}Bien</span>
+          <span>${ico("gota", 16, "var(--brand)")}Hay que regar</span>
+          <span>${ico("alerta", 16, "var(--crit)")}Urgente</span>
+          <span>${ico("sinsenal", 16, "var(--mute)")}Sin noticias</span>
+          <span><i class="sq" style="background:var(--ink-2); border-radius:50%"></i>Aparato que está mandando</span>
+          <span><i class="sq" style="background:transparent; border:2px dashed var(--ink-3); border-radius:50%"></i>Aparato que no manda</span>
+        </div>
+        <div class="note rule" style="margin-top:12px">
+          El lote se pinta por <b>cómo está</b>, no por lo que tiene sembrado: lo sembrado ya está escrito y lo que cambia es cómo está.
+          Los aparatos no se asignan a mano a ningún lote: el sistema sabe cuál está adentro de cuál.
+        </div>
+      </div>
+      <div>${ordenados().map(loteRow).join("")}</div>
+    </div>`,
+  after(root) {
+    $$(".bigrow", root).forEach(b => {
+      b.addEventListener("click", () => go("lote", b.dataset.p));
+      b.addEventListener("pointerenter", () => sync(b.dataset.p, 1));
+      b.addEventListener("pointerleave", () => sync(b.dataset.p, 0));
+    });
+    function sync(id, on) {
+      $$(".bigrow", root).forEach(r => r.classList.toggle("hot", on && r.dataset.p === id));
+      $$("svg [data-poly]", root).forEach(el => el.setAttribute("stroke-width", (on && el.dataset.poly === id) ? 4.5 : 2.4));
+    }
+    $$("svg [data-poly]", root).forEach(el => {
+      el.style.cursor = "pointer";
+      const p = byId(el.dataset.poly);
+      const tp = ev => tipShow(`<div class="t">${esc(p.cultivo)}</div><div class="r"><span><b>${esc(p.nom)}</b></span></div><div class="r"><span>Tamaño</span><b>${nf(p.ha, 1)} ha</b></div><div class="r"><span>Qué hacer</span><b>${esc(p.resp.t)}</b></div>`, ev);
+      el.addEventListener("pointerenter", ev => { sync(p.id, 1); tp(ev); });
+      el.addEventListener("pointermove", tp);
+      el.addEventListener("pointerleave", () => { sync(p.id, 0); tipHide(); });
+      el.addEventListener("click", () => go("lote", p.id));
+    });
+  }
+});
+
+function mapSVG() {
+  const dev = DISPOS_MAPA.map(d => {
+    const ho = d.off;
+    if (d.t === "estacion") return `<path d="M${d.x - 6} ${d.y + 6} L${d.x} ${d.y - 7} L${d.x + 6} ${d.y + 6} Z" fill="${ho ? "none" : "var(--ink-2)"}" stroke="var(--ink-2)" stroke-width="1.8" stroke-dasharray="${ho ? "2 2" : "none"}"/>`;
+    if (d.t === "ctrl") return `<rect x="${d.x - 5.5}" y="${d.y - 5.5}" width="11" height="11" fill="${ho ? "none" : "var(--brand)"}" stroke="var(--brand)" stroke-width="2" stroke-dasharray="${ho ? "2 2" : "none"}"/>`;
+    if (d.t === "caudal") return `<g transform="translate(${d.x},${d.y})"><circle r="6" fill="none" stroke="var(--s1)" stroke-width="2"/><path d="M-6 0 H6" stroke="var(--s1)" stroke-width="2"/></g>`;
+    if (d.t === "trampa") return `<path d="M${d.x} ${d.y - 6.5} L${d.x + 6.5} ${d.y} L${d.x} ${d.y + 6.5} L${d.x - 6.5} ${d.y} Z" fill="var(--s2)" stroke="var(--s2)" stroke-width="1.5"/>`;
+    return `<circle cx="${d.x}" cy="${d.y}" r="5" fill="${ho ? "none" : "var(--ink-2)"}" stroke="var(--ink-2)" stroke-width="1.9" stroke-dasharray="${ho ? "2 2" : "none"}"/>`;
+  }).join("");
+  const polys = PARCELAS.map(p => {
+    const c = estColor(p.est), mute = p.est === "mute";
+    return `<polygon data-poly="${p.id}" points="${p.poly}" fill="${mute ? "none" : `color-mix(in srgb, ${c} 20%, transparent)`}" stroke="${c}" stroke-width="2.4" stroke-linejoin="round" stroke-dasharray="${mute ? "8 5" : "none"}"><title>${esc(p.nom)} — ${esc(p.resp.t)}</title></polygon>`;
+  }).join("");
+  const labels = PARCELAS.map(p => {
+    const pts = p.poly.split(" ").map(s => s.split(",").map(Number));
+    const cx = pts.reduce((a, b) => a + b[0], 0) / pts.length, cy = pts.reduce((a, b) => a + b[1], 0) / pts.length;
+    return `<text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)" style="font-variation-settings:'wdth' 106; pointer-events:none">${esc(p.nom)}</text>
+            <text x="${cx}" y="${cy + 13}" text-anchor="middle" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 90; pointer-events:none">${esc(p.cultivo)} · ${nf(p.ha, 1)} ha</text>`;
+  }).join("");
+  return `<svg viewBox="0 0 920 510" role="img" aria-label="Mapa de los seis lotes del campo con sus aparatos">
+    <rect width="920" height="510" fill="var(--panel)"/>
+    <g opacity=".5">
+      <path d="M0 108 C160 92, 300 132, 460 112 S760 78, 920 100" fill="none" stroke="var(--line)"/>
+      <path d="M0 232 C180 214, 320 252, 500 234 S780 202, 920 224" fill="none" stroke="var(--line)"/>
+      <path d="M0 356 C200 336, 340 374, 520 356 S800 326, 920 346" fill="none" stroke="var(--line)"/>
+    </g>
+    <path d="M-10 318 C120 300, 250 306, 388 296 S620 276, 930 298" fill="none" stroke="var(--s1)" stroke-width="6" opacity=".38" stroke-linecap="round"/>
+    <text x="24" y="311" font-size="12" fill="var(--s1)" style="font-variation-settings:'wdth' 88">arroyo</text>
+    <path d="M404 0 L392 510" fill="none" stroke="var(--line-2)" stroke-width="8"/>
+    <path d="M404 0 L392 510" fill="none" stroke="var(--panel)" stroke-width="2.6" stroke-dasharray="11 11"/>
+    <text x="414" y="500" font-size="12" fill="var(--ink-3)" style="font-variation-settings:'wdth' 88">camino</text>
+    ${polys}${labels}${dev}
+    <g transform="translate(762,486)">
+      <line x1="0" y1="0" x2="110" y2="0" stroke="var(--ink-2)" stroke-width="1.8"/>
+      <line x1="0" y1="-4" x2="0" y2="4" stroke="var(--ink-2)" stroke-width="1.8"/>
+      <line x1="110" y1="-4" x2="110" y2="4" stroke="var(--ink-2)" stroke-width="1.8"/>
+      <text x="55" y="-7" text-anchor="middle" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 88">200 metros</text>
+    </g>
+    <g transform="translate(46,486)">
+      <path d="M0 0 L0 -22 M-5 -16 L0 -22 L5 -16" stroke="var(--ink-2)" stroke-width="1.8" fill="none"/>
+      <text x="10" y="-2" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 88">N</text>
+    </g>
+  </svg>`;
+}
+
+DUE.lote = (arg) => {
+  const p = byId(arg) || byId("p1");
+  return {
+    title: p.nom,
+    html: head("Los lotes · Estancia Yvoty", p.nom,
+      "<b>Decide si el agua llegó a la raíz o pasó de largo.</b> Eso es lo que sube o baja los minutos de riego, y es agua y es plata.") +
+      answer(p.est, p.resp.t, p.resp.s, p.resp.w) +
+      `<div class="tiles">
+        ${tile("Sembrado", esc(p.cultivo), "", "Campaña 2026/27 · trasplante 04/08/2026")}
+        ${tile("Tamaño", nf(p.ha, 1), "ha", "Dibujo corregido el 19/08/2026")}
+        ${tile("Agua en la campaña", nf(186400), "litros", "≈ " + gs(1840000) + " de bombeo (ejemplo)")}
+        ${tile("Litros por kilo", nf(24.6, 1), "L/kg", "El ciclo pasado fueron " + nf(31.2, 1))}
+        ${tile("Última lectura", "11", "min", "Llega cada 15 minutos")}
+      </div>
+
+      <div class="panel">
+        <header>
+          <h2>El agua en la tierra, a tres hondos</h2>
+          <span class="legend"><span><i style="background:var(--d1)"></i>arriba</span><span><i style="background:var(--d2)"></i>en la raíz</span><span><i style="background:var(--d3)"></i>abajo</span><span><i class="sq" style="background:color-mix(in srgb,var(--ok) 30%,transparent)"></i>donde tiene que estar</span></span>
+          <span class="hint">21 días · datos de ejemplo</span>
+        </header>
+        <div class="body">
+          <div class="chart" id="c-depth"></div>
+          <div class="note rule" style="margin-top:12px">
+            <b>Se dibuja para abajo porque es para abajo.</b> Si la línea de abajo sube después de cada riego, el agua está pasando la raíz:
+            eso es agua tirada y se arregla regando menos minutos, no cambiando la raya. El pedazo gris es <b>un día sin noticias</b>:
+            el aparato no mandó nada, no es que la tierra estuvo seca.
+          </div>
+        </div>
+      </div>
+
+      <div class="cols c2">
+        <div class="panel">
+          <header><h2>Riego y lluvia</h2><span class="hint">milímetros · el mismo tiempo que arriba</span></header>
+          <div class="body">
+            <div class="chart" id="c-agua"></div>
+            <div class="note" style="margin-top:8px">La lluvia se dibuja cayendo y el riego saliendo del suelo: se distinguen por el lado, no solo por el color. Los 18 mm del 21/09 son los que frenaron el riego de esa mañana.</div>
+          </div>
+        </div>
+        <div class="panel">
+          <header><h2>Cuánto verde hay</h2><span class="hint">este año contra los 9 anteriores</span></header>
+          <div class="body">
+            <div class="chart" id="c-verd"></div>
+            <div class="legend" style="margin-top:8px"><span><i style="background:var(--n5)"></i>Este año</span><span><i style="background:var(--n3); height:3px"></i>Lo normal</span><span><i class="sq" style="background:var(--n1); opacity:.5"></i>Entre lo peor y lo mejor de 9 años</span></div>
+            <div class="note" style="margin-top:8px">Sale de la foto del satélite, gratis, cada 5 días. No hay que poner nada en el lote.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <header><h2>Últimos riegos</h2><a class="hint" href="#/duenio/riegos">Ver todo</a></header>
+        <div class="body flush scroller">
+          <table>
+            <thead><tr><th>Cuándo</th><th>Por qué</th><th>Qué hizo</th><th class="num">Agua esperada</th><th class="num">Agua que salió</th></tr></thead>
+            <tbody>${RIEGOS.filter(r => r.p === p.nom).map(r => `<tr><td>${esc(r.f)}</td><td>${esc(r.cond)}</td><td>${esc(r.dec)}</td>
+              <td class="num">${nf(r.est)} L</td><td class="num">${r.med === null ? "—" : nf(r.med) + " L"}</td></tr>`).join("") || '<tr><td colspan="5" class="muted">Sin riegos anotados.</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cols c2">
+        <div class="panel">
+          <header><h2>Aparatos de este lote</h2></header>
+          <div class="body flush scroller">
+            <table><thead><tr><th>Aparato</th><th>Pila</th><th>Último aviso</th></tr></thead><tbody>
+            ${DISPOSITIVOS.filter(d => d.lug === p.nom).map(d => `<tr><td><b>${esc(d.id)}</b><span class="why">${esc(d.t)}</span></td><td>${d.bat === null ? "enchufado" : d.bat + " %"}</td><td>${esc(d.ult)}</td></tr>`).join("") || '<tr><td colspan="3" class="muted">Sin aparatos.</td></tr>'}
+            </tbody></table>
+          </div>
+        </div>
+        <div class="panel">
+          <header><h2>Último análisis de tierra</h2><span class="hint">14/07/2026</span></header>
+          <div class="body">
+            <dl class="kv">
+              <dt>Materia orgánica</dt><dd>2,8 %</dd>
+              <dt>Acidez (pH)</dt><dd>6,1</dd>
+              <dt>Fósforo</dt><dd>18 mg/kg</dd>
+              <dt>Potasio</dt><dd>0,42</dd>
+              <dt>Tipo de tierra</dt><dd>Franco arcillosa</dd>
+              <dt>Cuando está llena de agua</dt><dd>31 %</dd>
+              <dt>Cuando la planta ya sufre</dt><dd>16 %</dd>
+            </dl>
+            <div class="note" style="margin-top:10px">Esos dos últimos números son los que fijan la franja verde del dibujo de arriba. Si cambia el análisis, cambia la franja.</div>
+          </div>
+        </div>
+      </div>`,
+    after() {
+      const okBand = [{ from: 19, to: 28, color: "color-mix(in srgb, var(--ok) 14%, transparent)" }];
+      laneChart($("#c-depth"), {
+        xLen: 84, xLabels: FECHAS, xTicks: [0, 14, 28, 42, 56, 70, 83], laneH: 84, gap: 12, padR: 70,
+        aria: "Humedad de la tierra a tres hondos durante 21 días",
+        lanes: [
+          { title: "Arriba · 10 cm", sub: "%", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, series: [{ name: "Arriba", color: "var(--d1)", values: HUM10, fill: 1, unit: " %", dec: 1 }], marks: RIEGO_IDX.map(i => ({ i, color: "var(--brand)" })) },
+          { title: "En la raíz · 30 cm", sub: "es la que manda", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, vbands: [{ from: 43, to: 52, label: "sin noticias" }], hlines: [{ v: 19, color: "var(--warn)", label: "riega acá" }], series: [{ name: "En la raíz", color: "var(--d2)", values: HUM30, fill: 1, unit: " %", dec: 1 }] },
+          { title: "Abajo · 60 cm", sub: "si sube, el agua se fue de largo", yMin: 6, yMax: 36, yTicks: [10, 20, 30], series: [{ name: "Abajo", color: "var(--d3)", values: HUM60, fill: 1, unit: " %", dec: 1 }] }
+        ]
+      });
+      laneChart($("#c-agua"), {
+        xLen: 84, xLabels: FECHAS, xTicks: [0, 21, 42, 63, 83], laneH: 66, gap: 4, padR: 16,
+        aria: "Lluvia caída y riego aplicado, en milímetros",
+        lanes: [
+          { title: "Lluvia", sub: "cae desde arriba", yMin: -20, yMax: 0, yTicks: [-5, -10, -15], yFmt: v => nf(-v), series: [{ name: "Lluvia", color: "var(--s1)", values: LLUVIA.map(v => -v), type: "bar", unit: " mm", dec: 1, wide: .5, abs: 1 }] },
+          { title: "Riego", sub: "sale del suelo", yMin: 0, yMax: 8, yTicks: [2, 4, 6], series: [{ name: "Riego", color: "var(--brand)", values: RIEGO_MM, type: "bar", unit: " mm", dec: 1, wide: .5 }] }
+        ]
+      });
+      lineChart($("#c-verd"), {
+        xLen: 12, xLabels: MESES, xTicks: [0, 3, 6, 9, 11], h: 182, yMin: 30, yMax: 90, yTicks: [30, 50, 70, 90],
+        aria: "Cuánto verde hay cada mes, contra los nueve años anteriores",
+        series: [
+          { name: "entre lo peor y lo mejor", color: "var(--n1)", values: VERD_MAX, lower: VERD_MIN, type: "band", op: .32, skipTip: 1 },
+          { name: "Lo normal", color: "var(--n3)", values: VERD_MED, w: 2.2, dash: "6 4", dec: 0 },
+          { name: "Este año", color: "var(--n5)", values: VERD_ACT, w: 3, dec: 0 }
+        ]
+      });
+    }
+  };
+};
+
+DUE.riegos = () => ({
+  title: "Qué regó y por qué",
+  html: head("Estancia Yvoty", "Qué regó y por qué",
+    "<b>Decide si hay que mandar a alguien a revisar la línea, o si hay que cambiar cuándo riega.</b>") +
+    answer("crit", "Huerta Ñu Porâ está perdiendo agua", "En dos riegos seguidos salieron <b>470 litros de más</b> de los que tenían que salir. Los otros lotes andan bien.", "Hoy") +
+    `<div class="tiles">
+      ${tile("Riegos en 7 días", "14", "", "9 regaron · 5 decidieron no regar")}
+      ${tile("Agua esperada", nf(28400), "litros", "minutos por lo que tira cada gotero")}
+      ${tile("Agua que salió", nf(30130), "litros", "contada por el aparato de la línea")}
+      ${tile("Diferencia", "+6", "%", "La diferencia es el diagnóstico")}
+      ${tile("Costo de bombeo", gs(284000), "", "estimado de ejemplo · 7 días")}
+    </div>
+
+    <div class="panel">
+      <header><h2>Agua esperada contra agua que salió</h2><span class="hint">de más es pérdida · de menos es gotero tapado o filtro sucio</span></header>
+      <div class="body">
+        <div class="chart" id="c-delta"></div>
+        <div class="note rule" style="margin-top:10px">
+          Guardar los dos números no es de más: <b>la diferencia es el diagnóstico</b>. Si sale más agua de la esperada, hay una pérdida.
+          Si sale menos, hay goteros tapados o el filtro está sucio. Eso convierte una recorrida de rutina en una recorrida con motivo.
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <header><h2>Uno por uno</h2><span class="hint">incluye las veces que decidió <b>no</b> regar</span></header>
+      <div class="body flush scroller">
+        <table>
+          <thead><tr><th>Cuándo</th><th>Lote</th><th>Por qué</th><th>Qué hizo</th><th>Con qué regla</th><th class="num">Esperada</th><th class="num">Salió</th><th>Resultado</th></tr></thead>
+          <tbody>
+          ${RIEGOS.map(r => `<tr>
+            <td>${esc(r.f)}</td><td>${esc(r.p)}</td><td style="max-width:28ch">${esc(r.cond)}</td><td><b>${esc(r.dec)}</b></td>
+            <td>${r.pol === "—" ? '<span class="chip mute"><span class="g"></span>sin regla</span>' : esc(r.pol)}</td>
+            <td class="num">${r.est ? nf(r.est) + " L" : "—"}</td>
+            <td class="num">${r.med === null ? '<span class="muted">sin medidor</span>' : (r.med ? nf(r.med) + " L" : "—")}</td>
+            <td>${esc(r.res)}${r.flag ? `<span class="why" style="color:var(--${r.ok ? "ink-3" : "crit"})">${esc(r.flag)}</span>` : ""}</td>
+          </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <header><h2>Cuando el lote se queda sin noticias</h2><span class="hint">el riego no se para nunca</span></header>
+      <div class="body">
+        <div style="display:grid; grid-template-columns:9rem 1fr; gap:10px; align-items:center">
+          <span class="note" style="text-align:right">Costa Guasu</span>
+          <span style="display:block; height:20px; background:var(--panel-2); border:1px solid var(--line-2); border-radius:2px; position:relative">
+            <span style="position:absolute; left:64%; right:0; top:0; bottom:0; background:repeating-linear-gradient(135deg,var(--warn-wash) 0 7px,transparent 7px 14px); border-left:3px solid var(--warn)"></span>
+          </span>
+        </div>
+        <p class="note" style="margin-top:10px">Desde el 26/09 no le llega ninguna regla nueva. Pasados 5 días el aparato <b>se pone solo en modo cuidadoso</b>: riega lo mínimo para que la planta no sufra, lo anota, y lo manda cuando vuelve la señal. Nunca se queda esperando ni se para.</p>
+      </div>
+    </div>`,
+  after() {
+    rankChart($("#c-delta"), {
+      padL: 156, padR: 110, max: 50, metric: "Diferencia entre lo esperado y lo que salió",
+      rows: [
+        { lab: "Huerta Ñu Porâ", v: 41, txt: "41 % de más", color: "var(--crit)", extra: ["Esperada / salió", "640 L / 902 L"] },
+        { lab: "Tomatal Ka'aguy", v: 2, txt: "está bien", color: "var(--ok)", extra: ["Esperada / salió", "1.180 L / 1.205 L"] },
+        { lab: "Sandial Tuyutî", v: 3, txt: "está bien", color: "var(--ok)", extra: ["Esperada / salió", "1.490 L / 1.441 L"] },
+        { lab: "Melonar Tape Pytâ", v: .5, txt: "no regó", color: "var(--mute)", extra: ["Por qué", "Había llovido"] },
+        { lab: "Costa Guasu", v: .5, txt: "sin medidor", color: "var(--mute)", extra: ["Esperada", "820 L"] }
+      ]
+    });
+  }
+});
+
+DUE.cuando = () => ({
+  title: "Cuándo regar",
+  html: head("Tomatal Ka'aguy · regla 7", "Cuándo regar",
+    "<b>Decide si riega antes o después, más o menos.</b> Es lo único que se le manda al lote desde acá.") +
+    `<div class="answer do">
+      <span class="ic">${ico("mano", 34, "var(--brand)")}</span>
+      <div class="tx">
+        <div class="big">Acá no hay un botón para abrir la canilla, y no lo va a haber</div>
+        <div class="sub">El que decide está en el lote y sigue decidiendo aunque esté días sin señal. Desde acá se le manda <b>la regla</b>: con qué tierra arranca, a qué hora y cuántos minutos. Abajo se ve cuándo le llegó y desde cuándo la está usando.</div>
+      </div>
+    </div>
+
+    <div class="cols c2">
+      <div class="panel">
+        <header><h2>La regla que está usando</h2><span class="hint">regla 7 · desde el 22/09/2026</span></header>
+        <div class="body">
+          <dl class="kv">
+            <dt>Arranca cuando la tierra baja de</dt><dd><b>19 %</b> a 30 cm de hondo <span class="why">Con 16 % la planta ya sufre</span></dd>
+            <dt>Corta cuando llega a</dt><dd>28 %</dd>
+            <dt>Con qué aparatos mira</dt><dd>El promedio de los dos del lote</dd>
+            <dt>Solo entre</dt><dd>las 4 y las 8 de la mañana</dd>
+            <dt>Nunca más de</dt><dd>25 minutos seguidos</dd>
+            <dt>Ni más de</dt><dd>2.400 litros por día</dd>
+            <dt>Si llovió</dt><dd>No riega si cayeron 8 mm o más el día anterior</dd>
+            <dt>Si se queda sin noticias</dt><dd>A los 5 días se pone en modo cuidadoso</dd>
+          </dl>
+          <div class="btnrow" style="margin-top:16px">
+            <button class="btn primary">${ico("lapiz", 20)}Escribir una regla nueva</button>
+            <button class="btn">${ico("gota", 20)}Ponerlo en modo cuidadoso</button>
+          </div>
+          <div class="note" style="margin-top:8px">El modo cuidadoso también es una regla: baja el riego al mínimo hasta que se escriba otra.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <header><h2>Cuándo le llegó al lote</h2><span class="hint">tres momentos distintos, nunca uno</span></header>
+        <div class="body">
+          <dl class="kv">
+            <dt>Se escribió acá</dt><dd>22/09/2026 09:14 · Ramona Ayala</dd>
+            <dt>El aparato avisó que la recibió</dt><dd>22/09/2026 10:02 ${chip("ok")}</dd>
+            <dt>La empezó a usar</dt><dd>23/09/2026 04:00 · en la primera mañana después de recibirla</dd>
+          </dl>
+          <div style="margin-top:16px; border-top:1px solid var(--line); padding-top:12px">
+            <h3>Cuántas veces habría regado con cada número</h3>
+            <div class="note" style="margin:6px 0 10px">Con la tierra que de verdad se midió en los últimos 30 días.</div>
+            <div class="chart" id="c-sim"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <header><h2>Las reglas anteriores</h2><span class="hint">ninguna se borra ni se corrige: se cierra y se escribe otra</span></header>
+      <div class="body flush scroller">
+        <table><thead><tr><th>Regla</th><th>Desde</th><th>Quién</th><th>Qué cambió</th><th>Estado</th></tr></thead><tbody>
+        ${POL_VER.map(v => `<tr><td><b>${esc(v.v)}</b></td><td>${esc(v.desde)}</td><td>${esc(v.por)}</td><td>${esc(v.cambio)}</td>
+          <td>${v.est === "En uso" ? '<span class="chip ok"><span class="g"></span>En uso</span>' : `<span class="muted">${esc(v.est)}</span>`}</td></tr>`).join("")}
+        </tbody></table>
+      </div>
+    </div>`,
+  after() {
+    rankChart($("#c-sim"), {
+      padL: 168, padR: 150, metric: "Riegos en 30 días", max: 16,
+      rows: [
+        { lab: "Si arranca en 21 % (regla 6)", v: 14, txt: "14 riegos · 16.900 L", color: "var(--ink-3)" },
+        { lab: "Si arranca en 19 % (hoy)", v: 9, txt: "9 riegos · 11.400 L", color: "var(--brand)" },
+        { lab: "Si arranca en 17 %", v: 6, txt: "6 riegos · 7.600 L", color: "var(--ink-3)", extra: ["Cuidado", "2 días con la planta sufriendo"] }
+      ]
+    });
+  }
+});
+
+DUE.numeros = () => ({
+  title: "Los números con detalle",
+  html: head("Estancia Yvoty", "Los números con detalle",
+    "<b>Decide si el aparato está diciendo la verdad.</b> Es la pantalla del técnico, no la del capataz.") +
+    answer("ok", "El aparato SE01-0431 está midiendo bien", "Lo que manda sin tocar y lo que sale después del ajuste van juntos. Si un día se separan, el ajuste quedó mal y <b>se puede recalcular todo lo viejo</b>.", "") +
+    `<div class="panel">
+      <header><h2>Qué querés mirar</h2><span class="hint">4 lecturas por hora · nunca se promedian al guardarlas</span></header>
+      <div class="body">
+        <div class="btnrow">
+          <label class="note">Lote <select class="btn"><option>Tomatal Ka'aguy</option><option>Sandial Tuyutî</option><option>Patio de Asunción</option></select></label>
+          <label class="note">Aparato <select class="btn"><option>SE01-0431</option><option>SE01-0432</option></select></label>
+          <label class="note">Qué mide <select class="btn"><option>Humedad de la tierra a 30 cm</option><option>Calor de la tierra</option><option>Sales de la tierra</option></select></label>
+          <div class="seg" id="segcal"><button aria-pressed="false" data-m="crudo">Sin tocar</button><button aria-pressed="true" data-m="cal">Con el ajuste</button><button aria-pressed="false" data-m="ambos">Los dos</button></div>
+          <button class="btn">${ico("lista", 20)}Bajar la planilla</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <header><h2>SE01-0431 · humedad de la tierra a 30 cm</h2><span class="legend" id="leg-series"></span><span class="hint">datos de ejemplo</span></header>
+      <div class="body">
+        <div class="chart" id="c-series"></div>
+        <div class="cols c2" style="margin-top:14px">
+          <div class="note rule"><b>El hueco se dibuja como hueco.</b> Entre el 18/09 y el 20/09 no llegó nada. La línea se corta y la franja lo dice: rellenar con cero le enseña al ojo —y a una cuenta— que la tierra se seca de golpe.</div>
+          <div class="note rule"><b>Dos relojes.</b> El eje es la hora en que se midió, no la hora en que llegó. Cuando el dato tarda más de una hora en llegar, el globito lo avisa: ese atraso es la calidad de la señal.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <header><h2>El ajuste que está usando este aparato</h2><span class="hint">se muestra siempre, no está escondido</span></header>
+      <div class="body">
+        <dl class="kv">
+          <dt>Quién lo comprobó</dt><dd><b>Nosotros</b>, acá — se secó y se pesó tierra del lote en 6 puntos</dd>
+          <dt>Cuándo</dt><dd>12/08/2026</dd>
+          <dt>Desde cuándo rige</dt><dd>12/08/2026 · reemplazó a la tabla que traía de fábrica</dd>
+          <dt>Qué pasa con lo viejo</dt><dd>Se guarda lo que el aparato manda <b>sin tocar</b>, así que si el ajuste estuvo mal se recalcula todo</dd>
+        </dl>
+        <div class="note" style="margin-top:10px">Un ajuste sin decir de dónde salió no es un número: es una creencia. Por eso de dónde salió se guarda al lado del número.</div>
+      </div>
+    </div>`,
+  after() {
+    const crudo = HUM30.map(v => v === null ? null : +(v * 1.08 + 1.4).toFixed(1));
+    const build = mode => {
+      const ser = [];
+      if (mode !== "cal") ser.push({ name: "Sin tocar", color: "var(--ink-3)", values: crudo, w: 1.8, dash: "5 4", unit: " %", dec: 1 });
+      if (mode !== "crudo") ser.push({ name: "Con el ajuste", color: "var(--s1)", values: HUM30, w: 2.6, fill: mode === "cal" ? 1 : 0, unit: " %", dec: 1 });
+      lineChart($("#c-series"), {
+        xLen: 84, xLabels: FECHAS, xTicks: [0, 14, 28, 42, 56, 70, 83], h: 224, padR: 76, yMin: 8, yMax: 36, yTicks: [10, 15, 20, 25, 30, 35],
+        aria: "Humedad a 30 centímetros: lo que manda el aparato contra lo que sale después del ajuste",
+        vbands: [{ from: 43, to: 52, label: "no llegó nada · 18 al 20/09" }],
+        hlines: [{ v: 19, color: "var(--warn)", label: "riega acá" }],
+        series: ser
+      });
+      $("#leg-series").innerHTML = ser.map(s => `<span><i style="background:${s.color}"></i>${s.name}</span>`).join("");
+    };
+    build("cal");
+    $$("#segcal button").forEach(b => b.addEventListener("click", () => {
+      $$("#segcal button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      build(b.dataset.m);
+    }));
+  }
+});
+
+DUE.aparatos = () => ({
+  title: "Los aparatos",
+  html: head("Estancia Yvoty y patio de Asunción", "Los aparatos",
+    "<b>Decide a qué aparato hay que ir hoy</b> —pila, sonda o antena— y si algún dato viejo hay que recalcularlo.") +
+    answer("crit", "Un aparato se está quedando sin pila", "<b>SE01-0440</b>, en Potrero Costa Guasu, está al 9 % y no manda hace 3 días. Si se apaga, ese lote riega a ciegas. Llevá 2 pilas grandes de litio.", "Esta semana") +
+    `<div class="tiles">
+      ${tile("Mandando", "6", "de 8", "Tardan 38 segundos en llegar")}
+      ${tile("Pila baja", "1", "", "SE01-0440 · 9 %")}
+      ${tile("Sin mandar", "1", "", "SE01-0440 · hace 3 días")}
+      ${tile("Sin comprobar por nosotros", "3", "", "Andan con el ajuste que traían de fábrica")}
+    </div>
+
+    <div class="panel">
+      <header><h2>Cómo está cada uno</h2><span class="hint">de dónde salió cada ajuste está en la tabla, no escondido</span></header>
+      <div class="body flush scroller">
+        <table>
+          <thead><tr><th>Aparato</th><th>Dónde está</th><th>Pila</th><th>Último aviso</th><th>Últimas lecturas</th><th>Ajuste que usa</th><th>Cómo está</th></tr></thead>
+          <tbody>${DISPOSITIVOS.map(d => `<tr>
+            <td><b>${esc(d.id)}</b><span class="why">${esc(d.t)}</span></td>
+            <td>${esc(d.lug)}</td>
+            <td>${d.bat === null ? '<span class="muted">enchufado</span>' : `${d.bat} %${d.bat < 20 ? ' <span class="chip crit"><span class="g"></span>cambiar</span>' : ""}`}</td>
+            <td>${esc(d.ult)}</td>
+            <td>${sparkline(d.spark, d.est === "crit" ? "var(--crit)" : "var(--s1)")}</td>
+            <td style="max-width:28ch">${esc(d.cal)}</td>
+            <td>${chip(d.est)}</td>
+          </tr>`).join("")}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <header><h2>Los ajustes, uno por uno</h2><span class="hint">no se borra ninguno: es lo que permite recalcular lo viejo</span></header>
+      <div class="body flush scroller">
+        <table>
+          <thead><tr><th>Aparato</th><th>Qué mide</th><th>Quién lo comprobó</th><th>Desde</th><th>Estado</th></tr></thead>
+          <tbody>${CALIBS.map(c => `<tr>
+            <td><b>${esc(c.disp)}</b></td><td>${esc(c.mag)}</td>
+            <td><b>${esc(c.proc)}</b><span class="why">${esc(c.detalle)}</span></td>
+            <td>${esc(c.desde)}</td>
+            <td>${c.est.startsWith("En uso") ? `<span class="chip ${c.est.includes("sin comprobar") ? "warn" : "ok"}"><span class="g"></span>${esc(c.est)}</span>` : `<span class="muted">${esc(c.est)}</span>`}</td>
+          </tr>`).join("")}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cols c2">
+      <div class="panel">
+        <header><h2>La sonda de acidez del patio</h2><span class="hint">la más delicada de todas</span></header>
+        <div class="body">
+          <dl class="kv">
+            <dt>Cómo se mide hoy</dt><dd>${chip("warn")} a mano, con el aparatito</dd>
+            <dt>Líquidos de comprobación</dt><dd>Faltan comprar</dd>
+            <dt>Cuánto dura</dt><dd>Uno o dos años, y no se puede dejar secar</dd>
+          </dl>
+          <div class="note rule" style="margin-top:10px">Hasta que haya con qué comprobarla y alguien que lo haga seguido, la acidez se carga <b>a mano</b> y la pantalla lo dice. No se automatiza una decisión que todavía no se sabe tomar a mano.</div>
+        </div>
+      </div>
+      <div class="panel">
+        <header><h2>Repuestos</h2><span class="hint">precios de ejemplo, plaza de Asunción</span></header>
+        <div class="body flush scroller">
+          <table><thead><tr><th>Qué</th><th class="num">Cuánto</th><th>Para</th></tr></thead><tbody>
+            <tr><td>Par de pilas grandes de litio</td><td class="num">${gs(78000)}</td><td>SE01-0440</td></tr>
+            <tr><td>Medidor de agua de 1½ pulgada</td><td class="num">${gs(610000)}</td><td>Reemplaza al chico del banco</td></tr>
+            <tr><td>Líquidos para comprobar la acidez</td><td class="num">${gs(120000)}</td><td>Sonda del patio</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>`,
+  after() { }
+});
+
+DUE.verde = () => ({
+  title: "Cuánto pasto hay",
+  html: head("Foto del satélite · gratis, cada 5 días", "Cuánto pasto hay",
+    "<b>Decide a qué potrero mover la hacienda, cuál se está gastando, y dónde enterrar el próximo aparato.</b>") +
+    answer("ok", "Esta semana, metela en Potrero Yvyra'i", "Es el que tiene <b>más pasto</b> de los cinco. Costa Guasu es el que menos tiene y viene bajando año a año: conviene descansarlo.", "") +
+    `<div class="tiles">
+      ${tile("Última foto buena", "26/09", "", "Casi sin nubes")}
+      ${tile("Cuánto para atrás se puede ver", "9", "años", "Desde 2017")}
+      ${tile("Cada cuánto pasa", "5", "días", "Si hay nubes, puede ser cada 10")}
+      ${tile("Qué cuesta", "0", "", "Es gratis y no hay que poner nada en el lote")}
+    </div>
+
+    <div class="panel">
+      <header><h2>Hoy, de más a menos pasto</h2><span class="hint">la pregunta de todas las semanas</span></header>
+      <div class="body">
+        <div class="chart" id="c-rank"></div>
+        <div class="note rule" style="margin-top:10px">La foto dice <b>dónde y cuándo, nunca por qué</b>. Te manda a caminar al lugar correcto; lo que pasa ahí lo dice el aparato o el ojo.</div>
+      </div>
+    </div>
+
+    <div class="cols c2">
+      <div class="panel">
+        <header><h2>Potrero Yvyra'i, este año contra los 9 anteriores</h2><span class="hint">¿año malo o potrero malo?</span></header>
+        <div class="body">
+          <div class="chart" id="c-hist"></div>
+          <div class="legend" style="margin-top:8px"><span><i style="background:var(--n5)"></i>Este año</span><span><i style="background:var(--n3); height:3px"></i>Lo normal</span><span><i class="sq" style="background:var(--n1); opacity:.5"></i>Entre lo peor y lo mejor de 9 años</span></div>
+          <div class="note" style="margin-top:8px">Viene abajo de lo normal desde mayo, pero <b>adentro de lo que ya pasó otros años</b>: es un año seco, no un potrero perdido. Son decisiones opuestas.</div>
+        </div>
+      </div>
+      <div class="panel">
+        <header><h2>¿El lote es parejo o disparejo?</h2><span class="hint">es lo que decide cuántos aparatos lleva</span></header>
+        <div class="body">
+          <div class="chart" id="c-cv"></div>
+          <div class="note rule" style="margin-top:10px">Si el lote es parejo, <b>con un aparato alcanza</b>. Si es disparejo, hacen falta más — y la foto dice en qué parte ponerlos. Es la respuesta barata a “¿cuántos aparatos por hectárea?”.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <header><h2>Dónde la foto del satélite no sirve</h2><span class="hint">la pantalla lo dice en vez de mostrar un número que no sirve</span></header>
+      <div class="body flush scroller">
+        <table><thead><tr><th>Lote</th><th class="num">Tamaño</th><th>Qué se usa en su lugar</th></tr></thead><tbody>
+          <tr><td>Patio de Asunción</td><td class="num">38 m²</td><td>Ninguno. A ese tamaño la foto del satélite es un solo punto borroso: se mide con aparato y con foto de cerca.</td></tr>
+          <tr><td>Huerta Ñu Porâ</td><td class="num">0,9 ha</td><td>Sirve para ver si sube o baja, no para ver diferencias adentro del lote. Para eso, un vuelo de dron.</td></tr>
+        </tbody></table>
+      </div>
+    </div>`,
+  after() {
+    const col = v => v > 65 ? "var(--n5)" : v > 60 ? "var(--n4)" : v > 55 ? "var(--n3)" : v > 48 ? "var(--n2)" : "var(--n1)";
+    rankChart($("#c-rank"), {
+      padL: 158, padR: 168, metric: "Cuánto verde", max: 80,
+      rows: PARCELAS.slice().sort((a, b) => b.verdor - a.verdor).map(p => ({
+        lab: p.nom, v: p.verdor, txt: p.verdor + " de 100" + (p.id === "p1" ? " · recién plantado" : ""), color: col(p.verdor),
+        extra: ["De dónde sale", p.id === "p3" ? "vuelo de dron · 14/09" : "satélite · 26/09"]
+      }))
+    });
+    lineChart($("#c-hist"), {
+      xLen: 12, xLabels: MESES, xTicks: [0, 3, 6, 9, 11], h: 208, yMin: 30, yMax: 90, yTicks: [30, 50, 70, 90],
+      aria: "Cuánto verde hubo cada mes este año contra los nueve anteriores",
+      series: [
+        { name: "entre lo peor y lo mejor", color: "var(--n1)", values: VERD_MAX, lower: VERD_MIN, type: "band", op: .32, skipTip: 1 },
+        { name: "Lo normal", color: "var(--n3)", values: VERD_MED, w: 2.2, dash: "6 4", dec: 0 },
+        { name: "Este año", color: "var(--n5)", values: VERD_ACT, w: 3, dec: 0 }
+      ]
+    });
+    rankChart($("#c-cv"), {
+      padL: 156, padR: 140, metric: "Qué tan disparejo es", max: 34,
+      rows: [
+        { lab: "Potrero Costa Guasu", v: 29, txt: "muy disparejo", color: "var(--warn)", extra: ["Aparatos", "tiene 1 · le convienen 3"] },
+        { lab: "Potrero Yvyra'i", v: 18, txt: "algo disparejo", color: "var(--s1)", extra: ["Aparatos", "tiene 2 · está bien"] },
+        { lab: "Sandial Tuyutî", v: 11, txt: "parejo", color: "var(--ok)", extra: ["Aparatos", "tiene 2 · con 1 alcanza"] },
+        { lab: "Tomatal Ka'aguy", v: 8, txt: "parejo", color: "var(--ok)", extra: ["Aparatos", "tiene 2 · con 1 alcanza"] }
+      ]
+    });
+  }
+});
+
+DUE.hidro = () => ({
+  title: "El agua de la hidroponía",
+  html: head("Patio de Asunción · mesa 1 · lechuga", "El agua de la hidroponía",
+    "<b>Decide si hay que cambiar el agua, agregarle, corregir la acidez o poner media sombra.</b>") +
+    answer("crit", "El agua se calentó: 26,4 grados a las 3 de la tarde", "Pasando los 24 grados <b>la lechuga se va a semilla</b> y se termina la cosecha. El tanque está al sol. <b>Qué hacer:</b> correr el tanque a la sombra del árbol y poner media sombra sobre la mesa.", "Hoy") +
+    `<div class="cols c2">
+      <div class="panel"><div class="body">${gauge(SOL.temp, "Calor del agua", 1)}</div></div>
+      <div class="panel"><div class="body">${gauge(SOL.nivel, "Cuánta agua queda", 0)}</div></div>
+      <div class="panel"><div class="body">${gauge(SOL.ec, "Sales en el agua (EC)", 2)}</div></div>
+      <div class="panel"><div class="body">${gauge(SOL.ph, "Acidez (pH)", 1)}
+        <div class="btnrow" style="margin-top:12px"><button class="btn">${ico("lapiz", 20)}Cargar la medición de hoy</button></div></div></div>
+    </div>
+
+    <div class="cols c2">
+      <div class="panel">
+        <header><h2>Las sales y cuánta agua queda</h2><span class="hint">van juntos a propósito</span></header>
+        <div class="body">
+          <div class="chart" id="c-ec"></div>
+          <div class="chart" id="c-niv" style="margin-top:6px"></div>
+          <div class="note rule" style="margin-top:10px"><b>Las sales subieron porque bajó el agua, no porque falte abono.</b> Son cosas opuestas: una se arregla agregando agua, la otra agregando abono. Sin mirar las dos juntas, es fácil equivocarse.</div>
+        </div>
+      </div>
+      <div class="panel">
+        <header><h2>Calor del agua en el día</h2><span class="hint">la raya roja es donde se va a semilla</span></header>
+        <div class="body">
+          <div class="chart" id="c-temp"></div>
+          <div class="note" style="margin-top:10px">Las sales se muestran corregidas por el calor: sin corregir, la misma agua da un número distinto al mediodía que a la madrugada.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cols c2">
+      <div class="panel">
+        <header><h2>La receta que se está usando</h2><span class="hint">no se corrige: se cierra y se escribe otra</span></header>
+        <div class="body">
+          <dl class="kv">
+            <dt>Receta</dt><dd>r3 · desde el 21/09/2026</dd>
+            <dt>Sales, entre</dt><dd>1,2 y 1,8 mS/cm</dd>
+            <dt>Acidez, entre</dt><dd>5,5 y 6,5</dd>
+            <dt>Abono A</dt><dd>1,2 mL por litro</dd>
+            <dt>Abono B</dt><dd>1,2 mL por litro</dd>
+            <dt>Tanque</dt><dd>200 litros</dd>
+            <dt>Cuándo se cambió</dt><dd>21/09/2026 · hace 7 días</dd>
+            <dt>Próximo cambio</dt><dd>05/10/2026 · cada 14 días</dd>
+          </dl>
+          <div class="note" style="margin-top:10px">Sin saber qué receta estaba puesta, una acidez medida no se puede atribuir a nada y el dato no enseña nada.</div>
+        </div>
+      </div>
+      <div class="panel">
+        <header><h2>Qué se hizo en la mesa</h2></header>
+        <div class="body flush scroller">
+          <table><thead><tr><th>Cuándo</th><th>Qué</th><th>Detalle</th><th>Cantero</th></tr></thead><tbody>
+            <tr><td>Hoy 06:00</td><td>Recirculó</td><td>18 minutos · bomba y aireador</td><td>Todos</td></tr>
+            <tr><td>Ayer 19:20</td><td>Se agregó agua</td><td>14 litros · las sales bajaron de 1,78 a 1,69</td><td>Todos</td></tr>
+            <tr><td>Ayer 07:40</td><td>Se echó abono</td><td>40 mL de A y 40 de B · <b>lo hizo solo</b></td><td>B</td></tr>
+            <tr><td>26/09 08:05</td><td>Se echó abono</td><td>35 mL de A y 35 de B · <b>a mano</b></td><td>A, C, D</td></tr>
+          </tbody></table>
+          <div class="note" style="padding:12px">Lo que echa abono solo está en <b>un solo cantero</b>. Si la bombita se traba, se pierden 50 plantas y se sabe que fue eso.</div>
+        </div>
+      </div>
+    </div>`,
+  after() {
+    lineChart($("#c-ec"), {
+      xLen: 12, xLabels: SOL_H, xTicks: [0, 3, 6, 9, 11], h: 124, yMin: 1.3, yMax: 1.9, yTicks: [1.4, 1.6, 1.8], yFmt: v => nf(v, 1),
+      aria: "Sales del agua en las últimas 24 horas",
+      bands: [{ from: 1.2, to: 1.8, color: "color-mix(in srgb, var(--ok) 14%, transparent)", label: "entre 1,2 y 1,8" }],
+      series: [{ name: "Sales", color: "var(--s1)", values: SOL_EC, w: 2.6, fill: 1, unit: " mS/cm", dec: 2 }]
+    });
+    lineChart($("#c-niv"), {
+      xLen: 12, xLabels: SOL_H, xTicks: [0, 3, 6, 9, 11], h: 114, yMin: 30, yMax: 70, yTicks: [40, 55, 70],
+      aria: "Cuánta agua queda en el tanque en las últimas 24 horas",
+      bands: [{ from: 45, to: 65, color: "color-mix(in srgb, var(--ok) 14%, transparent)", label: "entre 45 y 65 cm" }],
+      series: [{ name: "Agua que queda", color: "var(--s3)", values: SOL_NIV, w: 2.6, fill: 1, unit: " cm", dec: 0 }]
+    });
+    lineChart($("#c-temp"), {
+      xLen: 12, xLabels: SOL_H, xTicks: [0, 3, 6, 9, 11], h: 272, padR: 96, yMin: 16, yMax: 30, yTicks: [18, 22, 26, 30],
+      aria: "Calor del agua en las últimas 24 horas",
+      bands: [{ from: 18, to: 24, color: "color-mix(in srgb, var(--ok) 14%, transparent)", label: "entre 18 y 24 grados" }],
+      hlines: [{ v: 24, color: "var(--crit)", label: "se va a semilla" }],
+      series: [{ name: "Calor del agua", color: "var(--s2)", values: SOL_T, w: 2.8, unit: " °C", dec: 1 }]
+    });
+  }
+});
+
+DUE.pruebas = () => ({
+  title: "Las pruebas",
+  html: head("Patio de Asunción · ciclo 3 · lechuga", "Las pruebas",
+    "<b>Decide qué se cambia en el ciclo que viene, sabiendo qué fue lo que lo causó.</b>") +
+    answer("ok", "La media sombra ganó: 50 % más de lechuga", "El cantero con media sombra dio <b>221 gramos por planta</b> contra 147 del que quedó al sol, y se tiraron 2 en vez de 12. La sombra vale más que el abono.", "") +
+    `<div class="panel" style="background:var(--brand-wash); border-color:var(--brand)">
+      <div class="body">
+        <h3>Qué se buscaba en este ciclo, escrito antes de plantar</h3>
+        <p class="note" style="margin-top:5px"><b>Que cada planta pese más.</b> Rapidez y calidad se miran como límite: ningún cantero puede pasar de 48 días ni tirar más de 5 plantas de cada 50.</p>
+        <div class="note muted">Si se buscan tres cosas a la vez, no se llega a ninguna. Se elige una y las otras quedan como límite.</div>
+      </div>
+    </div>
+
+    <div class="cols c2">
+      <div class="panel">
+        <header><h2>Cuánto pesó cada planta</h2><span class="hint">50 plantas por cantero</span></header>
+        <div class="body">
+          <div class="chart" id="c-bloques"></div>
+          <div class="legend" style="margin-top:10px">${BLOQUES.map(b => `<span><i class="sq" style="background:${b.col}"></i>Cantero ${b.id} — ${esc(b.var)}</span>`).join("")}</div>
+        </div>
+      </div>
+      <div class="panel">
+        <header><h2>La tabla completa</h2><span class="hint">nadie tiene que leer un color</span></header>
+        <div class="body flush scroller">
+          <table><thead><tr><th>Cantero</th><th>Qué se cambió</th><th class="num">Peso</th><th class="num">Contra el testigo</th><th class="num">Se tiraron</th><th class="num">Días</th></tr></thead><tbody>
+          ${BLOQUES.map(b => {
+      const ctrl = BLOQUES[0].peso, d = ((b.peso - ctrl) / ctrl * 100);
+      return `<tr><td><b>Cantero ${b.id}</b>${b.ctrl ? '<span class="why">es el testigo</span>' : ""}</td><td>${esc(b.var)}</td>
+              <td class="num">${nf(b.peso)} g</td>
+              <td class="num" style="color:${b.ctrl ? "var(--ink-3)" : d > 0 ? "var(--ok)" : "var(--crit)"}">${b.ctrl ? "—" : (d > 0 ? "+" : "") + nf(d, 1) + " %"}</td>
+              <td class="num">${b.desc} de ${b.n}</td><td class="num">${b.dias}</td></tr>`;
+    }).join("")}
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="cols c2">
+      ${BLOQUES.map(b => `
+        <div class="bloque">
+          <div class="cap">
+            <span class="id"><i style="background:${b.col}"></i>Cantero ${b.id}</span>
+            ${b.ctrl ? '<span class="chip mute"><span class="g"></span>Testigo</span>' : `<span class="chip ${b.desc > 5 ? "crit" : "ok"}"><span class="g"></span>${b.desc > 5 ? "Se tiró mucho" : "Dentro del límite"}</span>`}
+          </div>
+          <div class="bd">
+            <dl class="kv">
+              <dt>Qué se cambió</dt><dd><b>${esc(b.var)}</b></dd>
+              <dt>Peso por planta</dt><dd>${nf(b.peso)} g</dd>
+              <dt>Se cosecharon</dt><dd>${b.n - b.desc} de ${b.n}</dd>
+              <dt>Se tiraron</dt><dd>${b.desc} · ${esc(b.sint)}</dd>
+              <dt>Días hasta cosechar</dt><dd>${b.dias}</dd>
+            </dl>
+          </div>
+        </div>`).join("")}
+    </div>
+
+    <div class="panel" style="border:2px solid var(--warn)">
+      <div class="body" style="display:flex; gap:12px; align-items:flex-start">
+        <span class="chip warn" style="flex:none"><span class="g"></span>Ojo</span>
+        <div>
+          <h3>Entre el B y el D cambiaron dos cosas</h3>
+          <div class="note" style="max-width:74ch; margin-top:4px">
+            El B tiene más abono <b>y</b> sombra; el D tiene menos abono <b>y</b> sol. Comparar esos dos no prueba nada:
+            los 59 gramos de diferencia pueden ser el abono o pueden ser el sol. Las comparaciones limpias de este ciclo son
+            <b>A contra B</b> (cambia solo el abono) y <b>C contra D</b> (cambia solo la sombra).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <header><h2>Anotar la cosecha</h2><span class="hint">seis toques, en el momento de cosechar</span></header>
+      <div class="body">
+        <p class="note"><b>Todo el mundo anota lo que miden los aparatos y nadie anota cómo salió.</b> Sin eso, los números no enseñan nada.
+        Y si anotar cuesta media hora, en dos semanas nadie anota: por eso se carga desde el teléfono, parado al lado de la mesa, eligiendo en vez de escribiendo.</p>
+        <div class="btnrow"><button class="btn primary">${ico("balanza", 20)}Anotar lo que se cosechó</button></div>
+      </div>
+    </div>`,
+  after() {
+    rankChart($("#c-bloques"), {
+      padL: 208, padR: 74, metric: "Peso por planta", max: 240,
+      rows: BLOQUES.map(b => ({ lab: "Cantero " + b.id + " · " + b.var, v: b.peso, txt: nf(b.peso) + " g", color: b.col, extra: ["Se tiraron", b.desc + " de " + b.n] }))
+    });
+  }
+});
+
+DUE.avisos = () => ({
+  title: "Avisos",
+  html: head("Estancia Yvoty", "Avisos",
+    "<b>Decide qué se atiende primero.</b> Un aviso sin decir qué hacer no es un aviso: son malas noticias más temprano.") +
+    answer("crit", "Dos cosas urgentes", "Una pérdida de agua en Huerta Ñu Porâ y una pila por agotarse en Costa Guasu. Las dos son un viaje al lote.", "Hoy") +
+    `<div class="btnrow" style="margin-bottom:14px">
+      <div class="seg"><button aria-pressed="true">Todos (5)</button><button aria-pressed="false">Urgentes (2)</button><button aria-pressed="false">Para mirar (2)</button><button aria-pressed="false">Para saber (1)</button></div>
+      <span class="note muted">Ordenados por lo que cuesta no atenderlos, no por fecha.</span>
+    </div>
+    ${ALERTAS.map(a => `
+      <div class="panel" style="border-left:5px solid ${estColor(a.n)}">
+        <div class="body">
+          <div style="display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap">
+            ${chip(a.n)}
+            <div style="flex:1; min-width:250px">
+              <h3>${esc(a.t)}</h3>
+              <div class="note muted" style="margin-top:2px">${esc(a.p)} · ${esc(a.desde)}</div>
+              <div class="note" style="margin-top:7px"><b>Qué se vio:</b> ${esc(a.dato)}</div>
+              <div class="note" style="margin-top:4px"><b>Qué hacer:</b> ${esc(a.que)}</div>
+            </div>
+            <div class="btnrow" style="align-items:flex-start">
+              <button class="btn">Ya está resuelto</button>
+              <button class="btn">Callarlo, y por qué</button>
+            </div>
+          </div>
+        </div>
+      </div>`).join("")}
+    <div class="panel">
+      <header><h2>Por qué “sin noticias” es gris y no rojo</h2></header>
+      <div class="body">
+        <p class="note">El aparato del lote riega días sin señal: eso es el sistema andando bien, no una falla. El rojo se guarda
+        para lo que obliga a subirse a la camioneta: pila agotada, tierra tan seca que la planta sufre, agua que se está perdiendo.
+        <b>Si todo es rojo, nada es rojo</b>, y en dos semanas nadie mira los avisos.</p>
+        <p class="note">Callar un aviso pide <b>decir por qué y hasta cuándo</b>, y el motivo queda anotado.</p>
+      </div>
+    </div>`,
+  after() { }
+});
+
+DUE.gente = () => ({
+  title: "Quién entra y qué puede hacer",
+  html: head("Estancia Yvoty", "Quién entra y qué puede hacer",
+    "<b>Decide a quién se le da la llave de cuándo riega</b>, que es lo único que mueve agua de verdad.") +
+    answer("ok", "El capataz ve tres pantallas, el dueño ve doce", "No es una app recortada: es <b>la misma app</b> mostrando lo que cada uno necesita. Mostrarle doce pantallas a alguien que necesita tres es hacerle perder el lote adentro del menú.", "") +
+    `<div class="panel">
+      <header><h2>Quiénes entran</h2><span class="hint">4 personas</span></header>
+      <div class="body flush scroller">
+        <table><thead><tr><th>Quién</th><th>Qué es</th><th>Qué alcanza</th><th class="num">Cuántas pantallas ve</th><th>Última vez</th><th></th></tr></thead><tbody>
+        ${USUARIOS.map(u => `<tr><td><b>${esc(u.n)}</b><span class="why">${esc(u.m)}</span></td><td>${esc(u.rol)}</td><td>${esc(u.amb)}</td>
+          <td class="num"><b>${u.pant}</b></td><td>${esc(u.ult)}</td><td><button class="btn">Cambiar</button></td></tr>`).join("")}
+        </tbody></table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <header><h2>Qué puede hacer cada uno</h2><span class="hint">escrito, no deducido de un nombre</span></header>
+      <div class="body flush scroller">
+        <table class="matrix"><thead><tr><th>Qué</th><th>Dueño</th><th>Técnica</th><th>Capataz</th><th>Solo mirar</th></tr></thead><tbody>
+        ${PERMISOS.map(r => `<tr><td>${esc(r[0])}</td>${r.slice(1).map(v => v ? '<td class="y">Sí</td>' : '<td class="n">No</td>').join("")}</tr>`).join("")}
+        </tbody></table>
+      </div>
+    </div>
+
+    <div class="panel" style="border:2px solid var(--brand)">
+      <div class="body">
+        <h3>Sacarle un permiso a alguien no es lo que esconde los datos de otro cliente</h3>
+        <p class="note" style="margin-top:5px">
+          Los datos de un cliente no se le muestran a otro, y eso <b>no lo decide esta pantalla</b>: lo decide la base de datos.
+          Si alguien pregunta por datos que no son suyos, no le llega nada — ni una fila equivocada, ninguna.
+          Acá se decide qué puede <b>hacer</b> cada uno; qué puede <b>ver</b> ya está resuelto más abajo.
+        </p>
+        <p class="note">Por eso tampoco existe la opción “ver todos los clientes juntos”: esa pregunta no se puede hacer.</p>
+      </div>
+    </div>`,
+  after() { }
+});
+
+DUE.dibujar = () => ({
+  title: "Dibujar un lote",
+  html: head("Estancia Yvoty", "Dibujar un lote",
+    "<b>Define de dónde cuelga todo lo demás.</b> Si el dibujo del lote cambia, se vuelve a calcular solo qué aparatos le tocan y qué fotos del satélite le corresponden.") +
+    answer("warn", "Con el dibujo nuevo, un aparato queda afuera", "<b>SE01-0432</b> queda fuera del límite que estás por guardar. Sus lecturas dejan de contar para este lote. Mirá el mapa antes de guardar.", "Antes de guardar") +
+    `<div class="cols map">
+      <div class="panel">
+        <header><h2>El dibujo</h2><span class="hint">se guarda tal como vino del GPS</span></header>
+        <div class="body">
+          <div class="btnrow" style="margin-bottom:12px">
+            <button class="btn primary">${ico("lote", 20)}Traer un archivo del GPS</button>
+            <button class="btn">${ico("lapiz", 20)}Dibujar sobre el mapa</button>
+            <button class="btn">${ico("aparato", 20)}Cargar los mojones a mano</button>
+          </div>
+          <div class="mapfig">${altaSVG()}</div>
+          <div class="legend" style="margin-top:10px">
+            <span><i class="sq" style="background:transparent; border:2px dashed var(--ink-3)"></i>Límite de antes</span>
+            <span><i class="sq" style="background:color-mix(in srgb,var(--brand) 18%,transparent); border:2px solid var(--brand)"></i>Límite nuevo</span>
+            <span>${ico("tilde", 16, "var(--ok)")}Queda adentro</span>
+            <span>${ico("alerta", 16, "var(--crit)")}Queda afuera</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <header><h2>Datos</h2></header>
+          <div class="body">
+            <dl class="kv">
+              <dt>Nombre</dt><dd>Tomatal Ka'aguy</dd>
+              <dt>Campo</dt><dd>Estancia Yvoty</dd>
+              <dt>Sembrado</dt><dd>Tomate</dd>
+              <dt>Tamaño</dt><dd><b>1,84 ha</b></dd>
+              <dt>Mojones</dt><dd>4 · el dibujo cierra bien</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="panel" style="border:2px solid var(--warn)">
+          <header><h2>Qué cambia si lo guardás</h2><span class="hint">se muestra antes, no después</span></header>
+          <div class="body">
+            <dl class="kv">
+              <dt>Aparatos</dt><dd>4 quedan adentro · <b style="color:var(--crit)">1 queda afuera</b> (SE01-0432)</dd>
+              <dt>Lecturas</dt><dd>12.480 dejan de contar para este lote</dd>
+              <dt>Fotos del satélite</dt><dd>Se vuelven a recortar desde 2017 · 214 fechas</dd>
+              <dt>Riegos</dt><dd>186 se reasignan</dd>
+            </dl>
+            <div class="note rule" style="margin-top:10px">Nada de esto se asigna a mano. Si un aparato aparece en el lote equivocado, lo que se corrige es <b>el dibujo del lote</b>, y el resto se acomoda solo.</div>
+            <div class="btnrow" style="margin-top:14px"><button class="btn primary">${ico("tilde", 20)}Guardar el dibujo nuevo</button><button class="btn">Dejarlo como estaba</button></div>
+          </div>
+        </div>
+        <div class="panel">
+          <header><h2>Los dibujos anteriores</h2></header>
+          <div class="body flush scroller">
+            <table><thead><tr><th>Cuál</th><th>Desde</th><th class="num">Tamaño</th></tr></thead><tbody>
+              <tr><td><b>El de ahora</b></td><td>19/08/2026</td><td class="num">1,80 ha</td></tr>
+              <tr><td>El primero</td><td>04/08/2026</td><td class="num">1,72 ha</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>`,
+  after() { }
+});
+function altaSVG() {
+  return `<svg viewBox="0 0 560 360" role="img" aria-label="Dibujo nuevo del lote con sus aparatos">
+    <rect width="560" height="360" fill="var(--panel)"/>
+    <g opacity=".45">
+      <path d="M0 90 C120 76, 240 104, 360 88 S540 62, 560 76" fill="none" stroke="var(--line)"/>
+      <path d="M0 200 C130 186, 250 214, 370 198 S540 172, 560 186" fill="none" stroke="var(--line)"/>
+      <path d="M0 310 C130 296, 250 324, 370 308 S540 282, 560 296" fill="none" stroke="var(--line)"/>
+    </g>
+    <polygon points="90,70 430,54 452,272 112,296" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="8 5"/>
+    <polygon points="90,70 392,58 414,274 112,296" fill="color-mix(in srgb, var(--brand) 16%, transparent)" stroke="var(--brand)" stroke-width="2.8" stroke-linejoin="round"/>
+    ${[[90, 70], [392, 58], [414, 274], [112, 296]].map(p => `<rect x="${p[0] - 5}" y="${p[1] - 5}" width="10" height="10" fill="var(--panel)" stroke="var(--brand)" stroke-width="2.4"/>`).join("")}
+    <circle cx="180" cy="150" r="6" fill="var(--ok)"/><text x="193" y="155" font-size="13" fill="var(--ink-2)">SE01-0431</text>
+    <circle cx="250" cy="220" r="6" fill="var(--ok)"/><text x="263" y="225" font-size="13" fill="var(--ink-2)">CTRL-0112</text>
+    <circle cx="330" cy="120" r="6" fill="var(--ok)"/><text x="343" y="125" font-size="13" fill="var(--ink-2)">YFQ-0208</text>
+    <circle cx="150" cy="250" r="6" fill="var(--ok)"/><text x="163" y="255" font-size="13" fill="var(--ink-2)">HUM-0090</text>
+    <circle cx="428" cy="120" r="6" fill="var(--crit)"/><text x="428" y="102" font-size="13" fill="var(--crit)" text-anchor="middle" font-weight="700">SE01-0432 queda afuera</text>
+  </svg>`;
+}
+
+/* ============================ navegación ============================ */
+let ROLE = "capataz";
+const NAV_CAP = [["hoy", "Hoy", "lista"], ["lote", "El lote", "lote"], ["anotar", "Anotar", "lapiz"]];
+const NAV_DUE = [
+  ["El campo", [["lotes", "Los lotes", "lote"], ["lote", "Un lote por dentro", "planta"], ["riegos", "Qué regó y por qué", "gota"], ["cuando", "Cuándo regar", "reglas"], ["verde", "Cuánto pasto hay", "pasto"]]],
+  ["Detalle", [["numeros", "Los números con detalle", "grafico"], ["aparatos", "Los aparatos", "aparato"], ["dibujar", "Dibujar un lote", "lote"]]],
+  ["La huerta de casa", [["hidro", "El agua de la hidroponía", "tanque"], ["pruebas", "Las pruebas", "bicho"]]],
+  ["Todos los días", [["avisos", "Avisos", "alerta"], ["gente", "Quién entra y qué puede hacer", "gente"]]]
+];
+
+function buildNav() {
+  $("#nav").innerHTML = NAV_DUE.map(([g, items]) => `
+    <div class="navgroup">${esc(g)}</div>
+    ${items.map(([k, lab, i]) => `<button class="navlink" data-k="${k}">${ico(i, 20)}<span>${esc(lab)}</span>${k === "avisos" ? '<span class="badge">2</span>' : ""}</button>`).join("")}`).join("");
+  $$("#nav .navlink").forEach(b => b.addEventListener("click", () => { go(b.dataset.k); closeDrawer(); }));
+  buildTabs();
+}
+function buildTabs() {
+  const items = ROLE === "capataz" ? NAV_CAP : [["lotes", "Lotes", "lote"], ["riegos", "Riego", "gota"], ["hidro", "Huerta", "tanque"], ["avisos", "Avisos", "alerta"]];
+  $("#tabbar").innerHTML = items.map(([k, l, i]) => `<button data-k="${k}"><b></b>${ico(i, 22)}${esc(l)}</button>`).join("");
+  $$("#tabbar button").forEach(b => b.addEventListener("click", () => go(b.dataset.k)));
+}
+/* La direccion lleva el rol adelante -- #/capataz/hoy, #/duenio/lotes -- para poder
+   mandarle a alguien la vista exacta que estamos discutiendo. En la app de verdad el rol
+   sale del permiso de la persona, no de la direccion. */
+function go(k, arg) { location.hash = "#/" + ROLE + "/" + k + (arg ? "/" + arg : ""); }
+
+function render() {
+  const parts = location.hash.replace(/^#\//, "").split("/").filter(Boolean);
+  if (parts[0] === "capataz" || parts[0] === "duenio") {
+    if (parts[0] !== ROLE) applyRole(parts[0]);
+    parts.shift();
+  }
+  let k = parts[0] || (ROLE === "capataz" ? "hoy" : "lotes");
+  const arg = parts[1];
+  const set = ROLE === "capataz" ? CAP : DUE;
+  if (!set[k]) k = ROLE === "capataz" ? "hoy" : "lotes";
+  const scr = set[k](arg);
+  const view = $("#view");
+  view.innerHTML = scr.html;
+  $("#drawerlabel").textContent = scr.title;
+  document.title = scr.title + " · agro-platform (mockup)";
+  $$("#nav .navlink").forEach(b => b.setAttribute("aria-current", b.dataset.k === k ? "page" : "false"));
+  $$("#tabbar button").forEach(b => b.setAttribute("aria-current", b.dataset.k === k ? "page" : "false"));
+  window.scrollTo(0, 0);
+  if (scr.after) scr.after(view);
+}
+
+function applyRole(r) {
+  ROLE = r;
+  document.documentElement.setAttribute("data-role", r);
+  $("#r-cap").setAttribute("aria-pressed", String(r === "capataz"));
+  $("#r-due").setAttribute("aria-pressed", String(r !== "capataz"));
+  $("#big").style.display = r === "capataz" ? "" : "none";
+  buildTabs();
+}
+function setRole(r) {
+  applyRole(r);
+  location.hash = "#/" + r + "/" + (r === "capataz" ? "hoy" : "lotes");
+  render();
+}
+function closeDrawer() { $("#rail").classList.remove("open"); $("#scrim").classList.remove("on"); $("#drawerbtn").setAttribute("aria-expanded", "false"); }
+
+$("#r-cap").addEventListener("click", () => setRole("capataz"));
+$("#r-due").addEventListener("click", () => setRole("duenio"));
+$("#big").addEventListener("click", () => {
+  const on = document.documentElement.getAttribute("data-big") === "1";
+  document.documentElement.setAttribute("data-big", on ? "0" : "1");
+  $("#big").textContent = on ? "Letra más grande" : "Letra normal";
+});
+$("#drawerbtn").addEventListener("click", () => {
+  const open = $("#rail").classList.toggle("open");
+  $("#scrim").classList.toggle("on", open);
+  $("#drawerbtn").setAttribute("aria-expanded", String(open));
+});
+$("#scrim").addEventListener("click", closeDrawer);
+$("#theme").addEventListener("click", () => {
+  const d = document.documentElement.getAttribute("data-theme") === "dark";
+  document.documentElement.setAttribute("data-theme", d ? "light" : "dark");
+  $("#theme").textContent = d ? "Tema oscuro" : "Tema claro";
+  render();
+});
+if (matchMedia("(prefers-color-scheme: dark)").matches) {
+  document.documentElement.setAttribute("data-theme", "dark");
+  $("#theme").textContent = "Tema claro";
+}
+addEventListener("hashchange", render);
+addEventListener("scroll", tipHide, { passive: true });
+buildNav();
+render();
 </script>
 </body>
 </html>

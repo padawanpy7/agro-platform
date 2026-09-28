@@ -1,0 +1,32 @@
+{
+  "https://www.datos.gov.py/dataset/resultados-finales-del-censo-nacional-de-poblacion-y-viviendas-2022/resource/02326950-a2f2": {
+    "sha256": "9248461b2cda8b2d9f2e68c3a977475d162dfa9e3375d698e281ac81516bee81",
+    "archivo": "2026-09-28-www.datos.gov.py-dataset-resultados-finales-del-censo-nacional-de-poblacion-y-viviendas.md",
+    "fecha": "2026-09-28T18:52:58.219Z"
+  },
+  "https://www.contrataciones.gov.py/datos/api/v3/doc/": {
+    "sha256": "d9c027a20976ec78cec91016c6a017af0e311ba0cfe8e92a136b6fe85ab3ff87",
+    "archivo": "2026-09-28-www.contrataciones.gov.py-datos-api-v3-doc.md",
+    "fecha": "2026-09-28T18:52:59.528Z"
+  },
+  "https://www.mag.gov.py/": {
+    "sha256": "f9fdac58aeb4c5e1b081f54260fe817dfe35e719307ad4e1f16fe3ad363e442d",
+    "archivo": "2026-09-28-www.mag.gov.py-www-mag-gov-py.md",
+    "fecha": "2026-09-28T18:53:02.208Z"
+  },
+  "https://municipalidadlacolmena.gov.py/la-colmena/": {
+    "sha256": "abd154b4bc6b4a0d335de7c1c09af50da9d0e3c2e64f919ca7b890e6a2b88126",
+    "archivo": "2026-09-28-municipalidadlacolmena.gov.py-la-colmena.md",
+    "fecha": "2026-09-28T18:53:03.388Z"
+  },
+  "https://www.incoop.gov.py/": {
+    "sha256": "74d84124e313d9573c9b76b9395e3d08328048b4afb0c5dc38f2c5fe684df0a9",
+    "archivo": "2026-09-28-www.incoop.gov.py-www-incoop-gov-py.md",
+    "fecha": "2026-09-28T18:53:05.732Z"
+  },
+  "https://www.dinac.gov.py/": {
+    "sha256": "85b1c7fb12a67525c93628457e670303fc7491c33ab2592e558b51c4d5e5c17f",
+    "archivo": "2026-09-28-www.dinac.gov.py-www-dinac-gov-py.md",
+    "fecha": "2026-09-28T18:53:08.509Z"
+  }
+}

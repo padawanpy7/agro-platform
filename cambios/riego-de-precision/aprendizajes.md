@@ -1,5 +1,35 @@
 # Aprendizajes de riego-de-precision
 
+## Diseño de front — quinta pasada: el mapa se comporta como mapa (28/09/2026)
+
+Pedido del dueño: *"le falta zoom y mejor manejo, tiene que ser parecido a Maps"*. Y tenía razón:
+un dibujo fijo con scroll horizontal no es un mapa, es una lámina.
+
+Lo que se hizo, sin librerías y **sin mapa base de terceros** —esto no tiene conexión, y traer
+Leaflet metería una dependencia externa y una licencia—:
+
+- **Ocupa el alto que le queda a la ventana**, con `dvh` y no `vh` por la barra del navegador del
+  teléfono. Medido: en *El campo entero* el mapa entra entero arriba de la barra de abajo, en
+  teléfono y en escritorio.
+- **Rueda, pellizco, doble toque, arrastre**, y botones `+ Acercar` / `− Alejar` / `Ver todo`.
+  **`Ver todo` es el que más se usa y el que más se olvida**, y por eso está siempre visible.
+- **La escala cambia con el zoom** —500 m, 200, 100, 50—. Una escala fija miente.
+- **Lo que no se deforma al acercar**: chapitas, códigos, aparatos y grosor de línea se dibujan
+  siempre al mismo tamaño en pantalla. Los trazos con `vector-effect="non-scaling-stroke"`; las
+  marcas, fuera del grupo que escala y recolocadas a mano. **Eso es lo que hace que se sienta un
+  mapa y no una foto agrandada** — y es barato: una matriz y dos escuchas de puntero.
+- **Detalle por escala**: lejos sólo `P1`…`P6`; a media distancia el nombre del potrero y el código
+  del aparato; de cerca, qué mide y su última lectura. No mostrar todo siempre es lo que evita el
+  amontonamiento.
+- **La ficha de lo elegido flota adentro del mapa**, no debajo: con el mapa a pantalla completa,
+  debajo queda fuera de la vista y el toque no parecía hacer nada.
+- **El panel de capas es un cajón en teléfono**, abierto desde un botón sobre el mapa, para no
+  comerle alto justo donde el alto es todo.
+
+Y una regla de oficio que salió de esto: **el alto disponible no se adivina, se mide.** Ajusté la
+resta de `100dvh` contra una medición real del `getBoundingClientRect` del mapa a 390 px y a 1360,
+no a ojo.
+
 ## Diseño de front — cuarta pasada: el mapa (28/09/2026)
 
 **La leyenda salió del dibujo y se volvió un panel de capas.** Lo encontró el dueño mirando, no

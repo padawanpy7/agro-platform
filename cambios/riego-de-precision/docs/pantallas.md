@@ -204,7 +204,39 @@ La pantalla **El campo entero** lo dice con esas palabras, al lado del reparto d
 una nota al pie: es un recuadro de advertencia, porque es el error que un tablero mal hecho induce
 solo.
 
-### 3.2 La leyenda está afuera del dibujo, y es un panel de capas
+### 3.2 Se maneja como un mapa, no como un dibujo
+
+El mapa **ocupa el alto que le queda a la ventana** —con `dvh`, no `vh`, por la barra del navegador
+del teléfono— así que al entrar a *El campo entero* se ve entero **sin deslizar nada**. Y se maneja
+como cualquier mapa:
+
+| | |
+|---|---|
+| **Zoom** | Rueda del mouse, pellizco con dos dedos, doble toque, y **botones `+ Acercar` / `− Alejar`** — porque no todo el mundo pellizca |
+| **Mover** | Arrastrar con el dedo o con el mouse |
+| **`Ver todo`** | Vuelve al encuadre completo del campo. **Es el que más se usa y el que más se olvida**, y por eso está siempre a la vista |
+| **La escala** | **Cambia con el zoom**: pasa de 500 m a 200, a 100, a 50. Una escala fija mentiría |
+| **El norte** | Fijo. El mapa no rota |
+
+**Lo que no se deforma al acercar.** Los polígonos crecen; **las chapitas `P1`, los códigos `S4`, el
+grosor de las líneas y los aparatos NO**. Se dibujan siempre al mismo tamaño en pantalla — los
+trazos con `vector-effect="non-scaling-stroke"` y las marcas recolocadas fuera del grupo que
+escala. Es lo que hace que se sienta un mapa y no una foto agrandada.
+
+**Al acercar aparece más detalle, y al alejar menos.** Que no aparezca todo siempre es lo que evita
+el amontonamiento:
+
+| escala | qué se ve |
+|---|---|
+| **lejos** | Sólo las chapitas `P1`…`P6`. Los aparatos, como puntos sin código |
+| **medio** | Además, el **nombre del potrero** y su tamaño, y el **código de cada aparato** (`S4`) |
+| **cerca** | Además, **qué mide cada aparato y su última lectura** (*humedad · 18,2 %*) |
+
+**Sin librerías y sin mapa base de terceros.** Es SVG propio: una matriz de transformación y dos
+escuchas de puntero. Traer Leaflet o MapLibre metería una dependencia externa y una licencia en algo
+que **no tiene conexión**.
+
+### 3.3 La leyenda está afuera del dibujo, y es un panel de capas
 
 **Adentro del dibujo escribir el nombre completo no entra: se solapa todo.** Por eso:
 
@@ -214,8 +246,10 @@ solo.
   tocar el polígono o su renglón en el panel muestra una franja debajo del mapa con el código, el
   nombre completo, qué es y qué hay que hacer, más un botón para abrirlo. **El primer toque muestra;
   el segundo abre** — nada se ejecuta sin que se vea antes qué es (principio 1.8).
-- **El panel va al costado cuando el mapa tiene lugar y abajo cuando no.** No depende del ancho de
-  la ventana sino del ancho que le queda al mapa, que es lo que de verdad importa.
+- **El panel va al costado cuando el mapa tiene lugar.** No depende del ancho de la ventana sino
+  del ancho que le queda al mapa, que es lo que de verdad importa. **Cuando no entra al costado se
+  vuelve un cajón** que se abre desde un botón *Capas* arriba a la izquierda del mapa: así en el
+  teléfono no le come alto justo donde el alto es todo.
 
 **El panel es un árbol de dos niveles con casilla de verdad en cada uno:**
 
@@ -241,7 +275,7 @@ solo.
   separados**: uno apaga, el otro muestra el nombre.
 - **El campo —el borde de afuera— no está en la lista**: no se apaga nunca, porque es el marco.
 
-### 3.3 Apagar esconde, no borra — y la cuenta no cambia
+### 3.4 Apagar esconde, no borra — y la cuenta no cambia
 
 Apagar una capa **la saca del dibujo y nada más**. La tabla de hectáreas de la derecha **no se
 mueve**, porque esa es la tierra que hay, no lo que se está mirando. El panel lo dice en su pie, con
@@ -253,7 +287,7 @@ esas palabras.
 > Se eligió que la cuenta sea el hecho. **Si al probarlo con alguien esto confunde, se cambia** —
 > pero conviene probarlo antes de decidir.
 
-### 3.4 Los dos niveles no se dibujan a mano
+### 3.5 Los dos niveles no se dibujan a mano
 
 El archivo que el dueño arma con Google Earth trae los dos: el perímetro es el campo y cada división
 es un potrero. La pantalla de dibujo los trata por separado —el borde se carga una vez y casi no se
@@ -285,7 +319,7 @@ admite eso pierde al usuario el primer día que se equivoca.
 | | |
 |---|---|
 | **Para qué sirve** | El contexto: cuánta tierra hay y dónde termina. |
-| **Qué muestra** | El mapa a todo el ancho con su **panel de capas** al costado, y debajo **el reparto de hectáreas**: potreros y lotes, monte, caminos, bajos, tajamar, casco. Más la advertencia de §3.1 y de dónde salió el borde. |
+| **Qué muestra** | Una línea con el total y **el mapa ocupando el alto de la ventana** —se ve entero al entrar, sin deslizar— con su **panel de capas** al costado. Debajo, **el reparto de hectáreas**: potreros y lotes, monte, caminos, bajos, tajamar, casco. Más la advertencia de §3.1 y de dónde salió el borde. |
 | **De dónde sale** | `campo` + `campo.geom` (nuevo), `parcela.geom`. |
 | **Qué decisión permite** | Cuánta tierra hay de verdad en producción, y **no confundir el verdor del campo con el del potrero**. |
 
@@ -294,7 +328,7 @@ admite eso pierde al usuario el primer día que se equivoca.
 | | |
 |---|---|
 | **Para qué sirve** | Todo lo que hace falta saber de una división, en el orden en que se pregunta. |
-| **Qué muestra** | Un desplegable para cambiar de potrero. **La respuesta arriba y grande**, con cuándo hacerlo. Una franja con la última lectura. **El agua en la tierra a tres hondos, en palabras** — arriba (10 cm), en la raíz (30 cm), abajo (60 cm), con barra y la palabra *seco* / *bien* / *mojado*. Qué pasó estos días. Y **dos desplegables cerrados**: el dibujo del agua en la tierra, y la lluvia, el riego y el pasto. Después, los aparatos, el análisis de tierra y cuatro números. |
+| **Qué muestra** | Un desplegable para cambiar de potrero. **La respuesta arriba y grande**, con cuándo hacerlo. Una franja con la última lectura. **Un mapa ya encuadrado en ese potrero**, con sus aparatos y la última lectura de cada uno. **El agua en la tierra a tres hondos, en palabras** — arriba (10 cm), en la raíz (30 cm), abajo (60 cm), con barra y la palabra *seco* / *bien* / *mojado*. Qué pasó estos días. Y **dos desplegables cerrados**: el dibujo del agua en la tierra, y la lluvia, el riego y el pasto. Después, los aparatos, el análisis de tierra y cuatro números. |
 | **De dónde sale** | `parcela`, `medicion`, `riego_evento`, `politica_riego`, `indice_espacial`, `analisis_suelo`, `campania`, `dispositivo`. |
 | **Qué decisión permite** | **Si riega y cuántos minutos.** Los tres hondos evitan el error caro: si abajo todavía hay agua, veinte minutos alcanzan; regar de más manda el agua abajo de la raíz y se pierde. |
 
@@ -444,10 +478,11 @@ unidades y guaraníes son verosímiles a propósito para que el layout se vea co
 **ninguna cifra salió de una medición**.
 
 **Lo que sí es diseño y hay que aprobar o rechazar:** el orden respuesta-primero, el mapa de dos
-niveles con el campo como fondo, **el panel de capas afuera del dibujo y los códigos cortos
-adentro**, el agua en la tierra dicha en palabras, los gráficos plegados, el menú que se arma con
-permisos y sin rótulos de rol, los tamaños de toque, y el vocabulario entero.
+niveles con el campo como fondo, **el mapa a pantalla completa con zoom, arrastre y detalle por
+escala**, **el panel de capas afuera del dibujo y los códigos cortos adentro**, el agua en la tierra
+dicha en palabras, los gráficos plegados, el menú que se arma con permisos y sin rótulos de rol, los
+tamaños de toque, y el vocabulario entero.
 
-**Y una pregunta abierta, en §3.3:** apagar una capa cambia el dibujo pero **no** cambia la tabla de
+**Y una pregunta abierta, en §3.4:** apagar una capa cambia el dibujo pero **no** cambia la tabla de
 hectáreas. Es a propósito, y está argumentado — pero es lo primero que conviene mirarle a alguien
 cuando lo pruebe.

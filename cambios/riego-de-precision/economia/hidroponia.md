@@ -216,6 +216,7 @@ campo. **En la casa es ya**, y la que se corre a diciembre o mas alla es la del 
 - **A que temperatura llega la solucion en el patio en un dia de verano.** Sobre 24 °C se espiga: es la
   primera medicion a hacer, **antes de sembrar**, con un termometro en un balde de agua al sol.
 - **Donde se compran los nutrientes A+B y los medidores de EC y pH en Asuncion**, y a cuanto.
+- **El plan de sensores y la estacion meteorologica** estan en [docs/iot-hidroponia.md](../docs/iot-hidroponia.md): el TDS y el DS18B20 **se compran en Paraguay**, y la estacion tambien -- pero la estacion **no es de la hidroponia**.
 - ~~Hay electricidad confiable en el campo~~ -- **ya no aplica**: la hidroponia va en la casa.
 - **Cuanto cuesta instalar** un NFT chico en Paraguay, puesto -- **para mas adelante**, si se escala.
   El unico dato encontrado es implausible y se descarto. CMP Agro da soporte tecnico, materiales y

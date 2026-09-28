@@ -18,8 +18,21 @@ ignorarlo. Se llenan cuando haya codigo.
 |---|---|
 | mirar el VPS (`ssh-ro`) | **no funciona todavia**: el script es el del repo de origen y pide `LDAP_USUARIO`/`ORA_DSN_*`. Las `VPS_*` del `.env.example` son para cuando se adapte |
 | la base | Postgres + TimescaleDB + PostGIS (en local, docker) y las `PG*` del `.env` |
-| tests de pantalla | `npx playwright install chromium` |
+| tests de pantalla, y **`md-a-pdf`** | `PLAYWRIGHT_BROWSERS_PATH=../tools/playwright-browsers npx playwright install chromium` |
 | `gitleaks` (gate de secretos) | binario portable en `../tools/gitleaks-<version>/` |
+
+### El detalle de Playwright que cuesta media hora si no esta escrito (28/09/2026)
+
+`agro.js` fija `PLAYWRIGHT_BROWSERS_PATH` a **`../tools/playwright-browsers`** si nadie la seteo. Un
+`npx playwright install chromium` pelado baja los navegadores a `~/.cache/ms-playwright`, **que no es
+donde las tools los buscan**, y el error que sale es *"Looks like Playwright was just installed"* --
+que manda a correr justo el comando que ya se corrio. **Hay que pasarle la variable**, como en la
+tabla de arriba.
+
+Y el daemon de navegador tenia un arranque **solo de Windows** (`spawn('cmd', ['/c','start',...])`),
+que en Linux moria con `ENOENT` y dejaba `md-a-pdf` y toda tool con navegador rotas. Arreglado el
+28/09 con dos caminos segun `process.platform`; el porque de cada uno esta comentado en
+`scripts/lib/navegador.js`.
 
 ## Donde esta la plataforma
 

@@ -207,7 +207,22 @@ async function arrancarServidor({ headless = true, esperar = true } = {}) {
     //
     // Lo que se pierde asi es el stdio heredado: `start /b` no pasa nuestros handles, y el log
     // quedaba VACIO. Por eso el daemon ahora escribe `servidor.log` el mismo (navegador-daemon.js).
-    const hijo = spawn('cmd', ['/c', 'start', '', '/b', process.execPath, DAEMON], {
+    // POR QUE HAY DOS CAMINOS (28/09/2026): todo lo de abajo se midio en Windows, y en Linux
+    // `spawn('cmd', ...)` muere con ENOENT antes de intentar nada -- `cmd` no existe-. Eso dejaba
+    // `md-a-pdf` y cualquier tool con navegador rotas en esta maquina.
+    //
+    // En POSIX el equivalente correcto de `cmd /c start /b` es `detached: true` + `unref()`: el hijo
+    // queda en su propio grupo de procesos y sobrevive a que este node termine. La nota de abajo que
+    // dice "`detached` NO va" es CIERTA EN WINDOWS y solo ahi: alla `detached` abria una consola
+    // nueva que se llevaba puesto al Chromium. No se borra porque explica por que el camino de
+    // Windows es como es.
+    const esWindows = process.platform === 'win32'
+    const comando = esWindows ? 'cmd' : process.execPath
+    const argumentos = esWindows
+      ? ['/c', 'start', '', '/b', process.execPath, DAEMON]
+      : [DAEMON]
+    const hijo = spawn(comando, argumentos, {
+      detached: !esWindows,
       // LA PESTAÑA DE CONSOLA DEL CHROMIUM NO SE ARREGLA DESDE ACA: la pide el Chromium, no
       // nosotros, y ningun flag nuestro la tapa. El arreglo real es de la maquina -poner
       // "Aplicacion de terminal predeterminada" en "Host de la consola de Windows" en vez de

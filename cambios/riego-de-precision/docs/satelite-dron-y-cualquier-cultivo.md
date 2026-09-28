@@ -204,6 +204,75 @@ por intervalo, ademas de min, max, media y desviacion.
 
 Documentacion: [Statistical API](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Statistical.html).
 
+## 3c. Y si solo tengo la ubicacion de la casa, sin el poligono?
+
+**Un punto solo NO sirve. Una mensura NO hace falta. Lo que se necesita esta en el medio, y se consigue
+gratis esta semana.**
+
+### Por que el punto solo no alcanza
+
+Un punto es **un pixel de 10 x 10 m**. La Statistical API necesita una geometria, asi que la unica
+salida seria **un circulo alrededor del punto** -- y un circulo sobre un establecimiento **mezcla
+potreros, monte, casco, caminos y tajamar**.
+
+> **La media de esa mezcla no significa nada, y es peor que no tenerla: sale un numero, y un numero se
+> cree.** Una serie de nueve años calculada sobre un circulo arbitrario parece un dato y no lo es.
+
+### Pero una mensura tampoco hace falta
+
+Con pixeles de 10 m, **errar el limite por tres o cinco metros da lo mismo**. Lo que **no** da lo mismo
+es meter adentro el monte, el camino o el casco. El criterio no es precision legal:
+
+> **El poligono es suficiente cuando todos los pixeles de adentro pertenecen a la MISMA unidad de
+> manejo.** Nada mas que eso.
+
+### Tres formas de conseguirlo sin agrimensor, de mas barata a menos
+
+| | como | precision | cuando |
+|---|---|---|---|
+| **1. Dibujarlo sobre la imagen satelital** | Google Earth (dibujar y exportar KML), QGIS con fondo satelital, geojson.io o el EO Browser de Copernicus | mas que suficiente | **esta semana, desde la ciudad, gratis** |
+| **2. Caminar o recorrer el perimetro con el telefono** | cualquier app de GPS que exporte GPX o KML | **3 a 10 m** | **el sabado que ya se va a ir** |
+| **3. El plano del establecimiento** | **preguntarle al señor si lo tiene** -- un campo titulado suele tenerlo | definitiva | una pregunta, gratis |
+
+**La 1 es la que desbloquea todo hoy**, y la 2 la corrige. La 3 conviene preguntarla igual porque es
+gratis y puede ahorrar las otras dos.
+
+> **Y los potreros se VEN desde arriba**: los alambrados, las lineas de arboles, las huellas y el cambio
+> de vegetacion marcan los limites. Con **nueve años de imagenes**, el manejo distinto de cada potrero
+> deja firmas distintas, **y los limites se dibujan solos**. Si no se sabe donde estan los potreros, la
+> propia serie los muestra.
+
+### Empezar con UN poligono grueso, y subdividir despues
+
+**No hace falta tener los potreros para arrancar.** El perimetro del establecimiento, dibujado a ojo
+sobre la imagen, **ya da**:
+
+- el vigor total y su serie de nueve años,
+- las anomalias contra la banda historica,
+- la sensibilidad a la sequia,
+- y la **zonificacion estable**, que es la que **muestra donde estan las zonas distintas** -- o sea, la
+  que ayuda a dibujar los potreros despues.
+
+**Lo unico que exige los potreros por separado es la decision operativa** -- *"mové la hacienda al
+potrero 3"* --. Todo lo demas funciona con el limite de afuera.
+
+### La consecuencia de diseño, y hay que anotarla
+
+`parcela.geom` es `geometry(Polygon, 4326)`: **un punto no entra**, asi que o no se crea la parcela
+hasta tener poligono, o se acepta uno provisorio.
+
+**Si se acepta uno provisorio, hay que versionarlo.** El diseño dice que si el cliente corrige el
+limite *"todo se recalcula solo"*, y eso es cierto para `ST_Contains` -- que dispositivos caen adentro
+--. **Pero NO es cierto para `indice_espacial`**: esas filas las calculo una API externa **contra un
+poligono concreto**, y corregir el limite **no las recalcula**: hay que volver a pedirlas.
+
+> **El poligono es la calibracion del dato espacial**, igual que `calibracion` lo es del sensor y el
+> evalscript lo es del satelite. **Sin saber contra que version de la geometria se calculo cada fila,
+> corregir un limite invalida el historico en silencio.**
+
+Va a la lista de agregados de `indice_espacial`: **`geom_version`**, mas un estado `provisorio` en
+`parcela`.
+
 ## 4. El dron con camara termica de USD 2.000
 
 **Para que sirve una termica, de verdad:**
@@ -264,7 +333,7 @@ agregado por parcela con puntero al archivo. **No hay que rehacer nada.**
   ficha aparte de hidroponia.
 - **Si se usa NDRE ademas de NDVI** en el pasto. Sentinel-2 tiene las bandas; es una linea de
   evalscript.
-- **Agregar a `indice_espacial`: `sample_count`, `no_data_count` y `evalscript_version`.** Los dos
+- **Agregar a `indice_espacial`: `sample_count`, `no_data_count`, `evalscript_version` y `geom_version`.** Los dos
   primeros los devuelve la API y sin ellos no se distingue una media buena de una calculada sobre tres
   pixeles; el tercero es el `calibracion_id` del satelite. **Entra en la Fase 1, con la migracion.**
 - **Si el backfill arranca en 2017 (L2A global) o en 2015 (L1C).** L2A viene corregido

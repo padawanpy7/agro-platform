@@ -89,6 +89,24 @@ riesgo no es teorico.
 **Todo lo de la izquierda ya esta diseñado y no cuesta mas hacerlo bien.** Todo lo de la derecha puede
 esperar años sin penalidad, **siempre que la izquierda este bien.**
 
+## ACLARACION del dueño, el mismo dia: es su vision, NO el posicionamiento
+
+> *"El ERP era mi vision nomas, para que no se piense que van a ser apps diferentes para cada cosa. Y
+> tampoco decir: esta app es goteo."*
+
+**Corrige el encuadre de este documento y conviene que quede arriba, no al final:**
+
+| | |
+|---|---|
+| **Hacia adentro** -- equipo, diseño, esquema | *"es un ERP"* es **la brujula**: dice que hay UN nucleo, UNA base, UN login, y que los modulos se cruzan. **Todo lo de arriba sigue valiendo.** |
+| **Hacia afuera** -- lo que se dice y lo que se muestra | **no se dice "ERP" ni "estancias" ni "esta app es de goteo".** Es **una sola app** de la que cada cliente usa los modulos que tiene |
+
+**Las dos cosas que NO hay que decir nunca, y por el mismo motivo:**
+
+1. **"Esta app es de goteo"** -- achica el producto a un modulo.
+2. **Cualquier cosa que sugiera apps distintas** -- *"la app de riego"*, *"la app de ganaderia"*. **Es
+   una, y esa es justamente la ventaja sobre la competencia.**
+
 ## Una nota sobre el nombre
 
 *"ERP para estancias"* es una descripcion excelente **hacia adentro**: dice en tres palabras que es y

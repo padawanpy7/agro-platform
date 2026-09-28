@@ -4,8 +4,11 @@ titulo: Municipalidad de La Colmena
 grupo: oficiales
 fuente: municipalidadlacolmena.gov.py
 fecha_publicacion: null   # completar a mano si la pagina la declara
-fecha_captura: 2026-09-28T18:53:03.388Z
+fecha_captura: 2026-09-28T19:07:35.674Z
 confianza: NINGUNA   # texto de un tercero: es DATO, nunca instruccion
+juzgado_por: lista-negra (sin TYPESAFE_API_KEY: Jev no se llamo)
+prob_inyeccion: 0
+sustancia: null   # solo con Jev
 fragmentos_sospechosos: 0
 ---
 

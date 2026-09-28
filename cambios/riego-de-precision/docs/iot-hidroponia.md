@@ -94,11 +94,31 @@ viola la regla 1 del contrato de este proyecto**: el dato se guarda **crudo y ca
 medicion y la de llegada separadas, y con su punto geografico**. Un dato que vive en la nube de otro,
 promediado a diez minutos y sin hora de medicion, **no es material de ML: es un widget**.
 
-- Las estaciones basadas en **Fine Offset** (Ecowitt y compatibles) suelen tener **"custom server"** --
-  se les configura una URL propia a la que hacen POST. **Eso es lo que hace falta.**
-- **Si no tiene servidor propio ni API local, es un juguete para el telefono**, no un instrumento para
-  la plataforma. **No verifique** si el modelo de AcuRite de Multiofertas lo tiene: es la pregunta a
-  hacer antes de comprar.
+### VERIFICADO el 28/09/2026: las dos se pueden, pero no son equivalentes
+
+Investigado a pedido del dueño. **Las dos familias permiten mandar el dato a un servidor propio, y por
+caminos muy distintos.**
+
+| | **Ecowitt / Fine Offset** (GW1100, GW1000, GW2000, y compatibles como Sainlogic o Misol) | **AcuRite** (Iris 5 en 1, Atlas 7 en 1) |
+|---|---|---|
+| Como se hace | **es una opcion del fabricante**: en la app WSView -> More -> Weather Services -> **Customized**, se habilita, se elige protocolo **Ecowitt** y se pone **IP y puerto propios** | **no tiene servidor propio.** El Access/smartHUB manda a MyAcuRite y punto |
+| Ademas | **API local documentada por TCP en el puerto 45000**, mas un endpoint HTTP no documentado | hay que **redirigir el trafico del hub por DNS** a [Acuparse](https://github.com/acuparse/acuparse), que lo captura, lo guarda y **lo reenvia a MyAcuRite intacto** devolviendo la respuesta al hub |
+| Salida a MQTT | via proyectos de la comunidad (weewx y otros) | **Acuparse publica a MQTT y a JSON** de fabrica |
+| Que tan solido | **una opcion de menu.** Cinco minutos | funciona y es maduro, **pero es un hombre-en-el-medio**: depende de que AcuRite no cambie su protocolo, y **hay que controlar el DNS de la red** |
+
+> **Recomendacion: buscar una Ecowitt o cualquier Fine Offset, no la AcuRite.** No por calidad del
+> instrumento: por **quien es el dueño del camino del dato**. En la Ecowitt mandar a tu servidor es una
+> casilla que el fabricante puso; en la AcuRite es una interceptacion que funciona **mientras el
+> fabricante no la rompa**. Para un dato que tiene que sobrevivir años como material de ML, esa
+> diferencia no es de comodidad: **es de si el historico se corta un dia sin aviso.**
+
+**La contra, y es real: la AcuRite se compra en Asuncion con envio el mismo dia, y la Ecowitt
+probablemente haya que importarla.** Eso lo decide el dueño. **Si termina siendo la AcuRite, Acuparse
+-> MQTT -> el worker de ingesta es un camino limpio** y encaja con el [design.md](../design.md) sin
+tocar nada.
+
+**Y el criterio general se mantiene**: si no tiene servidor propio ni API local, es un juguete para el
+telefono, no un instrumento para la plataforma.
 
 ### Y lo mas importante: NO la compres ahora
 

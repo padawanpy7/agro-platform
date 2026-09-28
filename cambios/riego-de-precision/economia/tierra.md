@@ -4,9 +4,16 @@ Consultado el **27/09/2026**. Faltaba en toda la carpeta: cada archivo dice cuan
 hectarea, y **ninguno decia cuanto cuesta la hectarea**. Sin eso no se puede decir si un cultivo
 paga la tierra que ocupa.
 
-**Disparador**: el terreno familiar del banco de pruebas queda en **Taturuguai**, una **compañia de
-San Ignacio** -- documentada como vecindad rural de San Ignacio desde fines del siglo XIX
-([Presses universitaires de Rennes](https://books.openedition.org/pur/142372?lang=en)).
+**Disparador**: el dueño pregunto por **Taturuguai**, una **compañia de San Ignacio** -- documentada
+como vecindad rural de San Ignacio desde fines del siglo XIX
+([Presses universitaires de Rennes](https://books.openedition.org/pur/142372?lang=en)), como la zona
+del terreno de su abuelo.
+
+> **CORRECCION del 28/09/2026.** Este archivo decia que **el terreno del banco de pruebas** queda en
+> Taturuguai. **Eso no esta verificado y probablemente sea un error**:
+> [banco-de-pruebas.md](../banco-de-pruebas.md) dice **compañia Santa Rita**, y el dueño nombro
+> Taturuguai al hablar del terreno del abuelo. **Pueden ser dos terrenos distintos**, y hasta que se
+> aclare, los comparables de abajo valen para **San Ignacio**, no para el terreno del banco.
 
 > **Para Taturuguai NO hay precio publicado.** Es una compañia rural, no un mercado con listados.
 > Lo de abajo son **comparables de San Ignacio y del departamento**, que es lo mas cerca que se

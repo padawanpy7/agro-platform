@@ -85,6 +85,12 @@ presupuesto:
   - archivo: memory/playbooks/database.md
     tope: 400
     porque: "se lee antes de tocar el esquema: precision, retencion y RLS se deciden una vez"
+    # +3 es la regla anti-deriva para un documento que YA tiene su base. Este playbook nacio VACIO a
+    # proposito y la Fase 0 de tasks.md pide escribirlo ENTERO antes de la primera migracion: el
+    # nacimiento es un evento unico, no deriva. 36 es lo que ocupa esa base (RLS, tipos y claves,
+    # indices y secretos). BAJAR A 6 cuando la base este puesta: de ahi en mas un aprendizaje nuevo
+    # es una fila, que es exactamente lo que la regla de +3 protege.
+    maxCrecimiento: 36
   - archivo: memory/playbooks/ui-designer.md
     tope: 320
     porque: "se lee antes de tocar el front; lo consultable va a ui-hechos.md"

@@ -615,12 +615,76 @@ Ninguno de adorno: cada uno cuesta en escritura.
 que hoy no lo pide nadie; ni indices sobre `permiso`, `recurso`, `accion`, que son decenas de filas y
 viven en cache.
 
+## DECIDIDO el 28/09/2026 por el dueño: dos usuarios, y el admin habilita a demanda
+
+**Textual:** *"de momento solo va a haber dos usuarios, uno admin y otro simula cliente. Yo como admin
+del sistema le doy acceso a lo que quiere el cliente; si el cliente me dice dame permiso para crear
+usuarios, le pongo y listo. Por eso quiero los permisos granulares."*
+
+**Eso cierra la primera pregunta abierta: el cliente NO crea roles por default, y el admin se lo puede
+habilitar** poniendole `rol:escribir` y `usuario:crear` a su rol. **Es exactamente para lo que sirve
+tener permisos granulares**: habilitar de a uno, sin tocar codigo y sin inventar un rol nuevo.
+
+### La trampa, y es la unica cosa seria de esta seccion: ESCALADA DE PRIVILEGIOS
+
+> **Si le das a alguien `rol:escribir` sin mas, le diste superadmin.**
+>
+> Con ese permiso puede crear un rol, **meterle CUALQUIER permiso del catalogo** -- incluidos los que
+> vos nunca le diste -- y asignarselo. `facturacion:leer`, `politica_riego:aprobar`, lo que sea. **No
+> hace falta un bug: es el comportamiento obvio del modelo si nadie lo limita.**
+
+**La regla que lo cierra, y va al codigo desde el dia uno:**
+
+```
+Nadie puede otorgar un permiso que el mismo no tiene.
+```
+
+Al crear o editar un rol, la API compara el conjunto de permisos pedido contra los permisos efectivos
+de quien lo pide. **Si pide uno que no tiene, se rechaza la operacion entera** -- no se recorta en
+silencio, porque recortar deja al que pidio creyendo que otorgo algo que no otorgo.
+
+**Esto NO lo puede hacer RLS**: es una comparacion entre dos conjuntos de permisos, no un filtro por
+fila. **Va en la capa de aplicacion**, y es el primer caso concreto de la seccion "lo que RLS no
+puede".
+
+**Lo mismo vale para `usuario:crear`**: el usuario nuevo solo puede nacer con roles que quien lo crea
+podria otorgar. Si no, crear usuarios es la misma escalada por otra puerta.
+
+### El segundo usuario va en OTRO tenant, no en el mismo
+
+**"Uno admin y otro simula cliente"** se puede armar de dos formas, y **una de las dos no prueba
+nada**:
+
+| | que prueba |
+|---|---|
+| Los dos en el **mismo** tenant | solo que los permisos se aplican. **De RLS no prueba nada**: no hay de quien aislarse |
+| **Admin en el nuestro, cliente simulado en un tenant propio** | **los permisos Y el aislamiento.** Es el "test en rojo con dos tenants" que pide `design.md` |
+
+**Van en tenants distintos.** No cuesta mas -- un `INSERT` en `cliente` -- y es la unica forma de que
+el cliente simulado sea de verdad una simulacion del cliente.
+
+### Que tablas hacen falta HOY, con dos usuarios
+
+**El criterio no es "cuantas tablas": es que se puede agregar despues sin reescribir datos.**
+
+| | por que |
+|---|---|
+| **AHORA** (9): `usuario`, `credencial`, `sesion`, `membresia`, `recurso`, `accion`, `permiso`, `rol`, `rol_permiso`, `membresia_rol` | son la **FORMA**. Cambiarlas despues es migracion **con reescritura de datos** |
+| **DESPUES, sin costo**: `modulo`, `tenant_modulo`, `auditoria`, `auditoria_plataforma`, `operador_plataforma`, `acceso_soporte`, `intento_login` | se agregan como tabla nueva. La auditoria ademas es **append-only**: empezar a escribirla tarde no obliga a rellenar nada hacia atras |
+
+> **Lo que NO se puede posponer es la forma**: `permiso` como par `(recurso, accion)` en vez de un
+> string suelto, y `membresia` en vez de `tenant_id` sobre `usuario`. **Esas dos son las que, si se
+> hacen mal hoy, se pagan reescribiendo datos manana.** Todo lo demas espera.
+
+**Con dos usuarios sobra**, y la gracia es que el dia que sean veinte **no hay que rehacer nada**: se
+habilitan permisos, que es literalmente lo que el dueño pidio.
+
 ## Lo que falta decidir
 
-- **Puede un cliente crear sus propios roles, o los armamos nosotros?** Si el cliente los arma, hace
-  falta pantalla de administracion de roles en la fase 1 y el riesgo de que se auto-bloquee (ultimo
-  admin que se saca el permiso: hace falta un `CHECK` de "siempre al menos un admin vivo"). Decision
-  del dueño.
+- ~~**Puede un cliente crear sus propios roles?**~~ **CONTESTADA el 28/09**: no por default, **si por
+  habilitacion del admin**. Ver la seccion de arriba. **Queda en pie el riesgo de auto-bloqueo**: el
+  ultimo admin que se saca su propio permiso deja el tenant sin nadie que pueda arreglarlo. Hace falta
+  un `CHECK` o un trigger de **"siempre al menos un admin vivo por tenant"**.
 - **El acceso de soporte lo autoriza el cliente o lo autorizamos nosotros?** Que lo apruebe el cliente
   es lo correcto y es friccion justo cuando algo esta roto. Alternativa: lo otorgamos nosotros pero
   el cliente **lo ve y lo puede revocar**. Decision del dueño, y es contractual antes que tecnica.

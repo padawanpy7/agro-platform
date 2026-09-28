@@ -76,6 +76,21 @@ persona identificada que podria comprar el producto y que ya sabe del proyecto**
 una ventaja tecnica real, y no sirve de nada si no se puede llegar. Misiones vuelve cuando haya
 tiempo, no antes.
 
+> **Actualizado el 28/09**: el dueño va a montar **hidroponia en su casa**, y eso **cierra el tema**.
+> El unico argumento que le quedaba a Misiones era ser el banco de pruebas, y **el banco se muda al
+> patio de la casa** -- donde se lo mira todos los dias en vez de dos por mes
+> ([banco-de-pruebas.md](../banco-de-pruebas.md)).
+>
+> **Quedan dos sitios, y usan tiempos distintos que no compiten:**
+>
+> | | donde | cuando | que prueba |
+> |---|---|---|---|
+> | **Banco** | el patio de la casa | **lunes a viernes** | el software, con EC, pH, temperatura y nivel |
+> | **Piloto** | La Colmena | **sabado y domingo** | que el riego decide bien **sin nadie presente** |
+>
+> **Y de paso la hidroponia es lo unico de todo el plan que genera plata antes de diciembre**
+> ([economia/hidroponia.md](../economia/hidroponia.md)).
+
 ## El plan, fin de semana por fin de semana
 
 ### 10-11/10 -- el primer dia de campo: preguntar y medir, no comprar

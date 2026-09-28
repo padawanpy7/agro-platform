@@ -25,6 +25,38 @@ relacion- y **floja para el segundo**: prueba que la tecnologia anda, no que alg
 > [economia/inversion-inicial-tomate.md](economia/inversion-inicial-tomate.md); el efecto sobre quien
 > es el cliente, en [PREGUNTAS.md](PREGUNTAS.md) pregunta 0.
 
+## EL BANCO SE MUDA: del terreno de Misiones al patio de la casa (28/09/2026)
+
+**Este documento eligio Misiones, y con la informacion de hoy esa eleccion ya no se sostiene.** Lo que
+cambio: el dueño solo puede ir al campo **sabado y domingo**, y va a montar **hidroponia en su casa**.
+
+**La tabla de arriba dice, textual, que el banco puede estar en "cualquier lado; un patio sirve".**
+Aplicada en serio, esa frase manda el banco a la casa:
+
+| | Misiones | **el patio de la casa** |
+|---|---|---|
+| Cuanto se lo mira | **dos dias por mes**, con suerte | **todos los dias, 24/7** |
+| Que instrumenta | humedad de suelo, valvula | **EC, pH, temperatura de solucion, nivel, caudal, bomba** |
+| Cuando se ve una falla | **el fin de semana siguiente** | **el mismo dia** |
+| Viaje | si, y lejos | **cero** |
+
+**Un banco que se mira dos dias por mes no es un banco: es un experimento abandonado entre visitas.** Y
+la hidroponia **exige mas instrumentacion que la tierra** -- en tierra el sensor es una mejora, en
+hidroponia el sensor **es** el cultivo --, o sea que ejercita mas software, no menos.
+
+> **Decision: el banco se hace en la casa.** Misiones sale del plan, y **no por el tajamar** -- que
+> sigue siendo una ventaja tecnica real -- **sino porque ya no hace falta y no se puede atender**.
+> Vuelve cuando haya tiempo, no antes.
+
+**De tres sitios a dos**: el **banco en la casa** (entre semana) y el **piloto con cliente en La
+Colmena** (fines de semana). Ver
+[colmena/11-plan-por-fines-de-semana.md](colmena/11-plan-por-fines-de-semana.md) y
+[economia/hidroponia.md](economia/hidroponia.md).
+
+**Lo que sigue valiendo de todo lo de abajo**: el analisis de por que en Misiones no se vende ahorro de
+agua sino **el veranico y la saturacion**. Ese argumento es **de la zona, no del banco**, y sigue en pie
+para el dia que se plante ahi.
+
 ## Lo que Misiones tiene, y por que importa
 
 | | dato | fuente |

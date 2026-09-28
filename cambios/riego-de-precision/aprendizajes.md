@@ -1,5 +1,26 @@
 # Aprendizajes de riego-de-precision
 
+## Diseño de front — tercera pasada (28/09/2026)
+
+**Decisión del dueño: una sola app.** Se sacó la vista capataz como vista separada y el interruptor
+de rol. Y el aprendizaje es el bueno: **lo que se aprendió haciendo esa vista no se tiró — se
+ascendió a default de la app entera.** 18 px de base, 56 px de toque, contraste alto, respuesta
+arriba y grande, acción escrita en cada renglón, agua en palabras, gráficos plegados. La vista
+descartada sirvió para descubrir cómo tenía que comportarse todo.
+
+**Y el corolario que ordena el producto: el permiso decide la densidad, y no se rotula.** Quien no
+puede escribir reglas de riego no ve esa opción — no apagada, no con un cartel: no está. Decirle a
+alguien "esto es para otro rol" es contarle lo que no puede hacer, que no le sirve de nada.
+
+**El mapa pasó a tener dos niveles**, y eso toca el modelo: `campo` necesita `campo.geom`, que hoy
+no tiene. El campo es el **fondo** y los potreros son **lo que se toca**. Lo que más costó dibujar
+bien es lo que más importa: **la suma de los potreros no da el campo** — hay monte, camino, casco,
+corral y tajamar en el medio. De ahí sale una trampa que un tablero mal hecho induce solo: **el
+verdor del campo entero no sirve para decidir nada**, porque el monte está verde todo el año.
+
+El producto se llama **agropecuaria de precisión**; el ticket sigue llamándose como el día que se
+abrió.
+
 ## Diseño de front — segunda pasada (28/09/2026)
 
 **El error de la primera pasada, y vale más que todo lo que salió bien: se diseñaron doce

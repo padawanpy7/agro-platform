@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-PY" data-theme="light" data-role="capataz">
+<html lang="es-PY" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -11,8 +11,8 @@
 :root{
   color-scheme: light;
   --paper:#F2F4F1; --panel:#FFFFFF; --panel-2:#EAEEE9;
-  --ink:#0C1811; --ink-2:#3B4D42; --ink-3:#69796E;
-  --line:#CFD8CE; --line-2:#B2BFB2;
+  --ink:#07120C; --ink-2:#2C3D33; --ink-3:#5E6E64;
+  --line:#BECABE; --line-2:#A3B2A4;
   --brand:#0B4A56; --brand-2:#08333C; --brand-wash:#DDEBEE;
   --ok:#216B3A; --warn:#9C5504; --crit:#9B1D28; --mute:#5F6F65;
   --ok-wash:#DDECE1; --warn-wash:#F5E6D2; --crit-wash:#F6DEDF; --mute-wash:#E4E9E4;
@@ -21,13 +21,15 @@
   --n1:#98B478; --n2:#6F9B4D; --n3:#4F8235; --n4:#2A5A20; --n5:#113312;
   --grid:#DEE4DD; --axis:#AEBBAD;
   --rail:246px;
-  --fs:16px; --tap:44px;
+  /* Se usa al sol, en un telefono barato, con las manos sucias: esto NO es
+     una preferencia, es el caso de uso. */
+  --fs:18px; --tap:56px;
 }
 :root[data-theme="dark"]{
   color-scheme: dark;
   --paper:#101512; --panel:#1A211D; --panel-2:#232C27;
-  --ink:#F1F6F1; --ink-2:#BCC9C0; --ink-3:#93A399;
-  --line:#313D37; --line-2:#44534B;
+  --ink:#FFFFFF; --ink-2:#CCD9D0; --ink-3:#93A399;
+  --line:#3B4A43; --line-2:#4C5C54;
   --brand:#67C2D2; --brand-2:#9BDCE8; --brand-wash:#17302F;
   --ok:#57BA76; --warn:#DFA02C; --crit:#EC7079; --mute:#93A399;
   --ok-wash:#17301F; --warn-wash:#2F2615; --crit-wash:#31191C; --mute-wash:#242C27;
@@ -36,14 +38,7 @@
   --n1:#2A5A20; --n2:#4F8235; --n3:#6F9B4D; --n4:#98B478; --n5:#C3D6AC;
   --grid:#28322C; --axis:#415048;
 }
-/* La vista del capataz es mas grande y mas contrastada: se usa al sol, en un telefono
-   barato, con las manos sucias. No es una preferencia: es el caso de uso. */
-:root[data-role="capataz"]{ --fs:18px; --tap:56px; }
-/* El contraste extra del capataz se declara por tema. Sin esto pisaba al tema oscuro,
-   porque los dos selectores pesan igual y este va despues. */
-:root[data-theme="light"][data-role="capataz"]{ --ink:#07120C; --ink-2:#2C3D33; --line:#BECABE; }
-:root[data-theme="dark"][data-role="capataz"]{ --ink:#FFFFFF; --ink-2:#CCD9D0; --line:#3B4A43; }
-:root[data-role="capataz"][data-big="1"]{ --fs:21px; --tap:62px; }
+:root[data-big="1"]{ --fs:21px; --tap:62px; }
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -74,16 +69,9 @@ code{font-family:inherit}
 .flag .sm{display:none}
 @media (max-width:560px){ .flag .lg{display:none} .flag .sm{display:inline} .flag{padding:7px 12px; gap:8px} }
 
-.roleswitch{display:flex; align-items:center; gap:8px; background:var(--panel); border:2px solid var(--line-2); border-radius:3px; padding:3px 4px 3px 9px}
-.roleswitch > span{font-size:.76rem; color:var(--ink-3); font-variation-settings:"wdth" 88}
-.roleswitch button{border:0; background:none; color:var(--ink-2); padding:5px 10px; border-radius:2px; cursor:pointer; font-size:.8rem}
-.roleswitch button[aria-pressed="true"]{background:var(--brand); color:#fff; font-weight:700}
-:root[data-theme="dark"] .roleswitch button[aria-pressed="true"]{color:#08130f}
 .minibtn{border:2px solid var(--line-2); background:var(--panel); color:var(--ink-2); border-radius:3px; padding:4px 10px; font-size:.78rem; cursor:pointer}
 
 .shell{display:grid; grid-template-columns:var(--rail) 1fr; min-height:100vh}
-:root[data-role="capataz"] .shell{grid-template-columns:1fr}
-:root[data-role="capataz"] .rail{display:none}
 .rail{border-right:1px solid var(--line); background:var(--panel); display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow:auto}
 .brand{display:flex; gap:10px; align-items:center; padding:16px 16px 14px; border-bottom:1px solid var(--line)}
 .brand .nm{font-weight:750; font-variation-settings:"wdth" 116; letter-spacing:-.02em; font-size:1rem; line-height:1}
@@ -104,7 +92,6 @@ nav{padding:8px 8px 24px; flex:1}
 
 main{min-width:0; padding:0 0 92px}
 .wrap{max-width:1180px; padding:20px 20px 0}
-:root[data-role="capataz"] .wrap{max-width:660px; padding:16px 16px 0; margin:0 auto}
 .pagehead{border-bottom:2px solid var(--line); padding-bottom:14px; margin-bottom:18px}
 .crumb{font-size:.74rem; color:var(--ink-3); font-variation-settings:"wdth" 88; margin-bottom:5px}
 .pagehead .decision{margin-top:7px; font-size:.86rem; color:var(--ink-2); max-width:72ch}
@@ -135,6 +122,7 @@ main{min-width:0; padding:0 0 92px}
 .cols{display:grid; gap:16px}
 .cols.c2{grid-template-columns:1fr 1fr}
 .cols.map{grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr)}
+.cols.hoy{grid-template-columns:minmax(300px,0.92fr) minmax(0,1.6fr)}
 .note{font-size:.82rem; color:var(--ink-2); font-variation-settings:"wdth" 94; line-height:1.48}
 .note.rule{border-left:3px solid var(--brand); padding-left:11px}
 .muted{color:var(--ink-3)}
@@ -250,7 +238,7 @@ td.num,th.num{text-align:right}
 .skip{position:absolute; left:-9999px}
 .skip:focus{left:8px; top:8px; z-index:99; background:var(--panel); padding:8px 12px; border:2px solid var(--brand)}
 
-@media (max-width:960px){ .cols.c2,.cols.map{grid-template-columns:1fr} }
+@media (max-width:960px){ .cols.c2,.cols.map,.cols.hoy{grid-template-columns:1fr} }
 @media (max-width:820px){
   .shell{grid-template-columns:1fr}
   .rail{position:fixed; inset:0 auto 0 0; width:280px; z-index:70; transform:translateX(-100%); transition:transform .18s ease; height:100dvh}
@@ -260,15 +248,13 @@ td.num,th.num{text-align:right}
   .wrap{padding:16px 14px 0}
   table{font-size:.84rem} th,td{padding:9px 10px}
 }
-:root[data-role="duenio"] .drawerbtn{display:none}
-@media (max-width:820px){
-  :root[data-role="duenio"] .drawerbtn{display:flex; align-items:center; gap:9px; position:sticky; top:0; z-index:40; width:100%;
-    background:var(--panel); border:0; border-bottom:2px solid var(--line-2); padding:12px 14px; cursor:pointer; color:var(--ink); font-size:1rem; font-weight:700; min-height:var(--tap)}
-}
-.tabbar{grid-template-columns:repeat(3,1fr); position:fixed; left:0; right:0; bottom:0; z-index:50;
+.tabbar{grid-template-columns:repeat(4,1fr); position:fixed; left:0; right:0; bottom:0; z-index:50;
   background:var(--panel); border-top:2px solid var(--line-2); padding-bottom:env(safe-area-inset-bottom)}
-:root[data-role="capataz"] .tabbar{display:grid}
-@media (max-width:820px){ :root[data-role="duenio"] .tabbar{display:grid; grid-template-columns:repeat(4,1fr)} }
+@media (max-width:820px){
+  .drawerbtn{display:flex; align-items:center; gap:9px; position:sticky; top:0; z-index:40; width:100%;
+    background:var(--panel); border:0; border-bottom:2px solid var(--line-2); padding:12px 14px; cursor:pointer; color:var(--ink); font-size:1rem; font-weight:700; min-height:var(--tap)}
+  .tabbar{display:grid}
+}
 .tabbar button{border:0; background:none; padding:9px 4px 10px; font-size:.76rem; color:var(--ink-2); cursor:pointer;
   display:flex; flex-direction:column; align-items:center; gap:3px; font-variation-settings:"wdth" 92; font-weight:600; min-height:var(--tap)}
 .tabbar button[aria-current="page"]{color:var(--brand); font-weight:750}
@@ -287,11 +273,6 @@ td.num,th.num{text-align:right}
   <span class="lg">No hay nada conectado. Los números, nombres y fechas son <b>de ejemplo</b> y ninguno salió de una medición real.</span>
   <span class="sm">Datos de ejemplo.</span>
   <span class="sp"></span>
-  <div class="roleswitch">
-    <span>Mirar la app como</span>
-    <button id="r-cap" aria-pressed="true">Capataz</button>
-    <button id="r-due" aria-pressed="false">Dueño</button>
-  </div>
   <button class="minibtn" id="big">Letra más grande</button>
   <button class="minibtn" id="theme">Tema oscuro</button>
 </div>
@@ -307,7 +288,7 @@ td.num,th.num{text-align:right}
       </svg>
       <div>
         <div class="nm">agro-platform</div>
-        <div class="sub">riego de precisión · fase 1</div>
+        <div class="sub">agropecuaria de precisión</div>
       </div>
     </div>
     <div class="cliente">
@@ -323,7 +304,7 @@ td.num,th.num{text-align:right}
   <main id="main">
     <button class="drawerbtn" id="drawerbtn" aria-expanded="false" aria-controls="rail">
       <svg width="20" height="15" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="2"/></svg>
-      <span id="drawerlabel">Los lotes</span>
+      <span id="drawerlabel">Hoy</span>
     </button>
     <div class="wrap" id="view"></div>
   </main>
@@ -387,37 +368,52 @@ const estColor = e => ({ ok: "var(--ok)", warn: "var(--warn)", crit: "var(--crit
 const estIcon = e => ({ ok: "tilde", warn: "alerta", crit: "alerta", mute: "sinsenal", do: "gota" }[e]);
 const URG = { crit: 0, do: 1, warn: 2, mute: 3, ok: 4 };
 
+/* El CAMPO es el establecimiento entero: el fondo del mapa. Es `campo` en el modelo, y
+   hoy no tiene poligono -- se le agrega `campo.geom` en la migracion de la fase 1. */
+const CAMPO = {
+  nom: "Estancia Yvoty", lugar: "La Colmena, Paraguarí", ha: 148.0,
+  poly: "30,40 470,16 900,44 932,212 908,394 878,502 330,536 70,500 18,274",
+  reparto: [
+    { n: "Potreros y lotes", ha: 108.7, c: "var(--ok)", nota: "6 en total · es lo único que se toca" },
+    { n: "Monte", ha: 26.0, c: "var(--n4)", nota: "La franja del arroyo. Verde todo el año, y no se lo come nadie" },
+    { n: "Caminos y calles", ha: 4.8, c: "var(--ink-3)", nota: "" },
+    { n: "Bajos sin uso", ha: 4.0, c: "var(--mute)", nota: "Se inundan" },
+    { n: "Tajamar y aguadas", ha: 3.0, c: "var(--s1)", nota: "Donde toma la hacienda" },
+    { n: "Casco, galpones y corral", ha: 1.5, c: "var(--s2)", nota: "" }
+  ]
+};
+
 const PARCELAS = [
-  { id: "p3", nom: "Huerta Ñu Porâ", cultivo: "Tomate", ha: 0.9, est: "crit",
-    poly: "522,380 622,392 614,472 514,464", disp: 4, verdor: 58, ult: "hace 6 minutos",
+  { id: "p3", nom: "Huerta Ñu Porâ", tipo: "Lote", cultivo: "Tomate", ha: 0.9, est: "crit",
+    poly: "516,392 610,402 602,476 508,468", disp: 4, verdor: 58, ult: "hace 6 minutos",
     resp: { t: "Andá a mirar la manguera", s: "Salió <b>mucha más agua</b> de la que tenía que salir, dos riegos seguidos. Puede haber una pérdida en la línea.", w: "Hoy, cuando puedas" } },
-  { id: "p1", nom: "Tomatal Ka'aguy", cultivo: "Tomate", ha: 1.8, est: "do",
-    poly: "96,332 252,318 270,422 120,440", disp: 5, verdor: 74, ult: "hace 11 minutos",
+  { id: "p1", nom: "Tomatal Ka'aguy", tipo: "Lote", cultivo: "Tomate", ha: 1.8, est: "do",
+    poly: "104,352 250,338 266,436 126,452", disp: 5, verdor: 74, ult: "hace 11 minutos",
     agua: [{ n: "Arriba", d: "10 cm", p: 13, w: "seco" }, { n: "En la raíz", d: "30 cm", p: 9, w: "seco" }, { n: "Abajo", d: "60 cm", p: 40, w: "bien" }],
     resp: { t: "Regá hoy temprano", s: "La tierra está <b>seca hasta la raíz</b>. Abajo todavía hay agua: con 20 minutos alcanza, no le des de más.", w: "Antes de las 8 de la mañana" } },
-  { id: "p6", nom: "Melonar Tape Pytâ", cultivo: "Sandía", ha: 2.4, est: "warn",
-    poly: "662,372 832,358 854,474 674,488", disp: 3, verdor: 66, ult: "hace 1 hora",
-    resp: { t: "Fijate en la trampa", s: "Cayeron <b>4 bichos</b> esta semana. Las otras semanas caían uno. Andá a ver qué son.", w: "Esta semana" } },
-  { id: "p5", nom: "Potrero Costa Guasu", cultivo: "Pasto", ha: 58.4, est: "mute",
-    poly: "424,62 802,46 882,182 838,320 562,342 442,232", disp: 2, verdor: 52, ult: "hace 3 días",
-    resp: { t: "Sin noticias hace 3 días", s: "No llega nada del aparato de ese lote. <b>El riego sigue andando solo</b>: no se para. Si el lunes sigue igual, avisá.", w: "No es urgente" } },
-  { id: "p4", nom: "Potrero Yvyra'i", cultivo: "Pasto", ha: 42.0, est: "ok",
-    poly: "60,74 302,50 374,152 332,268 122,284 48,192", disp: 3, verdor: 68, ult: "hace 2 minutos",
-    resp: { t: "Acá podés meter la hacienda", s: "Es el potrero con <b>más pasto</b> de los cinco.", w: "" } },
-  { id: "p2", nom: "Sandial Tuyutî", cultivo: "Sandía", ha: 3.2, est: "ok",
-    poly: "302,332 472,354 488,472 324,464", disp: 4, verdor: 63, ult: "hace 9 minutos",
+  { id: "p6", nom: "Melonar Tape Pytâ", tipo: "Lote", cultivo: "Sandía", ha: 2.4, est: "warn",
+    poly: "662,388 818,374 838,482 676,494", disp: 3, verdor: 66, ult: "hace 1 hora",
+    resp: { t: "Fijate en la trampa", s: "Cayeron <b>4 bichos</b> esta semana. Las otras semanas caía uno. Andá a ver qué son.", w: "Esta semana" } },
+  { id: "p5", nom: "Potrero Costa Guasu", tipo: "Potrero", cultivo: "Pasto", ha: 58.4, est: "mute",
+    poly: "440,72 790,54 856,176 812,268 566,276 452,220", disp: 2, verdor: 52, ult: "hace 3 días",
+    resp: { t: "Sin noticias hace 3 días", s: "No llega nada del aparato de ese potrero. <b>El riego sigue andando solo</b>: no se para. Si el lunes sigue igual, avisá.", w: "No es urgente" } },
+  { id: "p4", nom: "Potrero Yvyra'i", tipo: "Potrero", cultivo: "Pasto", ha: 42.0, est: "ok",
+    poly: "70,80 296,58 356,150 316,258 130,270 58,190", disp: 3, verdor: 68, ult: "hace 2 minutos",
+    resp: { t: "Acá podés meter la hacienda", s: "Es el potrero con <b>más pasto</b> de los dos. Tiene el tajamar al lado.", w: "" } },
+  { id: "p2", nom: "Sandial Tuyutî", tipo: "Lote", cultivo: "Sandía", ha: 3.2, est: "ok",
+    poly: "300,352 462,372 476,478 320,470", disp: 4, verdor: 63, ult: "hace 9 minutos",
     resp: { t: "No hace falta nada", s: "La tierra está mojada. Regó dos veces hoy temprano.", w: "" } }
 ];
 const byId = id => PARCELAS.find(p => p.id === id);
 const ordenados = () => PARCELAS.slice().sort((a, b) => URG[a.est] - URG[b.est]);
 
 const DISPOS_MAPA = [
-  { x: 168, y: 150, t: "sensor", p: "p4" }, { x: 250, y: 205, t: "sensor", p: "p4" }, { x: 210, y: 110, t: "estacion", p: "p4" },
-  { x: 600, y: 160, t: "sensor", p: "p5", off: 1 }, { x: 700, y: 240, t: "ctrl", p: "p5", off: 1 },
-  { x: 150, y: 360, t: "sensor", p: "p1" }, { x: 210, y: 380, t: "sensor", p: "p1" }, { x: 178, y: 415, t: "ctrl", p: "p1" }, { x: 240, y: 345, t: "caudal", p: "p1" },
-  { x: 350, y: 380, t: "sensor", p: "p2" }, { x: 430, y: 420, t: "sensor", p: "p2" }, { x: 390, y: 445, t: "ctrl", p: "p2" },
-  { x: 545, y: 410, t: "sensor", p: "p3" }, { x: 590, y: 440, t: "ctrl", p: "p3" }, { x: 570, y: 395, t: "caudal", p: "p3" },
-  { x: 710, y: 410, t: "sensor", p: "p6" }, { x: 800, y: 430, t: "trampa", p: "p6" }, { x: 760, y: 455, t: "ctrl", p: "p6" }
+  { x: 160, y: 150, t: "sensor", p: "p4" }, { x: 250, y: 200, t: "sensor", p: "p4" }, { x: 200, y: 108, t: "estacion", p: "p4" },
+  { x: 600, y: 140, t: "sensor", p: "p5", off: 1 }, { x: 700, y: 210, t: "ctrl", p: "p5", off: 1 },
+  { x: 145, y: 378, t: "sensor", p: "p1" }, { x: 212, y: 368, t: "sensor", p: "p1" }, { x: 172, y: 420, t: "ctrl", p: "p1" }, { x: 238, y: 360, t: "caudal", p: "p1" },
+  { x: 345, y: 400, t: "sensor", p: "p2" }, { x: 432, y: 424, t: "sensor", p: "p2" }, { x: 390, y: 450, t: "ctrl", p: "p2" },
+  { x: 540, y: 420, t: "sensor", p: "p3" }, { x: 580, y: 448, t: "ctrl", p: "p3" }, { x: 562, y: 410, t: "caudal", p: "p3" },
+  { x: 710, y: 420, t: "sensor", p: "p6" }, { x: 800, y: 430, t: "trampa", p: "p6" }, { x: 762, y: 462, t: "ctrl", p: "p6" }
 ];
 
 const RIEGO_IDX = [7, 18, 29, 41, 62, 73];
@@ -753,47 +749,233 @@ function loteRow(p) {
     <span class="mid">
       <span class="nm">${esc(p.nom)}</span>
       <span class="act">${p.resp.t}</span>
-      <span class="meta">${esc(p.cultivo)} · ${nf(p.ha, 1)} ha · última lectura ${esc(p.ult)}</span>
+      <span class="meta">${esc(p.tipo)} de ${esc(p.cultivo.toLowerCase())} · ${nf(p.ha, 1)} ha · última lectura ${esc(p.ult)}</span>
     </span>
     <span class="right">${chip(p.est)}${ico("flecha", 22, "var(--ink-3)")}</span>
   </button>`;
 }
 
-/* ============================ pantallas del CAPATAZ ============================
-   Tres. No doce. Mostrarle doce es el fracaso.
-============================================================================== */
-const CAP = {};
+/* ============================ el mapa, en dos niveles ============================
+   El CAMPO es el fondo: contexto, limites, el dibujo general. No se toca.
+   Los POTREROS y LOTES son lo que se toca: ahi se decide.
+   Y entre medio hay monte, camino, casco y tajamar, que no son de nadie -- por eso
+   la suma de los potreros NO da el campo.
+================================================================================= */
+function mapSVG(opts) {
+  const o = opts || {};
+  const dev = o.sinAparatos ? "" : DISPOS_MAPA.map(d => {
+    const ho = d.off;
+    if (d.t === "estacion") return `<path d="M${d.x - 6} ${d.y + 6} L${d.x} ${d.y - 7} L${d.x + 6} ${d.y + 6} Z" fill="${ho ? "none" : "var(--ink-2)"}" stroke="var(--ink-2)" stroke-width="1.8" stroke-dasharray="${ho ? "2 2" : "none"}"/>`;
+    if (d.t === "ctrl") return `<rect x="${d.x - 5.5}" y="${d.y - 5.5}" width="11" height="11" fill="${ho ? "none" : "var(--brand)"}" stroke="var(--brand)" stroke-width="2" stroke-dasharray="${ho ? "2 2" : "none"}"/>`;
+    if (d.t === "caudal") return `<g transform="translate(${d.x},${d.y})"><circle r="6" fill="none" stroke="var(--s1)" stroke-width="2"/><path d="M-6 0 H6" stroke="var(--s1)" stroke-width="2"/></g>`;
+    if (d.t === "trampa") return `<path d="M${d.x} ${d.y - 6.5} L${d.x + 6.5} ${d.y} L${d.x} ${d.y + 6.5} L${d.x - 6.5} ${d.y} Z" fill="var(--s2)" stroke="var(--s2)" stroke-width="1.5"/>`;
+    return `<circle cx="${d.x}" cy="${d.y}" r="5" fill="${ho ? "none" : "var(--ink-2)"}" stroke="var(--ink-2)" stroke-width="1.9" stroke-dasharray="${ho ? "2 2" : "none"}"/>`;
+  }).join("");
 
-CAP.hoy = () => {
+  const polys = PARCELAS.map(p => {
+    const c = estColor(p.est), mute = p.est === "mute";
+    const fill = o.plano ? "color-mix(in srgb, var(--ok) 22%, transparent)" : (mute ? "none" : `color-mix(in srgb, ${c} 22%, transparent)`);
+    const stroke = o.plano ? "var(--ok)" : c;
+    return `<polygon data-poly="${p.id}" points="${p.poly}" fill="${fill}" stroke="${stroke}" stroke-width="2.6" stroke-linejoin="round" stroke-dasharray="${(!o.plano && mute) ? "8 5" : "none"}"><title>${esc(p.nom)} — ${esc(p.resp.t)}</title></polygon>`;
+  }).join("");
+
+  const labels = PARCELAS.map(p => {
+    const pts = p.poly.split(" ").map(x => x.split(",").map(Number));
+    const cx = pts.reduce((a, b) => a + b[0], 0) / pts.length, cy = pts.reduce((a, b) => a + b[1], 0) / pts.length;
+    return `<text x="${cx}" y="${cy - 3}" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)" style="font-variation-settings:'wdth' 106; pointer-events:none">${esc(p.nom)}</text>
+            <text x="${cx}" y="${cy + 14}" text-anchor="middle" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 90; pointer-events:none">${esc(p.cultivo)} · ${nf(p.ha, 1)} ha</text>`;
+  }).join("");
+
+  return `<svg viewBox="0 0 940 560" role="img" aria-label="Mapa del campo con sus seis potreros y lotes adentro">
+    <defs>
+      <pattern id="monte" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="9" height="9" fill="color-mix(in srgb, var(--n4) 20%, transparent)"/>
+        <path d="M0 0 V9" stroke="var(--n4)" stroke-width="2.2" opacity=".55"/>
+      </pattern>
+    </defs>
+    <rect width="940" height="560" fill="var(--panel)"/>
+
+    <!-- nivel 1: el campo. Es el fondo y no se toca. -->
+    <polygon points="${CAMPO.poly}" fill="color-mix(in srgb, var(--ink-3) 8%, transparent)" stroke="var(--ink)" stroke-width="3.4" stroke-linejoin="round"/>
+
+    <!-- lo que NO es potrero: monte, tajamar, casco, corral, camino -->
+    <polygon points="24,282 330,278 470,288 706,276 912,290 910,326 706,314 470,326 330,316 30,320" fill="url(#monte)" stroke="var(--n4)" stroke-width="1.4"/>
+    <text x="180" y="308" font-size="12.5" font-weight="700" fill="var(--n4)" style="font-variation-settings:'wdth' 92">monte del arroyo · 26 ha</text>
+    <path d="M28 302 C330 296, 470 306, 706 294 S905 306, 908 308" fill="none" stroke="var(--s1)" stroke-width="5" opacity=".45" stroke-linecap="round"/>
+
+    <ellipse cx="722" cy="350" rx="46" ry="21" fill="color-mix(in srgb, var(--s1) 34%, transparent)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="722" y="355" text-anchor="middle" font-size="12.5" fill="var(--ink-2)" font-weight="700" style="font-variation-settings:'wdth' 92">tajamar</text>
+
+    <rect x="140" y="458" width="52" height="30" fill="var(--panel-2)" stroke="var(--ink-2)" stroke-width="2"/>
+    <path d="M140 458 L166 444 L192 458" fill="none" stroke="var(--ink-2)" stroke-width="2"/>
+    <text x="166" y="504" text-anchor="middle" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 90">casco</text>
+    <rect x="206" y="458" width="54" height="30" fill="none" stroke="var(--ink-2)" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="233" y="504" text-anchor="middle" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 90">corral</text>
+
+    <path d="M414 24 L402 528" fill="none" stroke="var(--line-2)" stroke-width="9"/>
+    <path d="M414 24 L402 528" fill="none" stroke="var(--panel)" stroke-width="2.8" stroke-dasharray="12 12"/>
+    <text x="424" y="520" font-size="12" fill="var(--ink-3)" style="font-variation-settings:'wdth' 90">camino</text>
+
+    <!-- nivel 2: los potreros y lotes. Esto SI se toca. -->
+    ${polys}${labels}${dev}
+
+    <g transform="translate(770,534)">
+      <line x1="0" y1="0" x2="110" y2="0" stroke="var(--ink-2)" stroke-width="1.8"/>
+      <line x1="0" y1="-4" x2="0" y2="4" stroke="var(--ink-2)" stroke-width="1.8"/>
+      <line x1="110" y1="-4" x2="110" y2="4" stroke="var(--ink-2)" stroke-width="1.8"/>
+      <text x="55" y="-7" text-anchor="middle" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 90">200 metros</text>
+    </g>
+    <g transform="translate(52,534)">
+      <path d="M0 0 L0 -22 M-5 -16 L0 -22 L5 -16" stroke="var(--ink-2)" stroke-width="1.8" fill="none"/>
+      <text x="10" y="-2" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 90">N</text>
+    </g>
+  </svg>`;
+}
+
+function mapaInteractivo(root) {
+  const sync = (id, on) => {
+    $$(".bigrow", root).forEach(r => r.classList.toggle("hot", on && r.dataset.p === id));
+    $$("svg [data-poly]", root).forEach(el => el.setAttribute("stroke-width", (on && el.dataset.poly === id) ? 5 : 2.6));
+  };
+  $$(".bigrow", root).forEach(b => {
+    b.addEventListener("click", () => go("lote", b.dataset.p));
+    b.addEventListener("pointerenter", () => sync(b.dataset.p, 1));
+    b.addEventListener("pointerleave", () => sync(b.dataset.p, 0));
+  });
+  $$("svg [data-poly]", root).forEach(el => {
+    const p = byId(el.dataset.poly);
+    if (!p) return;
+    el.style.cursor = "pointer";
+    const tp = ev => tipShow(`<div class="t">${esc(p.tipo)} de ${esc(p.cultivo.toLowerCase())}</div><div class="r"><span><b>${esc(p.nom)}</b></span></div><div class="r"><span>Tamaño</span><b>${nf(p.ha, 1)} ha</b></div><div class="r"><span>Qué hacer</span><b>${esc(p.resp.t)}</b></div>`, ev);
+    el.addEventListener("pointerenter", ev => { sync(p.id, 1); tp(ev); });
+    el.addEventListener("pointermove", tp);
+    el.addEventListener("pointerleave", () => { sync(p.id, 0); tipHide(); });
+    el.addEventListener("click", () => go("lote", p.id));
+  });
+}
+
+const LEYENDA_MAPA = `<div class="legend" style="margin-top:10px">
+  <span>${ico("tilde", 18, "var(--ok)")}Bien</span>
+  <span>${ico("gota", 18, "var(--brand)")}Hay que regar</span>
+  <span>${ico("alerta", 18, "var(--crit)")}Urgente</span>
+  <span>${ico("sinsenal", 18, "var(--mute)")}Sin noticias</span>
+  <span><i class="sq" style="background:var(--ink-2); border-radius:50%"></i>Aparato que está mandando</span>
+  <span><i class="sq" style="background:transparent; border:2px dashed var(--ink-3); border-radius:50%"></i>Aparato que no manda</span>
+</div>`;
+
+/* ============================ pantallas ============================ */
+const SCR = {};
+
+/* ---------- 1. Hoy: la primera pantalla del día, y muchas veces la única ---------- */
+SCR.hoy = () => {
   const urg = PARCELAS.filter(p => p.est === "crit" || p.est === "do").length;
   return {
     title: "Hoy",
-    html: `<div class="pagehead"><div class="crumb">Estancia Yvoty · lunes 28 de septiembre</div><h1>Lo que hay que hacer hoy</h1></div>
+    html: `<div class="pagehead"><div class="crumb">${esc(CAMPO.nom)} · ${esc(CAMPO.lugar)} · lunes 28 de septiembre</div><h1>Lo que hay que hacer hoy</h1></div>
       ${urg
-        ? answer("do", `${urg} lotes necesitan algo`, "Los otros 4 están bien. Empezá por el de arriba, que es el más urgente.", "")
-        : answer("ok", "Hoy no hace falta nada", "Los 6 lotes están bien.", "")}
-      ${ordenados().map(loteRow).join("")}
-      <div class="panel"><div class="body">
-        <h3>${ico("mano", 20)} Si algo no cierra</h3>
-        <p class="note" style="margin-top:6px">Lo que la pantalla dice sale de los aparatos del lote. Si ves con tus ojos algo distinto a lo que dice acá, <b>lo que ves gana</b>: anotalo y avisá. El aparato se puede ensuciar o quedar mal enterrado.</p>
-        <div class="btnrow"><button class="btn" data-go="anotar">${ico("lapiz", 20)}Anotar algo</button></div>
-      </div></div>`,
+        ? answer("do", urg + " lugares necesitan algo", "Los otros " + (PARCELAS.length - urg) + " están bien. Empezá por el de arriba, que es el más urgente.", "")
+        : answer("ok", "Hoy no hace falta nada", "Los " + PARCELAS.length + " están bien.", "")}
+      <div class="cols hoy">
+        <div>${ordenados().map(loteRow).join("")}
+          <div class="panel"><div class="body">
+            <h3>${ico("mano", 20)} Si algo no cierra</h3>
+            <p class="note" style="margin-top:6px">Lo que la pantalla dice sale de los aparatos. Si ves con tus ojos algo distinto, <b>lo que ves gana</b>: anotalo y avisá. Un aparato se ensucia o queda mal enterrado.</p>
+            <div class="btnrow"><button class="btn" data-go="anotar">${ico("lapiz", 20)}Anotar algo</button></div>
+          </div></div>
+        </div>
+        <div>
+          <div class="mapfig">${mapSVG()}</div>
+          <div class="note" style="margin-top:7px; font-weight:650; color:var(--ink)">${esc(CAMPO.nom)} · ${nf(CAMPO.ha, 1)} hectáreas en total</div>
+          ${LEYENDA_MAPA}
+          <div class="note rule" style="margin-top:12px">
+            El borde grueso es <b>el campo entero</b>: ese no se toca. Lo que se toca son los potreros y los lotes de adentro.
+            Entre medio hay monte, camino, casco y tajamar, que no son de ningún potrero.
+            <a href="#/campo">Ver el campo entero</a>.
+          </div>
+        </div>
+      </div>`,
     after(root) {
-      $$(".bigrow", root).forEach(b => b.addEventListener("click", () => go("lote", b.dataset.p)));
+      mapaInteractivo(root);
       $$("[data-go]", root).forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
     }
   };
 };
 
-CAP.lote = (arg) => {
+/* ---------- 2. El campo entero ---------- */
+SCR.campo = () => ({
+  title: "El campo entero",
+  html: head(esc(CAMPO.lugar), CAMPO.nom,
+    "<b>Contesta cuánta tierra hay y dónde termina.</b> Es el contexto; las decisiones se toman potrero por potrero.") +
+    answer("ok", nf(CAMPO.ha, 1) + " hectáreas en total, y solo " + nf(108.7, 1) + " son potreros o lotes",
+      "Las otras <b>39,3 hectáreas</b> son monte, camino, casco, corral y tajamar. Es tierra real, pero no se siembra ni se pastorea.", "") +
+    `<div class="cols map">
+      <div>
+        <div class="mapfig">${mapSVG({ plano: 1, sinAparatos: 1 })}</div>
+        <div class="note" style="margin-top:7px; font-weight:650; color:var(--ink)">El borde entero mide ${nf(CAMPO.ha, 1)} hectáreas</div>
+        <div class="legend" style="margin-top:10px">
+          <span><i class="sq" style="background:transparent; border:3px solid var(--ink)"></i>El campo — el borde de afuera</span>
+          <span><i class="sq" style="background:color-mix(in srgb,var(--ok) 22%,transparent); border:2px solid var(--ok)"></i>Potreros y lotes</span>
+          <span><i class="sq" style="background:color-mix(in srgb,var(--n4) 30%,transparent); border:1px solid var(--n4)"></i>Monte</span>
+          <span><i class="sq" style="background:color-mix(in srgb,var(--s1) 34%,transparent); border:1px solid var(--s1)"></i>Tajamar</span>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <header><h2>Qué hay adentro del borde</h2></header>
+          <div class="body flush">
+            <table><tbody>
+            ${CAMPO.reparto.map(r => `<tr>
+              <td style="width:14px; padding-right:0"><span style="display:block; width:10px; height:26px; border-radius:2px; background:${r.c}"></span></td>
+              <td><b>${esc(r.n)}</b>${r.nota ? `<span class="why">${esc(r.nota)}</span>` : ""}</td>
+              <td class="num"><b>${nf(r.ha, 1)}</b> ha<span class="why">${nf(r.ha / CAMPO.ha * 100, 0)} %</span></td>
+            </tr>`).join("")}
+            <tr style="background:var(--panel-2)"><td></td><td><b>Todo el campo</b></td><td class="num"><b>${nf(CAMPO.ha, 1)}</b> ha</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="panel" style="border:2px solid var(--warn)">
+          <div class="body" style="display:flex; gap:12px; align-items:flex-start">
+            <span class="chip warn" style="flex:none"><span class="g"></span>Ojo</span>
+            <div>
+              <h3>Sumar los potreros no da el campo</h3>
+              <div class="note" style="margin-top:5px; max-width:56ch">
+                Y de ahí sale una trampa fácil de pasar por alto: <b>mirar cuánto verde hay en el campo entero no sirve para decidir nada.</b>
+                Las 26 hectáreas de monte están verdes todo el año y no se las come ninguna vaca. El número que decide es <b>el del potrero</b>,
+                y está en <a href="#/verde">cuánto pasto hay</a>.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <header><h2>El borde</h2></header>
+          <div class="body">
+            <dl class="kv">
+              <dt>De dónde salió</dt><dd>Del archivo del GPS que armó el dueño en Google Earth</dd>
+              <dt>Cuándo se cargó</dt><dd>12/08/2026</dd>
+              <dt>Potreros y lotes adentro</dt><dd>6 · ninguno se sale del borde</dd>
+            </dl>
+            <div class="btnrow" style="margin-top:12px"><button class="btn" data-go="dibujar">${ico("lapiz", 20)}Corregir el dibujo</button></div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+  after(root) {
+    mapaInteractivo(root);
+    $$("[data-go]", root).forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
+  }
+});
+
+/* ---------- 3. Un potrero o un lote por dentro ---------- */
+SCR.lote = (arg) => {
   const p = byId(arg) || ordenados()[0];
   const tieneAgua = !!p.agua;
+  const riegos = RIEGOS.filter(r => r.p === p.nom);
   return {
     title: p.nom,
-    html: `<div class="pagehead"><div class="crumb">Hoy · Estancia Yvoty</div><h1>${esc(p.nom)}</h1>
-        <div class="decision">${esc(p.cultivo)} · ${nf(p.ha, 1)} hectáreas</div></div>
-      <label class="note" style="display:block; margin-bottom:14px">Cambiar de lote<br>
-        <select class="btn" id="cap-lote" style="width:100%; margin-top:5px">${PARCELAS.map(x => `<option value="${x.id}"${x.id === p.id ? " selected" : ""}>${esc(x.nom)}</option>`).join("")}</select></label>
+    html: `<div class="pagehead"><div class="crumb">Hoy · ${esc(CAMPO.nom)}</div><h1>${esc(p.nom)}</h1>
+        <div class="decision">${esc(p.tipo)} de ${esc(p.cultivo.toLowerCase())} · ${nf(p.ha, 1)} hectáreas</div></div>
+      <label class="note" style="display:block; margin-bottom:14px">Cambiar de potrero o lote<br>
+        <select class="btn" id="sel-lote" style="width:100%; max-width:26rem; margin-top:5px">${PARCELAS.map(x => `<option value="${x.id}"${x.id === p.id ? " selected" : ""}>${esc(x.nom)}</option>`).join("")}</select></label>
       ${answer(p.est, p.resp.t, p.resp.s, p.resp.w)}
       ${freshness("Última lectura: <b>" + p.ult + "</b>", p.est === "mute")}
 
@@ -812,54 +994,125 @@ CAP.lote = (arg) => {
       </div>` : ""}
 
       <div class="panel">
-        <header><h2>${ico("lista", 20)} Qué pasó estos días</h2></header>
+        <header><h2>${ico("lista", 20)} Qué pasó estos días</h2><a class="hint" href="#/riegos">Ver todo</a></header>
         <div class="body flush">
           <table><tbody>
-            ${RIEGOS.filter(r => r.p === p.nom).slice(0, 4).map(r => `<tr><td style="width:9.5rem">${esc(r.f)}</td><td><b>${esc(r.dec)}</b><span class="why">${esc(r.cond)}</span></td></tr>`).join("")
-              || '<tr><td class="muted">Todavía no hay nada anotado de este lote.</td></tr>'}
+            ${riegos.length ? riegos.slice(0, 4).map(r => `<tr><td style="width:10rem">${esc(r.f)}</td><td><b>${esc(r.dec)}</b><span class="why">${esc(r.cond)}</span></td>
+              <td class="num">${r.est ? nf(r.est) + " L" : ""}</td></tr>`).join("")
+            : '<tr><td class="muted">Todavía no hay nada anotado acá.</td></tr>'}
           </tbody></table>
         </div>
       </div>
 
       ${tieneAgua ? `<details class="disclose">
-        <summary>${ico("grafico", 20)} Ver el dibujo de los últimos 21 días <span class="cv">${ico("chevron", 20)}</span></summary>
+        <summary>${ico("grafico", 20)} Ver el dibujo del agua en la tierra <span class="cv">${ico("chevron", 20)}</span></summary>
         <div class="inner">
-          <p class="note" style="margin:12px 0">La línea que importa es la del medio, la de la raíz. Cuando baja de la raya naranja, el riego arranca solo.</p>
-          <div class="chart" id="c-cap"></div>
-          <p class="note" style="margin-top:10px">El pedazo gris es un día en que el aparato no mandó nada. <b>No quiere decir que la tierra estuvo seca</b>: quiere decir que no sabemos.</p>
+          <p class="note" style="margin:12px 0">Los últimos 21 días. La línea que importa es la del medio, la de la raíz: cuando baja de la raya naranja, el riego arranca solo.</p>
+          <div class="chart" id="c-depth"></div>
+          <div class="note rule" style="margin-top:12px">
+            <b>Se dibuja para abajo porque es para abajo.</b> Si la línea de abajo sube después de cada riego, el agua está pasando la raíz:
+            eso es agua tirada y se arregla regando menos minutos, no cambiando la raya. El pedazo gris es <b>un día sin noticias</b>:
+            el aparato no mandó nada, no es que la tierra estuvo seca.
+          </div>
         </div>
       </details>` : ""}
 
-      <div class="btnrow">
-        <button class="btn block primary" data-go="anotar">${ico("lapiz", 22)}Anotar algo de este lote</button>
-      </div>`,
+      <details class="disclose">
+        <summary>${ico("grafico", 20)} Ver la lluvia, el riego y el pasto <span class="cv">${ico("chevron", 20)}</span></summary>
+        <div class="inner">
+          <div class="cols c2" style="margin-top:12px">
+            <div>
+              <h3>Riego y lluvia</h3>
+              <div class="chart" id="c-agua" style="margin-top:8px"></div>
+              <div class="note" style="margin-top:8px">La lluvia se dibuja cayendo y el riego saliendo del suelo: se distinguen por el lado, no solo por el color. Los 18 mm del 21/09 son los que frenaron el riego de esa mañana.</div>
+            </div>
+            <div>
+              <h3>Cuánto verde hay</h3>
+              <div class="chart" id="c-verd" style="margin-top:8px"></div>
+              <div class="legend" style="margin-top:8px"><span><i style="background:var(--n5)"></i>Este año</span><span><i style="background:var(--n3); height:3px"></i>Lo normal</span><span><i class="sq" style="background:var(--n1); opacity:.5"></i>Entre lo peor y lo mejor de 9 años</span></div>
+              <div class="note" style="margin-top:8px">Sale de la foto del satélite, gratis, cada 5 días. No hay que poner nada en el potrero.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <div class="cols c2">
+        <div class="panel">
+          <header><h2>Aparatos de acá</h2></header>
+          <div class="body flush scroller">
+            <table><thead><tr><th>Aparato</th><th>Pila</th><th>Último aviso</th></tr></thead><tbody>
+            ${DISPOSITIVOS.filter(d => d.lug === p.nom).map(d => `<tr><td><b>${esc(d.id)}</b><span class="why">${esc(d.t)}</span></td><td>${d.bat === null ? "enchufado" : d.bat + " %"}</td><td>${esc(d.ult)}</td></tr>`).join("") || '<tr><td colspan="3" class="muted">Sin aparatos todavía.</td></tr>'}
+            </tbody></table>
+          </div>
+        </div>
+        <div class="panel">
+          <header><h2>Último análisis de tierra</h2><span class="hint">14/07/2026</span></header>
+          <div class="body">
+            <dl class="kv">
+              <dt>Materia orgánica</dt><dd>2,8 %</dd>
+              <dt>Acidez</dt><dd>6,1</dd>
+              <dt>Fósforo</dt><dd>18 mg/kg</dd>
+              <dt>Tipo de tierra</dt><dd>Franco arcillosa</dd>
+              <dt>Cuando está llena de agua</dt><dd>31 %</dd>
+              <dt>Cuando la planta ya sufre</dt><dd>16 %</dd>
+            </dl>
+            <div class="note" style="margin-top:10px">Esos dos últimos números son los que fijan la franja verde del dibujo. Si cambia el análisis, cambia la franja.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tiles">
+        ${tile("Agua en la campaña", nf(186400), "litros", "≈ " + gs(1840000) + " de bombeo (ejemplo)")}
+        ${tile("Litros por kilo", nf(24.6, 1), "L/kg", "El ciclo pasado fueron " + nf(31.2, 1))}
+        ${tile("Tamaño", nf(p.ha, 1), "ha", "Dibujo corregido el 19/08/2026")}
+        ${tile("Cada cuánto llega el dato", "15", "min", "Si no hay señal, se guarda y se manda después")}
+      </div>
+
+      <div class="btnrow"><button class="btn block primary" data-go="anotar">${ico("lapiz", 22)}Anotar algo de acá</button></div>`,
     after(root) {
-      $$("[data-go]", root).forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
-      const sel = $("#cap-lote", root);
+      const sel = $("#sel-lote", root);
       if (sel) sel.addEventListener("change", () => go("lote", sel.value));
-      const det = $("details.disclose", root);
-      if (det) det.addEventListener("toggle", () => { if (det.open) drawCapChart(); });
+      $$("[data-go]", root).forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
+      $$("details.disclose", root).forEach(d => d.addEventListener("toggle", () => { if (d.open) dibujosDelLote(); }));
     }
   };
 };
-function drawCapChart() {
+function dibujosDelLote() {
   const okBand = [{ from: 19, to: 28, color: "color-mix(in srgb, var(--ok) 14%, transparent)" }];
-  laneChart($("#c-cap"), {
-    xLen: 84, xLabels: FECHAS, xTicks: [0, 21, 42, 63, 83], laneH: 76, gap: 12, padR: 20,
-    aria: "Humedad de la tierra a tres hondos, en los últimos 21 días",
+  if ($("#c-depth")) laneChart($("#c-depth"), {
+    xLen: 84, xLabels: FECHAS, xTicks: [0, 14, 28, 42, 56, 70, 83], laneH: 82, gap: 12, padR: 70,
+    aria: "El agua en la tierra a tres hondos, en 21 días",
     lanes: [
-      { title: "Arriba", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, series: [{ name: "Arriba", color: "var(--d1)", values: HUM10, fill: 1, unit: " %", dec: 1 }], marks: RIEGO_IDX.map(i => ({ i, color: "var(--brand)" })) },
-      { title: "En la raíz", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, vbands: [{ from: 43, to: 52, label: "no llegó nada" }], hlines: [{ v: 19, color: "var(--warn)" }], series: [{ name: "En la raíz", color: "var(--d2)", values: HUM30, fill: 1, unit: " %", dec: 1 }] },
-      { title: "Abajo", yMin: 6, yMax: 36, yTicks: [10, 20, 30], series: [{ name: "Abajo", color: "var(--d3)", values: HUM60, fill: 1, unit: " %", dec: 1 }] }
+      { title: "Arriba · 10 cm", sub: "%", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, series: [{ name: "Arriba", color: "var(--d1)", values: HUM10, fill: 1, unit: " %", dec: 1 }], marks: RIEGO_IDX.map(i => ({ i, color: "var(--brand)" })) },
+      { title: "En la raíz · 30 cm", sub: "es la que manda", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, vbands: [{ from: 43, to: 52, label: "sin noticias" }], hlines: [{ v: 19, color: "var(--warn)", label: "riega acá" }], series: [{ name: "En la raíz", color: "var(--d2)", values: HUM30, fill: 1, unit: " %", dec: 1 }] },
+      { title: "Abajo · 60 cm", sub: "si sube, el agua se fue de largo", yMin: 6, yMax: 36, yTicks: [10, 20, 30], series: [{ name: "Abajo", color: "var(--d3)", values: HUM60, fill: 1, unit: " %", dec: 1 }] }
+    ]
+  });
+  if ($("#c-agua")) laneChart($("#c-agua"), {
+    xLen: 84, xLabels: FECHAS, xTicks: [0, 21, 42, 63, 83], laneH: 66, gap: 4, padR: 16,
+    aria: "Lluvia caída y riego aplicado, en milímetros",
+    lanes: [
+      { title: "Lluvia", sub: "cae desde arriba", yMin: -20, yMax: 0, yTicks: [-5, -10, -15], yFmt: v => nf(-v), series: [{ name: "Lluvia", color: "var(--s1)", values: LLUVIA.map(v => -v), type: "bar", unit: " mm", dec: 1, wide: .5, abs: 1 }] },
+      { title: "Riego", sub: "sale del suelo", yMin: 0, yMax: 8, yTicks: [2, 4, 6], series: [{ name: "Riego", color: "var(--brand)", values: RIEGO_MM, type: "bar", unit: " mm", dec: 1, wide: .5 }] }
+    ]
+  });
+  if ($("#c-verd")) lineChart($("#c-verd"), {
+    xLen: 12, xLabels: MESES, xTicks: [0, 3, 6, 9, 11], h: 186, yMin: 30, yMax: 90, yTicks: [30, 50, 70, 90],
+    aria: "Cuánto verde hay cada mes contra los nueve años anteriores",
+    series: [
+      { name: "entre lo peor y lo mejor", color: "var(--n1)", values: VERD_MAX, lower: VERD_MIN, type: "band", op: .32, skipTip: 1 },
+      { name: "Lo normal", color: "var(--n3)", values: VERD_MED, w: 2.2, dash: "6 4", dec: 0 },
+      { name: "Este año", color: "var(--n5)", values: VERD_ACT, w: 3, dec: 0 }
     ]
   });
 }
 
-CAP.anotar = () => ({
+/* ---------- 4. Anotar ---------- */
+SCR.anotar = () => ({
   title: "Anotar",
-  html: `<div class="pagehead"><div class="crumb">Estancia Yvoty</div><h1>Anotar algo</h1>
+  html: `<div class="pagehead"><div class="crumb">${esc(CAMPO.nom)}</div><h1>Anotar algo</h1>
       <div class="decision">Elegí qué querés anotar. Casi todo se toca, no se escribe.</div></div>
-    <div id="anotar-menu">
+    <div id="anotar-menu" style="max-width:34rem">
       <button class="btn block" data-f="cosecha">${ico("balanza", 24)}Anotar lo que se cosechó</button>
       <div style="height:10px"></div>
       <button class="btn block" data-f="foto">${ico("camara", 24)}Sacar foto de la trampa</button>
@@ -867,11 +1120,13 @@ CAP.anotar = () => ({
       <button class="btn block" data-f="revise">${ico("tilde", 24)}Ya revisé la manguera</button>
       <div style="height:10px"></div>
       <button class="btn block" data-f="regue">${ico("gota", 24)}Regué a mano</button>
+      <div style="height:10px"></div>
+      <button class="btn block" data-f="hacienda">${ico("pasto", 24)}Moví la hacienda de potrero</button>
       <div class="panel" style="margin-top:18px"><div class="body">
-        <p class="note">La foto se guarda con el lugar y la hora solas. <b>No hay que escribir nada.</b></p>
+        <p class="note">La foto se guarda con el lugar y la hora solas. <b>No hay que escribir nada.</b> Si no hay señal, se manda cuando vuelva.</p>
       </div></div>
     </div>
-    <div id="anotar-form"></div>`,
+    <div id="anotar-form" style="max-width:34rem"></div>`,
   after(root) {
     const menu = $("#anotar-menu", root), form = $("#anotar-form", root);
     const volver = () => { form.innerHTML = ""; menu.style.display = ""; };
@@ -886,7 +1141,7 @@ function formCosecha(host, volver) {
   host.innerHTML = `<div class="panel"><header><h2>${ico("balanza", 20)} Lo que se cosechó</h2></header>
     <div class="body">
       <div class="kv" style="grid-template-columns:1fr; gap:14px">
-        <label><span class="note">De qué lote</span><br>
+        <label><span class="note">De dónde</span><br>
           <select class="btn" id="f-lote" style="width:100%">${PARCELAS.map(p => `<option>${esc(p.nom)}</option>`).join("")}</select></label>
         <label><span class="note">Cuántos kilos</span><br>
           <input class="btn" id="f-kg" inputmode="decimal" value="9,1" style="width:100%"></label>
@@ -914,11 +1169,11 @@ function formCosecha(host, volver) {
   $("#f-seguir", host).addEventListener("click", () => {
     const lote = $("#f-lote", host).value, kg = $("#f-kg", host).value, desc = $("#f-desc", host).value;
     const mot = ($$("#f-mot .btn", host).find(b => b.getAttribute("aria-pressed") === "true") || {}).textContent || "";
-    /* Ninguna accion queda a un toque: primero se muestra exactamente que se va a guardar. */
+    /* Nada queda a un toque: primero se muestra exactamente que se va a guardar. */
     host.innerHTML = `<div class="panel" style="border:2px solid var(--brand)"><header><h2>¿Está bien así?</h2></header>
       <div class="body">
         <dl class="kv" style="font-size:1.05rem">
-          <dt>Lote</dt><dd><b>${esc(lote)}</b></dd>
+          <dt>Dónde</dt><dd><b>${esc(lote)}</b></dd>
           <dt>Kilos</dt><dd><b>${esc(kg)} kg</b></dd>
           <dt>Se tiraron</dt><dd><b>${esc(desc)}</b> cajones</dd>
           <dt>Por qué</dt><dd><b>${esc(mot)}</b></dd>
@@ -944,14 +1199,17 @@ function formSimple(host, volver, kind) {
         <p class="note" style="margin:12px auto 0">Apuntá a la trampa y sacá la foto. El lugar y la hora los pone el teléfono.</p>
       </div></div>`, ok: "La foto quedó guardada con el lugar y la hora." },
     revise: { t: "Ya revisé la manguera", ic: "tilde", body: "", ok: "Quedó anotado que revisaste la línea hoy." },
-    regue: { t: "Regué a mano", ic: "gota", body: "", ok: "Quedó anotado el riego a mano. No cambia lo que hace el aparato." }
+    regue: { t: "Regué a mano", ic: "gota", body: "", ok: "Quedó anotado el riego a mano. No cambia lo que hace el aparato." },
+    hacienda: { t: "Moví la hacienda", ic: "pasto", body: "", ok: "Quedó anotado el cambio de potrero." }
   }[kind];
   host.innerHTML = `<div class="panel"><header><h2>${ico(T.ic, 20)} ${esc(T.t)}</h2></header>
     <div class="body">
-      <label><span class="note">De qué lote</span><br>
+      <label><span class="note">${kind === "hacienda" ? "A qué potrero" : "De dónde"}</span><br>
         <select class="btn" id="s-lote" style="width:100%; margin-top:5px">${PARCELAS.map(p => `<option>${esc(p.nom)}</option>`).join("")}</select></label>
       ${kind === "regue" ? `<label style="display:block; margin-top:14px"><span class="note">Cuánto tiempo</span><br>
         <select class="btn" id="s-min" style="width:100%; margin-top:5px"><option>10 minutos</option><option selected>20 minutos</option><option>30 minutos</option><option>Más de media hora</option></select></label>` : ""}
+      ${kind === "hacienda" ? `<label style="display:block; margin-top:14px"><span class="note">Cuántos animales</span><br>
+        <select class="btn" id="s-n" style="width:100%; margin-top:5px"><option>Menos de 20</option><option selected>Entre 20 y 50</option><option>Entre 50 y 100</option><option>Más de 100</option></select></label>` : ""}
     </div></div>
     ${T.body}
     <div class="btnrow">
@@ -961,231 +1219,12 @@ function formSimple(host, volver, kind) {
   $("#s-no", host).addEventListener("click", volver);
   $("#s-ok", host).addEventListener("click", () => {
     const lote = $("#s-lote", host).value;
-    host.innerHTML = `${answer("ok", "Guardado", T.ok + " Lote: <b>" + esc(lote) + "</b>.", "")}
+    host.innerHTML = `${answer("ok", "Guardado", T.ok + " Fue en <b>" + esc(lote) + "</b>.", "")}
       <button class="btn block" id="s-fin">${ico("flecha", 22)}Anotar otra cosa</button>`;
     $("#s-fin", host).addEventListener("click", volver);
   });
 }
-
-/* ============================ pantallas del DUEÑO ============================ */
-const DUE = {};
-
-DUE.lotes = () => ({
-  title: "Los lotes",
-  html: head("Estancia Yvoty · La Colmena, Paraguarí", "Los lotes",
-    "<b>Decide a qué lote hay que ir hoy.</b> El mapa dice dónde está el problema; el lote por dentro dice cuál es.") +
-    answer("do", "Dos lotes necesitan algo hoy", "Huerta Ñu Porâ está perdiendo agua y Tomatal Ka'aguy hay que regarlo. Los otros cuatro están bien.", "") +
-    `<div class="tiles">
-      ${tile("Bien", "3", "de 6", "Última lectura hace 2 minutos")}
-      ${tile("Hay que regar", "1", "", "Tomatal Ka'aguy")}
-      ${tile("Urgente", "1", "", "Huerta Ñu Porâ · pierde agua")}
-      ${tile("Sin noticias", "1", "", "Potrero Costa Guasu · hace 3 días")}
-      ${tile("Agua usada hoy", nf(4860), "litros", "6 riegos en 4 lotes")}
-    </div>
-    <div class="cols map">
-      <div>
-        <div class="mapfig">${mapSVG()}</div>
-        <div class="legend" style="margin-top:10px">
-          <span>${ico("tilde", 16, "var(--ok)")}Bien</span>
-          <span>${ico("gota", 16, "var(--brand)")}Hay que regar</span>
-          <span>${ico("alerta", 16, "var(--crit)")}Urgente</span>
-          <span>${ico("sinsenal", 16, "var(--mute)")}Sin noticias</span>
-          <span><i class="sq" style="background:var(--ink-2); border-radius:50%"></i>Aparato que está mandando</span>
-          <span><i class="sq" style="background:transparent; border:2px dashed var(--ink-3); border-radius:50%"></i>Aparato que no manda</span>
-        </div>
-        <div class="note rule" style="margin-top:12px">
-          El lote se pinta por <b>cómo está</b>, no por lo que tiene sembrado: lo sembrado ya está escrito y lo que cambia es cómo está.
-          Los aparatos no se asignan a mano a ningún lote: el sistema sabe cuál está adentro de cuál.
-        </div>
-      </div>
-      <div>${ordenados().map(loteRow).join("")}</div>
-    </div>`,
-  after(root) {
-    $$(".bigrow", root).forEach(b => {
-      b.addEventListener("click", () => go("lote", b.dataset.p));
-      b.addEventListener("pointerenter", () => sync(b.dataset.p, 1));
-      b.addEventListener("pointerleave", () => sync(b.dataset.p, 0));
-    });
-    function sync(id, on) {
-      $$(".bigrow", root).forEach(r => r.classList.toggle("hot", on && r.dataset.p === id));
-      $$("svg [data-poly]", root).forEach(el => el.setAttribute("stroke-width", (on && el.dataset.poly === id) ? 4.5 : 2.4));
-    }
-    $$("svg [data-poly]", root).forEach(el => {
-      el.style.cursor = "pointer";
-      const p = byId(el.dataset.poly);
-      const tp = ev => tipShow(`<div class="t">${esc(p.cultivo)}</div><div class="r"><span><b>${esc(p.nom)}</b></span></div><div class="r"><span>Tamaño</span><b>${nf(p.ha, 1)} ha</b></div><div class="r"><span>Qué hacer</span><b>${esc(p.resp.t)}</b></div>`, ev);
-      el.addEventListener("pointerenter", ev => { sync(p.id, 1); tp(ev); });
-      el.addEventListener("pointermove", tp);
-      el.addEventListener("pointerleave", () => { sync(p.id, 0); tipHide(); });
-      el.addEventListener("click", () => go("lote", p.id));
-    });
-  }
-});
-
-function mapSVG() {
-  const dev = DISPOS_MAPA.map(d => {
-    const ho = d.off;
-    if (d.t === "estacion") return `<path d="M${d.x - 6} ${d.y + 6} L${d.x} ${d.y - 7} L${d.x + 6} ${d.y + 6} Z" fill="${ho ? "none" : "var(--ink-2)"}" stroke="var(--ink-2)" stroke-width="1.8" stroke-dasharray="${ho ? "2 2" : "none"}"/>`;
-    if (d.t === "ctrl") return `<rect x="${d.x - 5.5}" y="${d.y - 5.5}" width="11" height="11" fill="${ho ? "none" : "var(--brand)"}" stroke="var(--brand)" stroke-width="2" stroke-dasharray="${ho ? "2 2" : "none"}"/>`;
-    if (d.t === "caudal") return `<g transform="translate(${d.x},${d.y})"><circle r="6" fill="none" stroke="var(--s1)" stroke-width="2"/><path d="M-6 0 H6" stroke="var(--s1)" stroke-width="2"/></g>`;
-    if (d.t === "trampa") return `<path d="M${d.x} ${d.y - 6.5} L${d.x + 6.5} ${d.y} L${d.x} ${d.y + 6.5} L${d.x - 6.5} ${d.y} Z" fill="var(--s2)" stroke="var(--s2)" stroke-width="1.5"/>`;
-    return `<circle cx="${d.x}" cy="${d.y}" r="5" fill="${ho ? "none" : "var(--ink-2)"}" stroke="var(--ink-2)" stroke-width="1.9" stroke-dasharray="${ho ? "2 2" : "none"}"/>`;
-  }).join("");
-  const polys = PARCELAS.map(p => {
-    const c = estColor(p.est), mute = p.est === "mute";
-    return `<polygon data-poly="${p.id}" points="${p.poly}" fill="${mute ? "none" : `color-mix(in srgb, ${c} 20%, transparent)`}" stroke="${c}" stroke-width="2.4" stroke-linejoin="round" stroke-dasharray="${mute ? "8 5" : "none"}"><title>${esc(p.nom)} — ${esc(p.resp.t)}</title></polygon>`;
-  }).join("");
-  const labels = PARCELAS.map(p => {
-    const pts = p.poly.split(" ").map(s => s.split(",").map(Number));
-    const cx = pts.reduce((a, b) => a + b[0], 0) / pts.length, cy = pts.reduce((a, b) => a + b[1], 0) / pts.length;
-    return `<text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)" style="font-variation-settings:'wdth' 106; pointer-events:none">${esc(p.nom)}</text>
-            <text x="${cx}" y="${cy + 13}" text-anchor="middle" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 90; pointer-events:none">${esc(p.cultivo)} · ${nf(p.ha, 1)} ha</text>`;
-  }).join("");
-  return `<svg viewBox="0 0 920 510" role="img" aria-label="Mapa de los seis lotes del campo con sus aparatos">
-    <rect width="920" height="510" fill="var(--panel)"/>
-    <g opacity=".5">
-      <path d="M0 108 C160 92, 300 132, 460 112 S760 78, 920 100" fill="none" stroke="var(--line)"/>
-      <path d="M0 232 C180 214, 320 252, 500 234 S780 202, 920 224" fill="none" stroke="var(--line)"/>
-      <path d="M0 356 C200 336, 340 374, 520 356 S800 326, 920 346" fill="none" stroke="var(--line)"/>
-    </g>
-    <path d="M-10 318 C120 300, 250 306, 388 296 S620 276, 930 298" fill="none" stroke="var(--s1)" stroke-width="6" opacity=".38" stroke-linecap="round"/>
-    <text x="24" y="311" font-size="12" fill="var(--s1)" style="font-variation-settings:'wdth' 88">arroyo</text>
-    <path d="M404 0 L392 510" fill="none" stroke="var(--line-2)" stroke-width="8"/>
-    <path d="M404 0 L392 510" fill="none" stroke="var(--panel)" stroke-width="2.6" stroke-dasharray="11 11"/>
-    <text x="414" y="500" font-size="12" fill="var(--ink-3)" style="font-variation-settings:'wdth' 88">camino</text>
-    ${polys}${labels}${dev}
-    <g transform="translate(762,486)">
-      <line x1="0" y1="0" x2="110" y2="0" stroke="var(--ink-2)" stroke-width="1.8"/>
-      <line x1="0" y1="-4" x2="0" y2="4" stroke="var(--ink-2)" stroke-width="1.8"/>
-      <line x1="110" y1="-4" x2="110" y2="4" stroke="var(--ink-2)" stroke-width="1.8"/>
-      <text x="55" y="-7" text-anchor="middle" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 88">200 metros</text>
-    </g>
-    <g transform="translate(46,486)">
-      <path d="M0 0 L0 -22 M-5 -16 L0 -22 L5 -16" stroke="var(--ink-2)" stroke-width="1.8" fill="none"/>
-      <text x="10" y="-2" font-size="12" fill="var(--ink-2)" style="font-variation-settings:'wdth' 88">N</text>
-    </g>
-  </svg>`;
-}
-
-DUE.lote = (arg) => {
-  const p = byId(arg) || byId("p1");
-  return {
-    title: p.nom,
-    html: head("Los lotes · Estancia Yvoty", p.nom,
-      "<b>Decide si el agua llegó a la raíz o pasó de largo.</b> Eso es lo que sube o baja los minutos de riego, y es agua y es plata.") +
-      answer(p.est, p.resp.t, p.resp.s, p.resp.w) +
-      `<div class="tiles">
-        ${tile("Sembrado", esc(p.cultivo), "", "Campaña 2026/27 · trasplante 04/08/2026")}
-        ${tile("Tamaño", nf(p.ha, 1), "ha", "Dibujo corregido el 19/08/2026")}
-        ${tile("Agua en la campaña", nf(186400), "litros", "≈ " + gs(1840000) + " de bombeo (ejemplo)")}
-        ${tile("Litros por kilo", nf(24.6, 1), "L/kg", "El ciclo pasado fueron " + nf(31.2, 1))}
-        ${tile("Última lectura", "11", "min", "Llega cada 15 minutos")}
-      </div>
-
-      <div class="panel">
-        <header>
-          <h2>El agua en la tierra, a tres hondos</h2>
-          <span class="legend"><span><i style="background:var(--d1)"></i>arriba</span><span><i style="background:var(--d2)"></i>en la raíz</span><span><i style="background:var(--d3)"></i>abajo</span><span><i class="sq" style="background:color-mix(in srgb,var(--ok) 30%,transparent)"></i>donde tiene que estar</span></span>
-          <span class="hint">21 días · datos de ejemplo</span>
-        </header>
-        <div class="body">
-          <div class="chart" id="c-depth"></div>
-          <div class="note rule" style="margin-top:12px">
-            <b>Se dibuja para abajo porque es para abajo.</b> Si la línea de abajo sube después de cada riego, el agua está pasando la raíz:
-            eso es agua tirada y se arregla regando menos minutos, no cambiando la raya. El pedazo gris es <b>un día sin noticias</b>:
-            el aparato no mandó nada, no es que la tierra estuvo seca.
-          </div>
-        </div>
-      </div>
-
-      <div class="cols c2">
-        <div class="panel">
-          <header><h2>Riego y lluvia</h2><span class="hint">milímetros · el mismo tiempo que arriba</span></header>
-          <div class="body">
-            <div class="chart" id="c-agua"></div>
-            <div class="note" style="margin-top:8px">La lluvia se dibuja cayendo y el riego saliendo del suelo: se distinguen por el lado, no solo por el color. Los 18 mm del 21/09 son los que frenaron el riego de esa mañana.</div>
-          </div>
-        </div>
-        <div class="panel">
-          <header><h2>Cuánto verde hay</h2><span class="hint">este año contra los 9 anteriores</span></header>
-          <div class="body">
-            <div class="chart" id="c-verd"></div>
-            <div class="legend" style="margin-top:8px"><span><i style="background:var(--n5)"></i>Este año</span><span><i style="background:var(--n3); height:3px"></i>Lo normal</span><span><i class="sq" style="background:var(--n1); opacity:.5"></i>Entre lo peor y lo mejor de 9 años</span></div>
-            <div class="note" style="margin-top:8px">Sale de la foto del satélite, gratis, cada 5 días. No hay que poner nada en el lote.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <header><h2>Últimos riegos</h2><a class="hint" href="#/duenio/riegos">Ver todo</a></header>
-        <div class="body flush scroller">
-          <table>
-            <thead><tr><th>Cuándo</th><th>Por qué</th><th>Qué hizo</th><th class="num">Agua esperada</th><th class="num">Agua que salió</th></tr></thead>
-            <tbody>${RIEGOS.filter(r => r.p === p.nom).map(r => `<tr><td>${esc(r.f)}</td><td>${esc(r.cond)}</td><td>${esc(r.dec)}</td>
-              <td class="num">${nf(r.est)} L</td><td class="num">${r.med === null ? "—" : nf(r.med) + " L"}</td></tr>`).join("") || '<tr><td colspan="5" class="muted">Sin riegos anotados.</td></tr>'}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="cols c2">
-        <div class="panel">
-          <header><h2>Aparatos de este lote</h2></header>
-          <div class="body flush scroller">
-            <table><thead><tr><th>Aparato</th><th>Pila</th><th>Último aviso</th></tr></thead><tbody>
-            ${DISPOSITIVOS.filter(d => d.lug === p.nom).map(d => `<tr><td><b>${esc(d.id)}</b><span class="why">${esc(d.t)}</span></td><td>${d.bat === null ? "enchufado" : d.bat + " %"}</td><td>${esc(d.ult)}</td></tr>`).join("") || '<tr><td colspan="3" class="muted">Sin aparatos.</td></tr>'}
-            </tbody></table>
-          </div>
-        </div>
-        <div class="panel">
-          <header><h2>Último análisis de tierra</h2><span class="hint">14/07/2026</span></header>
-          <div class="body">
-            <dl class="kv">
-              <dt>Materia orgánica</dt><dd>2,8 %</dd>
-              <dt>Acidez (pH)</dt><dd>6,1</dd>
-              <dt>Fósforo</dt><dd>18 mg/kg</dd>
-              <dt>Potasio</dt><dd>0,42</dd>
-              <dt>Tipo de tierra</dt><dd>Franco arcillosa</dd>
-              <dt>Cuando está llena de agua</dt><dd>31 %</dd>
-              <dt>Cuando la planta ya sufre</dt><dd>16 %</dd>
-            </dl>
-            <div class="note" style="margin-top:10px">Esos dos últimos números son los que fijan la franja verde del dibujo de arriba. Si cambia el análisis, cambia la franja.</div>
-          </div>
-        </div>
-      </div>`,
-    after() {
-      const okBand = [{ from: 19, to: 28, color: "color-mix(in srgb, var(--ok) 14%, transparent)" }];
-      laneChart($("#c-depth"), {
-        xLen: 84, xLabels: FECHAS, xTicks: [0, 14, 28, 42, 56, 70, 83], laneH: 84, gap: 12, padR: 70,
-        aria: "Humedad de la tierra a tres hondos durante 21 días",
-        lanes: [
-          { title: "Arriba · 10 cm", sub: "%", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, series: [{ name: "Arriba", color: "var(--d1)", values: HUM10, fill: 1, unit: " %", dec: 1 }], marks: RIEGO_IDX.map(i => ({ i, color: "var(--brand)" })) },
-          { title: "En la raíz · 30 cm", sub: "es la que manda", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, vbands: [{ from: 43, to: 52, label: "sin noticias" }], hlines: [{ v: 19, color: "var(--warn)", label: "riega acá" }], series: [{ name: "En la raíz", color: "var(--d2)", values: HUM30, fill: 1, unit: " %", dec: 1 }] },
-          { title: "Abajo · 60 cm", sub: "si sube, el agua se fue de largo", yMin: 6, yMax: 36, yTicks: [10, 20, 30], series: [{ name: "Abajo", color: "var(--d3)", values: HUM60, fill: 1, unit: " %", dec: 1 }] }
-        ]
-      });
-      laneChart($("#c-agua"), {
-        xLen: 84, xLabels: FECHAS, xTicks: [0, 21, 42, 63, 83], laneH: 66, gap: 4, padR: 16,
-        aria: "Lluvia caída y riego aplicado, en milímetros",
-        lanes: [
-          { title: "Lluvia", sub: "cae desde arriba", yMin: -20, yMax: 0, yTicks: [-5, -10, -15], yFmt: v => nf(-v), series: [{ name: "Lluvia", color: "var(--s1)", values: LLUVIA.map(v => -v), type: "bar", unit: " mm", dec: 1, wide: .5, abs: 1 }] },
-          { title: "Riego", sub: "sale del suelo", yMin: 0, yMax: 8, yTicks: [2, 4, 6], series: [{ name: "Riego", color: "var(--brand)", values: RIEGO_MM, type: "bar", unit: " mm", dec: 1, wide: .5 }] }
-        ]
-      });
-      lineChart($("#c-verd"), {
-        xLen: 12, xLabels: MESES, xTicks: [0, 3, 6, 9, 11], h: 182, yMin: 30, yMax: 90, yTicks: [30, 50, 70, 90],
-        aria: "Cuánto verde hay cada mes, contra los nueve años anteriores",
-        series: [
-          { name: "entre lo peor y lo mejor", color: "var(--n1)", values: VERD_MAX, lower: VERD_MIN, type: "band", op: .32, skipTip: 1 },
-          { name: "Lo normal", color: "var(--n3)", values: VERD_MED, w: 2.2, dash: "6 4", dec: 0 },
-          { name: "Este año", color: "var(--n5)", values: VERD_ACT, w: 3, dec: 0 }
-        ]
-      });
-    }
-  };
-};
-
-DUE.riegos = () => ({
+SCR.riegos = () => ({
   title: "Qué regó y por qué",
   html: head("Estancia Yvoty", "Qué regó y por qué",
     "<b>Decide si hay que mandar a alguien a revisar la línea, o si hay que cambiar cuándo riega.</b>") +
@@ -1253,7 +1292,7 @@ DUE.riegos = () => ({
   }
 });
 
-DUE.cuando = () => ({
+SCR.cuando = () => ({
   title: "Cuándo regar",
   html: head("Tomatal Ka'aguy · regla 7", "Cuándo regar",
     "<b>Decide si riega antes o después, más o menos.</b> Es lo único que se le manda al lote desde acá.") +
@@ -1325,10 +1364,10 @@ DUE.cuando = () => ({
   }
 });
 
-DUE.numeros = () => ({
+SCR.numeros = () => ({
   title: "Los números con detalle",
   html: head("Estancia Yvoty", "Los números con detalle",
-    "<b>Decide si el aparato está diciendo la verdad.</b> Es la pantalla del técnico, no la del capataz.") +
+    "<b>Decide si el aparato está diciendo la verdad.</b> Es la pantalla de quien mantiene los aparatos: al resto no le aparece.") +
     answer("ok", "El aparato SE01-0431 está midiendo bien", "Lo que manda sin tocar y lo que sale después del ajuste van juntos. Si un día se separan, el ajuste quedó mal y <b>se puede recalcular todo lo viejo</b>.", "") +
     `<div class="panel">
       <header><h2>Qué querés mirar</h2><span class="hint">4 lecturas por hora · nunca se promedian al guardarlas</span></header>
@@ -1389,7 +1428,7 @@ DUE.numeros = () => ({
   }
 });
 
-DUE.aparatos = () => ({
+SCR.aparatos = () => ({
   title: "Los aparatos",
   html: head("Estancia Yvoty y patio de Asunción", "Los aparatos",
     "<b>Decide a qué aparato hay que ir hoy</b> —pila, sonda o antena— y si algún dato viejo hay que recalcularlo.") +
@@ -1460,7 +1499,7 @@ DUE.aparatos = () => ({
   after() { }
 });
 
-DUE.verde = () => ({
+SCR.verde = () => ({
   title: "Cuánto pasto hay",
   html: head("Foto del satélite · gratis, cada 5 días", "Cuánto pasto hay",
     "<b>Decide a qué potrero mover la hacienda, cuál se está gastando, y dónde enterrar el próximo aparato.</b>") +
@@ -1510,7 +1549,7 @@ DUE.verde = () => ({
   after() {
     const col = v => v > 65 ? "var(--n5)" : v > 60 ? "var(--n4)" : v > 55 ? "var(--n3)" : v > 48 ? "var(--n2)" : "var(--n1)";
     rankChart($("#c-rank"), {
-      padL: 158, padR: 168, metric: "Cuánto verde", max: 80,
+      padL: 176, padR: 168, metric: "Cuánto verde", max: 80,
       rows: PARCELAS.slice().sort((a, b) => b.verdor - a.verdor).map(p => ({
         lab: p.nom, v: p.verdor, txt: p.verdor + " de 100" + (p.id === "p1" ? " · recién plantado" : ""), color: col(p.verdor),
         extra: ["De dónde sale", p.id === "p3" ? "vuelo de dron · 14/09" : "satélite · 26/09"]
@@ -1537,7 +1576,7 @@ DUE.verde = () => ({
   }
 });
 
-DUE.hidro = () => ({
+SCR.hidro = () => ({
   title: "El agua de la hidroponía",
   html: head("Patio de Asunción · mesa 1 · lechuga", "El agua de la hidroponía",
     "<b>Decide si hay que cambiar el agua, agregarle, corregir la acidez o poner media sombra.</b>") +
@@ -1621,7 +1660,7 @@ DUE.hidro = () => ({
   }
 });
 
-DUE.pruebas = () => ({
+SCR.pruebas = () => ({
   title: "Las pruebas",
   html: head("Patio de Asunción · ciclo 3 · lechuga", "Las pruebas",
     "<b>Decide qué se cambia en el ciclo que viene, sabiendo qué fue lo que lo causó.</b>") +
@@ -1707,7 +1746,7 @@ DUE.pruebas = () => ({
   }
 });
 
-DUE.avisos = () => ({
+SCR.avisos = () => ({
   title: "Avisos",
   html: head("Estancia Yvoty", "Avisos",
     "<b>Decide qué se atiende primero.</b> Un aviso sin decir qué hacer no es un aviso: son malas noticias más temprano.") +
@@ -1746,15 +1785,15 @@ DUE.avisos = () => ({
   after() { }
 });
 
-DUE.gente = () => ({
+SCR.gente = () => ({
   title: "Quién entra y qué puede hacer",
   html: head("Estancia Yvoty", "Quién entra y qué puede hacer",
     "<b>Decide a quién se le da la llave de cuándo riega</b>, que es lo único que mueve agua de verdad.") +
-    answer("ok", "El capataz ve tres pantallas, el dueño ve doce", "No es una app recortada: es <b>la misma app</b> mostrando lo que cada uno necesita. Mostrarle doce pantallas a alguien que necesita tres es hacerle perder el lote adentro del menú.", "") +
+    answer("ok", "Cada uno ve solo lo que puede usar, y no hay que avisárselo", "La app es <b>una sola</b>. Quien no tiene permiso para cambiar las reglas de riego simplemente <b>no ve esa opción en el menú</b>: no aparece apagada ni con un cartel. El permiso decide cuánto se muestra.", "") +
     `<div class="panel">
       <header><h2>Quiénes entran</h2><span class="hint">4 personas</span></header>
       <div class="body flush scroller">
-        <table><thead><tr><th>Quién</th><th>Qué es</th><th>Qué alcanza</th><th class="num">Cuántas pantallas ve</th><th>Última vez</th><th></th></tr></thead><tbody>
+        <table><thead><tr><th>Quién</th><th>Qué es</th><th>Qué alcanza</th><th class="num">Cuántas cosas le aparecen</th><th>Última vez</th><th></th></tr></thead><tbody>
         ${USUARIOS.map(u => `<tr><td><b>${esc(u.n)}</b><span class="why">${esc(u.m)}</span></td><td>${esc(u.rol)}</td><td>${esc(u.amb)}</td>
           <td class="num"><b>${u.pant}</b></td><td>${esc(u.ult)}</td><td><button class="btn">Cambiar</button></td></tr>`).join("")}
         </tbody></table>
@@ -1762,7 +1801,7 @@ DUE.gente = () => ({
     </div>
 
     <div class="panel">
-      <header><h2>Qué puede hacer cada uno</h2><span class="hint">escrito, no deducido de un nombre</span></header>
+      <header><h2>Qué habilita cada permiso</h2><span class="hint">escrito, no deducido de un nombre</span></header>
       <div class="body flush scroller">
         <table class="matrix"><thead><tr><th>Qué</th><th>Dueño</th><th>Técnica</th><th>Capataz</th><th>Solo mirar</th></tr></thead><tbody>
         ${PERMISOS.map(r => `<tr><td>${esc(r[0])}</td>${r.slice(1).map(v => v ? '<td class="y">Sí</td>' : '<td class="n">No</td>').join("")}</tr>`).join("")}
@@ -1776,7 +1815,7 @@ DUE.gente = () => ({
         <p class="note" style="margin-top:5px">
           Los datos de un cliente no se le muestran a otro, y eso <b>no lo decide esta pantalla</b>: lo decide la base de datos.
           Si alguien pregunta por datos que no son suyos, no le llega nada — ni una fila equivocada, ninguna.
-          Acá se decide qué puede <b>hacer</b> cada uno; qué puede <b>ver</b> ya está resuelto más abajo.
+          Acá se decide qué puede <b>hacer</b> cada uno, y de rebote cuánto ve; qué datos <b>existen</b> para él ya está resuelto abajo.
         </p>
         <p class="note">Por eso tampoco existe la opción “ver todos los clientes juntos”: esa pregunta no se puede hacer.</p>
       </div>
@@ -1784,24 +1823,44 @@ DUE.gente = () => ({
   after() { }
 });
 
-DUE.dibujar = () => ({
-  title: "Dibujar un lote",
-  html: head("Estancia Yvoty", "Dibujar un lote",
-    "<b>Define de dónde cuelga todo lo demás.</b> Si el dibujo del lote cambia, se vuelve a calcular solo qué aparatos le tocan y qué fotos del satélite le corresponden.") +
-    answer("warn", "Con el dibujo nuevo, un aparato queda afuera", "<b>SE01-0432</b> queda fuera del límite que estás por guardar. Sus lecturas dejan de contar para este lote. Mirá el mapa antes de guardar.", "Antes de guardar") +
-    `<div class="cols map">
+SCR.dibujar = () => ({
+  title: "Dibujar el campo",
+  html: head(esc(CAMPO.nom), "Dibujar el campo y los potreros",
+    "<b>Define de dónde cuelga todo lo demás.</b> Son dos dibujos distintos: el borde de afuera y las divisiones de adentro.") +
+    answer("warn", "Con la división nueva, un aparato queda afuera", "<b>SE01-0432</b> queda fuera del potrero que estás por guardar. Sus lecturas dejan de contar para ahí. Mirá el mapa antes de guardar.", "Antes de guardar") +
+    `<div class="panel">
+      <div class="body">
+        <div class="cols c2">
+          <div>
+            <h3>${ico("lote", 20)} El borde de afuera — el campo</h3>
+            <p class="note" style="margin-top:6px">Es el contexto: cuánta tierra hay y dónde termina. Se dibuja <b>una sola vez</b>, cuando se da de alta el establecimiento, y casi nunca se toca.</p>
+            <dl class="kv"><dt>Estado</dt><dd>${chip("ok")} cargado el 12/08/2026</dd><dt>Tamaño</dt><dd><b>${nf(CAMPO.ha, 1)} ha</b></dd></dl>
+          </div>
+          <div>
+            <h3>${ico("planta", 20)} Las divisiones de adentro — potreros y lotes</h3>
+            <p class="note" style="margin-top:6px">Son la unidad de decisión: dónde se riega, a cuál se mueve la hacienda. <b>Se corrigen seguido</b>, y cada corrección recalcula todo lo que cuelga.</p>
+            <dl class="kv"><dt>Cargados</dt><dd>6 · ninguno se sale del borde</dd><dt>Suman</dt><dd><b>108,7 ha</b> de las ${nf(CAMPO.ha, 1)}</dd></dl>
+          </div>
+        </div>
+        <div class="note rule" style="margin-top:12px">
+          <b>No hace falta dibujar a mano ninguno de los dos.</b> El archivo que el dueño armó con Google Earth trae los dos niveles: el borde de afuera es el campo y cada división de adentro es un potrero o un lote.
+        </div>
+      </div>
+    </div>
+
+    <div class="cols map">
       <div class="panel">
-        <header><h2>El dibujo</h2><span class="hint">se guarda tal como vino del GPS</span></header>
+        <header><h2>La división que estás por guardar</h2><span class="hint">se guarda tal como vino del GPS</span></header>
         <div class="body">
           <div class="btnrow" style="margin-bottom:12px">
-            <button class="btn primary">${ico("lote", 20)}Traer un archivo del GPS</button>
+            <button class="btn primary">${ico("lote", 20)}Traer el archivo del GPS</button>
             <button class="btn">${ico("lapiz", 20)}Dibujar sobre el mapa</button>
             <button class="btn">${ico("aparato", 20)}Cargar los mojones a mano</button>
           </div>
           <div class="mapfig">${altaSVG()}</div>
           <div class="legend" style="margin-top:10px">
-            <span><i class="sq" style="background:transparent; border:2px dashed var(--ink-3)"></i>Límite de antes</span>
-            <span><i class="sq" style="background:color-mix(in srgb,var(--brand) 18%,transparent); border:2px solid var(--brand)"></i>Límite nuevo</span>
+            <span><i class="sq" style="background:transparent; border:2px dashed var(--ink-3)"></i>Como estaba</span>
+            <span><i class="sq" style="background:color-mix(in srgb,var(--brand) 18%,transparent); border:2px solid var(--brand)"></i>Como va a quedar</span>
             <span>${ico("tilde", 16, "var(--ok)")}Queda adentro</span>
             <span>${ico("alerta", 16, "var(--crit)")}Queda afuera</span>
           </div>
@@ -1813,10 +1872,11 @@ DUE.dibujar = () => ({
           <div class="body">
             <dl class="kv">
               <dt>Nombre</dt><dd>Tomatal Ka'aguy</dd>
-              <dt>Campo</dt><dd>Estancia Yvoty</dd>
-              <dt>Sembrado</dt><dd>Tomate</dd>
+              <dt>Qué es</dt><dd>Lote de tomate</dd>
+              <dt>Campo</dt><dd>${esc(CAMPO.nom)}</dd>
               <dt>Tamaño</dt><dd><b>1,84 ha</b></dd>
               <dt>Mojones</dt><dd>4 · el dibujo cierra bien</dd>
+              <dt>Queda adentro del campo</dt><dd>${chip("ok")}</dd>
             </dl>
           </div>
         </div>
@@ -1825,11 +1885,11 @@ DUE.dibujar = () => ({
           <div class="body">
             <dl class="kv">
               <dt>Aparatos</dt><dd>4 quedan adentro · <b style="color:var(--crit)">1 queda afuera</b> (SE01-0432)</dd>
-              <dt>Lecturas</dt><dd>12.480 dejan de contar para este lote</dd>
+              <dt>Lecturas</dt><dd>12.480 dejan de contar acá</dd>
               <dt>Fotos del satélite</dt><dd>Se vuelven a recortar desde 2017 · 214 fechas</dd>
               <dt>Riegos</dt><dd>186 se reasignan</dd>
             </dl>
-            <div class="note rule" style="margin-top:10px">Nada de esto se asigna a mano. Si un aparato aparece en el lote equivocado, lo que se corrige es <b>el dibujo del lote</b>, y el resto se acomoda solo.</div>
+            <div class="note rule" style="margin-top:10px">Nada de esto se asigna a mano. Si un aparato aparece donde no va, lo que se corrige es <b>el dibujo</b>, y el resto se acomoda solo.</div>
             <div class="btnrow" style="margin-top:14px"><button class="btn primary">${ico("tilde", 20)}Guardar el dibujo nuevo</button><button class="btn">Dejarlo como estaba</button></div>
           </div>
         </div>
@@ -1865,44 +1925,36 @@ function altaSVG() {
   </svg>`;
 }
 
-/* ============================ navegación ============================ */
-let ROLE = "capataz";
-const NAV_CAP = [["hoy", "Hoy", "lista"], ["lote", "El lote", "lote"], ["anotar", "Anotar", "lapiz"]];
-const NAV_DUE = [
-  ["El campo", [["lotes", "Los lotes", "lote"], ["lote", "Un lote por dentro", "planta"], ["riegos", "Qué regó y por qué", "gota"], ["cuando", "Cuándo regar", "reglas"], ["verde", "Cuánto pasto hay", "pasto"]]],
-  ["Detalle", [["numeros", "Los números con detalle", "grafico"], ["aparatos", "Los aparatos", "aparato"], ["dibujar", "Dibujar un lote", "lote"]]],
+/* ============================ navegación ============================
+   UNA sola app. Lo que cada persona ve lo decide su permiso, y eso NO se rotula
+   en la pantalla: no hay ningun cartel que diga "vista de tal". Alguien sin el
+   permiso de escribir reglas sencillamente no ve "Cuándo regar" en el menú.
+==================================================================== */
+const NAV = [
+  ["El campo", [["hoy", "Hoy", "lista"], ["campo", "El campo entero", "lote"], ["lote", "Un potrero o un lote", "planta"], ["verde", "Cuánto pasto hay", "pasto"]]],
+  ["El riego", [["riegos", "Qué regó y por qué", "gota"], ["cuando", "Cuándo regar", "reglas"]]],
+  ["Anotar y aparatos", [["anotar", "Anotar algo", "lapiz"], ["aparatos", "Los aparatos", "aparato"], ["dibujar", "Dibujar el campo", "lote"], ["numeros", "Los números con detalle", "grafico"]]],
   ["La huerta de casa", [["hidro", "El agua de la hidroponía", "tanque"], ["pruebas", "Las pruebas", "bicho"]]],
   ["Todos los días", [["avisos", "Avisos", "alerta"], ["gente", "Quién entra y qué puede hacer", "gente"]]]
 ];
+const TABS = [["hoy", "Hoy", "lista"], ["campo", "El campo", "lote"], ["anotar", "Anotar", "lapiz"], ["avisos", "Avisos", "alerta"]];
 
 function buildNav() {
-  $("#nav").innerHTML = NAV_DUE.map(([g, items]) => `
+  $("#nav").innerHTML = NAV.map(([g, items]) => `
     <div class="navgroup">${esc(g)}</div>
     ${items.map(([k, lab, i]) => `<button class="navlink" data-k="${k}">${ico(i, 20)}<span>${esc(lab)}</span>${k === "avisos" ? '<span class="badge">2</span>' : ""}</button>`).join("")}`).join("");
   $$("#nav .navlink").forEach(b => b.addEventListener("click", () => { go(b.dataset.k); closeDrawer(); }));
-  buildTabs();
-}
-function buildTabs() {
-  const items = ROLE === "capataz" ? NAV_CAP : [["lotes", "Lotes", "lote"], ["riegos", "Riego", "gota"], ["hidro", "Huerta", "tanque"], ["avisos", "Avisos", "alerta"]];
-  $("#tabbar").innerHTML = items.map(([k, l, i]) => `<button data-k="${k}"><b></b>${ico(i, 22)}${esc(l)}</button>`).join("");
+  $("#tabbar").innerHTML = TABS.map(([k, l, i]) => `<button data-k="${k}"><b></b>${ico(i, 22)}${esc(l)}</button>`).join("");
   $$("#tabbar button").forEach(b => b.addEventListener("click", () => go(b.dataset.k)));
 }
-/* La direccion lleva el rol adelante -- #/capataz/hoy, #/duenio/lotes -- para poder
-   mandarle a alguien la vista exacta que estamos discutiendo. En la app de verdad el rol
-   sale del permiso de la persona, no de la direccion. */
-function go(k, arg) { location.hash = "#/" + ROLE + "/" + k + (arg ? "/" + arg : ""); }
+function go(k, arg) { location.hash = "#/" + k + (arg ? "/" + arg : ""); }
 
 function render() {
   const parts = location.hash.replace(/^#\//, "").split("/").filter(Boolean);
-  if (parts[0] === "capataz" || parts[0] === "duenio") {
-    if (parts[0] !== ROLE) applyRole(parts[0]);
-    parts.shift();
-  }
-  let k = parts[0] || (ROLE === "capataz" ? "hoy" : "lotes");
+  let k = parts[0] || "hoy";
   const arg = parts[1];
-  const set = ROLE === "capataz" ? CAP : DUE;
-  if (!set[k]) k = ROLE === "capataz" ? "hoy" : "lotes";
-  const scr = set[k](arg);
+  if (!SCR[k]) k = "hoy";
+  const scr = SCR[k](arg);
   const view = $("#view");
   view.innerHTML = scr.html;
   $("#drawerlabel").textContent = scr.title;
@@ -1912,24 +1964,8 @@ function render() {
   window.scrollTo(0, 0);
   if (scr.after) scr.after(view);
 }
-
-function applyRole(r) {
-  ROLE = r;
-  document.documentElement.setAttribute("data-role", r);
-  $("#r-cap").setAttribute("aria-pressed", String(r === "capataz"));
-  $("#r-due").setAttribute("aria-pressed", String(r !== "capataz"));
-  $("#big").style.display = r === "capataz" ? "" : "none";
-  buildTabs();
-}
-function setRole(r) {
-  applyRole(r);
-  location.hash = "#/" + r + "/" + (r === "capataz" ? "hoy" : "lotes");
-  render();
-}
 function closeDrawer() { $("#rail").classList.remove("open"); $("#scrim").classList.remove("on"); $("#drawerbtn").setAttribute("aria-expanded", "false"); }
 
-$("#r-cap").addEventListener("click", () => setRole("capataz"));
-$("#r-due").addEventListener("click", () => setRole("duenio"));
 $("#big").addEventListener("click", () => {
   const on = document.documentElement.getAttribute("data-big") === "1";
   document.documentElement.setAttribute("data-big", on ? "0" : "1");

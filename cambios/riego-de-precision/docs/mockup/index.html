@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-PY" data-theme="light">
+<html lang="es-PY" data-theme="light" data-role="capataz">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -10,232 +10,263 @@
 <style>
 :root{
   color-scheme: light;
-  --paper:#F2F4F1; --panel:#FAFBF9; --panel-2:#EDF0EC;
-  --ink:#132019; --ink-2:#46574C; --ink-3:#7B8A80;
-  --line:#DCE2DB; --line-2:#C3CDC3;
-  --brand:#0D4F5C; --brand-2:#0A3A44; --brand-wash:#E2EDEF;
-  --ok:#2A7D46; --warn:#C06A05; --crit:#B3242F; --mute:#77877C;
-  --ok-wash:#E4F0E7; --warn-wash:#F6EADB; --crit-wash:#F7E4E5; --mute-wash:#E9EDE9;
+  --paper:#F2F4F1; --panel:#FFFFFF; --panel-2:#EAEEE9;
+  --ink:#0C1811; --ink-2:#3B4D42; --ink-3:#69796E;
+  --line:#CFD8CE; --line-2:#B2BFB2;
+  --brand:#0B4A56; --brand-2:#08333C; --brand-wash:#DDEBEE;
+  --ok:#216B3A; --warn:#9C5504; --crit:#9B1D28; --mute:#5F6F65;
+  --ok-wash:#DDECE1; --warn-wash:#F5E6D2; --crit-wash:#F6DEDF; --mute-wash:#E4E9E4;
   --s1:#0284A8; --s2:#C06A05; --s3:#7C3AED; --s4:#BE123C;
   --d1:#6FAAC6; --d2:#1A5C7A; --d3:#0B3247;
   --n1:#98B478; --n2:#6F9B4D; --n3:#4F8235; --n4:#2A5A20; --n5:#113312;
-  --grid:#E3E8E2; --axis:#BCC6BB;
-  --shadow:none;
-  --rail:232px;
+  --grid:#DEE4DD; --axis:#AEBBAD;
+  --rail:246px;
+  --fs:16px; --tap:44px;
 }
 :root[data-theme="dark"]{
   color-scheme: dark;
-  --paper:#141A17; --panel:#1B2320; --panel-2:#222B27;
-  --ink:#E9EFE9; --ink-2:#AFBDB3; --ink-3:#8A9A8F;
-  --line:#2C3833; --line-2:#3A4841;
-  --brand:#5FBACB; --brand-2:#8FD3E0; --brand-wash:#17302F;
-  --ok:#4FAF6C; --warn:#D5941F; --crit:#E3616A; --mute:#8A9A8F;
-  --ok-wash:#1A2D21; --warn-wash:#2E2617; --crit-wash:#2E1C1E; --mute-wash:#232B27;
+  --paper:#101512; --panel:#1A211D; --panel-2:#232C27;
+  --ink:#F1F6F1; --ink-2:#BCC9C0; --ink-3:#93A399;
+  --line:#313D37; --line-2:#44534B;
+  --brand:#67C2D2; --brand-2:#9BDCE8; --brand-wash:#17302F;
+  --ok:#57BA76; --warn:#DFA02C; --crit:#EC7079; --mute:#93A399;
+  --ok-wash:#17301F; --warn-wash:#2F2615; --crit-wash:#31191C; --mute-wash:#242C27;
   --s1:#2AA3C6; --s2:#BD780C; --s3:#9B7BF5; --s4:#E5566F;
   --d1:#2E7FA3; --d2:#57A3C2; --d3:#8FC6DC;
-  --n1:#2A5A20; --n2:#4F8235; --n3:#6F9B4D; --n4:#98B478; --n5:#BCD0A4;
-  --grid:#26302B; --axis:#3D4A44;
+  --n1:#2A5A20; --n2:#4F8235; --n3:#6F9B4D; --n4:#98B478; --n5:#C3D6AC;
+  --grid:#28322C; --axis:#415048;
 }
+/* La vista del capataz es mas grande y mas contrastada: se usa al sol, en un telefono
+   barato, con las manos sucias. No es una preferencia: es el caso de uso. */
+:root[data-role="capataz"]{ --fs:18px; --tap:56px; --ink:#07120C; --ink-2:#2C3D33; --line:#BECABE; }
+:root[data-role="capataz"][data-big="1"]{ --fs:21px; --tap:62px; }
+
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
   background:var(--paper); color:var(--ink);
   font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
   font-variation-settings:"wdth" 100;
-  font-size:15px; line-height:1.5;
+  font-size:var(--fs); line-height:1.5;
   -webkit-font-smoothing:antialiased;
   font-variant-numeric:tabular-nums;
 }
 h1,h2,h3,h4{margin:0; font-weight:650; font-variation-settings:"wdth" 112; letter-spacing:-.012em; line-height:1.18}
-h1{font-size:26px} h2{font-size:19px} h3{font-size:15px} h4{font-size:13.5px}
-p{margin:0 0 10px; max-width:68ch}
+h1{font-size:1.72rem} h2{font-size:1.22rem} h3{font-size:1rem} h4{font-size:.9rem}
+p{margin:0 0 10px; max-width:66ch}
 a{color:var(--brand); text-underline-offset:3px}
-button{font:inherit; font-variant-numeric:tabular-nums}
-:focus-visible{outline:2px solid var(--brand); outline-offset:2px; border-radius:2px}
+button,input,select{font:inherit; font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--brand); outline-offset:2px; border-radius:2px}
+code{font-family:inherit}
 
-/* ---- el cartel de mockup: no se cierra ---- */
 .flag{
   background:repeating-linear-gradient(135deg,var(--warn-wash) 0 12px,transparent 12px 24px);
-  border-bottom:1px solid var(--line-2);
-  padding:7px 16px; font-size:12.5px; color:var(--ink-2);
-  font-variation-settings:"wdth" 92; display:flex; gap:8px; align-items:baseline; flex-wrap:wrap;
+  border-bottom:2px solid var(--line-2);
+  padding:8px 14px; font-size:.8rem; color:var(--ink-2);
+  font-variation-settings:"wdth" 92; display:flex; gap:10px; align-items:center; flex-wrap:wrap;
 }
 .flag b{color:var(--ink); font-weight:700; font-variation-settings:"wdth" 108}
+.flag .sp{flex:1 1 20px}
 
-/* ---- shell ---- */
+.roleswitch{display:flex; align-items:center; gap:8px; background:var(--panel); border:2px solid var(--line-2); border-radius:3px; padding:3px 4px 3px 9px}
+.roleswitch > span{font-size:.76rem; color:var(--ink-3); font-variation-settings:"wdth" 88}
+.roleswitch button{border:0; background:none; color:var(--ink-2); padding:5px 10px; border-radius:2px; cursor:pointer; font-size:.8rem}
+.roleswitch button[aria-pressed="true"]{background:var(--brand); color:#fff; font-weight:700}
+:root[data-theme="dark"] .roleswitch button[aria-pressed="true"]{color:#08130f}
+.minibtn{border:2px solid var(--line-2); background:var(--panel); color:var(--ink-2); border-radius:3px; padding:4px 10px; font-size:.78rem; cursor:pointer}
+
 .shell{display:grid; grid-template-columns:var(--rail) 1fr; min-height:100vh}
-.rail{
-  border-right:1px solid var(--line); background:var(--panel);
-  display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow:auto;
-}
+:root[data-role="capataz"] .shell{grid-template-columns:1fr}
+:root[data-role="capataz"] .rail{display:none}
+.rail{border-right:1px solid var(--line); background:var(--panel); display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow:auto}
 .brand{display:flex; gap:10px; align-items:center; padding:16px 16px 14px; border-bottom:1px solid var(--line)}
-.brand svg{flex:none}
-.brand .nm{font-weight:750; font-variation-settings:"wdth" 116; letter-spacing:-.02em; font-size:16px; line-height:1}
-.brand .sub{font-size:11px; color:var(--ink-3); font-variation-settings:"wdth" 86; line-height:1.3}
+.brand .nm{font-weight:750; font-variation-settings:"wdth" 116; letter-spacing:-.02em; font-size:1rem; line-height:1}
+.brand .sub{font-size:.7rem; color:var(--ink-3); font-variation-settings:"wdth" 86; line-height:1.3}
 .tenant{padding:12px 16px; border-bottom:1px solid var(--line)}
-.tenant label{display:block; font-size:11px; color:var(--ink-3); font-variation-settings:"wdth" 86; margin-bottom:4px}
-.tenant select{
-  width:100%; font:inherit; font-size:13.5px; background:var(--panel-2); color:var(--ink);
-  border:1px solid var(--line-2); border-radius:2px; padding:6px 8px;
-}
-nav{padding:10px 8px 24px; flex:1}
-.navgroup{font-size:11px; color:var(--ink-3); font-variation-settings:"wdth" 86; padding:14px 8px 5px; letter-spacing:.02em}
-.navlink{
-  display:flex; align-items:center; gap:9px; width:100%; text-align:left;
-  padding:7px 8px; border:0; background:none; color:var(--ink-2); cursor:pointer;
-  font-size:14px; border-radius:2px; position:relative;
-}
+.tenant label{display:block; font-size:.72rem; color:var(--ink-3); font-variation-settings:"wdth" 86; margin-bottom:4px}
+.tenant select{width:100%; font-size:.85rem; background:var(--panel-2); color:var(--ink); border:1px solid var(--line-2); border-radius:2px; padding:7px 8px}
+nav{padding:8px 8px 24px; flex:1}
+.navgroup{font-size:.72rem; color:var(--ink-3); font-variation-settings:"wdth" 86; padding:14px 8px 5px}
+.navlink{display:flex; align-items:center; gap:10px; width:100%; text-align:left; padding:9px 8px; border:0; background:none; color:var(--ink-2); cursor:pointer; font-size:.88rem; border-radius:2px; position:relative; min-height:var(--tap)}
+.navlink svg{flex:none; opacity:.8}
 .navlink:hover{background:var(--panel-2); color:var(--ink)}
 .navlink[aria-current="page"]{color:var(--ink); font-weight:650; background:var(--brand-wash)}
-.navlink[aria-current="page"]::before{content:""; position:absolute; left:-8px; top:4px; bottom:4px; width:3px; background:var(--brand)}
-.navlink .dot{width:7px; height:7px; border-radius:50%; flex:none; background:var(--line-2)}
-.navlink .badge{margin-left:auto; font-size:11px; background:var(--crit); color:#fff; border-radius:9px; padding:1px 6px; font-variation-settings:"wdth" 88}
+.navlink[aria-current="page"]::before{content:""; position:absolute; left:-8px; top:4px; bottom:4px; width:4px; background:var(--brand)}
+.navlink[aria-current="page"] svg{opacity:1}
+.navlink .badge{margin-left:auto; font-size:.72rem; background:var(--crit); color:#fff; border-radius:9px; padding:1px 7px; font-variation-settings:"wdth" 88}
 :root[data-theme="dark"] .navlink .badge{color:#12100f}
 
-main{min-width:0; padding:0 0 88px}
-.wrap{max-width:1180px; padding:22px 22px 0}
-.pagehead{border-bottom:1px solid var(--line); padding-bottom:14px; margin-bottom:18px}
-.pagehead .decision{
-  margin-top:7px; font-size:13.5px; color:var(--ink-2); max-width:72ch;
-}
+main{min-width:0; padding:0 0 92px}
+.wrap{max-width:1180px; padding:20px 20px 0}
+:root[data-role="capataz"] .wrap{max-width:660px; padding:16px 16px 0; margin:0 auto}
+.pagehead{border-bottom:2px solid var(--line); padding-bottom:14px; margin-bottom:18px}
+.crumb{font-size:.74rem; color:var(--ink-3); font-variation-settings:"wdth" 88; margin-bottom:5px}
+.pagehead .decision{margin-top:7px; font-size:.86rem; color:var(--ink-2); max-width:72ch}
 .pagehead .decision b{color:var(--ink); font-weight:650}
-.crumb{font-size:11.5px; color:var(--ink-3); font-variation-settings:"wdth" 88; margin-bottom:6px}
 
-/* ---- pieces ---- */
+/* ---------- la respuesta: lo primero y lo mas grande de cada pantalla ---------- */
+.answer{display:flex; gap:14px; align-items:flex-start; border:2px solid var(--line-2); border-left-width:8px; border-radius:4px; background:var(--panel); padding:16px 16px; margin-bottom:16px}
+.answer.ok{border-color:var(--ok); background:var(--ok-wash)}
+.answer.do{border-color:var(--brand); background:var(--brand-wash)}
+.answer.warn{border-color:var(--warn); background:var(--warn-wash)}
+.answer.crit{border-color:var(--crit); background:var(--crit-wash)}
+.answer.mute{border-color:var(--mute); background:var(--mute-wash)}
+.answer .ic{flex:none; margin-top:2px}
+.answer .tx{min-width:0}
+.answer .big{font-size:1.5rem; font-weight:750; font-variation-settings:"wdth" 116; letter-spacing:-.02em; line-height:1.14}
+.answer .sub{margin-top:6px; font-size:.95rem; color:var(--ink-2); max-width:44ch}
+.answer .sub b{color:var(--ink)}
+.answer .when{margin-top:9px; font-size:.84rem; color:var(--ink-2); display:flex; align-items:center; gap:7px; font-weight:600}
+
+.freshness{display:flex; align-items:center; gap:8px; border:2px solid var(--line-2); border-radius:3px; background:var(--panel); padding:9px 12px; margin-bottom:14px; font-size:.88rem; font-weight:600}
+.freshness.stale{border-color:var(--mute); background:var(--mute-wash)}
+
 .panel{background:var(--panel); border:1px solid var(--line); border-radius:3px; margin-bottom:16px}
 .panel > header{padding:12px 14px; border-bottom:1px solid var(--line); display:flex; gap:12px; align-items:baseline; flex-wrap:wrap}
-.panel > header .hint{font-size:12px; color:var(--ink-3); font-variation-settings:"wdth" 88; margin-left:auto}
+.panel > header .hint{font-size:.78rem; color:var(--ink-3); font-variation-settings:"wdth" 88; margin-left:auto}
 .panel .body{padding:14px}
 .panel .body.flush{padding:0}
 .cols{display:grid; gap:16px}
 .cols.c2{grid-template-columns:1fr 1fr}
-.cols.c3{grid-template-columns:repeat(3,1fr)}
 .cols.map{grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr)}
-.note{font-size:12.5px; color:var(--ink-2); font-variation-settings:"wdth" 94; line-height:1.45}
-.note.rule{border-left:2px solid var(--brand); padding-left:10px}
+.note{font-size:.82rem; color:var(--ink-2); font-variation-settings:"wdth" 94; line-height:1.48}
+.note.rule{border-left:3px solid var(--brand); padding-left:11px}
 .muted{color:var(--ink-3)}
 
-.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; margin:1px 1px 17px}
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:1px; margin:1px 1px 17px}
 .tile{background:var(--panel); outline:1px solid var(--line); padding:12px 14px; min-width:0}
-.tile .k{font-size:11.5px; color:var(--ink-3); font-variation-settings:"wdth" 88; display:flex; align-items:center; gap:6px}
-.tile .v{font-size:27px; font-weight:750; font-variation-settings:"wdth" 118; letter-spacing:-.02em; line-height:1.15; margin-top:3px}
-.tile .v small{font-size:13px; font-weight:500; font-variation-settings:"wdth" 96; color:var(--ink-2); letter-spacing:0; margin-left:4px}
-.tile .f{font-size:11.5px; color:var(--ink-3); font-variation-settings:"wdth" 90; margin-top:2px}
+.tile .k{font-size:.76rem; color:var(--ink-3); font-variation-settings:"wdth" 88}
+.tile .v{font-size:1.65rem; font-weight:750; font-variation-settings:"wdth" 118; letter-spacing:-.02em; line-height:1.15; margin-top:3px}
+.tile .v small{font-size:.8rem; font-weight:500; font-variation-settings:"wdth" 96; color:var(--ink-2); letter-spacing:0; margin-left:4px}
+.tile .f{font-size:.76rem; color:var(--ink-3); font-variation-settings:"wdth" 90; margin-top:3px}
 
-.chip{display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-variation-settings:"wdth" 90; font-weight:600;
-  padding:2px 7px 2px 5px; border-radius:2px; border:1px solid transparent; white-space:nowrap}
-.chip .g{width:8px; height:8px; flex:none}
-.chip.ok{background:var(--ok-wash); color:var(--ok); border-color:color-mix(in srgb,var(--ok) 28%,transparent)}
-.chip.warn{background:var(--warn-wash); color:var(--warn); border-color:color-mix(in srgb,var(--warn) 28%,transparent)}
-.chip.crit{background:var(--crit-wash); color:var(--crit); border-color:color-mix(in srgb,var(--crit) 32%,transparent)}
+/* El estado nunca se dice solo con color: va figura + palabra. Al sol un verde y un
+   naranja se parecen, y un daltonico no los distingue nunca. */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.78rem; font-variation-settings:"wdth" 92; font-weight:700;
+  padding:3px 9px 3px 7px; border-radius:2px; border:2px solid transparent; white-space:nowrap}
+.chip .g{width:10px; height:10px; flex:none}
+.chip.ok{background:var(--ok-wash); color:var(--ok); border-color:var(--ok)}
+.chip.warn{background:var(--warn-wash); color:var(--warn); border-color:var(--warn)}
+.chip.crit{background:var(--crit-wash); color:var(--crit); border-color:var(--crit)}
 .chip.mute{background:var(--mute-wash); color:var(--ink-2); border-color:var(--line-2)}
 .chip.ok .g{background:var(--ok); border-radius:50%}
 .chip.warn .g{background:var(--warn); clip-path:polygon(50% 0,100% 100%,0 100%)}
 .chip.crit .g{background:var(--crit); clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
-.chip.mute .g{background:none; border:1.5px dashed var(--ink-3); border-radius:50%}
+.chip.mute .g{background:none; border:2px dashed var(--ink-3); border-radius:50%}
 
-table{width:100%; border-collapse:collapse; font-size:13.5px}
-th{text-align:left; font-weight:600; font-size:11.5px; color:var(--ink-3); font-variation-settings:"wdth" 88;
-  padding:9px 12px; border-bottom:1px solid var(--line-2); white-space:nowrap}
-td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+/* ---------- lista de lotes: una fila grande, tocable con el pulgar ---------- */
+.bigrow{display:grid; grid-template-columns:8px 1fr auto; width:100%; text-align:left; background:var(--panel);
+  border:1px solid var(--line); border-radius:3px; padding:0; margin-bottom:10px; cursor:pointer; color:inherit; font:inherit; min-height:var(--tap)}
+.bigrow:hover,.bigrow.hot{background:var(--panel-2)}
+.bigrow .bar{border-radius:2px 0 0 2px}
+.bigrow .mid{padding:12px 14px; min-width:0}
+.bigrow .nm{display:block; font-weight:700; font-size:1.06rem; font-variation-settings:"wdth" 108}
+.bigrow .act{display:block; font-size:1rem; margin-top:3px}
+.bigrow .meta{display:block; font-size:.8rem; color:var(--ink-2); margin-top:5px; font-variation-settings:"wdth" 92}
+.bigrow .right{padding:12px 14px 12px 0; display:flex; align-items:center; gap:10px}
+
+/* ---------- el agua en la tierra, en palabras ---------- */
+.wsoil{display:grid; gap:10px}
+.wrow{display:grid; grid-template-columns:8.5rem 1fr auto; gap:10px; align-items:center}
+.wrow .lb{font-size:.9rem; font-weight:600}
+.wrow .lb small{display:block; font-weight:400; font-size:.74rem; color:var(--ink-3)}
+.wrow .tk{height:22px; background:var(--panel-2); border:1px solid var(--line-2); border-radius:2px; position:relative; overflow:hidden}
+.wrow .fl{position:absolute; inset:0 auto 0 0; background:var(--d2)}
+.wrow .fl.seco{background:repeating-linear-gradient(135deg,var(--warn) 0 6px,color-mix(in srgb,var(--warn) 70%,#000) 6px 12px)}
+.wrow .vw{font-size:.88rem; font-weight:700; min-width:5.4rem; display:flex; align-items:center; gap:6px}
+
+details.disclose{border:1px solid var(--line); border-radius:3px; background:var(--panel); margin-bottom:16px}
+details.disclose > summary{list-style:none; cursor:pointer; padding:13px 14px; display:flex; align-items:center; gap:9px; font-weight:650; min-height:var(--tap); font-size:.95rem}
+details.disclose > summary::-webkit-details-marker{display:none}
+details.disclose > summary .cv{margin-left:auto; transition:transform .15s}
+details[open].disclose > summary .cv{transform:rotate(180deg)}
+details.disclose .inner{padding:0 14px 14px; border-top:1px solid var(--line)}
+
+table{width:100%; border-collapse:collapse; font-size:.86rem}
+th{text-align:left; font-weight:650; font-size:.76rem; color:var(--ink-3); font-variation-settings:"wdth" 88; padding:9px 12px; border-bottom:2px solid var(--line-2); white-space:nowrap}
+td{padding:11px 12px; border-bottom:1px solid var(--line); vertical-align:top}
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover{background:var(--panel-2)}
-td.num,th.num{text-align:right; font-variant-numeric:tabular-nums}
+td.num,th.num{text-align:right}
 .scroller{overflow-x:auto}
-.why{font-size:12px; color:var(--ink-3); font-variation-settings:"wdth" 92; line-height:1.4; display:block; margin-top:2px}
+.why{font-size:.76rem; color:var(--ink-3); font-variation-settings:"wdth" 92; line-height:1.4; display:block; margin-top:2px}
 
-.btn{border:1px solid var(--line-2); background:var(--panel); color:var(--ink); border-radius:2px;
-  padding:6px 11px; font-size:13.5px; cursor:pointer}
+.btn{border:2px solid var(--line-2); background:var(--panel); color:var(--ink); border-radius:3px; padding:8px 13px; font-size:.86rem; cursor:pointer; min-height:var(--tap); display:inline-flex; align-items:center; gap:8px}
 .btn:hover{background:var(--panel-2)}
-.btn.primary{background:var(--brand); border-color:var(--brand); color:var(--panel)}
+.btn.primary{background:var(--brand); border-color:var(--brand); color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#08130f}
 .btn.primary:hover{background:var(--brand-2)}
-.btn[disabled]{opacity:.5; cursor:not-allowed}
-.btnrow{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
-.seg{display:inline-flex; border:1px solid var(--line-2); border-radius:2px; overflow:hidden}
-.seg button{border:0; background:var(--panel); color:var(--ink-2); padding:5px 10px; font-size:13px; cursor:pointer; border-right:1px solid var(--line-2)}
+.btn.block{width:100%; justify-content:flex-start; font-size:1rem; font-weight:650; padding:14px 16px}
+.btnrow{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.seg{display:inline-flex; border:2px solid var(--line-2); border-radius:3px; overflow:hidden}
+.seg button{border:0; background:var(--panel); color:var(--ink-2); padding:8px 12px; font-size:.84rem; cursor:pointer; border-right:2px solid var(--line-2); min-height:var(--tap)}
 .seg button:last-child{border-right:0}
-.seg button[aria-pressed="true"]{background:var(--brand-wash); color:var(--ink); font-weight:650}
+.seg button[aria-pressed="true"]{background:var(--brand-wash); color:var(--ink); font-weight:700}
 
-.kv{display:grid; grid-template-columns:auto 1fr; gap:5px 14px; font-size:13.5px; align-items:baseline}
-.kv dt{color:var(--ink-3); font-size:12px; font-variation-settings:"wdth" 90; white-space:nowrap}
+.kv{display:grid; grid-template-columns:auto 1fr; gap:6px 14px; font-size:.86rem; align-items:baseline}
+.kv dt{color:var(--ink-3); font-size:.78rem; font-variation-settings:"wdth" 90}
 .kv dd{margin:0}
 
-.legend{display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--ink-2); font-variation-settings:"wdth" 92; align-items:center}
+.legend{display:flex; gap:14px; flex-wrap:wrap; font-size:.78rem; color:var(--ink-2); font-variation-settings:"wdth" 92; align-items:center}
 .legend span{display:inline-flex; gap:6px; align-items:center}
-.legend i{width:14px; height:3px; border-radius:2px; display:block}
-.legend i.sq{width:11px; height:11px; border-radius:2px}
+.legend i{width:16px; height:3px; border-radius:2px; display:block}
+.legend i.sq{width:12px; height:12px; border-radius:2px}
 
 .chart{position:relative}
 .chart svg{display:block; width:100%; height:auto; overflow:visible}
-.tip{position:fixed; z-index:60; pointer-events:none; background:var(--panel); border:1px solid var(--line-2);
-  border-radius:3px; padding:8px 10px; font-size:12.5px; box-shadow:0 4px 14px rgba(0,0,0,.12); min-width:132px; opacity:0; transition:opacity .08s}
-:root[data-theme="dark"] .tip{box-shadow:0 4px 18px rgba(0,0,0,.5)}
-.tip .t{font-size:11px; color:var(--ink-3); font-variation-settings:"wdth" 88; margin-bottom:4px}
-.tip .r{display:flex; gap:10px; justify-content:space-between; align-items:baseline}
-.tip .r i{width:9px; height:9px; border-radius:2px; display:inline-block; margin-right:5px}
-.tip .r b{font-weight:650}
+.tip{position:fixed; z-index:60; pointer-events:none; background:var(--panel); border:2px solid var(--line-2); border-radius:3px; padding:9px 11px; font-size:.82rem; box-shadow:0 4px 14px rgba(0,0,0,.14); min-width:140px; opacity:0; transition:opacity .08s}
+.tip .t{font-size:.74rem; color:var(--ink-3); font-variation-settings:"wdth" 88; margin-bottom:4px}
+.tip .r{display:flex; gap:12px; justify-content:space-between; align-items:baseline}
+.tip .r i{width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:6px}
 
 .mapfig{background:var(--panel); border:1px solid var(--line); border-radius:3px; overflow:hidden}
 .mapfig svg{display:block; width:100%; height:auto}
-.parcela-list{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:3px; background:var(--panel); overflow:hidden}
-.parcela-row{display:grid; grid-template-columns:4px 1fr auto; gap:0; border-bottom:1px solid var(--line); cursor:pointer; text-align:left; background:none; border-left:0; border-right:0; border-top:0; padding:0; color:inherit; font:inherit}
-.parcela-row:last-child{border-bottom:0}
-.parcela-row:hover,.parcela-row.hot{background:var(--panel-2)}
-.parcela-row .bar{width:4px}
-.parcela-row .mid{padding:9px 12px; min-width:0}
-.parcela-row .nm{display:block; font-weight:650; font-size:14px; font-variation-settings:"wdth" 106}
-.parcela-row .meta{display:block; font-size:11.5px; color:var(--ink-3); font-variation-settings:"wdth" 90; margin-top:1px}
-.parcela-row .right{padding:9px 12px 9px 0; display:flex; align-items:center}
 
-.timeline{display:grid; grid-template-columns:82px 1fr; gap:0 10px; align-items:center; font-size:11.5px}
-.timeline .lab{color:var(--ink-3); font-variation-settings:"wdth" 88; text-align:right}
-
-.gauge{display:grid; grid-template-columns:1fr; gap:3px}
-.gauge .top{display:flex; justify-content:space-between; align-items:baseline}
-.gauge .val{font-size:30px; font-weight:750; font-variation-settings:"wdth" 118; letter-spacing:-.022em; line-height:1}
-.gauge .val small{font-size:13px; font-weight:500; font-variation-settings:"wdth" 96; color:var(--ink-2); letter-spacing:0; margin-left:3px}
-.gauge .track{height:7px; background:var(--panel-2); border:1px solid var(--line); border-radius:2px; position:relative; margin-top:6px}
-.gauge .ok-range{position:absolute; top:-1px; bottom:-1px; background:color-mix(in srgb,var(--ok) 26%,transparent); border-left:2px solid var(--ok); border-right:2px solid var(--ok)}
-.gauge .needle{position:absolute; top:-3px; bottom:-3px; width:3px; background:var(--ink); border-radius:1px}
-.gauge .scale{display:flex; justify-content:space-between; font-size:10.5px; color:var(--ink-3); font-variation-settings:"wdth" 86; margin-top:3px}
+.gauge .top{display:flex; justify-content:space-between; align-items:baseline; gap:8px}
+.gauge .val{font-size:1.9rem; font-weight:750; font-variation-settings:"wdth" 118; letter-spacing:-.022em; line-height:1}
+.gauge .val small{font-size:.8rem; font-weight:500; font-variation-settings:"wdth" 96; color:var(--ink-2); letter-spacing:0; margin-left:4px}
+.gauge .track{height:9px; background:var(--panel-2); border:1px solid var(--line-2); border-radius:2px; position:relative; margin-top:8px}
+.gauge .ok-range{position:absolute; top:-1px; bottom:-1px; background:color-mix(in srgb,var(--ok) 26%,transparent); border-left:3px solid var(--ok); border-right:3px solid var(--ok)}
+.gauge .needle{position:absolute; top:-4px; bottom:-4px; width:4px; background:var(--ink); border-radius:1px}
+.gauge .scale{display:flex; justify-content:space-between; font-size:.72rem; color:var(--ink-3); font-variation-settings:"wdth" 86; margin-top:4px}
 
 .bloque{border:1px solid var(--line); border-radius:3px; background:var(--panel); overflow:hidden}
-.bloque .cap{padding:9px 12px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:8px}
-.bloque .cap .id{display:inline-flex; align-items:center; gap:7px; font-weight:700; font-variation-settings:"wdth" 112}
-.bloque .cap .id i{width:11px; height:11px; border-radius:2px; display:block}
-.bloque .bd{padding:11px 12px}
-
-.matrix td.y{color:var(--ok); font-weight:650}
+.bloque .cap{padding:10px 12px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:8px}
+.bloque .cap .id{display:inline-flex; align-items:center; gap:8px; font-weight:700; font-variation-settings:"wdth" 112}
+.bloque .cap .id i{width:12px; height:12px; border-radius:2px; display:block}
+.bloque .bd{padding:12px}
+.matrix td.y{color:var(--ok); font-weight:700}
 .matrix td.n{color:var(--ink-3)}
 
 .drawerbtn,.tabbar{display:none}
 .skip{position:absolute; left:-9999px}
-.skip:focus{left:8px; top:8px; z-index:99; background:var(--panel); padding:8px 12px; border:1px solid var(--brand)}
+.skip:focus{left:8px; top:8px; z-index:99; background:var(--panel); padding:8px 12px; border:2px solid var(--brand)}
 
-@media (max-width:960px){
-  .cols.c2,.cols.c3,.cols.map{grid-template-columns:1fr}
-}
+@media (max-width:960px){ .cols.c2,.cols.map{grid-template-columns:1fr} }
 @media (max-width:820px){
   .shell{grid-template-columns:1fr}
-  .rail{position:fixed; inset:0 auto 0 0; width:272px; z-index:70; transform:translateX(-100%); transition:transform .18s ease; height:100dvh}
-  .rail.open{transform:none; box-shadow:0 0 40px rgba(0,0,0,.28)}
-  .scrim{position:fixed; inset:0; background:rgba(10,20,15,.42); z-index:65; display:none}
+  .rail{position:fixed; inset:0 auto 0 0; width:280px; z-index:70; transform:translateX(-100%); transition:transform .18s ease; height:100dvh}
+  .rail.open{transform:none; box-shadow:0 0 40px rgba(0,0,0,.3)}
+  .scrim{position:fixed; inset:0; background:rgba(8,18,12,.46); z-index:65; display:none}
   .scrim.on{display:block}
-  .drawerbtn{display:flex; align-items:center; gap:8px; position:sticky; top:0; z-index:40; width:100%;
-    background:var(--panel); border:0; border-bottom:1px solid var(--line); padding:11px 14px; cursor:pointer; color:var(--ink); font-size:15px; font-weight:650}
   .wrap{padding:16px 14px 0}
-  h1{font-size:22px}
-  .tabbar{display:grid; grid-template-columns:repeat(4,1fr); position:fixed; left:0; right:0; bottom:0; z-index:50;
-    background:var(--panel); border-top:1px solid var(--line-2); padding-bottom:env(safe-area-inset-bottom)}
-  .tabbar button{border:0; background:none; padding:9px 4px 10px; font-size:11px; color:var(--ink-3); cursor:pointer;
-    display:flex; flex-direction:column; align-items:center; gap:3px; font-variation-settings:"wdth" 90}
-  .tabbar button[aria-current="page"]{color:var(--brand); font-weight:700}
-  .tabbar button b{display:block; width:20px; height:3px; border-radius:2px; background:transparent}
-  .tabbar button[aria-current="page"] b{background:var(--brand)}
-  main{padding-bottom:76px}
-  table{font-size:13px}
-  th,td{padding:8px 9px}
+  table{font-size:.84rem} th,td{padding:9px 10px}
 }
+:root[data-role="duenio"] .drawerbtn{display:none}
+@media (max-width:820px){
+  :root[data-role="duenio"] .drawerbtn{display:flex; align-items:center; gap:9px; position:sticky; top:0; z-index:40; width:100%;
+    background:var(--panel); border:0; border-bottom:2px solid var(--line-2); padding:12px 14px; cursor:pointer; color:var(--ink); font-size:1rem; font-weight:700; min-height:var(--tap)}
+}
+.tabbar{grid-template-columns:repeat(3,1fr); position:fixed; left:0; right:0; bottom:0; z-index:50;
+  background:var(--panel); border-top:2px solid var(--line-2); padding-bottom:env(safe-area-inset-bottom)}
+:root[data-role="capataz"] .tabbar{display:grid}
+@media (max-width:820px){ :root[data-role="duenio"] .tabbar{display:grid; grid-template-columns:repeat(4,1fr)} }
+.tabbar button{border:0; background:none; padding:9px 4px 10px; font-size:.76rem; color:var(--ink-2); cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:3px; font-variation-settings:"wdth" 92; font-weight:600; min-height:var(--tap)}
+.tabbar button[aria-current="page"]{color:var(--brand); font-weight:750}
+.tabbar button b{display:block; width:26px; height:4px; border-radius:2px; background:transparent; margin-bottom:1px}
+.tabbar button[aria-current="page"] b{background:var(--brand)}
+
 @media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
 @media print{.rail,.tabbar,.drawerbtn{display:none}}
 </style>
@@ -245,18 +276,25 @@ td.num,th.num{text-align:right; font-variant-numeric:tabular-nums}
 
 <div class="flag">
   <b>Mockup de diseño.</b>
-  <span>No hay backend ni API. Todos los números, nombres y fechas son <b>de ejemplo</b> y ninguno salió de una medición real.</span>
-  <button class="btn" id="theme" style="margin-left:auto; padding:2px 9px; font-size:12px">Tema oscuro</button>
+  <span>No hay nada conectado. Los números, nombres y fechas son <b>de ejemplo</b> y ninguno salió de una medición real.</span>
+  <span class="sp"></span>
+  <div class="roleswitch">
+    <span>Mirar la app como</span>
+    <button id="r-cap" aria-pressed="true">Capataz</button>
+    <button id="r-due" aria-pressed="false">Dueño</button>
+  </div>
+  <button class="minibtn" id="big">Letra más grande</button>
+  <button class="minibtn" id="theme">Tema oscuro</button>
 </div>
 
 <div class="scrim" id="scrim"></div>
 <div class="shell">
   <aside class="rail" id="rail">
     <div class="brand">
-      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
-        <path d="M3 8.5 L11 2.5 L23 6 L21.5 20 L8 23.5 Z" fill="none" stroke="var(--brand)" stroke-width="1.6" stroke-linejoin="round"/>
-        <circle cx="13" cy="12.5" r="2.6" fill="var(--brand)"/>
-        <path d="M13 15.1 L13 21" stroke="var(--brand)" stroke-width="1.4" stroke-dasharray="2 2.2"/>
+      <svg width="28" height="28" viewBox="0 0 26 26" aria-hidden="true">
+        <path d="M3 8.5 L11 2.5 L23 6 L21.5 20 L8 23.5 Z" fill="none" stroke="var(--brand)" stroke-width="1.8" stroke-linejoin="round"/>
+        <circle cx="13" cy="12.5" r="2.8" fill="var(--brand)"/>
+        <path d="M13 15.3 L13 21" stroke="var(--brand)" stroke-width="1.6" stroke-dasharray="2 2.2"/>
       </svg>
       <div>
         <div class="nm">agro-platform</div>
@@ -264,22 +302,19 @@ td.num,th.num{text-align:right; font-variant-numeric:tabular-nums}
       </div>
     </div>
     <div class="tenant">
-      <label for="tenantsel">Cliente en contexto</label>
+      <label for="tenantsel">Estás viendo</label>
       <select id="tenantsel">
         <option>Estancia Yvoty (ejemplo)</option>
         <option>Huerta del patio (ejemplo)</option>
       </select>
-      <div class="note" style="margin-top:6px; font-size:11.5px; color:var(--ink-3)">
-        Cambiar de cliente cambia el <i>tenant</i> del token. No existe una vista “todos los clientes”.
-      </div>
     </div>
     <nav id="nav" aria-label="Secciones"></nav>
   </aside>
 
   <main id="main">
     <button class="drawerbtn" id="drawerbtn" aria-expanded="false" aria-controls="rail">
-      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="1.8"/></svg>
-      <span id="drawerlabel">Mapa de parcelas</span>
+      <svg width="20" height="15" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="2"/></svg>
+      <span id="drawerlabel">Los lotes</span>
     </button>
     <div class="wrap" id="view"></div>
   </main>
@@ -289,1453 +324,6 @@ td.num,th.num{text-align:right; font-variant-numeric:tabular-nums}
 <div class="tip" id="tip" role="status" aria-live="polite"></div>
 
 <script>
-"use strict";
-
-/* ============================ util ============================ */
-const $ = (s, r) => (r || document).querySelector(s);
-const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
-const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const nf = (n, d) => Number(n).toLocaleString("es-PY", { minimumFractionDigits: d || 0, maximumFractionDigits: d === undefined ? 0 : d });
-const gs = n => "Gs " + nf(n);
-function rng(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
-const CSSVAR = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-
-/* ============================ datos de ejemplo ============================
-   Todo lo de abajo es inventado para mirar el diseno. Ninguna cifra fue medida.
-========================================================================= */
-
-const EST = {
-  ok:   { chip: "ok",   lab: "En rango" },
-  warn: { chip: "warn", lab: "Atención" },
-  crit: { chip: "crit", lab: "Crítico" },
-  mute: { chip: "mute", lab: "Sin señal" }
-};
-const estColor = e => ({ ok: "var(--ok)", warn: "var(--warn)", crit: "var(--crit)", mute: "var(--mute)" }[e]);
-
-const PARCELAS = [
-  { id: "p4", nom: "Potrero Yvyra'i", cultivo: "Pasto (Brachiaria)", ha: 42.0, est: "ok",
-    poly: "60,74 302,50 374,152 332,268 122,284 48,192", disp: 3, ndvi: 0.68,
-    nota: "Estación meteorológica + 2 sensores de humedad" },
-  { id: "p5", nom: "Potrero Costa Guasu", cultivo: "Pasto (Brachiaria)", ha: 58.4, est: "mute",
-    poly: "424,62 802,46 882,182 838,320 562,342 442,232", disp: 2, ndvi: 0.52,
-    nota: "Sin reportes desde el 25/09. El controlador sigue con la última política" },
-  { id: "p1", nom: "Tomatal Ka'aguy", cultivo: "Tomate — Elpida", ha: 1.8, est: "warn",
-    poly: "96,332 252,318 270,422 120,440", disp: 5, ndvi: 0.74,
-    nota: "Humedad a 30 cm bajo el umbral de arranque desde hace 2 días" },
-  { id: "p2", nom: "Sandial Tuyutî", cultivo: "Sandía — Crimson Sweet", ha: 3.2, est: "ok",
-    poly: "302,332 472,354 488,472 324,464", disp: 4, ndvi: 0.63,
-    nota: "Regó 2 veces hoy · 1.240 L estimados" },
-  { id: "p3", nom: "Huerta Ñu Porâ", cultivo: "Tomate — Elpida", ha: 0.9, est: "crit",
-    poly: "522,380 622,392 614,472 514,464", disp: 4, ndvi: 0.58,
-    nota: "Caudalímetro midió 41 % más de lo estimado: fuga probable en la línea" },
-  { id: "p6", nom: "Melonar Tape Pytâ", cultivo: "Sandía — Santa Amelia", ha: 2.4, est: "ok",
-    poly: "662,372 832,358 854,474 674,488", disp: 3, ndvi: 0.66,
-    nota: "Trampa de plagas: 4 capturas esta semana" }
-];
-
-const DISPOS_MAPA = [
-  { x: 168, y: 150, t: "sensor", p: "p4" }, { x: 250, y: 205, t: "sensor", p: "p4" }, { x: 210, y: 110, t: "estacion", p: "p4" },
-  { x: 600, y: 160, t: "sensor", p: "p5", off: 1 }, { x: 700, y: 240, t: "ctrl", p: "p5", off: 1 },
-  { x: 150, y: 360, t: "sensor", p: "p1" }, { x: 210, y: 380, t: "sensor", p: "p1" }, { x: 178, y: 415, t: "ctrl", p: "p1" }, { x: 240, y: 345, t: "caudal", p: "p1" },
-  { x: 350, y: 380, t: "sensor", p: "p2" }, { x: 430, y: 420, t: "sensor", p: "p2" }, { x: 390, y: 445, t: "ctrl", p: "p2" },
-  { x: 545, y: 410, t: "sensor", p: "p3" }, { x: 590, y: 440, t: "ctrl", p: "p3" }, { x: 570, y: 395, t: "caudal", p: "p3" },
-  { x: 710, y: 410, t: "sensor", p: "p6" }, { x: 800, y: 430, t: "trampa", p: "p6" }, { x: 760, y: 455, t: "ctrl", p: "p6" }
-];
-
-const RIEGO_IDX = [7, 18, 29, 41, 62, 73];
-function simDepth(seed, o) {
-  const r = rng(seed), n = 84, out = [];
-  let v = o.base;
-  for (let i = 0; i < n; i++) {
-    v -= o.drop * (0.7 + r() * 0.6);
-    if (RIEGO_IDX.includes(i)) v += o.jump * (0.85 + r() * 0.3);
-    v = Math.min(o.cap, Math.max(7, v));
-    out.push(+(v + (r() - 0.5) * o.noise).toFixed(1));
-  }
-  return out;
-}
-const HUM10 = simDepth(11, { base: 31, cap: 33, drop: 1.30, jump: 11.0, noise: 0.8 });
-const HUM30 = simDepth(23, { base: 25, cap: 28, drop: 0.52, jump: 4.6, noise: 0.45 });
-const HUM60 = simDepth(37, { base: 22, cap: 25, drop: 0.14, jump: 1.1, noise: 0.3 });
-for (let i = 44; i <= 51; i++) HUM30[i] = null;           /* hueco real: sin dato, no cero */
-
-const FECHAS = (() => {
-  const out = [], base = new Date(2026, 8, 7);
-  for (let i = 0; i < 84; i++) {
-    const d = new Date(base.getTime() + i * 6 * 3600e3);
-    out.push(("0" + d.getDate()).slice(-2) + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":00");
-  }
-  return out;
-})();
-
-const LLUVIA = new Array(84).fill(0);
-[[12, 4], [13, 11], [36, 2], [55, 18], [56, 6], [70, 3]].forEach(([i, v]) => LLUVIA[i] = v);
-const RIEGO_MM = new Array(84).fill(0);
-RIEGO_IDX.forEach((i, k) => RIEGO_MM[i] = [6.2, 5.8, 6.4, 5.1, 6.6, 6.0][k]);
-
-const MESES = ["oct", "nov", "dic", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep"];
-const NDVI_ACT = [0.41, 0.49, 0.62, 0.71, 0.74, 0.70, 0.61, 0.49, 0.41, 0.36, 0.38, 0.50];
-const NDVI_P10 = [0.36, 0.42, 0.54, 0.62, 0.66, 0.63, 0.55, 0.47, 0.40, 0.35, 0.36, 0.44];
-const NDVI_P90 = [0.52, 0.60, 0.72, 0.79, 0.81, 0.78, 0.70, 0.61, 0.53, 0.49, 0.53, 0.66];
-const NDVI_MED = [0.44, 0.51, 0.63, 0.70, 0.73, 0.70, 0.62, 0.54, 0.46, 0.42, 0.44, 0.55];
-
-const RIEGOS = [
-  { f: "28/09 05:40", p: "Tomatal Ka'aguy", cond: "Humedad 30 cm = 17,4 % (umbral 19 %) · 2 sensores concuerdan", dec: "Regar 22 min", pol: "v7", est: 1180, med: 1205, res: "22 min · válvula 2", ok: 1 },
-  { f: "27/09 18:05", p: "Huerta Ñu Porâ", cond: "Humedad 10 cm = 15,1 % (umbral 18 %)", dec: "Regar 18 min", pol: "v4", est: 640, med: 902, res: "18 min · válvula 1", ok: 0, flag: "Δ +41 % · revisar línea" },
-  { f: "27/09 06:10", p: "Sandial Tuyutî", cond: "Humedad 30 cm = 21,8 % (umbral 19 %)", dec: "No regar", pol: "v3", est: 0, med: 0, res: "Sin apertura", ok: 1 },
-  { f: "26/09 19:30", p: "Potrero Costa Guasu", cond: "Sin política nueva hace 6 d (gracia: 5 d)", dec: "Programa conservador: 12 min", pol: "—", est: 820, med: null, res: "12 min · registrado offline", ok: 1, flag: "Cayó al programa conservador" },
-  { f: "26/09 05:35", p: "Tomatal Ka'aguy", cond: "Humedad 30 cm = 18,2 % (umbral 19 %)", dec: "Regar 20 min", pol: "v7", est: 1075, med: 1092, res: "20 min · válvula 2", ok: 1 },
-  { f: "25/09 17:50", p: "Melonar Tape Pytâ", cond: "Lluvia 18 mm en 24 h · bloqueo por lluvia", dec: "No regar", pol: "v2", est: 0, med: 0, res: "Sin apertura", ok: 1 },
-  { f: "25/09 06:00", p: "Huerta Ñu Porâ", cond: "Humedad 10 cm = 16,0 % (umbral 18 %)", dec: "Regar 18 min", pol: "v4", est: 640, med: 848, res: "18 min · válvula 1", ok: 0, flag: "Δ +33 %" },
-  { f: "24/09 05:45", p: "Sandial Tuyutî", cond: "Humedad 30 cm = 18,6 % (umbral 19 %)", dec: "Regar 26 min", pol: "v3", est: 1490, med: 1441, res: "26 min · válvula 3", ok: 1 }
-];
-
-const POL_VER = [
-  { v: "v7", desde: "22/09/2026", por: "Ramona Ayala (técnica)", cambio: "Umbral de arranque 21 % → 19 %; ventana 04:00–08:00", est: "Rigiendo" },
-  { v: "v6", desde: "05/09/2026", por: "Ramona Ayala (técnica)", cambio: "Duración máxima 30 → 25 min por evento", est: "Cerrada" },
-  { v: "v5", desde: "18/08/2026", por: "Derlis Cáceres (dueño)", cambio: "Alta de la parcela · política inicial", est: "Cerrada" }
-];
-
-const DISPOSITIVOS = [
-  { id: "SE01-0431", t: "Humedad de suelo (10/30/60 cm)", p: "Tomatal Ka'aguy", bat: 82, ult: "hace 11 min", atr: "40 s", fw: "1.4.2", cal: "Ensayo propio 12/08/2026 · gravimetría, 6 puntos", est: "ok", spark: [24, 22, 20, 18, 27, 25, 23, 21, 19, 28] },
-  { id: "SE01-0432", t: "Humedad de suelo (10/30/60 cm)", p: "Tomatal Ka'aguy", bat: 76, ult: "hace 9 min", atr: "35 s", fw: "1.4.2", cal: "Ensayo propio 12/08/2026 · gravimetría, 6 puntos", est: "ok", spark: [25, 23, 21, 19, 28, 26, 24, 22, 20, 29] },
-  { id: "CTRL-0112", t: "Controlador de riego", p: "Tomatal Ka'aguy", bat: null, ult: "hace 4 min", atr: "12 s", fw: "2.1.0", cal: "No aplica", est: "ok", spark: null },
-  { id: "YFQ-0208", t: "Caudalímetro de línea", p: "Huerta Ñu Porâ", bat: null, ult: "hace 6 min", atr: "18 s", fw: "1.0.7", cal: "Fabricante · K = 7,5 pulsos/L, hoja de datos 2024", est: "warn", spark: [30, 31, 34, 38, 41, 44, 47, 49, 52, 55] },
-  { id: "SE01-0440", t: "Humedad de suelo (10/30 cm)", p: "Potrero Costa Guasu", bat: 9, ult: "hace 3 d", atr: "—", fw: "1.3.9", cal: "Fabricante · curva mineral por defecto", est: "crit", spark: [22, 22, 21, 21, 20, 20, null, null, null, null] },
-  { id: "EST-0003", t: "Estación meteorológica", p: "Potrero Yvyra'i", bat: 94, ult: "hace 2 min", atr: "8 s", fw: "3.0.1", cal: "Fabricante · pluviómetro 0,2 mm/basculación", est: "ok", spark: [18, 19, 22, 26, 29, 27, 24, 21, 19, 18] },
-  { id: "TRP-0017", t: "Trampa de plagas", p: "Melonar Tape Pytâ", bat: 61, ult: "hace 1 h", atr: "3 min", fw: "1.1.4", cal: "No aplica · conteo manual", est: "ok", spark: [0, 1, 0, 2, 1, 0, 3, 2, 4, 4] },
-  { id: "HID-0001", t: "Nodo de hidroponía (EC · T · nivel)", p: "Patio Asunción — Mesa 1", bat: null, ult: "hace 1 min", atr: "2 s", fw: "0.9.3", cal: "EC: ensayo propio 20/09/2026 · solución patrón 1,41 mS/cm, compensada por T", est: "ok", spark: [1.5, 1.5, 1.6, 1.6, 1.7, 1.7, 1.8, 1.7, 1.6, 1.6] }
-];
-
-const CALIBS = [
-  { disp: "SE01-0431", mag: "Humedad volumétrica", form: "θ = 3,879·10⁻⁴·S − 0,6956", proc: "Ensayo propio", detalle: "Gravimetría con 6 puntos, suelo del lote, 12/08/2026", desde: "12/08/2026", est: "Vigente" },
-  { disp: "SE01-0431", mag: "Humedad volumétrica", form: "θ = 4,100·10⁻⁴·S − 0,7200", proc: "Fabricante", detalle: "Curva mineral por defecto, hoja de datos rev. 2023", desde: "18/08/2025", est: "Cerrada el 12/08/2026" },
-  { disp: "HID-0001", mag: "Conductividad (EC)", form: "EC₂₅ = EC(T) / (1 + 0,019·(T − 25))", proc: "Ensayo propio", detalle: "Solución patrón 1,41 mS/cm a 25 °C, 20/09/2026", desde: "20/09/2026", est: "Vigente" },
-  { disp: "YFQ-0208", mag: "Caudal", form: "Q = f / 7,5", proc: "Fabricante", detalle: "K = 7,5 pulsos/L, hoja de datos 2024. Sin ensayo propio todavía", desde: "02/09/2026", est: "Vigente · sin verificar" }
-];
-
-const ALERTAS = [
-  { n: "crit", t: "Caudal medido 41 % sobre el estimado", p: "Huerta Ñu Porâ", dato: "902 L medidos contra 640 L estimados · 27/09 18:05", desde: "hace 14 h", que: "Ir al lote y recorrer la línea del sector 1. El delta se abrió en dos riegos seguidos." },
-  { n: "crit", t: "Batería del sensor en 9 %", p: "Potrero Costa Guasu", dato: "SE01-0440 · 3,42 V · último reporte 25/09 08:12", desde: "hace 3 d", que: "Llevar 2 pilas de litio AA. Si se agota, la parcela queda sin condición para decidir." },
-  { n: "warn", t: "Humedad a 30 cm bajo el umbral 2 días seguidos", p: "Tomatal Ka'aguy", dato: "17,4 % contra umbral 19 % · 2 sensores concuerdan", desde: "hace 2 d", que: "Revisar la política v7: el umbral puede estar bien y la duración corta." },
-  { n: "warn", t: "Capturas de trampa por encima del promedio", p: "Melonar Tape Pytâ", dato: "4 capturas en 7 días · promedio del mes 1,2", desde: "hace 1 d", que: "Recorrer el borde este y confirmar la especie antes de decidir tratamiento." },
-  { n: "mute", t: "Sin señal del gateway", p: "Potrero Costa Guasu", dato: "Último paquete 25/09 08:12 · el controlador sigue regando con la última política", desde: "hace 3 d", que: "Nada urgente. Si pasa de 5 días el controlador cae al programa conservador." },
-  { n: "mute", t: "Cuota de Copernicus al 74 %", p: "Toda la cuenta", dato: "Unidades de procesamiento del mes · se reinician el 01/10", desde: "hace 6 h", que: "Nada. Si llega a 90 % se espacia el barrido de NDVI a 10 días." }
-];
-
-const SOL = {
-  ec: { v: 1.72, u: "mS/cm", min: 0.6, max: 2.6, okMin: 1.2, okMax: 1.8, est: "ok", nota: "Objetivo de la receta: 1,2–1,8 mS/cm" },
-  ph: { v: 6.9, u: "", min: 4.5, max: 8.0, okMin: 5.5, okMax: 6.5, est: "warn", nota: "Lectura manual con pH-metro portátil · 28/09 07:15" },
-  temp: { v: 26.4, u: "°C", min: 14, max: 34, okMin: 18, okMax: 24, est: "crit", nota: "Sobre 24 °C la lechuga se espiga" },
-  nivel: { v: 41, u: "cm", min: 0, max: 70, okMin: 45, okMax: 65, est: "warn", nota: "Tanque de 200 L · al bajar el nivel la EC se concentra" }
-};
-const SOL_EC = [1.42, 1.44, 1.46, 1.48, 1.51, 1.55, 1.58, 1.60, 1.63, 1.66, 1.69, 1.72];
-const SOL_NIV = [62, 60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 41];
-const SOL_T = [19.8, 20.4, 22.1, 24.6, 26.9, 27.8, 26.4, 24.1, 22.0, 20.6, 19.9, 19.4];
-const SOL_H = ["00", "02", "04", "06", "08", "10", "12", "14", "16", "18", "20", "22"];
-
-const BLOQUES = [
-  { id: "A", var: "EC 1,2 mS/cm", ctrl: 1, peso: 182, n: 50, desc: 4, dias: 43, sint: "Sin espigado. Hoja firme.", col: "var(--s1)" },
-  { id: "B", var: "EC 1,6 mS/cm", ctrl: 0, peso: 206, n: 50, desc: 3, dias: 42, sint: "Sin espigado. Hoja más gruesa.", col: "var(--s2)" },
-  { id: "C", var: "Media sombra 40 %", ctrl: 0, peso: 221, n: 50, desc: 2, dias: 44, sint: "Sin espigado. Solución 3,1 °C más fría.", col: "var(--s3)" },
-  { id: "D", var: "Sin sombra", ctrl: 0, peso: 147, n: 50, desc: 12, dias: 41, sint: "9 espigadas. Borde de hoja quemado.", col: "var(--s4)" }
-];
-
-const USUARIOS = [
-  { n: "Derlis Cáceres", m: "derlis@ejemplo.py", rol: "Dueño", amb: "Todo el cliente", ult: "hoy 06:12" },
-  { n: "Ramona Ayala", m: "ramona@ejemplo.py", rol: "Técnica", amb: "Estancia Yvoty", ult: "hoy 05:48" },
-  { n: "Aníbal Giménez", m: "anibal@ejemplo.py", rol: "Operario", amb: "Estancia Yvoty", ult: "ayer 17:30" },
-  { n: "Coop. San Isidro (auditoría)", m: "auditoria@ejemplo.py", rol: "Lectura", amb: "Tomatal Ka'aguy, Sandial Tuyutî", ult: "22/09 09:05" }
-];
-const PERMISOS = [
-  ["Ver mapa, series y riego", 1, 1, 1, 1],
-  ["Exportar CSV", 1, 1, 1, 1],
-  ["Cargar cosecha y lecturas manuales", 1, 1, 1, 0],
-  ["Escribir política de riego", 1, 1, 0, 0],
-  ["Registrar una calibración", 1, 1, 0, 0],
-  ["Editar el polígono de una parcela", 1, 1, 0, 0],
-  ["Dar de alta usuarios y roles", 1, 0, 0, 0]
-];
-
-/* ============================ gráficos ============================ */
-const TIP = $("#tip");
-function tipShow(html, ev) {
-  TIP.innerHTML = html; TIP.style.opacity = "1";
-  const r = TIP.getBoundingClientRect();
-  let x = ev.clientX + 14, y = ev.clientY - r.height - 12;
-  if (x + r.width > innerWidth - 8) x = ev.clientX - r.width - 14;
-  if (y < 8) y = ev.clientY + 18;
-  TIP.style.left = x + "px"; TIP.style.top = y + "px";
-}
-const tipHide = () => { TIP.style.opacity = "0"; };
-
-const NS = "http://www.w3.org/2000/svg";
-function S(tag, a) { const e = document.createElementNS(NS, tag); for (const k in a) if (a[k] !== undefined && a[k] !== null) e.setAttribute(k, a[k]); return e; }
-
-/* Motor comun: lineas, areas, barras, bandas y crosshair. Un solo eje Y por panel. */
-function drawPanel(g, cfg, geo) {
-  const { x0, y0, w, h } = geo;
-  const { yMin, yMax } = cfg;
-  const sy = v => y0 + h - (v - yMin) / (yMax - yMin) * h;
-  const n = cfg.xLen;
-  const sx = i => n === 1 ? x0 + w / 2 : x0 + i / (n - 1) * w;
-
-  (cfg.bands || []).forEach(b => {
-    g.appendChild(S("rect", { x: x0, y: sy(b.to), width: w, height: Math.max(1, sy(b.from) - sy(b.to)), fill: b.color, opacity: b.op || 1 }));
-    if (b.label) g.appendChild(Object.assign(S("text", { x: x0 + 5, y: sy(b.to) + 11, fill: "var(--ink-3)", "font-size": 10.5, "font-variation-settings": '"wdth" 88' }), { textContent: b.label }));
-  });
-  (cfg.vbands || []).forEach(b => {
-    g.appendChild(S("rect", { x: sx(b.from), y: y0, width: sx(b.to) - sx(b.from), height: h, fill: "var(--panel-2)" }));
-    g.appendChild(S("rect", { x: sx(b.from), y: y0, width: sx(b.to) - sx(b.from), height: h, fill: "none", stroke: "var(--axis)", "stroke-width": 1, "stroke-dasharray": "3 3" }));
-    if (b.label) g.appendChild(Object.assign(S("text", { x: (sx(b.from) + sx(b.to)) / 2, y: y0 + h / 2 + 3, fill: "var(--ink-3)", "font-size": 10.5, "text-anchor": "middle", "font-variation-settings": '"wdth" 86' }), { textContent: b.label }));
-  });
-
-  (cfg.yTicks || []).forEach(t => {
-    g.appendChild(S("line", { x1: x0, x2: x0 + w, y1: sy(t), y2: sy(t), stroke: "var(--grid)", "stroke-width": 1 }));
-    g.appendChild(Object.assign(S("text", { x: x0 - 6, y: sy(t) + 3.5, fill: "var(--ink-3)", "font-size": 10.5, "text-anchor": "end", "font-variation-settings": '"wdth" 86' }), { textContent: cfg.yFmt ? cfg.yFmt(t) : t }));
-  });
-  (cfg.hlines || []).forEach(l => {
-    g.appendChild(S("line", { x1: x0, x2: x0 + w, y1: sy(l.v), y2: sy(l.v), stroke: l.color, "stroke-width": 1.5, "stroke-dasharray": "5 4" }));
-    if (l.label) g.appendChild(Object.assign(S("text", { x: x0 + w + 5, y: sy(l.v) + 3.5, fill: l.color, "font-size": 10.5, "font-weight": 650, "font-variation-settings": '"wdth" 88' }), { textContent: l.label }));
-  });
-
-  (cfg.series || []).forEach(s => {
-    const vals = s.values;
-    if (s.type === "band") {
-      let d = "";
-      for (let i = 0; i < vals.length; i++) d += (i ? "L" : "M") + sx(i).toFixed(1) + " " + sy(vals[i]).toFixed(1) + " ";
-      for (let i = vals.length - 1; i >= 0; i--) d += "L" + sx(i).toFixed(1) + " " + sy(s.lower[i]).toFixed(1) + " ";
-      g.appendChild(S("path", { d: d + "Z", fill: s.color, opacity: s.op || .22 }));
-      return;
-    }
-    if (s.type === "bar") {
-      const bw = Math.max(2, Math.min(14, w / n * (s.wide || 0.6)));
-      vals.forEach((v, i) => {
-        if (v === null || v === 0) return;
-        const yv = sy(v), yb = sy(Math.min(yMax, Math.max(yMin, 0)));
-        g.appendChild(S("rect", { x: sx(i) - bw / 2, y: Math.min(yv, yb), width: bw, height: Math.max(2, Math.abs(yb - yv)), fill: s.color, rx: 2, ry: 2 }));
-      });
-      return;
-    }
-    const segs = []; let cur = [];
-    vals.forEach((v, i) => { if (v === null) { if (cur.length) segs.push(cur); cur = []; } else cur.push(i); });
-    if (cur.length) segs.push(cur);
-    if (s.fill) segs.forEach(seg => {
-      if (seg.length < 2) return;
-      let a = "M" + sx(seg[0]).toFixed(1) + " " + sy(yMin).toFixed(1) + " ";
-      seg.forEach(i => { a += "L" + sx(i).toFixed(1) + " " + sy(vals[i]).toFixed(1) + " "; });
-      a += "L" + sx(seg[seg.length - 1]).toFixed(1) + " " + sy(yMin).toFixed(1) + " Z";
-      g.appendChild(S("path", { d: a, fill: s.color, opacity: s.fillOp || .14 }));
-    });
-    let d = "";
-    segs.forEach(seg => seg.forEach((i, k) => { d += (k ? "L" : "M") + sx(i).toFixed(1) + " " + sy(vals[i]).toFixed(1) + " "; }));
-    g.appendChild(S("path", { d, fill: "none", stroke: s.color, "stroke-width": s.w || 2, "stroke-linejoin": "round", "stroke-linecap": "round", "stroke-dasharray": s.dash || null }));
-  });
-
-  (cfg.marks || []).forEach(m => {
-    g.appendChild(S("line", { x1: sx(m.i), x2: sx(m.i), y1: y0 + h, y2: y0 + h - 7, stroke: m.color, "stroke-width": 2 }));
-  });
-
-  g.appendChild(S("line", { x1: x0, x2: x0 + w, y1: y0 + h, y2: y0 + h, stroke: "var(--axis)", "stroke-width": 1 }));
-  return { sx, sy };
-}
-
-function thinTicks(ticks, W) {
-  const t = ticks || [];
-  const step = W < 380 ? 3 : W < 560 ? 2 : 1;
-  return step === 1 ? t : t.filter((_, k) => k % step === 0 || k === t.length - 1);
-}
-
-function mountChart(host, build) {
-  const render = () => {
-    const w = Math.max(260, host.clientWidth || 320);
-    host.innerHTML = "";
-    const svg = build(w);
-    host.appendChild(svg);
-  };
-  render();
-  let t; const ro = new ResizeObserver(() => { clearTimeout(t); t = setTimeout(render, 90); });
-  ro.observe(host);
-}
-
-/* Grafico de LANES: varios paneles apilados que comparten el eje X.
-   Se usa para la humedad por profundidad: la superficie arriba, 60 cm al fondo. */
-function laneChart(host, cfg) {
-  mountChart(host, W => {
-    const padL = 42, padR = cfg.padR || 12, padT = 8, padB = 26, gap = cfg.gap === undefined ? 10 : cfg.gap;
-    const lanes = cfg.lanes;
-    const lh = cfg.laneH;
-    const H = padT + lanes.length * lh + (lanes.length - 1) * gap + padB;
-    const svg = S("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": cfg.aria || "" });
-    const w = W - padL - padR;
-    const geoms = [];
-    lanes.forEach((L, k) => {
-      const y0 = padT + k * (lh + gap);
-      const g = S("g", {});
-      svg.appendChild(g);
-      const geo = { x0: padL, y0, w, h: lh };
-      geoms.push(drawPanel(g, Object.assign({ xLen: cfg.xLen }, L), geo));
-      svg.appendChild(Object.assign(S("text", { x: padL + 6, y: y0 + 13, fill: "var(--ink-2)", "font-size": 11.5, "font-weight": 650, "font-variation-settings": '"wdth" 96' }), { textContent: L.title }));
-      if (L.sub && W > 520) svg.appendChild(Object.assign(S("text", { x: padL + w - 2, y: y0 + 13, fill: "var(--ink-3)", "font-size": 10.5, "text-anchor": "end", "font-variation-settings": '"wdth" 88' }), { textContent: L.sub }));
-    });
-    const yBot = padT + lanes.length * lh + (lanes.length - 1) * gap;
-    thinTicks(cfg.xTicks, W).forEach(i => {
-      const x = padL + i / (cfg.xLen - 1) * w;
-      svg.appendChild(Object.assign(S("text", { x, y: yBot + 15, fill: "var(--ink-3)", "font-size": 10.5, "text-anchor": "middle", "font-variation-settings": '"wdth" 86' }), { textContent: cfg.xLabels[i] }));
-    });
-
-    const cross = S("line", { y1: padT, y2: yBot, stroke: "var(--ink)", "stroke-width": 1, opacity: 0, "pointer-events": "none" });
-    svg.appendChild(cross);
-    const ov = S("rect", { x: padL, y: padT, width: w, height: yBot - padT, fill: "transparent", style: "cursor:crosshair" });
-    svg.appendChild(ov);
-    const idxOf = ev => {
-      const r = svg.getBoundingClientRect();
-      const rel = (ev.clientX - r.left - padL) / w;
-      return Math.max(0, Math.min(cfg.xLen - 1, Math.round(rel * (cfg.xLen - 1))));
-    };
-    const move = ev => {
-      const i = idxOf(ev), x = padL + i / (cfg.xLen - 1) * w;
-      cross.setAttribute("x1", x); cross.setAttribute("x2", x); cross.setAttribute("opacity", .35);
-      let rows = "";
-      lanes.forEach(L => (L.series || []).forEach(s => {
-        if (s.skipTip) return;
-        let v = s.values[i];
-        if (v !== null && s.abs) v = Math.abs(v);
-        rows += `<div class="r"><span><i style="background:${s.color}"></i>${esc(s.name)}</span><b>${v === null ? "sin dato" : nf(v, s.dec === undefined ? 1 : s.dec) + (s.unit || "")}</b></div>`;
-      }));
-      tipShow(`<div class="t">${esc(cfg.xLabels[i])}</div>${rows}`, ev);
-    };
-    ov.addEventListener("pointermove", move);
-    ov.addEventListener("pointerleave", () => { cross.setAttribute("opacity", 0); tipHide(); });
-    return svg;
-  });
-}
-
-/* Un solo panel con crosshair. */
-function lineChart(host, cfg) {
-  mountChart(host, W => {
-    const padL = cfg.padL || 42, padR = cfg.padR || 14, padT = 10, padB = 26;
-    const H = cfg.h || 180;
-    const svg = S("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": cfg.aria || "" });
-    const w = W - padL - padR, h = H - padT - padB;
-    const g = S("g", {}); svg.appendChild(g);
-    drawPanel(g, Object.assign({ xLen: cfg.xLen }, cfg), { x0: padL, y0: padT, w, h });
-    thinTicks(cfg.xTicks, W).forEach(i => {
-      const x = padL + i / (cfg.xLen - 1) * w;
-      svg.appendChild(Object.assign(S("text", { x, y: padT + h + 15, fill: "var(--ink-3)", "font-size": 10.5, "text-anchor": "middle", "font-variation-settings": '"wdth" 86' }), { textContent: cfg.xLabels[i] }));
-    });
-    const cross = S("line", { y1: padT, y2: padT + h, stroke: "var(--ink)", "stroke-width": 1, opacity: 0, "pointer-events": "none" });
-    svg.appendChild(cross);
-    const ov = S("rect", { x: padL, y: padT, width: w, height: h, fill: "transparent", style: "cursor:crosshair" });
-    svg.appendChild(ov);
-    const move = ev => {
-      const r = svg.getBoundingClientRect();
-      const i = Math.max(0, Math.min(cfg.xLen - 1, Math.round((ev.clientX - r.left - padL) / w * (cfg.xLen - 1))));
-      const x = padL + i / (cfg.xLen - 1) * w;
-      cross.setAttribute("x1", x); cross.setAttribute("x2", x); cross.setAttribute("opacity", .35);
-      let rows = "";
-      (cfg.series || []).forEach(s => {
-        if (s.skipTip) return;
-        const v = s.values[i];
-        rows += `<div class="r"><span><i style="background:${s.color}"></i>${esc(s.name)}</span><b>${v === null ? "sin dato" : nf(v, s.dec === undefined ? 2 : s.dec) + (s.unit || "")}</b></div>`;
-      });
-      tipShow(`<div class="t">${esc(cfg.xLabels[i])}</div>${rows}`, ev);
-    };
-    ov.addEventListener("pointermove", move);
-    ov.addEventListener("pointerleave", () => { cross.setAttribute("opacity", 0); tipHide(); });
-    return svg;
-  });
-}
-
-/* Barras horizontales con rotulo directo: ranking de potreros, bloques. */
-function rankChart(host, cfg) {
-  mountChart(host, W => {
-    const rowH = 30, padL = cfg.padL || 128, padR = cfg.padR || 56, padT = 6;
-    const H = padT + cfg.rows.length * rowH + 8;
-    const svg = S("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": cfg.aria || "" });
-    const w = Math.max(60, W - padL - padR);
-    cfg.rows.forEach((r, k) => {
-      const y = padT + k * rowH;
-      const bw = Math.max(3, r.v / cfg.max * w);
-      const g = S("g", { style: "cursor:pointer" });
-      g.appendChild(Object.assign(S("text", { x: padL - 10, y: y + 18, fill: "var(--ink)", "font-size": 12.5, "text-anchor": "end" }), { textContent: r.lab }));
-      g.appendChild(S("rect", { x: padL, y: y + 6, width: w, height: 17, fill: "var(--panel-2)", rx: 2 }));
-      g.appendChild(S("rect", { x: padL, y: y + 6, width: bw, height: 17, fill: r.color, rx: 4 }));
-      g.appendChild(Object.assign(S("text", { x: padL + bw + 7, y: y + 19, fill: "var(--ink)", "font-size": 12.5, "font-weight": 650, "font-variation-settings": '"wdth" 104' }), { textContent: r.txt }));
-      g.addEventListener("pointermove", ev => tipShow(`<div class="t">${esc(r.lab)}</div><div class="r"><span>${esc(cfg.metric)}</span><b>${esc(r.txt)}</b></div>${r.extra ? `<div class="r"><span>${esc(r.extra[0])}</span><b>${esc(r.extra[1])}</b></div>` : ""}`, ev));
-      g.addEventListener("pointerleave", tipHide);
-      svg.appendChild(g);
-    });
-    return svg;
-  });
-}
-
-function sparkline(vals, color) {
-  if (!vals) return "";
-  const w = 72, h = 20, ok = vals.filter(v => v !== null);
-  const mn = Math.min.apply(null, ok), mx = Math.max.apply(null, ok), r = (mx - mn) || 1;
-  let d = "", open = false;
-  vals.forEach((v, i) => {
-    if (v === null) { open = false; return; }
-    const x = i / (vals.length - 1) * w, y = h - (v - mn) / r * (h - 4) - 2;
-    d += (open ? "L" : "M") + x.toFixed(1) + " " + y.toFixed(1) + " "; open = true;
-  });
-  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true" style="display:block"><path d="${d}" fill="none" stroke="${color}" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
-}
-
-/* ============================ piezas de UI ============================ */
-const chip = e => `<span class="chip ${EST[e].chip}"><span class="g"></span>${EST[e].lab}</span>`;
-const tile = (k, v, u, f) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}${u ? `<small>${u}</small>` : ""}</div>${f ? `<div class="f">${f}</div>` : ""}</div>`;
-function head(crumb, title, decision) {
-  return `<div class="pagehead"><div class="crumb">${esc(crumb)}</div><h1>${esc(title)}</h1><div class="decision">${decision}</div></div>`;
-}
-function gauge(g, label, dec) {
-  const pct = v => ((v - g.min) / (g.max - g.min) * 100).toFixed(1) + "%";
-  const okW = ((g.okMax - g.okMin) / (g.max - g.min) * 100).toFixed(1) + "%";
-  return `<div class="gauge">
-    <div class="top"><h3>${esc(label)}</h3>${chip(g.est)}</div>
-    <div class="val">${nf(g.v, dec)}${g.u ? `<small>${g.u}</small>` : ""}</div>
-    <div class="track"><div class="ok-range" style="left:${pct(g.okMin)}; width:${okW}"></div><div class="needle" style="left:calc(${pct(g.v)} - 1.5px)"></div></div>
-    <div class="scale"><span>${nf(g.min, dec)}</span><span style="color:var(--ok)">objetivo ${nf(g.okMin, dec)}–${nf(g.okMax, dec)}</span><span>${nf(g.max, dec)}</span></div>
-    <div class="note" style="margin-top:6px">${esc(g.nota)}</div>
-  </div>`;
-}
-
-/* ============================ pantallas ============================ */
-const SCREENS = {};
-
-/* ---------- 1. Mapa ---------- */
-SCREENS.mapa = () => ({
-  title: "Mapa de parcelas",
-  html: head("Estancia Yvoty · La Colmena, Paraguarí", "Mapa de parcelas",
-    "<b>Decide a qué lote hay que ir hoy.</b> El mapa dice dónde está el problema; el detalle de parcela dice cuál es.") +
-    `<div class="tiles">
-      ${tile("Parcelas en rango", "3", "de 6", "Última lectura hace 11 min")}
-      ${tile("En atención", "1", "", "Tomatal Ka'aguy · humedad a 30 cm")}
-      ${tile("Críticas", "1", "", "Huerta Ñu Porâ · delta de caudal")}
-      ${tile("Sin señal", "1", "", "Potrero Costa Guasu · hace 3 d")}
-      ${tile("Agua aplicada hoy", nf(4860), "L", "6 eventos en 4 parcelas")}
-    </div>
-    <div class="cols map">
-      <div>
-        <div class="mapfig">${mapSVG()}</div>
-        <div class="legend" style="margin-top:10px">
-          <span><i class="sq" style="background:color-mix(in srgb,var(--ok) 22%,transparent); border:1.5px solid var(--ok)"></i>En rango</span>
-          <span><i class="sq" style="background:color-mix(in srgb,var(--warn) 22%,transparent); border:1.5px solid var(--warn)"></i>Atención</span>
-          <span><i class="sq" style="background:color-mix(in srgb,var(--crit) 22%,transparent); border:1.5px solid var(--crit)"></i>Crítico</span>
-          <span><i class="sq" style="background:transparent; border:1.5px dashed var(--mute)"></i>Sin señal</span>
-          <span><i class="sq" style="background:var(--ink-2); border-radius:50%"></i>Dispositivo reportando</span>
-          <span><i class="sq" style="background:transparent; border:1.5px dashed var(--ink-3); border-radius:50%"></i>Dispositivo sin reportar</span>
-        </div>
-        <div class="note rule" style="margin-top:12px">
-          El polígono se pinta por <b>estado</b>, no por cultivo: el cultivo ya está escrito y el estado es lo que cambia.
-          Ningún dispositivo se asigna a mano — cae adentro de la parcela por <code>ST_Contains</code>.
-        </div>
-      </div>
-      <div>
-        <div class="parcela-list" id="plist">
-          ${PARCELAS.map(p => `
-            <button class="parcela-row" data-p="${p.id}">
-              <span class="bar" style="background:${estColor(p.est)}"></span>
-              <span class="mid">
-                <span class="nm">${esc(p.nom)}</span>
-                <span class="meta">${esc(p.cultivo)} · ${nf(p.ha, 1)} ha · ${p.disp} dispositivos</span>
-                <span class="why">${esc(p.nota)}</span>
-              </span>
-              <span class="right">${chip(p.est)}</span>
-            </button>`).join("")}
-        </div>
-      </div>
-    </div>`,
-  after() {
-    const sync = (id, on) => {
-      $$("#plist .parcela-row").forEach(r => r.classList.toggle("hot", on && r.dataset.p === id));
-      $$("svg [data-poly]").forEach(el => el.style.filter = (on && el.dataset.poly === id) ? "brightness(.94)" : "");
-      $$("svg [data-poly]").forEach(el => el.setAttribute("stroke-width", (on && el.dataset.poly === id) ? 3.5 : 2));
-    };
-    $$("#plist .parcela-row").forEach(r => {
-      r.addEventListener("pointerenter", () => sync(r.dataset.p, 1));
-      r.addEventListener("pointerleave", () => sync(r.dataset.p, 0));
-      r.addEventListener("click", () => go("parcela"));
-    });
-    $$("svg [data-poly]").forEach(el => {
-      el.style.cursor = "pointer";
-      el.addEventListener("pointerenter", ev => {
-        sync(el.dataset.poly, 1);
-        const p = PARCELAS.find(x => x.id === el.dataset.poly);
-        tipShow(`<div class="t">${esc(p.cultivo)}</div><div class="r"><span><b>${esc(p.nom)}</b></span></div><div class="r"><span>Superficie</span><b>${nf(p.ha, 1)} ha</b></div><div class="r"><span>NDVI (ejemplo)</span><b>${nf(p.ndvi, 2)}</b></div>`, ev);
-      });
-      el.addEventListener("pointermove", ev => { const p = PARCELAS.find(x => x.id === el.dataset.poly); tipShow(`<div class="t">${esc(p.cultivo)}</div><div class="r"><span><b>${esc(p.nom)}</b></span></div><div class="r"><span>Superficie</span><b>${nf(p.ha, 1)} ha</b></div><div class="r"><span>NDVI (ejemplo)</span><b>${nf(p.ndvi, 2)}</b></div>`, ev); });
-      el.addEventListener("pointerleave", () => { sync(el.dataset.poly, 0); tipHide(); });
-      el.addEventListener("click", () => go("parcela"));
-    });
-  }
-});
-
-function mapSVG() {
-  const dev = DISPOS_MAPA.map(d => {
-    const hollow = d.off;
-    if (d.t === "estacion") return `<g transform="translate(${d.x},${d.y})"><path d="M-6 6 L0 -7 L6 6 Z" fill="${hollow ? "none" : "var(--ink-2)"}" stroke="var(--ink-2)" stroke-width="1.6" stroke-dasharray="${hollow ? "2 2" : "none"}"/></g>`;
-    if (d.t === "ctrl") return `<rect x="${d.x - 5}" y="${d.y - 5}" width="10" height="10" fill="${hollow ? "none" : "var(--brand)"}" stroke="var(--brand)" stroke-width="1.8" stroke-dasharray="${hollow ? "2 2" : "none"}"/>`;
-    if (d.t === "caudal") return `<g transform="translate(${d.x},${d.y})"><circle r="5.5" fill="none" stroke="var(--s1)" stroke-width="1.8"/><path d="M-5.5 0 H5.5" stroke="var(--s1)" stroke-width="1.8"/></g>`;
-    if (d.t === "trampa") return `<path d="M${d.x} ${d.y - 6} L${d.x + 6} ${d.y} L${d.x} ${d.y + 6} L${d.x - 6} ${d.y} Z" fill="var(--s2)" stroke="var(--s2)" stroke-width="1.4"/>`;
-    return `<circle cx="${d.x}" cy="${d.y}" r="4.6" fill="${hollow ? "none" : "var(--ink-2)"}" stroke="var(--ink-2)" stroke-width="1.7" stroke-dasharray="${hollow ? "2 2" : "none"}"/>`;
-  }).join("");
-  const polys = PARCELAS.map(p => {
-    const c = estColor(p.est), mute = p.est === "mute";
-    return `<polygon data-poly="${p.id}" points="${p.poly}" fill="${mute ? "none" : `color-mix(in srgb, ${c} 20%, transparent)`}" stroke="${c}" stroke-width="2" stroke-linejoin="round" stroke-dasharray="${mute ? "7 5" : "none"}"><title>${esc(p.nom)}</title></polygon>`;
-  }).join("");
-  const labels = PARCELAS.map(p => {
-    const pts = p.poly.split(" ").map(s => s.split(",").map(Number));
-    const cx = pts.reduce((a, b) => a + b[0], 0) / pts.length, cy = pts.reduce((a, b) => a + b[1], 0) / pts.length;
-    return `<text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)" style="font-variation-settings:'wdth' 106; pointer-events:none">${esc(p.nom)}</text>
-            <text x="${cx}" y="${cy + 12}" text-anchor="middle" font-size="11" fill="var(--ink-2)" style="font-variation-settings:'wdth' 88; pointer-events:none">${esc(p.cultivo.split(" —")[0])} · ${nf(p.ha, 1)} ha</text>`;
-  }).join("");
-  return `<svg viewBox="0 0 920 540" role="img" aria-label="Mapa de las seis parcelas del campo con sus dispositivos">
-    <rect width="920" height="540" fill="var(--panel)"/>
-    <g opacity=".5">
-      <path d="M0 108 C160 92, 300 132, 460 112 S760 78, 920 100" fill="none" stroke="var(--line)" stroke-width="1"/>
-      <path d="M0 232 C180 214, 320 252, 500 234 S780 202, 920 224" fill="none" stroke="var(--line)" stroke-width="1"/>
-      <path d="M0 356 C200 336, 340 374, 520 356 S800 326, 920 346" fill="none" stroke="var(--line)" stroke-width="1"/>
-    </g>
-    <path d="M-10 318 C120 300, 250 306, 388 296 S620 276, 930 298" fill="none" stroke="var(--s1)" stroke-width="5" opacity=".35" stroke-linecap="round"/>
-    <text x="24" y="312" font-size="11" fill="var(--s1)" style="font-variation-settings:'wdth' 86">arroyo Ka'aguy</text>
-    <path d="M404 0 L392 540" fill="none" stroke="var(--line-2)" stroke-width="7"/>
-    <path d="M404 0 L392 540" fill="none" stroke="var(--panel)" stroke-width="2.4" stroke-dasharray="11 11"/>
-    <text x="414" y="520" font-size="11" fill="var(--ink-3)" style="font-variation-settings:'wdth' 86">camino vecinal</text>
-    ${polys}${labels}${dev}
-    <g transform="translate(760,500)">
-      <line x1="0" y1="0" x2="110" y2="0" stroke="var(--ink-2)" stroke-width="1.6"/>
-      <line x1="0" y1="-4" x2="0" y2="4" stroke="var(--ink-2)" stroke-width="1.6"/>
-      <line x1="110" y1="-4" x2="110" y2="4" stroke="var(--ink-2)" stroke-width="1.6"/>
-      <text x="55" y="-7" text-anchor="middle" font-size="11" fill="var(--ink-2)" style="font-variation-settings:'wdth' 88">200 m</text>
-    </g>
-    <g transform="translate(46,500)">
-      <path d="M0 0 L0 -22 M-5 -16 L0 -22 L5 -16" stroke="var(--ink-2)" stroke-width="1.6" fill="none"/>
-      <text x="10" y="-2" font-size="11" fill="var(--ink-2)" style="font-variation-settings:'wdth' 88">N</text>
-    </g>
-  </svg>`;
-}
-
-/* ---------- 2. Detalle de parcela ---------- */
-SCREENS.parcela = () => ({
-  title: "Detalle de parcela",
-  html: head("Mapa · Estancia Yvoty", "Tomatal Ka'aguy",
-    "<b>Decide si el agua llegó a la raíz o pasó de largo.</b> Eso es lo que sube o baja la duración del riego, y es agua y es plata.") +
-    `<div class="tiles">
-      ${tile("Estado", `<span style="font-size:19px">${chip("warn")}</span>`, "", "Humedad a 30 cm bajo el umbral desde hace 2 d")}
-      ${tile("Cultivo", "Tomate", "Elpida", "Campaña 2026/27 · trasplante 04/08/2026")}
-      ${tile("Superficie", nf(1.8, 1), "ha", "Polígono v3 · corregido el 19/08/2026")}
-      ${tile("Agua en la campaña", nf(186400), "L", "≈ " + gs(1840000) + " de bombeo (ejemplo)")}
-      ${tile("Litros por kg", nf(24.6, 1), "L/kg", "Contra " + nf(31.2, 1) + " del ciclo anterior")}
-    </div>
-
-    <div class="panel">
-      <header>
-        <h2>Humedad del suelo por profundidad</h2>
-        <span class="legend"><span><i style="background:var(--d1)"></i>10 cm</span><span><i style="background:var(--d2)"></i>30 cm</span><span><i style="background:var(--d3)"></i>60 cm</span><span><i style="background:var(--ok); height:9px; width:9px; border-radius:2px"></i>rango de la política v7</span></span>
-        <span class="hint">21 días · datos de ejemplo</span>
-      </header>
-      <div class="body">
-        <div class="chart" id="c-depth"></div>
-        <div class="note rule" style="margin-top:12px">
-          <b>Se dibuja hacia abajo porque la profundidad es profundidad.</b> Si los 60 cm suben después de cada riego,
-          el agua está pasando la zona radicular: eso es agua tirada y se corrige acortando el evento, no bajando el umbral.
-          El tramo gris del panel de 30 cm es <b>sin dato</b> — el sensor no reportó, no midió cero.
-        </div>
-      </div>
-    </div>
-
-    <div class="cols c2">
-      <div class="panel">
-        <header><h2>Riego y lluvia</h2><span class="hint">mm · mismo eje de tiempo que la humedad</span></header>
-        <div class="body">
-          <div class="chart" id="c-agua"></div>
-          <div class="note" style="margin-top:8px">La lluvia se dibuja cayendo y el riego saliendo del suelo: la separación es de posición, no solo de color. Los 18 mm del 21/09 son los que bloquearon el riego de esa mañana.</div>
-        </div>
-      </div>
-      <div class="panel">
-        <header><h2>NDVI de los últimos 12 meses</h2><span class="hint">contra la banda p10–p90 de 9 años</span></header>
-        <div class="body">
-          <div class="chart" id="c-ndvi"></div>
-          <div class="legend" style="margin-top:8px"><span><i style="background:var(--n5)"></i>2025/26</span><span><i style="background:var(--n3); height:2px"></i>Mediana 9 años</span><span><i class="sq" style="background:var(--n1); opacity:.45"></i>p10–p90</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header><h2>Últimos eventos de riego</h2><a class="hint" href="#/riego">Ver historial completo</a></header>
-      <div class="body flush scroller">
-        <table>
-          <thead><tr><th>Cuándo</th><th>Condición que lo causó</th><th>Decisión</th><th>Política</th><th class="num">Estimado</th><th class="num">Medido</th></tr></thead>
-          <tbody>${RIEGOS.filter(r => r.p === "Tomatal Ka'aguy").map(r => `
-            <tr><td>${esc(r.f)}</td><td>${esc(r.cond)}</td><td>${esc(r.dec)}</td><td>${esc(r.pol)}</td>
-            <td class="num">${nf(r.est)} L</td><td class="num">${r.med === null ? "—" : nf(r.med) + " L"}</td></tr>`).join("")}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="cols c2">
-      <div class="panel">
-        <header><h2>Dispositivos adentro del polígono</h2></header>
-        <div class="body flush scroller">
-          <table><thead><tr><th>Dispositivo</th><th>Batería</th><th>Último reporte</th></tr></thead><tbody>
-          ${DISPOSITIVOS.filter(d => d.p === "Tomatal Ka'aguy").map(d => `<tr><td><b>${esc(d.id)}</b><span class="why">${esc(d.t)}</span></td><td>${d.bat === null ? "220 V" : d.bat + " %"}</td><td>${esc(d.ult)}</td></tr>`).join("")}
-          </tbody></table>
-        </div>
-      </div>
-      <div class="panel">
-        <header><h2>Último análisis de suelo</h2><span class="hint">14/07/2026 · punto de muestreo registrado</span></header>
-        <div class="body">
-          <dl class="kv">
-            <dt>Materia orgánica</dt><dd>2,8 %</dd>
-            <dt>pH (agua)</dt><dd>6,1</dd>
-            <dt>Fósforo (Bray I)</dt><dd>18 mg/kg</dd>
-            <dt>Potasio</dt><dd>0,42 cmol/kg</dd>
-            <dt>Textura</dt><dd>Franco arcillosa</dd>
-            <dt>Capacidad de campo</dt><dd>31 % v/v</dd>
-            <dt>Punto de marchitez</dt><dd>16 % v/v</dd>
-          </dl>
-          <div class="note" style="margin-top:10px">La capacidad de campo y el punto de marchitez de este análisis son los que fijan el rango verde del gráfico de arriba. Cambiar el análisis cambia el rango, no al revés.</div>
-        </div>
-      </div>
-    </div>`,
-  after() {
-    const okBand = [{ from: 19, to: 28, color: "color-mix(in srgb, var(--ok) 13%, transparent)" }];
-    laneChart($("#c-depth"), {
-      xLen: 84, xLabels: FECHAS, xTicks: [0, 14, 28, 42, 56, 70, 83], laneH: 84, gap: 12, padR: 66,
-      aria: "Humedad volumétrica a 10, 30 y 60 centímetros durante 21 días",
-      lanes: [
-        { title: "10 cm", sub: "% v/v", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, series: [{ name: "10 cm", color: "var(--d1)", values: HUM10, fill: 1, unit: " %", dec: 1 }], marks: RIEGO_IDX.map(i => ({ i, color: "var(--brand)" })) },
-        { title: "30 cm", sub: "zona radicular", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, vbands: [{ from: 43, to: 52, label: "sin dato" }], hlines: [{ v: 19, color: "var(--warn)", label: "umbral v7" }], series: [{ name: "30 cm", color: "var(--d2)", values: HUM30, fill: 1, unit: " %", dec: 1 }] },
-        { title: "60 cm", sub: "bajo la raíz · si sube, el agua se fue de largo", yMin: 6, yMax: 36, yTicks: [10, 20, 30], series: [{ name: "60 cm", color: "var(--d3)", values: HUM60, fill: 1, unit: " %", dec: 1 }] }
-      ]
-    });
-    laneChart($("#c-agua"), {
-      xLen: 84, xLabels: FECHAS, xTicks: [0, 21, 42, 63, 83], laneH: 66, gap: 4, padR: 16,
-      aria: "Lluvia caída y riego aplicado, en milímetros",
-      lanes: [
-        { title: "Lluvia", sub: "mm · cae desde arriba", yMin: -20, yMax: 0, yTicks: [-5, -10, -15], yFmt: v => nf(-v),
-          series: [{ name: "Lluvia", color: "var(--s1)", values: LLUVIA.map(v => -v), type: "bar", unit: " mm", dec: 1, wide: .5, abs: 1 }] },
-        { title: "Riego aplicado", sub: "mm · sale del suelo hacia arriba", yMin: 0, yMax: 8, yTicks: [2, 4, 6],
-          series: [{ name: "Riego", color: "var(--brand)", values: RIEGO_MM, type: "bar", unit: " mm", dec: 1, wide: .5 }] }
-      ]
-    });
-    lineChart($("#c-ndvi"), {
-      xLen: 12, xLabels: MESES, xTicks: [0, 3, 6, 9, 11], h: 178, yMin: .3, yMax: .9, yTicks: [.3, .5, .7, .9], yFmt: v => nf(v, 1),
-      aria: "NDVI mensual contra la banda de nueve años",
-      series: [
-        { name: "p10–p90 (9 años)", color: "var(--n1)", values: NDVI_P90, lower: NDVI_P10, type: "band", op: .30, skipTip: 1 },
-        { name: "Mediana 9 años", color: "var(--n3)", values: NDVI_MED, w: 2, dash: "6 4" },
-        { name: "2025/26", color: "var(--n5)", values: NDVI_ACT, w: 2.6 }
-      ]
-    });
-  }
-});
-
-/* ---------- 3. Series ---------- */
-SCREENS.series = () => ({
-  title: "Series de mediciones",
-  html: head("Explorador · tabla medicion", "Series de mediciones",
-    "<b>Decide si el sensor está diciendo la verdad.</b> Comparar crudo contra calibrado es lo que permite recalcular el histórico en vez de tirarlo.") +
-    `<div class="panel">
-      <header>
-        <h2>Filtros</h2>
-        <span class="hint">medicion · 4 lecturas por hora · sin promediar en la ingesta</span>
-      </header>
-      <div class="body">
-        <div class="btnrow">
-          <label class="note">Parcela <select class="btn"><option>Tomatal Ka'aguy</option><option>Sandial Tuyutî</option><option>Patio Asunción — Mesa 1</option></select></label>
-          <label class="note">Dispositivo <select class="btn"><option>SE01-0431</option><option>SE01-0432</option></select></label>
-          <label class="note">Magnitud <select class="btn"><option>Humedad volumétrica (% v/v) — 30 cm</option><option>Temperatura de suelo (°C)</option><option>Conductividad (mS/cm)</option></select></label>
-          <div class="seg" id="segcal"><button aria-pressed="false" data-m="crudo">Crudo</button><button aria-pressed="true" data-m="cal">Calibrado</button><button aria-pressed="false" data-m="ambos">Los dos</button></div>
-          <button class="btn">Exportar CSV</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header>
-        <h2>SE01-0431 · humedad volumétrica a 30 cm</h2>
-        <span class="legend" id="leg-series"></span>
-        <span class="hint">eje X = <b>medido_en</b> · datos de ejemplo</span>
-      </header>
-      <div class="body">
-        <div class="chart" id="c-series"></div>
-        <div class="cols c2" style="margin-top:14px">
-          <div class="note rule">
-            <b>El hueco se dibuja como hueco.</b> Entre el 18/09 y el 20/09 no hubo reporte. La línea se corta
-            y la franja dice “sin dato”: rellenar con cero le enseña al ojo —y a un modelo— que el suelo se seca de golpe.
-          </div>
-          <div class="note rule">
-            <b>Dos relojes.</b> El eje es <code>medido_en</code>. Cuando <code>recibido_en</code> se separa más de una hora,
-            el punto lo dice en el tooltip: ese atraso es la calidad del enlace y también es una variable.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header><h2>Calibración vigente de esta serie</h2><span class="hint">se muestra siempre, no está escondida en un menú</span></header>
-      <div class="body">
-        <dl class="kv">
-          <dt>calibracion_id</dt><dd>4812</dd>
-          <dt>Fórmula</dt><dd>θ = 3,879·10⁻⁴·S − 0,6956</dd>
-          <dt>Procedencia</dt><dd><b>Ensayo propio</b> — gravimetría con 6 puntos sobre suelo del lote</dd>
-          <dt>Fecha del ensayo</dt><dd>12/08/2026</dd>
-          <dt>Rige desde</dt><dd>12/08/2026 00:00 · reemplazó a la curva del fabricante</dd>
-        </dl>
-        <div class="note" style="margin-top:10px">Un número de calibración sin procedencia no es un número: es una superstición. Por eso la procedencia es una columna, no un comentario en un correo.</div>
-      </div>
-    </div>`,
-  after() {
-    const crudo = HUM30.map(v => v === null ? null : +(v * 1.08 + 1.4).toFixed(1));
-    const build = mode => {
-      const ser = [];
-      if (mode !== "cal") ser.push({ name: "Crudo (S)", color: "var(--ink-3)", values: crudo, w: 1.6, dash: "5 4", unit: " %", dec: 1 });
-      if (mode !== "crudo") ser.push({ name: "Calibrado", color: "var(--s1)", values: HUM30, w: 2.4, fill: mode === "cal" ? 1 : 0, unit: " %", dec: 1 });
-      lineChart($("#c-series"), {
-        xLen: 84, xLabels: FECHAS, xTicks: [0, 14, 28, 42, 56, 70, 83], h: 220, padR: 64, yMin: 8, yMax: 36, yTicks: [10, 15, 20, 25, 30, 35],
-        aria: "Serie de humedad a 30 centímetros, crudo contra calibrado",
-        vbands: [{ from: 43, to: 52, label: "sin dato · 18–20/09" }],
-        hlines: [{ v: 19, color: "var(--warn)", label: "umbral v7" }],
-        series: ser
-      });
-      $("#leg-series").innerHTML = ser.map(s => `<span><i style="background:${s.color}"></i>${s.name}</span>`).join("");
-    };
-    build("cal");
-    $$("#segcal button").forEach(b => b.addEventListener("click", () => {
-      $$("#segcal button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
-      build(b.dataset.m);
-    }));
-  }
-});
-
-/* ---------- 4. Historial de riego ---------- */
-SCREENS.riego = () => ({
-  title: "Historial de riego",
-  html: head("Auditoría del lazo de control", "Historial de riego",
-    "<b>Decide si hay que mandar a alguien a revisar la línea, o si hay que cambiar la política.</b> Cada fila dice qué decidió el controlador y por qué.") +
-    `<div class="tiles">
-      ${tile("Eventos en 7 días", "14", "", "9 con apertura · 5 decisiones de no regar")}
-      ${tile("Agua estimada", nf(28400), "L", "minutos × caudal nominal")}
-      ${tile("Agua medida", nf(30130), "L", "pulsos de caudalímetro")}
-      ${tile("Delta", "+6,1", "%", "El delta es el diagnóstico, no un error de la planilla")}
-      ${tile("Costo de bombeo", gs(284000), "", "estimado de ejemplo · 7 días")}
-    </div>
-
-    <div class="panel">
-      <header>
-        <h2>Estimado contra medido, por parcela</h2>
-        <span class="hint">medir de más es fuga · medir de menos es gotero tapado o filtro sucio</span>
-      </header>
-      <div class="body">
-        <div class="chart" id="c-delta"></div>
-        <div class="note rule" style="margin-top:10px">
-          Guardar los dos números no es redundancia: <b>la diferencia es el diagnóstico</b>. Huerta Ñu Porâ viene midiendo
-          más de lo que se le pidió a la válvula en dos riegos seguidos, y eso es una visita con motivo, no una visita de rutina.
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header><h2>Eventos</h2><span class="hint">incluye las decisiones de <b>no regar</b>: valen tanto como las de regar</span></header>
-      <div class="body flush scroller">
-        <table>
-          <thead><tr><th>Cuándo</th><th>Parcela</th><th>Condición</th><th>Decisión</th><th>Política</th><th class="num">Estimado</th><th class="num">Medido</th><th>Resultado</th></tr></thead>
-          <tbody>
-          ${RIEGOS.map(r => `<tr>
-            <td>${esc(r.f)}</td>
-            <td>${esc(r.p)}</td>
-            <td style="max-width:32ch">${esc(r.cond)}</td>
-            <td><b>${esc(r.dec)}</b></td>
-            <td>${r.pol === "—" ? '<span class="chip mute"><span class="g"></span>sin política</span>' : esc(r.pol)}</td>
-            <td class="num">${r.est ? nf(r.est) + " L" : "—"}</td>
-            <td class="num">${r.med === null ? '<span class="muted">sin medidor</span>' : (r.med ? nf(r.med) + " L" : "—")}</td>
-            <td>${esc(r.res)}${r.flag ? `<span class="why" style="color:var(--${r.ok ? "ink-3" : "crit"})">${esc(r.flag)}</span>` : ""}</td>
-          </tr>`).join("")}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header><h2>Tramos con programa conservador</h2><span class="hint">el controlador no se queda esperando</span></header>
-      <div class="body">
-        <div class="timeline">
-          <span class="lab">Costa Guasu</span>
-          <span style="display:block; height:16px; background:var(--panel-2); border:1px solid var(--line); border-radius:2px; position:relative">
-            <span style="position:absolute; left:64%; right:0; top:0; bottom:0; background:repeating-linear-gradient(135deg,var(--warn-wash) 0 7px,transparent 7px 14px); border-left:2px solid var(--warn)"></span>
-          </span>
-          <span class="lab"></span>
-          <span class="note" style="padding-top:5px">Desde el 26/09 19:30, sin política nueva hace 6 días (la gracia es 5). Riego mínimo de supervivencia, registrado y reenviado cuando vuelva el enlace.</span>
-        </div>
-      </div>
-    </div>`,
-  after() {
-    const rows = [
-      { lab: "Huerta Ñu Porâ", v: 41, txt: "+41 %", color: "var(--crit)", extra: ["Estimado / medido", "640 L / 902 L"] },
-      { lab: "Tomatal Ka'aguy", v: 2, txt: "+2 %", color: "var(--ok)", extra: ["Estimado / medido", "1.180 L / 1.205 L"] },
-      { lab: "Sandial Tuyutî", v: 3, txt: "−3 %", color: "var(--ok)", extra: ["Estimado / medido", "1.490 L / 1.441 L"] },
-      { lab: "Melonar Tape Pytâ", v: 0.5, txt: "sin riego", color: "var(--mute)", extra: ["Motivo", "Bloqueo por lluvia"] },
-      { lab: "Costa Guasu", v: 0.5, txt: "sin medidor", color: "var(--mute)", extra: ["Estimado", "820 L"] }
-    ];
-    rankChart($("#c-delta"), { rows, max: 50, metric: "Delta estimado vs medido", padL: 148, padR: 96 });
-  }
-});
-
-/* ---------- 5. Política ---------- */
-SCREENS.politica = () => ({
-  title: "Política de riego",
-  html: head("Tomatal Ka'aguy · política v7", "Política de riego",
-    "<b>Decide si se riega antes o después, más o menos.</b> Es lo único que la nube le manda al campo.") +
-    `<div class="panel" style="border-color:var(--brand); background:var(--brand-wash)">
-      <div class="body" style="display:flex; gap:12px; align-items:flex-start">
-        <svg width="20" height="20" viewBox="0 0 20 20" style="flex:none; margin-top:1px" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="var(--brand)" stroke-width="1.6"/><path d="M10 5.5v5.5M10 13.6v.9" stroke="var(--brand)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <div>
-          <h3 style="margin-bottom:4px">Acá no hay un botón para abrir la válvula, y no lo va a haber.</h3>
-          <div class="note" style="max-width:76ch">
-            El lazo de control vive en el campo: el controlador decide con lo que mide aunque lleve días sin señal.
-            Esta pantalla escribe una <b>versión nueva de política</b>; cuándo llega y cuándo empieza a regir se ve abajo.
-            Un control que parece inmediato y no lo es, miente.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="cols c2">
-      <div class="panel">
-        <header><h2>Política vigente</h2><span class="hint">v7 · desde el 22/09/2026</span></header>
-        <div class="body">
-          <dl class="kv">
-            <dt>Umbral de arranque</dt><dd><b>19,0 % v/v</b> a 30 cm <span class="why">Punto de marchitez del análisis: 16 %</span></dd>
-            <dt>Umbral de corte</dt><dd>28,0 % v/v a 30 cm</dd>
-            <dt>Profundidad de referencia</dt><dd>30 cm · promedio de SE01-0431 y SE01-0432</dd>
-            <dt>Ventana horaria</dt><dd>04:00 – 08:00</dd>
-            <dt>Duración máxima</dt><dd>25 min por evento</dd>
-            <dt>Tope diario</dt><dd>2.400 L</dd>
-            <dt>Bloqueo por lluvia</dt><dd>Sin riego si llovieron ≥ 8 mm en 24 h</dd>
-            <dt>Días de gracia</dt><dd>5 d sin política nueva → programa conservador</dd>
-          </dl>
-          <div class="btnrow" style="margin-top:14px">
-            <button class="btn primary">Escribir una versión nueva</button>
-            <button class="btn">Forzar programa conservador</button>
-          </div>
-          <div class="note" style="margin-top:8px">Forzar el programa conservador también es política: baja el riego al mínimo de supervivencia hasta que se escriba otra versión.</div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <header><h2>Propagación al campo</h2><span class="hint">tres tiempos distintos, nunca uno</span></header>
-        <div class="body">
-          <dl class="kv">
-            <dt>Guardada en la nube</dt><dd>22/09/2026 09:14 · Ramona Ayala</dd>
-            <dt>Acusada por el controlador</dt><dd>22/09/2026 10:02 <span class="chip ok" style="margin-left:6px"><span class="g"></span>CTRL-0112</span></dd>
-            <dt>Rige desde</dt><dd>23/09/2026 04:00 · primera ventana después del acuse</dd>
-          </dl>
-          <div style="margin-top:14px; border-top:1px solid var(--line); padding-top:12px">
-            <h3>Qué habría pasado con este umbral</h3>
-            <div class="note" style="margin:6px 0 10px">Simulación sobre los últimos 30 días con la condición que de verdad se midió.</div>
-            <div class="chart" id="c-sim"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header><h2>Historial de versiones</h2><span class="hint">una fila nunca se edita: se cierra y se abre otra</span></header>
-      <div class="body flush scroller">
-        <table><thead><tr><th>Versión</th><th>Desde</th><th>Quién</th><th>Qué cambió</th><th>Estado</th></tr></thead><tbody>
-        ${POL_VER.map(v => `<tr><td><b>${esc(v.v)}</b></td><td>${esc(v.desde)}</td><td>${esc(v.por)}</td><td>${esc(v.cambio)}</td><td>${v.est === "Rigiendo" ? chip("ok").replace("En rango", "Rigiendo") : `<span class="muted">${esc(v.est)}</span>`}</td></tr>`).join("")}
-        </tbody></table>
-      </div>
-    </div>`,
-  after() {
-    rankChart($("#c-sim"), {
-      padL: 130, padR: 150, metric: "Eventos en 30 días", max: 16,
-      rows: [
-        { lab: "Umbral 21 % (v6)", v: 14, txt: "14 riegos · 16.900 L", color: "var(--ink-3)" },
-        { lab: "Umbral 19 % (v7)", v: 9, txt: "9 riegos · 11.400 L", color: "var(--brand)" },
-        { lab: "Umbral 17 %", v: 6, txt: "6 riegos · 7.600 L", color: "var(--ink-3)", extra: ["Riesgo", "2 días bajo punto de marchitez"] }
-      ]
-    });
-  }
-});
-
-/* ---------- 6. Dispositivos ---------- */
-SCREENS.dispositivos = () => ({
-  title: "Dispositivos y calibración",
-  html: head("Flota · Estancia Yvoty y Patio Asunción", "Dispositivos y calibración",
-    "<b>Decide a qué dispositivo hay que ir hoy</b> —pila, sonda o antena— y si un dato viejo hay que recalcularlo con una fórmula corregida.") +
-    `<div class="tiles">
-      ${tile("Reportando", "6", "de 8", "Atraso medio de llegada: 38 s")}
-      ${tile("Batería baja", "1", "", "SE01-0440 · 9 %")}
-      ${tile("Sin reportar", "1", "", "SE01-0440 · hace 3 días")}
-      ${tile("Calibración sin ensayo propio", "3", "", "Las tres andan con curva del fabricante")}
-    </div>
-
-    <div class="panel">
-      <header><h2>Estado de la flota</h2><span class="hint">la procedencia de la calibración está en la tabla, no escondida</span></header>
-      <div class="body flush scroller">
-        <table>
-          <thead><tr><th>Dispositivo</th><th>Parcela</th><th>Batería</th><th>Último reporte</th><th>Atraso</th><th>Últimas lecturas</th><th>Calibración vigente</th><th>Estado</th></tr></thead>
-          <tbody>${DISPOSITIVOS.map(d => `<tr>
-            <td><b>${esc(d.id)}</b><span class="why">${esc(d.t)} · fw ${esc(d.fw)}</span></td>
-            <td>${esc(d.p)}</td>
-            <td>${d.bat === null ? '<span class="muted">220 V</span>' : `${d.bat} %${d.bat < 20 ? ' <span class="chip crit"><span class="g"></span>cambiar</span>' : ""}`}</td>
-            <td>${esc(d.ult)}</td>
-            <td>${esc(d.atr)}</td>
-            <td>${sparkline(d.spark, d.est === "crit" ? "var(--crit)" : "var(--s1)")}</td>
-            <td style="max-width:30ch">${esc(d.cal)}</td>
-            <td>${chip(d.est)}</td>
-          </tr>`).join("")}</tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header><h2>Historial de calibraciones</h2><span class="hint">no se borra nunca: es lo que hace recalculable el histórico</span></header>
-      <div class="body flush scroller">
-        <table>
-          <thead><tr><th>Dispositivo</th><th>Magnitud</th><th>Fórmula</th><th>Procedencia</th><th>Rige desde</th><th>Estado</th></tr></thead>
-          <tbody>${CALIBS.map(c => `<tr>
-            <td><b>${esc(c.disp)}</b></td><td>${esc(c.mag)}</td><td>${esc(c.form)}</td>
-            <td><b>${esc(c.proc)}</b><span class="why">${esc(c.detalle)}</span></td>
-            <td>${esc(c.desde)}</td>
-            <td>${c.est.startsWith("Vigente") ? `<span class="chip ${c.est.includes("sin verificar") ? "warn" : "ok"}"><span class="g"></span>${esc(c.est)}</span>` : `<span class="muted">${esc(c.est)}</span>`}</td>
-          </tr>`).join("")}</tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="cols c2">
-      <div class="panel">
-        <header><h2>Sonda de pH del patio</h2><span class="hint">el sensor más problemático de la lista</span></header>
-        <div class="body">
-          <dl class="kv">
-            <dt>Estado</dt><dd><span class="chip warn"><span class="g"></span>Lectura manual</span></dd>
-            <dt>Última calibración</dt><dd>—</dd>
-            <dt>Buffers</dt><dd>pH 4,0 y 7,0 · pendientes de compra</dd>
-            <dt>Vida útil típica</dt><dd>1 a 2 años, y no se puede dejar secar</dd>
-          </dl>
-          <div class="note rule" style="margin-top:10px">Hasta que haya buffers y rutina de calibración, el pH entra <b>a mano</b> desde el tablero de solución y se marca como tal. No se automatiza una decisión que todavía no se sabe tomar a mano.</div>
-        </div>
-      </div>
-      <div class="panel">
-        <header><h2>Repuestos y costos</h2><span class="hint">valores de ejemplo, plaza de Asunción</span></header>
-        <div class="body flush scroller">
-          <table><thead><tr><th>Ítem</th><th class="num">Costo</th><th>Para</th></tr></thead><tbody>
-            <tr><td>Par de pilas de litio AA</td><td class="num">${gs(78000)}</td><td>SE01-0440</td></tr>
-            <tr><td>Caudalímetro 1½″ con salida de pulsos</td><td class="num">${gs(610000)}</td><td>Reemplaza al YF-S201 del banco</td></tr>
-            <tr><td>Buffers pH 4,0 y 7,0</td><td class="num">${gs(120000)}</td><td>Sonda del patio</td></tr>
-          </tbody></table>
-        </div>
-      </div>
-    </div>`,
-  after() { }
-});
-
-/* ---------- 7. Índice espacial ---------- */
-SCREENS.satelite = () => ({
-  title: "Índice espacial",
-  html: head("Sentinel-2 · Copernicus · agregado por parcela", "Índice espacial (NDVI)",
-    "<b>Decide a qué potrero mover la hacienda esta semana, cuál se está degradando, y dónde enterrar el próximo sensor.</b>") +
-    `<div class="tiles">
-      ${tile("Última imagen usable", "26/09", "", "Nubosidad 8 % · revisita cada 5 días")}
-      ${tile("Serie disponible", "9", "años", "Sentinel-2 L2A global desde enero 2017")}
-      ${tile("Resolución", "10", "m/píxel", "Se guarda el agregado, nunca el raster")}
-      ${tile("Cuota del mes", "74", "%", "Se reinicia el 01/10 y no se acumula")}
-    </div>
-
-    <div class="panel">
-      <header><h2>Hoy: los potreros ordenados por NDVI</h2><span class="hint">la pregunta del ganadero, todas las semanas</span></header>
-      <div class="body">
-        <div class="chart" id="c-rank"></div>
-        <div class="note rule" style="margin-top:10px">El NDVI dice <b>dónde y cuándo, nunca por qué</b>. Manda a caminar al lugar correcto; el diagnóstico lo hace el sensor o la persona.</div>
-      </div>
-    </div>
-
-    <div class="cols c2">
-      <div class="panel">
-        <header><h2>Potrero Yvyra'i contra sus 9 años</h2><span class="hint">¿año malo, o pedazo malo?</span></header>
-        <div class="body">
-          <div class="chart" id="c-hist"></div>
-          <div class="legend" style="margin-top:8px"><span><i style="background:var(--n5)"></i>2025/26</span><span><i style="background:var(--n3); height:2px"></i>Mediana 9 años</span><span><i class="sq" style="background:var(--n1); opacity:.45"></i>p10–p90</span></div>
-          <div class="note" style="margin-top:8px">La serie de este año viene abajo de la mediana desde mayo, pero adentro de la banda: es un año seco, no un potrero perdido. Son decisiones opuestas.</div>
-        </div>
-      </div>
-      <div class="panel">
-        <header><h2>Uniformidad dentro de la parcela</h2><span class="hint">coeficiente de variación · decide cuántos sensores lleva</span></header>
-        <div class="body">
-          <div class="chart" id="c-cv"></div>
-          <div class="note rule" style="margin-top:10px">Si el CV es bajo, <b>un sensor alcanza</b>. Si es alto, hacen falta más — y el mapa dice dónde. Es la respuesta barata a “¿cuántos sensores por hectárea?”.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header><h2>Parcelas donde el satélite no sirve</h2><span class="hint">la pantalla lo dice en vez de mostrar un número inservible</span></header>
-      <div class="body flush scroller">
-        <table><thead><tr><th>Parcela</th><th class="num">Superficie</th><th class="num">Píxeles Sentinel-2</th><th>Qué se usa en su lugar</th></tr></thead><tbody>
-          <tr><td>Patio Asunción — Mesa 1</td><td class="num">38 m²</td><td class="num">0,4</td><td>Ninguno. A esta escala se mide con sensor y con foto, no con satélite.</td></tr>
-          <tr><td>Huerta Ñu Porâ</td><td class="num">0,9 ha</td><td class="num">90</td><td>Sirve para tendencia, no para variabilidad interna. Para eso, vuelo de dron.</td></tr>
-        </tbody></table>
-      </div>
-    </div>`,
-  after() {
-    const nd = [.68, .66, .63, .58, .52, .41];
-    const col = v => v > .65 ? "var(--n5)" : v > .60 ? "var(--n4)" : v > .55 ? "var(--n3)" : v > .48 ? "var(--n2)" : "var(--n1)";
-    rankChart($("#c-rank"), {
-      padL: 150, padR: 150, metric: "NDVI medio", max: .8,
-      rows: [
-        { lab: "Potrero Yvyra'i", v: .68, txt: "0,68", color: col(.68), extra: ["Fuente", "sentinel2 · 10 m · 26/09"] },
-        { lab: "Melonar Tape Pytâ", v: .66, txt: "0,66", color: col(.66), extra: ["Fuente", "sentinel2 · 10 m · 26/09"] },
-        { lab: "Sandial Tuyutî", v: .63, txt: "0,63", color: col(.63), extra: ["Fuente", "sentinel2 · 10 m · 26/09"] },
-        { lab: "Huerta Ñu Porâ", v: .58, txt: "0,58", color: col(.58), extra: ["Fuente", "dron · 0,05 m · 14/09"] },
-        { lab: "Potrero Costa Guasu", v: .52, txt: "0,52", color: col(.52), extra: ["Fuente", "sentinel2 · 10 m · 26/09"] },
-        { lab: "Tomatal Ka'aguy", v: .41, txt: "0,41 · recién trasplantado", color: col(.41), extra: ["Fuente", "sentinel2 · 10 m · 26/09"] }
-      ]
-    });
-    lineChart($("#c-hist"), {
-      xLen: 12, xLabels: MESES, xTicks: [0, 3, 6, 9, 11], h: 206, yMin: .3, yMax: .9, yTicks: [.3, .5, .7, .9], yFmt: v => nf(v, 1),
-      aria: "NDVI de este año contra la banda de nueve años",
-      series: [
-        { name: "p10–p90 (9 años)", color: "var(--n1)", values: NDVI_P90, lower: NDVI_P10, type: "band", op: .30, skipTip: 1 },
-        { name: "Mediana 9 años", color: "var(--n3)", values: NDVI_MED, w: 2, dash: "6 4" },
-        { name: "2025/26", color: "var(--n5)", values: NDVI_ACT, w: 2.6 }
-      ]
-    });
-    rankChart($("#c-cv"), {
-      padL: 146, padR: 118, metric: "Coeficiente de variación", max: 34,
-      rows: [
-        { lab: "Potrero Costa Guasu", v: 29, txt: "29 % · faltan 2", color: "var(--warn)", extra: ["Sensores hoy", "1 · convendrían 3"] },
-        { lab: "Potrero Yvyra'i", v: 18, txt: "18 % · está bien", color: "var(--s1)", extra: ["Sensores hoy", "2"] },
-        { lab: "Sandial Tuyutî", v: 11, txt: "11 % · sobra uno", color: "var(--ok)", extra: ["Sensores hoy", "2 · con 1 alcanza"] },
-        { lab: "Tomatal Ka'aguy", v: 8, txt: "8 % · sobra uno", color: "var(--ok)", extra: ["Sensores hoy", "2 · con 1 alcanza"] }
-      ]
-    });
-  }
-});
-
-/* ---------- 8. Hidroponía ---------- */
-SCREENS.solucion = () => ({
-  title: "Tablero de solución",
-  html: head("Patio Asunción · Mesa 1 · lechuga (raíz flotante)", "Tablero de solución",
-    "<b>Decide si hay que renovar la solución, agregar agua, corregir el pH o poner media sombra.</b> Acá la solución es el único sustento de la planta: un número falso mata el cultivo, y rápido.") +
-    `<div class="cols c2">
-      <div class="panel"><div class="body">${gauge(SOL.ec, "Conductividad (EC)", 2)}</div></div>
-      <div class="panel"><div class="body">${gauge(SOL.nivel, "Nivel del tanque", 0)}</div></div>
-      <div class="panel"><div class="body">${gauge(SOL.temp, "Temperatura de solución", 1)}</div></div>
-      <div class="panel"><div class="body">${gauge(SOL.ph, "pH", 1)}
-        <div class="btnrow" style="margin-top:12px"><button class="btn">Cargar lectura manual</button></div></div></div>
-    </div>
-
-    <div class="panel" style="border-color:var(--crit)">
-      <div class="body" style="display:flex; gap:12px; align-items:flex-start">
-        <span class="chip crit" style="flex:none"><span class="g"></span>Crítico</span>
-        <div>
-          <h3>La solución llegó a 26,4 °C a las 15:00</h3>
-          <div class="note" style="max-width:76ch; margin-top:4px">
-            Arriba de 24 °C la lechuga se espiga y se termina la cosecha. El tanque está al sol.
-            <b>Qué hacer:</b> mover el tanque a la sombra del árbol y sumar media sombra sobre la mesa.
-            El bloque C, que ya tiene 40 % de sombra, viene 3,1 °C más frío — está en <a href="#/bloques">bloques experimentales</a>.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="cols c2">
-      <div class="panel">
-        <header><h2>EC y nivel, en el mismo eje de tiempo</h2><span class="hint">van juntos a propósito</span></header>
-        <div class="body">
-          <div class="chart" id="c-ec"></div>
-          <div class="chart" id="c-niv" style="margin-top:6px"></div>
-          <div class="note rule" style="margin-top:10px">
-            <b>La EC subió porque bajó el nivel, no porque falte nutriente.</b> Son respuestas opuestas: una se corrige con agua,
-            la otra con solución madre. Sin el nivel al lado, la EC se interpreta mal.
-          </div>
-        </div>
-      </div>
-      <div class="panel">
-        <header><h2>Temperatura de solución</h2><span class="hint">24 h · la línea de 24 °C es la que decide la cosecha</span></header>
-        <div class="body">
-          <div class="chart" id="c-temp"></div>
-          <div class="note" style="margin-top:10px">La EC se muestra compensada a 25 °C con la fórmula de <code>calibracion</code> 5104 (ensayo propio, solución patrón 1,41 mS/cm, 20/09/2026). Sin compensación por temperatura, una EC de verano es otro número.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="cols c2">
-      <div class="panel">
-        <header><h2>Receta vigente</h2><span class="hint">solucion_nutritiva · versionada, nunca editada</span></header>
-        <div class="body">
-          <dl class="kv">
-            <dt>Versión</dt><dd>r3 · desde el 21/09/2026</dd>
-            <dt>Objetivo de EC</dt><dd>1,2 – 1,8 mS/cm</dd>
-            <dt>Objetivo de pH</dt><dd>5,5 – 6,5</dd>
-            <dt>Solución A</dt><dd>1,2 mL/L (macro)</dd>
-            <dt>Solución B</dt><dd>1,2 mL/L (calcio)</dd>
-            <dt>Volumen del tanque</dt><dd>200 L</dd>
-            <dt>Última renovación</dt><dd>21/09/2026 · hace 7 días</dd>
-            <dt>Próxima prevista</dt><dd>05/10/2026 · cada 14 días</dd>
-          </dl>
-          <div class="note" style="margin-top:10px">Sin la receta versionada, un pH medido no se puede atribuir a nada y el dato no enseña. Es el <code>calibracion</code> de la solución.</div>
-        </div>
-      </div>
-      <div class="panel">
-        <header><h2>Eventos de la mesa</h2><span class="hint">riego_evento · misma tabla, distinto tipo</span></header>
-        <div class="body flush scroller">
-          <table><thead><tr><th>Cuándo</th><th>Tipo</th><th>Qué pasó</th><th>Bloque</th></tr></thead><tbody>
-            <tr><td>28/09 06:00</td><td>Recirculación</td><td>18 min · bomba + aireador</td><td>Todos</td></tr>
-            <tr><td>27/09 19:20</td><td>Reposición</td><td>14 L de agua · EC bajó de 1,78 a 1,69</td><td>Todos</td></tr>
-            <tr><td>27/09 07:40</td><td>Dosificación</td><td>40 mL A + 40 mL B · <b>automática</b></td><td>B</td></tr>
-            <tr><td>26/09 08:05</td><td>Dosificación</td><td>35 mL A + 35 mL B · <b>a mano</b></td><td>A, C, D (control)</td></tr>
-          </tbody></table>
-          <div class="note" style="padding:12px">La dosificación automática corre <b>en un solo bloque</b>. Si la peristáltica se traba, mata 50 plantas y se sabe que fue eso.</div>
-        </div>
-      </div>
-    </div>`,
-  after() {
-    lineChart($("#c-ec"), {
-      xLen: 12, xLabels: SOL_H, xTicks: [0, 3, 6, 9, 11], h: 120, yMin: 1.3, yMax: 1.9, yTicks: [1.4, 1.6, 1.8], yFmt: v => nf(v, 1),
-      aria: "Conductividad de la solución en las últimas 24 horas",
-      bands: [{ from: 1.2, to: 1.8, color: "color-mix(in srgb, var(--ok) 13%, transparent)", label: "objetivo 1,2–1,8" }],
-      series: [{ name: "EC (mS/cm)", color: "var(--s1)", values: SOL_EC, w: 2.4, fill: 1, unit: " mS/cm", dec: 2 }]
-    });
-    lineChart($("#c-niv"), {
-      xLen: 12, xLabels: SOL_H, xTicks: [0, 3, 6, 9, 11], h: 110, yMin: 30, yMax: 70, yTicks: [40, 55, 70],
-      aria: "Nivel del tanque en las últimas 24 horas",
-      bands: [{ from: 45, to: 65, color: "color-mix(in srgb, var(--ok) 13%, transparent)", label: "objetivo 45–65 cm" }],
-      series: [{ name: "Nivel (cm)", color: "var(--s3)", values: SOL_NIV, w: 2.4, fill: 1, unit: " cm", dec: 0 }]
-    });
-    lineChart($("#c-temp"), {
-      xLen: 12, xLabels: SOL_H, xTicks: [0, 3, 6, 9, 11], h: 262, padR: 74, yMin: 16, yMax: 30, yTicks: [18, 22, 26, 30],
-      aria: "Temperatura de la solución en las últimas 24 horas",
-      bands: [{ from: 18, to: 24, color: "color-mix(in srgb, var(--ok) 13%, transparent)", label: "objetivo 18–24 °C" }],
-      hlines: [{ v: 24, color: "var(--crit)", label: "24 °C · se espiga" }],
-      series: [{ name: "Temperatura", color: "var(--s2)", values: SOL_T, w: 2.6, unit: " °C", dec: 1 }]
-    });
-  }
-});
-
-/* ---------- 9. Bloques ---------- */
-SCREENS.bloques = () => ({
-  title: "Bloques experimentales",
-  html: head("Patio Asunción · ciclo 3 · lechuga crespa", "Bloques experimentales",
-    "<b>Decide qué se cambia en el ciclo que viene, con atribución limpia.</b> Cuatro bloques en el mismo clima y la misma semana dan cuatro respuestas en 45 días, no una.") +
-    `<div class="panel" style="background:var(--brand-wash); border-color:var(--brand)">
-      <div class="body">
-        <h3>Objetivo declarado del ciclo, escrito antes de sembrar</h3>
-        <p class="note" style="margin-top:5px"><b>Peso fresco por planta.</b> Velocidad y calidad se miran como restricción: ningún bloque puede pasar de 48 días ni superar 10 % de descarte.</p>
-        <div class="note muted">Un lazo sin objetivo declarado no converge: oscila. Se elige uno y las otras métricas quedan como límite.</div>
-      </div>
-    </div>
-
-    <div class="cols c2">
-      <div class="panel">
-        <header><h2>Peso fresco por bloque</h2><span class="hint">contra el control · 50 plantas cada uno</span></header>
-        <div class="body">
-          <div class="chart" id="c-bloques"></div>
-          <div class="legend" style="margin-top:10px">${BLOQUES.map(b => `<span><i class="sq" style="background:${b.col}"></i>Bloque ${b.id} — ${esc(b.var)}</span>`).join("")}</div>
-        </div>
-      </div>
-      <div class="panel">
-        <header><h2>Resultado, bloque por bloque</h2><span class="hint">la tabla completa: nadie tiene que leer un color</span></header>
-        <div class="body flush scroller">
-          <table><thead><tr><th>Bloque</th><th>Variable</th><th class="num">Peso/planta</th><th class="num">vs control</th><th class="num">Descarte</th><th class="num">Días</th></tr></thead><tbody>
-          ${BLOQUES.map(b => {
-      const ctrl = BLOQUES[0].peso, d = ((b.peso - ctrl) / ctrl * 100);
-      return `<tr><td><b>Bloque ${b.id}</b>${b.ctrl ? '<span class="why">control</span>' : ""}</td><td>${esc(b.var)}</td>
-              <td class="num">${nf(b.peso)} g</td>
-              <td class="num" style="color:${b.ctrl ? "var(--ink-3)" : d > 0 ? "var(--ok)" : "var(--crit)"}">${b.ctrl ? "—" : (d > 0 ? "+" : "") + nf(d, 1) + " %"}</td>
-              <td class="num">${b.desc} / ${b.n}</td><td class="num">${b.dias}</td></tr>`;
-    }).join("")}
-          </tbody></table>
-        </div>
-      </div>
-    </div>
-
-    <div class="cols c2">
-      ${BLOQUES.map(b => `
-        <div class="bloque">
-          <div class="cap">
-            <span class="id"><i style="background:${b.col}"></i>Bloque ${b.id}</span>
-            ${b.ctrl ? '<span class="chip mute"><span class="g"></span>Control</span>' : `<span class="chip ${b.desc > 5 ? "crit" : "ok"}"><span class="g"></span>${b.desc > 5 ? "Descarte alto" : "Dentro del límite"}</span>`}
-          </div>
-          <div class="bd">
-            <dl class="kv">
-              <dt>Qué se varió</dt><dd><b>${esc(b.var)}</b></dd>
-              <dt>Peso fresco</dt><dd>${nf(b.peso)} g por planta</dd>
-              <dt>Cosechadas</dt><dd>${b.n - b.desc} de ${b.n}</dd>
-              <dt>Descartadas</dt><dd>${b.desc} · ${esc(b.sint)}</dd>
-              <dt>Días a cosecha</dt><dd>${b.dias} d</dd>
-            </dl>
-          </div>
-        </div>`).join("")}
-    </div>
-
-    <div class="panel" style="border-color:var(--warn)">
-      <div class="body" style="display:flex; gap:12px; align-items:flex-start">
-        <span class="chip warn" style="flex:none"><span class="g"></span>Atención</span>
-        <div>
-          <h3>Entre B y D hay dos variables distintas</h3>
-          <div class="note" style="max-width:76ch; margin-top:4px">
-            B corre a EC 1,6 <b>y</b> con sombra; D corre a EC 1,2 <b>y</b> sin sombra. Comparar esos dos no prueba nada:
-            la diferencia de 59 g puede ser la EC o puede ser el sol. Las comparaciones limpias de este ciclo son
-            <b>A contra B</b> (solo EC) y <b>C contra D</b> (solo sombra).
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header><h2>Cargar la cosecha</h2><span class="hint">de teléfono, de un pulgar, en el momento de cosechar</span></header>
-      <div class="body">
-        <div class="btnrow">
-          <label class="note">Bloque <select class="btn"><option>A</option><option>B</option><option>C</option><option>D</option></select></label>
-          <label class="note">Peso total <input class="btn" inputmode="decimal" value="9,1" size="5"> kg</label>
-          <label class="note">Cosechadas <input class="btn" inputmode="numeric" value="46" size="4"></label>
-          <label class="note">Descartadas <input class="btn" inputmode="numeric" value="4" size="4"></label>
-          <label class="note">Motivo <select class="btn"><option>Espigado</option><option>Hoja quemada</option><option>Raíz marrón</option><option>Amargo</option><option>Otro</option></select></label>
-          <button class="btn primary">Guardar cosecha</button>
-        </div>
-        <div class="note rule" style="margin-top:12px">
-          <b>Todo el mundo loguea los sensores y nadie loguea el resultado.</b> Sin esta carga la serie es entrada sin salida.
-          Y si anotar cuesta media hora, se deja de anotar en dos semanas: por eso son seis campos y entra desde el teléfono, parado al lado de la mesa.
-        </div>
-      </div>
-    </div>`,
-  after() {
-    rankChart($("#c-bloques"), {
-      padL: 186, padR: 70, metric: "Peso fresco por planta", max: 240,
-      rows: BLOQUES.map(b => ({
-        lab: "Bloque " + b.id + " · " + b.var, v: b.peso, txt: nf(b.peso) + " g", color: b.col,
-        extra: ["Descarte", b.desc + " de " + b.n]
-      }))
-    });
-  }
-});
-
-/* ---------- 10. Alertas ---------- */
-SCREENS.alertas = () => ({
-  title: "Alertas",
-  html: head("Cola de guardia", "Alertas",
-    "<b>Decide qué se atiende primero.</b> Una alerta sin “qué hacer” no es una alerta: son malas noticias más temprano.") +
-    `<div class="btnrow" style="margin-bottom:14px">
-      <div class="seg"><button aria-pressed="true">Todas (6)</button><button aria-pressed="false">Críticas (2)</button><button aria-pressed="false">Atención (2)</button><button aria-pressed="false">Informativas (2)</button></div>
-      <span class="note muted">Ordenadas por lo que cuesta no atenderlas, no por fecha.</span>
-    </div>
-    ${ALERTAS.map(a => `
-      <div class="panel" style="border-left:3px solid ${estColor(a.n)}">
-        <div class="body">
-          <div style="display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap">
-            ${chip(a.n)}
-            <div style="flex:1; min-width:240px">
-              <h3>${esc(a.t)}</h3>
-              <div class="note muted" style="margin-top:2px">${esc(a.p)} · ${esc(a.desde)}</div>
-              <div class="note" style="margin-top:7px"><b>El dato que la disparó:</b> ${esc(a.dato)} · <a href="#/series">ver la serie en ese instante</a></div>
-              <div class="note" style="margin-top:4px"><b>Qué hacer:</b> ${esc(a.que)}</div>
-            </div>
-            <div class="btnrow" style="align-items:flex-start">
-              <button class="btn">Silenciar con motivo</button>
-              <button class="btn">Marcar atendida</button>
-            </div>
-          </div>
-        </div>
-      </div>`).join("")}
-    <div class="panel">
-      <header><h2>Por qué “sin señal” es gris y no rojo</h2></header>
-      <div class="body">
-        <p class="note">El controlador riega días sin enlace: eso es el diseño funcionando, no una falla. El rojo se reserva
-        para lo que obliga a subirse a la camioneta —batería agotada, humedad bajo el punto de marchitez, delta de caudal que dice fuga—.
-        Si todo es rojo, nada es rojo, y en dos semanas nadie mira la cola.</p>
-        <p class="note">Silenciar exige <b>motivo y vencimiento</b>, y el motivo queda guardado. Silenciar sin motivo es cómo una cola de alertas se convierte en ruido.</p>
-      </div>
-    </div>`,
-  after() { }
-});
-
-/* ---------- 11. Usuarios ---------- */
-SCREENS.usuarios = () => ({
-  title: "Usuarios y permisos",
-  html: head("Estancia Yvoty · administración", "Usuarios, roles y permisos",
-    "<b>Decide a quién se le da la llave de la política de riego</b>, que es la única escritura con consecuencia física.") +
-    `<div class="panel">
-      <header><h2>Usuarios del cliente en contexto</h2><span class="hint">4 activos</span></header>
-      <div class="body flush scroller">
-        <table><thead><tr><th>Persona</th><th>Rol</th><th>Alcance</th><th>Último acceso</th><th></th></tr></thead><tbody>
-        ${USUARIOS.map(u => `<tr><td><b>${esc(u.n)}</b><span class="why">${esc(u.m)}</span></td><td>${esc(u.rol)}</td><td>${esc(u.amb)}</td><td>${esc(u.ult)}</td><td><button class="btn">Editar</button></td></tr>`).join("")}
-        </tbody></table>
-      </div>
-    </div>
-
-    <div class="panel">
-      <header><h2>Qué puede hacer cada rol</h2><span class="hint">explícito, no deducido de un nombre</span></header>
-      <div class="body flush scroller">
-        <table class="matrix"><thead><tr><th>Acción</th><th>Dueño</th><th>Técnico</th><th>Operario</th><th>Lectura</th></tr></thead><tbody>
-        ${PERMISOS.map(r => `<tr><td>${esc(r[0])}</td>${r.slice(1).map(v => v ? '<td class="y">Sí</td>' : '<td class="n">No</td>').join("")}</tr>`).join("")}
-        </tbody></table>
-      </div>
-    </div>
-
-    <div class="panel" style="border-color:var(--brand)">
-      <div class="body">
-        <h3>Esta pantalla no es lo que aísla a un cliente de otro</h3>
-        <p class="note" style="margin-top:5px">
-          El aislamiento lo hace cumplir la base de datos: cada tabla lleva <code>tenant_id</code> y una política de
-          <b>Row-Level Security</b>. Una consulta sin tenant <b>no devuelve filas</b> — no devuelve filas equivocadas, no devuelve ninguna.
-          Quitar un permiso acá cambia lo que alguien puede <i>hacer</i>; lo que puede <i>ver</i> ya está decidido en el motor,
-          y el <code>tenant_id</code> sale del token, nunca de un campo del formulario.
-        </p>
-        <p class="note">Por eso tampoco existe una vista “todos los clientes”: esa consulta no se puede escribir.</p>
-      </div>
-    </div>`,
-  after() { }
-});
-
-/* ---------- 12. Alta de parcela ---------- */
-SCREENS["parcelas-alta"] = () => ({
-  title: "Alta y mensura de parcela",
-  html: head("Estancia Yvoty · alta", "Alta y mensura de parcela",
-    "<b>Define la unidad de análisis.</b> El polígono es de donde cuelga todo: qué dispositivos, qué NDVI y qué mediciones le pertenecen se recalculan solos cuando cambia.") +
-    `<div class="cols map">
-      <div class="panel">
-        <header><h2>Polígono</h2><span class="hint">geometry(Polygon, 4326) · se guarda como llegó del GPS</span></header>
-        <div class="body">
-          <div class="btnrow" style="margin-bottom:12px">
-            <button class="btn primary">Importar KML / GeoJSON</button>
-            <button class="btn">Dibujar sobre el mapa</button>
-            <button class="btn">Cargar vértices del GPS</button>
-          </div>
-          <div class="mapfig">${altaSVG()}</div>
-          <div class="legend" style="margin-top:10px">
-            <span><i class="sq" style="background:transparent; border:1.5px dashed var(--ink-3)"></i>Límite actual (v2)</span>
-            <span><i class="sq" style="background:color-mix(in srgb,var(--brand) 18%,transparent); border:1.5px solid var(--brand)"></i>Límite propuesto (v3)</span>
-            <span><i class="sq" style="background:var(--ok); border-radius:50%"></i>Queda adentro</span>
-            <span><i class="sq" style="background:var(--crit); border-radius:50%"></i>Queda afuera</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="panel">
-          <header><h2>Datos</h2></header>
-          <div class="body">
-            <dl class="kv">
-              <dt>Nombre</dt><dd>Tomatal Ka'aguy</dd>
-              <dt>Campo</dt><dd>Estancia Yvoty</dd>
-              <dt>Cultivo</dt><dd>Tomate — Elpida</dd>
-              <dt>Superficie</dt><dd><b>1,84 ha</b> <span class="why">calculada proyectando a UTM 21S en la consulta; la geometría se guarda en 4326</span></dd>
-              <dt>Vértices</dt><dd>4 · geometría válida y cerrada</dd>
-              <dt>Autointersecciones</dt><dd>Ninguna</dd>
-            </dl>
-          </div>
-        </div>
-        <div class="panel" style="border-color:var(--warn)">
-          <header><h2>Qué cambia si guardás la v3</h2><span class="hint">antes de confirmar, no después</span></header>
-          <div class="body">
-            <dl class="kv">
-              <dt>Dispositivos</dt><dd>4 quedan adentro · <b style="color:var(--crit)">1 queda afuera</b> (SE01-0432)</dd>
-              <dt>Mediciones</dt><dd>12.480 filas cambian de parcela en la vista</dd>
-              <dt>NDVI</dt><dd>La serie se vuelve a recortar desde 01/2017 · 214 fechas</dd>
-              <dt>Eventos de riego</dt><dd>186 eventos se reasignan</dd>
-            </dl>
-            <div class="note rule" style="margin-top:10px">Nada de esto se asigna a mano: sale de <code>ST_Contains(parcela.geom, dispositivo.punto)</code>. Si un sensor está en la parcela equivocada, lo que se corrige es el polígono.</div>
-            <div class="btnrow" style="margin-top:12px"><button class="btn primary">Guardar como v3</button><button class="btn">Descartar</button></div>
-          </div>
-        </div>
-        <div class="panel">
-          <header><h2>Versiones del límite</h2></header>
-          <div class="body flush scroller">
-            <table><thead><tr><th>Versión</th><th>Desde</th><th class="num">Superficie</th></tr></thead><tbody>
-              <tr><td><b>v2</b></td><td>19/08/2026</td><td class="num">1,80 ha</td></tr>
-              <tr><td>v1</td><td>04/08/2026</td><td class="num">1,72 ha</td></tr>
-            </tbody></table>
-          </div>
-        </div>
-      </div>
-    </div>`,
-  after() { }
-});
-
-function altaSVG() {
-  return `<svg viewBox="0 0 560 360" role="img" aria-label="Polígono propuesto de la parcela con sus dispositivos">
-    <rect width="560" height="360" fill="var(--panel)"/>
-    <g opacity=".45">
-      <path d="M0 90 C120 76, 240 104, 360 88 S540 62, 560 76" fill="none" stroke="var(--line)"/>
-      <path d="M0 200 C130 186, 250 214, 370 198 S540 172, 560 186" fill="none" stroke="var(--line)"/>
-      <path d="M0 310 C130 296, 250 324, 370 308 S540 282, 560 296" fill="none" stroke="var(--line)"/>
-    </g>
-    <polygon points="90,70 430,54 452,272 112,296" fill="none" stroke="var(--ink-3)" stroke-width="1.8" stroke-dasharray="7 5"/>
-    <polygon points="90,70 392,58 414,274 112,296" fill="color-mix(in srgb, var(--brand) 16%, transparent)" stroke="var(--brand)" stroke-width="2.4" stroke-linejoin="round"/>
-    ${[[90, 70], [392, 58], [414, 274], [112, 296]].map(p => `<rect x="${p[0] - 4.5}" y="${p[1] - 4.5}" width="9" height="9" fill="var(--panel)" stroke="var(--brand)" stroke-width="2.2"/>`).join("")}
-    <circle cx="180" cy="150" r="5.5" fill="var(--ok)"/><text x="192" y="154" font-size="11.5" fill="var(--ink-2)">SE01-0431</text>
-    <circle cx="250" cy="220" r="5.5" fill="var(--ok)"/><text x="262" y="224" font-size="11.5" fill="var(--ink-2)">CTRL-0112</text>
-    <circle cx="330" cy="120" r="5.5" fill="var(--ok)"/><text x="342" y="124" font-size="11.5" fill="var(--ink-2)">YFQ-0208</text>
-    <circle cx="150" cy="250" r="5.5" fill="var(--ok)"/><text x="162" y="254" font-size="11.5" fill="var(--ink-2)">HUM-0090</text>
-    <circle cx="428" cy="120" r="5.5" fill="var(--crit)"/><text x="428" y="104" font-size="11.5" fill="var(--crit)" text-anchor="middle" font-weight="650">SE01-0432 queda afuera</text>
-  </svg>`;
-}
-
-/* ============================ navegación ============================ */
-const NAVGROUPS = [
-  ["Campo", [["mapa", "Mapa de parcelas"], ["parcela", "Detalle de parcela"], ["series", "Series de mediciones"], ["riego", "Historial de riego"], ["politica", "Política de riego"], ["satelite", "Índice espacial"]]],
-  ["Equipos", [["dispositivos", "Dispositivos y calibración"], ["parcelas-alta", "Alta y mensura de parcela"]]],
-  ["Hidroponía", [["solucion", "Tablero de solución"], ["bloques", "Bloques experimentales"]]],
-  ["Operación", [["alertas", "Alertas"], ["usuarios", "Usuarios y permisos"]]]
-];
-const NAVDOT = { mapa: "var(--warn)", parcela: "var(--warn)", riego: "var(--crit)", solucion: "var(--crit)", dispositivos: "var(--crit)" };
-
-function buildNav() {
-  $("#nav").innerHTML = NAVGROUPS.map(([g, items]) => `
-    <div class="navgroup">${esc(g)}</div>
-    ${items.map(([k, lab]) => `<button class="navlink" data-k="${k}">
-      <span class="dot" style="background:${NAVDOT[k] || "var(--line-2)"}"></span>${esc(lab)}
-      ${k === "alertas" ? '<span class="badge">2</span>' : ""}</button>`).join("")}`).join("");
-  $$("#nav .navlink").forEach(b => b.addEventListener("click", () => { go(b.dataset.k); closeDrawer(); }));
-
-  $("#tabbar").innerHTML = [["mapa", "Mapa"], ["riego", "Riego"], ["solucion", "Solución"], ["alertas", "Alertas"]]
-    .map(([k, l]) => `<button data-k="${k}"><b></b>${esc(l)}</button>`).join("");
-  $$("#tabbar button").forEach(b => b.addEventListener("click", () => go(b.dataset.k)));
-}
-
-function go(k) { location.hash = "#/" + k; }
-
-function render() {
-  const k = (location.hash.replace(/^#\//, "") || "mapa");
-  const make = SCREENS[k] || SCREENS.mapa;
-  const scr = make();
-  const view = $("#view");
-  view.innerHTML = scr.html;
-  $("#drawerlabel").textContent = scr.title;
-  document.title = scr.title + " · agro-platform (mockup)";
-  $$("#nav .navlink").forEach(b => b.setAttribute("aria-current", b.dataset.k === k ? "page" : "false"));
-  $$("#tabbar button").forEach(b => b.setAttribute("aria-current", b.dataset.k === k ? "page" : "false"));
-  window.scrollTo(0, 0);
-  if (scr.after) scr.after();
-}
-
-function closeDrawer() { $("#rail").classList.remove("open"); $("#scrim").classList.remove("on"); $("#drawerbtn").setAttribute("aria-expanded", "false"); }
-$("#drawerbtn").addEventListener("click", () => {
-  const open = $("#rail").classList.toggle("open");
-  $("#scrim").classList.toggle("on", open);
-  $("#drawerbtn").setAttribute("aria-expanded", String(open));
-});
-$("#scrim").addEventListener("click", closeDrawer);
-$("#theme").addEventListener("click", () => {
-  const d = document.documentElement.getAttribute("data-theme") === "dark";
-  document.documentElement.setAttribute("data-theme", d ? "light" : "dark");
-  $("#theme").textContent = d ? "Tema oscuro" : "Tema claro";
-  render();
-});
-if (matchMedia("(prefers-color-scheme: dark)").matches) {
-  document.documentElement.setAttribute("data-theme", "dark");
-  $("#theme").textContent = "Tema claro";
-}
-addEventListener("hashchange", render);
-addEventListener("scroll", tipHide, { passive: true });
-buildNav();
-render();
 </script>
 </body>
 </html>

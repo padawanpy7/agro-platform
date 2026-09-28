@@ -25,6 +25,64 @@ y el [manual tecnico de tomate del IPTA](https://www.ipta.gov.py/application/fil
 > El almacigo va de julio a noviembre y el transplante de octubre a diciembre. **Estamos justo en el
 > momento de sembrar el almacigo.**
 
+## CONTESTADO el 28/09/2026 -- lo de abajo quedo resuelto, y mal planteado por mi
+
+Todo lo que sigue en la seccion de abajo **se pregunto y se contesto**, y **ninguna de mis cuatro
+opciones era la correcta**:
+
+- **No fue falta de agua ni inundacion.** Fue **riego por gravedad imposible de controlar** -- zanjas
+  que retienen y liberan por puntos -- mas **falta de experiencia**: el no es agricultor, se mudo de
+  la ciudad al campo. El detalle y lo que significa para la venta, en
+  [02-caica.md](02-caica.md).
+- **El suelo SI es un problema, y lo describio el**: *"tierra gris negruzca, impermeable, no absorbe
+  mucha agua, siempre hay lodazal"*. Eso no es tierra arrocera preparada con taipas -- es un **suelo
+  hidromorfico o un vertisol**, que es peor y es distinto. Ver la seccion nueva de abajo.
+- **La oferta es de confianza**: es el **papa de un compañero**, ya sabe del proyecto, hoy **no tiene
+  ninguna plantacion** y tiene **120 ha con 130 cabezas**.
+
+**Lo que NO cambia**: el flag del drenaje. Yo lo justifique con el argumento equivocado -tierra
+arrocera- y resulto cierto por otro motivo. **El suelo no drena, y eso sigue decidiendo que se
+planta y como.**
+
+El plan concreto con el capital real esta en
+[10-plan-con-12-millones.md](10-plan-con-12-millones.md).
+
+## El suelo, con nombre: por que "impermeable y lodazal" importa tanto
+
+Lo que describio -- **gris, impermeable, siempre lodazal** -- coincide con la descripcion tecnica de
+los **suelos hidromorficos** de la Region Oriental: *"perfil saturado de agua, textura dominantemente
+arcillosa, horizonte superficial pardo oscuro fuertemente moteado y un horizonte mas profundo de
+color **gris** dominante con procesos avanzados de **gleyzamiento**"*, con la **napa en la superficie
+o muy proxima** y **drenaje pobre a muy pobre casi permanentemente**
+([Molinas, sobre el estudio MAG/BM](https://ing-alfredo-molinas.blogspot.com/2025/07/tipos-de-suelos-en-la-region-oriental.html),
+[OEA](https://www.oas.org/dsd/publications/unit/oea30s/ch027.htm)).
+
+La otra posibilidad es un **vertisol**, que en Paraguay esta en el centro y el este. Los vertisoles
+son **quimicamente muy ricos y fisicamente muy dificiles**: alta capacidad de intercambio cationico
+-- o sea, retienen nutrientes -- pero **se expanden con el agua y causan asfixia radicular**, y se
+agrietan al secarse.
+
+> **La buena noticia esta escondida ahi: el problema no es la fertilidad, es el AIRE.** Ese suelo
+> tiene de sobra lo que un suelo arenoso no tiene. Lo que le falta es que el agua se vaya y que la
+> raiz respire. **Y eso es un problema de manejo, que se resuelve.**
+
+### Las tres cosas que ese suelo obliga
+
+1. **Camellones, no siembra a nivel.** Es la solucion documentada: *"en condiciones problemáticas de
+   suelo, donde existe un nivel freatico alto, se recomienda plantar sobre un camellon"*, y se
+   recomienda explicitamente para **tomate y melon**. Suma mejor drenaje, mas temperatura de suelo,
+   **menos exposicion a hongos** y hasta ahorro de agua
+   ([PortalFruticola](https://www.portalfruticola.com/noticias/2017/11/09/guia-para-construir-camellones-de-calidad-en-plantaciones-hortofruticolas/),
+   y hay guia paraguaya en [ABC](https://www.abc.com.py/articulos/preparacion-de-camellones-en-horticultura-120846.html)).
+   **El tractor prestado los hace casi gratis.**
+2. **Nunca pasar el tractor con el suelo humedo.** En arcilla pesada la labranza en humedo
+   **destruye la estructura** y el daño dura años. Con maquinaria prestada la tentacion es usarla
+   cuando esta disponible, no cuando el suelo esta a punto. **Esa es la decision donde un sensor de
+   humedad se paga antes de plantar nada.**
+3. **El goteo se maneja distinto en arcilla**: caudal bajo y riegos mas largos y espaciados, porque el
+   agua avanza despacio hacia abajo y bien hacia los costados. **Y sobre todo: en ese suelo el
+   producto no es "cuando regar", es "cuando NO regar".**
+
 ## Y ahora la contradiccion que hay que resolver antes de gastar un guarani
 
 **El dice que ahi no hay problema de agua. Pero su arroz se murio.**

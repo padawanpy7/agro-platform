@@ -14,7 +14,8 @@ fuentes publicas.
 | [04-riego-agua.md](04-riego-agua.md) | el tema central, y donde menos fuente publica hay |
 | [05-clima-riesgos.md](05-clima-riesgos.md) | las perdidas documentadas, con fecha |
 | [02-caica.md](02-caica.md) | con quien se habla |
-| [09-oferta-tierra-maquinaria.md](09-oferta-tierra-maquinaria.md) | **ofrecio su maquinaria y 1 ha**: que se puede plantar ya, y la contradiccion del arroz |
+| [09-oferta-tierra-maquinaria.md](09-oferta-tierra-maquinaria.md) | **ofrecio su maquinaria y 1 ha**: que se puede plantar ya, y el suelo que no drena |
+| [10-plan-con-12-millones.md](10-plan-con-12-millones.md) | **el plan con el capital real**: Gs 12 M no compran 1 ha, y donde NO poner la plata |
 | [01-produccion.md](01-produccion.md) | cultivos, hectareas, rindes, calendario |
 | [03-comercializacion.md](03-comercializacion.md) | el canal, Expo Frutas, precios |
 | [06-fuentes.md](06-fuentes.md) | todo lo consultado, **incluido lo que fallo y por que** |

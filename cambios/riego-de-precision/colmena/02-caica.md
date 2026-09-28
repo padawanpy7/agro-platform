@@ -82,6 +82,44 @@ no haber escuchado.
 **Y ojo con el sesgo que deja**: es alguien **quemado** con una inversion productiva. Va a evaluar
 lo que se le proponga con desconfianza y con razon. **Ir con el numero, no con la promesa.**
 
+### CONTESTADO el 28/09/2026 -- y la respuesta no estaba en la tabla
+
+**No fue falta de agua ni inundacion. Fue falta de CONTROL y de experiencia.** El riego era **por
+gravedad**: zanjas que retienen el agua y se libera por puntos, *"muy dificil de controlar todo"*.
+Y **el no es agricultor**: se mudo de la ciudad al campo.
+
+**Las cuatro causas de la tabla de arriba eran las cuatro equivocadas.** La real es una quinta que no
+estaba escrita, y es **la unica de las cinco que este producto resuelve de frente**:
+
+| | |
+|---|---|
+| El problema no era **cuanta** agua habia | era **cuando y donde** se soltaba, y que nadie podia saberlo |
+| El riego por gravedad **no se mide y no se dosifica** | se abre una zanja y se espera. No hay caudal, no hay hora, no hay registro |
+| Lo que falto fue **la decision**, no el recurso | y la decision es exactamente lo que el lazo de control automatiza |
+
+> **Es la mejor validacion que tiene este proyecto, y no la salimos a buscar: es un fracaso real,
+> documentado por quien lo sufrio, causado por la razon exacta que el producto ataca.** El
+> `proposal.md` argumenta que se vende control y no ahorro de agua. Aca hay un caso con nombre.
+
+**Perfil completo, actualizado:**
+
+| | |
+|---|---|
+| Quien es | **el papa de un compañero del dueño**. Presta de confianza y **ya sabe del proyecto** |
+| Tierra | **120 ha**, con **130 cabezas** -- ~1,1 cabeza/ha |
+| Plantacion hoy | **ninguna**. Dejo el arroz y no volvio a plantar |
+| Suelo | **gris negruzco, impermeable, "siempre hay lodazal"**. Ver [09-oferta-tierra-maquinaria.md](09-oferta-tierra-maquinaria.md) |
+| Postura | **si funciona, le sirve.** No hay que convencerlo de la idea, hay que mostrarle que anda |
+
+**Lo que esto cambia en la venta**: dejo de ser un desconocido quemado al que hay que convencer y
+paso a ser **un aliado que ya fallo por la razon que resolvemos**. El sesgo de desconfianza de arriba
+**baja mucho** -- pero la regla se mantiene: **ir con el numero, no con la promesa.**
+
+**Y una contra que hay que tener presente**: que no sea agricultor tiene dos caras. **A favor**, no va
+a discutirle al sistema ni a preferir su corazonada. **En contra, no puede decirte si el sistema se
+equivoca.** Hace falta una referencia agronomica que no sea el -- CAICA, la cooperativa o el IPTA -- o
+el primer error del software no lo va a ver nadie.
+
 ## Los dos roles del contacto, que conviene no mezclar
 
 | como... | que puede contestar | cuanto vale |

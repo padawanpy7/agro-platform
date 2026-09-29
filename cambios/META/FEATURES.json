@@ -1,0 +1,40 @@
+{
+  "proyecto": "META",
+  "nota": "Ledger del LOOP, no del producto. El del producto vive en cambios/riego-de-precision/FEATURES.json. Existe desde el 29/09/2026: el gate de cierre avisaba 'no pude leer el ledger del META: los pendientes NO se cruzaron', y el paquete de arranque en frio lo listaba como NO EXISTE. Solo se cambia 'passes'; no se borra ni se edita descripcion/pasos.",
+  "features": [
+    {
+      "id": "META-ssh-ro",
+      "categoria": "herramientas",
+      "descripcion": "scripts/infra/ssh-ro.js sigue siendo el script del repo de origen: pide credenciales LDAP/Oracle y apunta a un server que no es este VPS. Es trabajo, no una decision del dueño.",
+      "pasos": [
+        "Apuntarlo al VPS y a las variables VPS_HOST / VPS_USUARIO / VPS_SSH_KEY del .env.example",
+        "Revisar la lista blanca de comandos en scripts/lib/ssh-ro-core.js: la de origen nombra binarios de Oracle",
+        "Probarlo en solo lectura contra el VPS y dejar la evidencia"
+      ],
+      "passes": false
+    },
+    {
+      "id": "META-hook-db-sql",
+      "categoria": "herramientas",
+      "descripcion": "El hook PreToolUse de .claude/settings.json autoriza `node agro.js db-sql` sin --write, y esa tool NO EXISTE en este repo: quedo del repo de origen. Un hook que autoriza un comando inexistente no hace daño, y tampoco hace nada -- y el dia que exista una db-sql de verdad va a autorizarla sin que nadie lo haya decidido.",
+      "pasos": [
+        "Decidir si se construye `db-sql` para este repo o se saca el hook",
+        "Si se saca: borrar el bloque del settings.json y dejar dicho por que",
+        "Si se construye: la tool de solo lectura primero, y el hook despues"
+      ],
+      "passes": false,
+      "nota": "ESTA la decide el dueño, no una sesion."
+    },
+    {
+      "id": "META-progreso-mensual",
+      "categoria": "bitacora",
+      "descripcion": "cambios/META/progreso/2026-09.md no existe, y el paquete de arranque en frio lo pide por nombre. El archivo mensual es donde se archivan las entradas viejas cuando PROGRESO.md se acerca a su techo de 150 lineas.",
+      "pasos": [
+        "Esperar a que PROGRESO.md lo necesite: al 29/09 va en 33 de 150 lineas",
+        "Al archivar, dejar en PROGRESO.md UNA fila de indice que diga cuando ir al mensual"
+      ],
+      "passes": false,
+      "nota": "No es deuda todavia: archivar hoy seria mover cuatro entradas a un archivo que nadie abre. Queda fichado para que el aviso del paquete tenga a donde apuntar."
+    }
+  ]
+}

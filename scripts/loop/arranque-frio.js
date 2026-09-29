@@ -144,7 +144,14 @@ if (argv.includes('--paquete')) {
       : '- Preguntas que bloquean: **no existe PREGUNTAS.md**')
   }
   else if (b > 0) console.log(`- **${b} pregunta(s) BLOQUEAN**: se resuelven antes de tomar nada (ver PREGUNTAS.md abajo)`)
-  else console.log('- Preguntas que bloquean: ninguna anotada (el gate que las cuenta tiene ficha propia: HN-CIERRE-PREGUNTAS-ABIERTAS-FALSO-VERDE)')
+  // Decia "(el gate que las cuenta tiene ficha propia: HN-CIERRE-PREGUNTAS-ABIERTAS-FALSO-VERDE)".
+  // Esa ficha es del repo de ORIGEN y aca no existe: el paquete mandaba a un lector en frio a
+  // buscar un id que no esta en ningun ledger. Es exactamente la clase de referencia muerta que
+  // esta tool existe para encontrar, y estaba adentro de la tool. Encontrado el 29/09/2026.
+  // Lo que queda es la advertencia sin el id, que es la parte que si es cierta en cualquier repo.
+  else console.log('- Preguntas que bloquean: ninguna anotada -- y "ninguna anotada" no es "ninguna": ' +
+    'el contador solo ve la seccion `**Bloquean**` del PREGUNTAS.md del loop, asi que una que se ' +
+    'decidio en el chat y nunca se escribio no aparece aca')
   if (s.fecha) console.log(`- Ultima sesion (${s.fecha}): ${s.titulo}`)
   if (s.ids.length) console.log(`- Fichas que esa entrada NOMBRA: ${s.ids.join(', ')}`)
   else console.log('- Esa entrada no nombra ninguna ficha: la pista de por donde seguir hay que buscarla en el ledger')

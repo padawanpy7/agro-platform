@@ -42,6 +42,13 @@ Al 29/09/2026 queda **una sola abierta, y no bloquea nada de lo que se esta cons
 
 ## Pendientes del loop que NO son preguntas, son trabajo
 
-- **`scripts/infra/ssh-ro.js`** sigue apuntado al server del repo de origen: pide credenciales
-  LDAP/Oracle. Adaptarlo al VPS es trabajo, no decision.
-- **El hook de `db-sql`** quedo muerto en `.claude/settings.json`. **Eso si lo decide el dueño.**
+**Desde el 29/09 tienen ficha**, en `cambios/META/FEATURES.json`. Antes vivian solo como estas dos
+lineas, asi que el cierre no podia cruzarlos contra nada y el paquete de arranque en frio listaba
+el ledger del META como **NO EXISTE**.
+
+- **`META-ssh-ro`** -- `scripts/infra/ssh-ro.js` sigue apuntado al server del repo de origen: pide
+  credenciales LDAP/Oracle. Adaptarlo al VPS es trabajo, no decision.
+- **`META-hook-db-sql`** -- el hook de `.claude/settings.json` autoriza `node agro.js db-sql`, una
+  tool que **no existe en este repo**. **Eso si lo decide el dueño.**
+- **`META-progreso-mensual`** -- `cambios/META/progreso/2026-09.md` todavia no hace falta
+  (`PROGRESO.md` va en 33 de 150 lineas), pero el paquete de arranque lo pide por nombre.

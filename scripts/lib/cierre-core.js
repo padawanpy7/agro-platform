@@ -209,9 +209,14 @@ function chequearProgreso(rutaProgreso, fechasEnElProgreso, hoy, contenido, carp
 // quedan apuntando a rutas muertas. Copiar y pegar lo documentado falla, y parece culpa de quien
 // lo corre.
 const OBSOLETOS = [
-  { patron: /bash\s+scripts\/[\w-]+\.sh/g, porque: 'los wrappers .sh no existen desde el 10/08: es `node agro.js <tool>`' },
+  // 29/09: el patron admite un PREFIJO de carpetas. Sin el, un script de ticket como
+  // `cambios/<id>/scripts/verify-schema.sh` -- que AGENTS.md §5 no solo permite sino que pide --
+  // matcheaba igual, y la prueba de existencia de abajo buscaba `scripts/verify-schema.sh` en la
+  // RAIZ, no lo encontraba, y lo marcaba muerto. Es el mismo falso positivo que el comentario del
+  // 01/09 vino a arreglar, con otra forma: el script existe, solo que no en la raiz.
+  { patron: /bash\s+(?:[\w.-]+\/)*scripts\/[\w-]+\.sh/g, porque: 'los wrappers .sh no existen desde el 10/08: es `node agro.js <tool>`' },
   { patron: /\btests\/e2e\//g, porque: 'los specs viven en <carpeta-de-cambios>/<TICKET>/tests/' },
-  { patron: /scripts\/[\w-]+\.sh\b/g, porque: 'los wrappers .sh no existen desde el 10/08: es `node agro.js <tool>`' },
+  { patron: /(?:[\w.-]+\/)*scripts\/[\w-]+\.sh\b/g, porque: 'los wrappers .sh no existen desde el 10/08: es `node agro.js <tool>`' },
 ]
 
 // Los tres patrones de arriba son HISTORICOS: cazan la migracion .sh -> node agro.js del 10/08 y
@@ -249,7 +254,9 @@ function buscarComandosObsoletos(texto, toolsConocidas = null, existe = null) {
     const encontrados = texto.match(new RegExp(patron.source, patron.flags)) || []
     for (const e of new Set(encontrados)) {
       if (existe) {
-        const ruta = (e.match(/scripts\/[\w-]+\.sh/) || [])[0]
+        // La ruta COMPLETA, con su prefijo si lo trae: si se recorta a `scripts/x.sh` se busca en
+        // la raiz un archivo que vive en la carpeta de un ticket, y se lo declara muerto estando vivo.
+        const ruta = (e.match(/(?:[\w.-]+\/)*scripts\/[\w-]+\.sh/) || [])[0]
         if (ruta && existe(ruta)) continue
       }
       hallazgos.push({ fragmento: e, porque })

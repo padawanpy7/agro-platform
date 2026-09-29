@@ -5,6 +5,76 @@ metido en `cambios/META/PROGRESO.md`, que es para lo que se hace en `main` y tie
 **+8 lineas por sesion** -pensado para la bitacora del loop, no para un producto de quince
 documentos-. Aca hay lugar. La mas nueva ARRIBA.
 
+## 2026-09-29 -- la base, entera y en ingles
+
+**Primera linea de codigo del producto y esquema completo.** Lo que quedo funcionando:
+
+- **Postgres 17.11 + TimescaleDB 2.30.1 + PostGIS 3.6.4** corriendo en esta maquina, atada a
+  `127.0.0.1` y sin exponer nada. Verificada creando una hypertable y guardando un `POINT` 4326:
+  que la imagen diga que trae las dos extensiones no prueba que funcionen juntas.
+- **51 tablas: 27 de datos y 24 de historia**, todas en ingles. Incluye las de ACCESO, que faltaban.
+- **`verify-schema.sh`: 21 de 21 en verde** contra la base corriendo.
+- **`check` paso de 6 a 9 gates reales**: lint (ruff + mypy estricto), tests y tipografia.
+
+**Decisiones del dueño que bajaron a la base:**
+
+| | |
+|---|---|
+| `medicion` **ANGOSTA** | cerro la pregunta 4 con cinco argumentos independientes |
+| **Todo en ingles**, texto de pantalla en espaniol | se rehizo el esquema entero: eran 13 tablas sin un dato de valor |
+| **Historia en cada tabla mutable** | un trigger generico, no quince copiados |
+| **Nada hardcodeado** | lo que crece va a catalogo; lo que es maquina de estados se queda en CHECK |
+| **Front: shadcn**, y prohibido crear componentes | ver `docs/reglas-del-front.md` |
+
+**Lo que NO lleva historia, y es la parte que importa:** `measurement` e `irrigation_event` son
+append-only y enormes. Auditarlas duplicaria la tabla mas grande del sistema para registrar cambios
+que nunca deben pasar. **En vez de auditar el cambio, el cambio esta PROHIBIDO**: UPDATE y DELETE
+revocados. Para append-only eso es estrictamente mas fuerte que auditar.
+
+**Errores propios que el proceso encontro, y quedaron escritos donde se cometieron:**
+
+1. La etiqueta de la imagen de Timescale estaba **inventada de memoria** y no existia.
+2. `api/config.py` inventaba nombres de variables cuando el `.env.example` **ya declaraba los de
+   libpq**.
+3. **La contrasenia aparecia en el `repr()`** de la configuracion. No lo encontro una revision: lo
+   encontro un test escrito para eso, y fallo a la primera.
+4. El test grepeaba **el texto del error de psql**, que depende del locale: pasa aca y deja de
+   chequear en silencio en otra maquina. Cambiado por el codigo de salida.
+5. La tool `ascii`, al incluir `.js`, **se rompio a si misma**: su tabla de reemplazos contiene los
+   caracteres que reemplaza.
+
+**Y una correccion que vino de infra:** yo habia escrito que esta maquina corre k3s, aloja a
+`primavera-nati` y que aca paso el `fsync` de 3 segundos. **Las tres falsas.** Son dos maquinas:
+`vmi2900083` -- aca, nodo de control, con SIRA -- y `srv1943767`, el VPS de staging.
+
+**Sin resolver, y es del dueño:** las dos preguntas abiertas de `PREGUNTAS.md` (quien es el cliente,
+y en que VPS corre el producto), y la limpieza de los ~24 GB de imagenes de docker de contenedores
+apagados, que no se toca desde una sesion.
+
+## 2026-09-28 -- el producto se definio, y el mockup se rehizo tres veces
+
+**Dia de definicion, no de codigo.** Lo que cambio de fondo:
+
+- **El producto NO es riego de precision: es agropecuaria de precision**, y el riego es un modulo.
+  El dueño lo encuadro como *"un ERP para estancias"* -- **hacia adentro**, aclaro despues: hacia
+  afuera es **una sola app** y no se dice "esta app es de goteo".
+- **El mockup se rehizo TRES veces**, y las tres por la misma causa: **el brief no tenia al
+  usuario**. Son estancieros y capataces que nunca vinieron a Asuncion. De ahi salieron las nueve
+  reglas de `docs/quien-usa-esto.md`, y la primera es que **la pantalla contesta una PREGUNTA, no
+  muestra datos**.
+- **El mapa lleva DOS NIVELES** -- el campo de fondo y los potreros clickeables -- con la trampa
+  anotada: **la suma de los potreros NO es el campo**, y por eso mirar el verdor del campo entero no
+  sirve para decidir nada.
+
+**Hallazgos que valen mas que el codigo del dia:**
+
+| | |
+|---|---|
+| **Por que se murio el arroz del contacto** | no fue agua: fue **riego por gravedad imposible de controlar**. Es la mejor validacion que tiene el proyecto y no la salimos a buscar |
+| **El pesaje al paso existe** | `walk-over weighing`: balanza con RFID en el paso a la aguada. **Saca el dron, el corral y el GPS** del plan |
+| **El Minimum Data Set** | la lista de que guardar ya esta escrita por la FAO y DSSAT. Y **la mitad NO viene de un sensor** |
+| **Nueve anios de NDVI gratis** | el satelite lleva desde 2017 acumulando historico sobre esa tierra, retroactivo |
+
 ## 2026-09-27 -- localizar hacienda sin GPS, anotado como opcion futura
 
 Pregunta del dueño: *hay otra forma de rastrear las vacas por radiofrecuencia, para no pagar GPS?*
@@ -95,6 +165,20 @@ caso nuevo y control negativo del que tiene que seguir dando rojo.
 **Sin resolver, y es del dueño**: los commits sin subir, y el hook de `db-sql` muerto en
 `.claude/settings.json` -al que el commit `2fc5743` le sumo permisos de git por arrastre de un
 `git add -A`-.
+
+## 2026-09-26 -- ganaderia evaluada, y una correccion al dia siguiente
+
+**Entrada escrita el 29/09**, al cerrar: el dia tenia commits y no tenia bitacora, y un dia que
+falta no vuelve.
+
+- **`economia/ganaderia.md`**: se evaluo el mercado vecino. Veredicto: **si hay negocio, pero es OTRO
+  producto** -- reusa el 80% de lo construido y no compite por el mismo cliente. La unidad de cobro
+  deja de ser la hectarea y pasa a ser la **cabeza, el punto de agua o el establecimiento**: con
+  Gs 3,1 M de bruto por hectarea, la cuota actual seria el 58% del bruto.
+- **Y al dia siguiente se corrigio solo**: se habia escrito que la trazabilidad era la tercera
+  oportunidad, y **es mas debil de lo que se dijo**. En software de gestion ganadera **SI hay
+  competencia madura** -- GanApp cubre sanidad, pesajes y RFID, con prueba gratis. Lo contrario de
+  lo que pasa en fruta. **El hueco esta en medir pasto y agua, no en registrar el rodeo.**
 
 ## 2026-09-25 al 27 -- la ficha del producto
 

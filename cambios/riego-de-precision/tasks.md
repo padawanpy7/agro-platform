@@ -48,8 +48,8 @@ resto, tablas comunes.
 - [~] `medicion` es hypertable, **verificado contra el catalogo de Timescale**, no contra el archivo. `riego_evento` falta.
 - [x] `calibracion` con `procedencia` NOT NULL y no-vacia, y una sola vigente por (dispositivo, magnitud). **Las dos cosas probadas en rojo.**
 - [x] Comentario de que queda y que se pierde en las cuatro migraciones (001/002, up y down). El de la bajada de la 002 dice explicitamente que **se pierde el historico entero** y que la vuelta atras real es restaurar de backup.
-- [x] `scripts/verificar-rls.sh`: **11/11 en verde**, contra `pg_policies` y `pg_class`. Con control negativo: al borrar la policy se pone en rojo.
-- [x] `scripts/verificar-precision.sh`: **11/11 en verde**. Incluye el paso que prueba que una magnitud nueva es **una FILA y no una migracion**.
+- [x] `cambios/riego-de-precision/scripts/verify-schema.sh`: **11/11 en verde**, contra `pg_policies` y `pg_class`. Con control negativo: al borrar la policy se pone en rojo.
+- [x] `cambios/riego-de-precision/scripts/verify-schema.sh`: **11/11 en verde**. Incluye el paso que prueba que una magnitud nueva es **una FILA y no una migracion**.
 
 **Rol**: `database`. **Gate**: el objeto tiene que compilar contra la Postgres real (AGENTS.md §7).
 
@@ -62,7 +62,7 @@ resto, tablas comunes.
       en lote.
 - [ ] **El dato no se promedia en la ingesta.** Se guarda crudo y calibrado. Si hay que elegir entre
       disco y precisión, gana la precisión.
-- [ ] `scripts/verificar-dedup.sh`: el mismo payload tres veces, una sola fila.
+- [ ] `verify-ingest.sh` (todavia no existe): el mismo payload tres veces, una sola fila.
 
 **Rol**: `backend`. **Depende de**: Fase 1.
 
@@ -75,8 +75,8 @@ aplicación (REST para el front) y api de política (la única que el campo cons
       abrir o cerrar una válvula.
 - [ ] Controlador simulado: decide con lo que mide, guarda la última política y su fecha, y a los N
       días sin política nueva cae al programa conservador registrándolo.
-- [x] `riego_evento` con la **condicion** que causo la decision, la politica vigente, y **litros medidos y estimados en columnas SEPARADAS**. Mas `politica_riego` -- validada en la base, no en la API -- `metodo_de_riego` y `tramo`. **11/11 en `scripts/verificar-riego.sh`**, con control negativo.
-- [ ] `scripts/verificar-autonomia.sh`: se corta el enlace y sigue regando; pasan N días y cae al
+- [x] `riego_evento` con la **condicion** que causo la decision, la politica vigente, y **litros medidos y estimados en columnas SEPARADAS**. Mas `politica_riego` -- validada en la base, no en la API -- `metodo_de_riego` y `tramo`. **11/11 en `cambios/riego-de-precision/scripts/verify-schema.sh`**, con control negativo.
+- [ ] `verify-autonomy.sh` (todavia no existe): se corta el enlace y sigue regando; pasan N días y cae al
       conservador.
 
 **Rol**: `backend`. **Depende de**: Fases 1 y 2. **Es la última fase que no cuesta plata.**
@@ -118,7 +118,7 @@ aplicación. **Depende de**: Fase 1.
 - [ ] Ingesta de NDVI a `indice_espacial` por parcela y fecha. Sentinel-2 es gratis.
 - [ ] La salida a Copernicus es una **CCNP declarada en git**: la red es default-deny y cada flujo
       nuevo se declara, no se abre un puerto. Se le pasa a `infra-platform`; no se toca desde acá.
-- [ ] `scripts/verificar-ndvi.sh`: un polígono nuevo trae su serie.
+- [ ] `verify-ndvi.sh` (todavia no existe): un polígono nuevo trae su serie.
 
 **Rol**: `backend`. **Depende de**: Fase 1.
 

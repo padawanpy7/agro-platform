@@ -200,7 +200,14 @@ if (carpeta && fs.existsSync(carpeta)) {
     // No se pierde nada: si el criterio nombra una tool que no existe, `aceptacion` lo corre igual
     // y sale 2 -"no se pudo medir"-, que es mas honesto que un aviso de doc.
     if (path.basename(archivo) === 'HECHO_CUANDO.md') continue
-    const h = core.buscarComandosObsoletos(fs.readFileSync(archivo, 'utf8'), TOOLS)
+    // El tercer argumento -- la prueba de existencia -- se agrego el 29/09, y hasta ese dia NO SE
+    // PASABA. La excepcion del 01/09 ("un script que existe en el disco no es un comando muerto")
+    // vivia en la libreria, con su comentario y sus tests, y el llamador real la ignoraba: el falso
+    // positivo que vino a evitar estuvo pasando cuatro semanas. Es el mismo patron que la tool
+    // `ascii`, que existia y no estaba enchufada a `check`.
+    const h = core.buscarComandosObsoletos(
+      fs.readFileSync(archivo, 'utf8'), TOOLS,
+      (ruta) => fs.existsSync(path.join(RAIZ, ruta)))
     if (h.length) hallazgos[archivo.replace(/\\/g, '/')] = h
   }
   chequeos.push(core.chequearDocs(hallazgos))

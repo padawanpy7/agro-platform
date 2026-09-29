@@ -25,15 +25,20 @@ _(ninguna)_
 
 > **[cambios/riego-de-precision/PREGUNTAS.md](../riego-de-precision/PREGUNTAS.md)**
 
-Y al 29/09/2026 **no queda ninguna abierta**. Las dos ultimas se contestaron ese dia:
+Al 29/09/2026 queda **una sola abierta, y no bloquea nada de lo que se esta construyendo**:
 
-| | respuesta |
+| | estado |
 |---|---|
-| **0. Quien es el cliente** (bloqueaba) | **el productor**. Queda firme la cuota por finca + hectarea y el piso de 3 clientes; los otros escenarios quedan despriorizados, no prohibidos |
-| **1. En que VPS corre el producto** | **este, para el desarrollo local**; el despliegue a staging lo hace la sesion INFRA. El disparador para mudar sigue siendo **el primer cliente que paga** |
+| **0. Quien es el cliente** (bloqueaba) | **CONTESTADA: el productor.** Queda firme la cuota por finca + hectarea y el piso de 3 clientes; los otros escenarios quedan despriorizados, no prohibidos |
+| **1. En que VPS corre el producto** | **CONTESTADA: este, para el desarrollo local**; el despliegue a staging lo hace la sesion INFRA. El disparador para mudar sigue siendo **el primer cliente que paga** |
+| **3. Cuanto hardware se compra** | **ABIERTA.** El analisis y los precios estan completos; **falta la decision, y es plata del dueño**. Bloquea la Fase 4 -el banco de pruebas- y ninguna anterior |
 
-**Las otras tres ya estaban**: el banco de pruebas (27/09), `medicion` angosta (28/09) y el
-hardware de la primera vuelta (con precios locales verificados).
+**Las otras dos**: el banco de pruebas (27/09) y `medicion` angosta (28/09).
+
+> **La 3 figuraba como contestada y no lo estaba.** Se la habia dado por cerrada *"con precios
+> locales verificados"* -- pero la pregunta no es que marca, es **cuantos se compran**, y eso lo
+> decide quien paga. Lo encontro el gate de cierre del 29/09, que contaba dos abiertas mientras el
+> texto afirmaba que no quedaba ninguna.
 
 ## Pendientes del loop que NO son preguntas, son trabajo
 

@@ -4,7 +4,23 @@ Lo que no se decide solo. Una pregunta abierta que BLOQUEA no deja cerrar la vue
 
 ## Abiertas
 
-_(ninguna)_
+**No bloquean nada de lo que se esta construyendo**
+
+3. **Cuanto hardware se compra para la primera vuelta.** El analisis, los precios de lista
+   verificados en Asuncion y la recomendacion estan mas abajo, completos. **Lo que falta es la
+   decision, y es plata del dueño**: bloquea la **Fase 4** -el banco de pruebas con el ESP32 y la
+   valvula- y **ninguna de las tres anteriores**.
+
+> **Y una correccion sobre lo que decia este archivo el 29/09 a la maniana:** habia quedado escrito
+> que **las cinco** estaban contestadas, contando la 3 *"con precios locales verificados"*. **Los
+> precios no son la respuesta.** La pregunta 3 no es *que marca* -eso lo resuelve el diseño- sino
+> **cuantos se compran**, y eso lo decide quien pone la plata. Lo encontro el gate de cierre, que
+> contaba 2 abiertas mientras el texto decia que no quedaba ninguna.
+
+## Respondidas
+
+Lo que sigue es **el analisis completo de las cinco**, contestadas y abierta, en el orden en que se
+plantearon. Se deja entero y no se resume: es lo que hace auditable cada decision.
 
 ## 0. ~~Quien es el cliente, y quien pone el capital~~ CONTESTADA (29/09/2026)
 
@@ -74,14 +90,12 @@ que exista mercado** -- que es exactamente lo que la pregunta 0 busca. Sigue **A
 escenarios A a D siguen siendo los que la contestan.
 
 
-**Ninguna abierta desde el 29/09/2026.** Las cinco estan contestadas: la 2 el 27/09, la 4 el 28/09
-(medicion ANGOSTA), la 3 con precios locales verificados, y **la 0 y la 1 el 29/09** -- las dos por
-el dueño, que era la unica forma de contestarlas.
+**Cuatro contestadas y una abierta.** La 2 el 27/09, la 4 el 28/09 (medicion ANGOSTA), y **la 0 y la
+1 el 29/09** -- las dos por el dueño, que era la unica forma. **Queda la 3**, que es plata.
 
 **Actualizado el 28/09**: la frase que estaba aca decia *"ninguna es tecnica"*. Dejo de ser cierto con
 la pregunta **4**, que era tecnica y bloqueaba la Fase 1 -- **y que el mismo dia se contesto: ANGOSTA**.
-**Vuelve a ser cierto**: las tres que quedan abiertas dependen de plata, de un campo real o del negocio,
-y ninguna se decide desde el escritorio.
+**Vuelve a ser cierto**: la que queda abierta depende de plata, y eso no se decide desde el escritorio.
 
 ## 1. ~~Donde corre el producto: este VPS o uno nuevo~~ CONTESTADA (29/09/2026)
 
@@ -134,7 +148,7 @@ fisica. Son dos cosas distintas y el banco cuesta una fraccion.
 **Si no se contesta**: el diseño se escribe para el banco, que es lo que no requiere permiso de
 nadie.
 
-## 3. Cuanto se compra de hardware para la primera vuelta
+## 3. Cuanto se compra de hardware para la primera vuelta -- ABIERTA (25/09/2026)
 
 La pregunta no es que marca -eso lo resuelve el diseño- sino **cuantos**. Con **uno** de cada cosa
 se prueba que funciona; con **dos sensores en la misma parcela** se prueba algo distinto y mas

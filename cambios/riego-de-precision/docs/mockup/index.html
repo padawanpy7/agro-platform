@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>agro-platform · mockup de pantallas</title>
+<title>agro-platform - mockup de pantallas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
@@ -457,7 +457,7 @@ const CAMPO = {
   nom: "Estancia Yvoty", lugar: "La Colmena, Paraguarí", ha: 148.0,
   poly: "30,40 470,16 900,44 932,212 908,394 878,502 330,536 70,500 18,274",
   reparto: [
-    { n: "Potreros y lotes", ha: 108.7, c: "var(--ok)", nota: "6 en total · es lo único que se toca" },
+    { n: "Potreros y lotes", ha: 108.7, c: "var(--ok)", nota: "6 en total - es lo único que se toca" },
     { n: "Monte", ha: 26.0, c: "var(--n4)", nota: "La franja del arroyo. Verde todo el año, y no se lo come nadie" },
     { n: "Caminos y calles", ha: 4.8, c: "var(--ink-3)", nota: "" },
     { n: "Bajos sin uso", ha: 4.0, c: "var(--mute)", nota: "Se inundan" },
@@ -536,9 +536,9 @@ const VERD_MED = [44, 51, 63, 70, 73, 70, 62, 54, 46, 42, 44, 55];
 
 const RIEGOS = [
   { f: "Hoy 05:40", p: "Tomatal Ka'aguy", cond: "La tierra estaba seca en la raíz", dec: "Regó 22 minutos", pol: "Regla 7", est: 1180, med: 1205, res: "Salió lo que tenía que salir", ok: 1 },
-  { f: "Ayer 18:05", p: "Huerta Ñu Porâ", cond: "La tierra estaba seca arriba", dec: "Regó 18 minutos", pol: "Regla 4", est: 640, med: 902, res: "Salió mucha más agua de la esperada", ok: 0, flag: "262 litros de más · revisar la línea" },
+  { f: "Ayer 18:05", p: "Huerta Ñu Porâ", cond: "La tierra estaba seca arriba", dec: "Regó 18 minutos", pol: "Regla 4", est: 640, med: 902, res: "Salió mucha más agua de la esperada", ok: 0, flag: "262 litros de más - revisar la línea" },
   { f: "Ayer 06:10", p: "Sandial Tuyutî", cond: "La tierra estaba mojada", dec: "No regó", pol: "Regla 3", est: 0, med: 0, res: "No hizo falta", ok: 1 },
-  { f: "Anteayer 19:30", p: "Potrero Costa Guasu", cond: "Hace 6 días que no le llega ninguna regla nueva", dec: "Regó lo mínimo: 12 minutos", pol: "—", est: 820, med: null, res: "Quedó anotado y se va a mandar cuando vuelva la señal", ok: 1, flag: "Se puso en modo cuidadoso solo" },
+  { f: "Anteayer 19:30", p: "Potrero Costa Guasu", cond: "Hace 6 días que no le llega ninguna regla nueva", dec: "Regó lo mínimo: 12 minutos", pol: "-", est: 820, med: null, res: "Quedó anotado y se va a mandar cuando vuelva la señal", ok: 1, flag: "Se puso en modo cuidadoso solo" },
   { f: "Anteayer 05:35", p: "Tomatal Ka'aguy", cond: "La tierra estaba seca en la raíz", dec: "Regó 20 minutos", pol: "Regla 7", est: 1075, med: 1092, res: "Salió lo que tenía que salir", ok: 1 },
   { f: "25/09 17:50", p: "Melonar Tape Pytâ", cond: "Llovió 18 mm el día anterior", dec: "No regó", pol: "Regla 2", est: 0, med: 0, res: "No hizo falta", ok: 1 },
   { f: "25/09 06:00", p: "Huerta Ñu Porâ", cond: "La tierra estaba seca arriba", dec: "Regó 18 minutos", pol: "Regla 4", est: 640, med: 848, res: "Salió más agua de la esperada", ok: 0, flag: "208 litros de más" },
@@ -565,7 +565,7 @@ const CALIBS = [
   { disp: "SE01-0431", mag: "Humedad de la tierra", proc: "Lo comprobamos nosotros", detalle: "Se secó y se pesó tierra del lote en 6 puntos, el 12/08/2026", desde: "12/08/2026", est: "En uso" },
   { disp: "SE01-0431", mag: "Humedad de la tierra", proc: "Venía de fábrica", detalle: "Tabla del fabricante, hoja de 2023", desde: "18/08/2025", est: "Reemplazado el 12/08/2026" },
   { disp: "HID-0001", mag: "Sales del agua", proc: "Lo comprobamos nosotros", detalle: "Agua de referencia de 1,41, el 20/09/2026", desde: "20/09/2026", est: "En uso" },
-  { disp: "YFQ-0208", mag: "Agua que pasa", proc: "Venía de fábrica", detalle: "7,5 vueltas por litro, hoja de 2024. Nunca lo comprobamos nosotros", desde: "02/09/2026", est: "En uso · sin comprobar" }
+  { disp: "YFQ-0208", mag: "Agua que pasa", proc: "Venía de fábrica", detalle: "7,5 vueltas por litro, hoja de 2024. Nunca lo comprobamos nosotros", desde: "02/09/2026", est: "En uso - sin comprobar" }
 ];
 
 const ALERTAS = [
@@ -832,7 +832,7 @@ function loteRow(p) {
     <span class="mid">
       <span class="nm">${esc(p.nom)}</span>
       <span class="act">${p.resp.t}</span>
-      <span class="meta">${esc(p.tipo)} de ${esc(p.cultivo.toLowerCase())} · ${nf(p.ha, 1)} ha · última lectura ${esc(p.ult)}</span>
+      <span class="meta">${esc(p.tipo)} de ${esc(p.cultivo.toLowerCase())} - ${nf(p.ha, 1)} ha - última lectura ${esc(p.ult)}</span>
     </span>
     <span class="right">${chip(p.est)}${ico("flecha", 22, "var(--ink-3)")}</span>
   </button>`;
@@ -856,7 +856,7 @@ const KMIN = 0.45, KMAX = 9;
 const PASOS_M = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000];
 
 const KIND = { sensor: "humedad", estacion: "clima", ctrl: "controlador", caudal: "agua que pasa", trampa: "trampa" };
-const LECT = { sensor: "18,2 %", estacion: "26 °C · 0 mm", ctrl: "regó 22 min", caudal: "1.205 L", trampa: "4 bichos" };
+const LECT = { sensor: "18,2 %", estacion: "26 °C - 0 mm", ctrl: "regó 22 min", caudal: "1.205 L", trampa: "4 bichos" };
 DISPOS_MAPA.forEach((d, i) => { d.cod = "S" + (i + 1); d.lid = "s" + (i + 1); d.lect = d.off ? "sin noticias" : LECT[d.t]; });
 
 const AGUADAS = [
@@ -867,7 +867,7 @@ const AGUADAS = [
 const CAPAS = [
   { id: "potreros", nom: "Potreros y lotes", ico: "lote",
     hijos: () => PARCELAS.slice().sort((a, b) => a.cod.localeCompare(b.cod, "es", { numeric: true }))
-      .map(p => ({ lid: p.id, cod: p.cod, nom: p.nom, det: p.tipo.toLowerCase() + " · " + nf(p.ha, 1) + " ha", ir: p.id })) },
+      .map(p => ({ lid: p.id, cod: p.cod, nom: p.nom, det: p.tipo.toLowerCase() + " - " + nf(p.ha, 1) + " ha", ir: p.id })) },
   { id: "aparatos", nom: "Aparatos", ico: "aparato",
     hijos: () => DISPOS_MAPA.map(d => ({ lid: d.lid, cod: d.cod, nom: KIND[d.t], det: "en " + byId(d.p).cod })) },
   { id: "agua", nom: "Aguadas", ico: "tanque",
@@ -917,12 +917,12 @@ function mapSVG(o) {
       <path d="M140 458 L166 444 L192 458" fill="none" stroke="var(--ink-2)" stroke-width="2" vector-effect="non-scaling-stroke"/>
       <rect x="206" y="458" width="54" height="30" fill="none" stroke="var(--ink-2)" stroke-width="2" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/>
     </g>
-    ${AGUADAS.map(a => `<g data-lay="agua" data-lid="${a.lid}"><ellipse cx="${a.x}" cy="${a.y}" rx="${a.rx}" ry="${a.ry}" fill="color-mix(in srgb, var(--s1) 34%, transparent)" stroke="var(--s1)" stroke-width="2" vector-effect="non-scaling-stroke" style="cursor:pointer"><title>${esc(a.cod)} — ${esc(a.nom)}</title></ellipse></g>`).join("")}
+    ${AGUADAS.map(a => `<g data-lay="agua" data-lid="${a.lid}"><ellipse cx="${a.x}" cy="${a.y}" rx="${a.rx}" ry="${a.ry}" fill="color-mix(in srgb, var(--s1) 34%, transparent)" stroke="var(--s1)" stroke-width="2" vector-effect="non-scaling-stroke" style="cursor:pointer"><title>${esc(a.cod)} - ${esc(a.nom)}</title></ellipse></g>`).join("")}
     ${PARCELAS.map(p => {
     const c = estColor(p.est), mute = p.est === "mute";
     const fill = o.plano ? "color-mix(in srgb, var(--ok) 22%, transparent)" : (mute ? "none" : `color-mix(in srgb, ${c} 22%, transparent)`);
     const stroke = o.plano ? "var(--ok)" : c;
-    return `<g data-lay="potreros" data-lid="${p.id}"><polygon data-poly="${p.id}" points="${p.poly}" fill="${fill}" stroke="${stroke}" stroke-width="2.6" stroke-linejoin="round" stroke-dasharray="${(!o.plano && mute) ? "8 5" : "none"}" vector-effect="non-scaling-stroke"><title>${esc(p.cod)} — ${esc(p.nom)}</title></polygon></g>`;
+    return `<g data-lay="potreros" data-lid="${p.id}"><polygon data-poly="${p.id}" points="${p.poly}" fill="${fill}" stroke="${stroke}" stroke-width="2.6" stroke-linejoin="round" stroke-dasharray="${(!o.plano && mute) ? "8 5" : "none"}" vector-effect="non-scaling-stroke"><title>${esc(p.cod)} - ${esc(p.nom)}</title></polygon></g>`;
   }).join("")}`;
 
   /* --- las marcas: NO se estiran. Se reubican, y ahi esta el detalle por escala. --- */
@@ -933,7 +933,7 @@ function mapSVG(o) {
       <text y="7" text-anchor="middle" font-size="17" font-weight="750" fill="var(--ink)" style="font-variation-settings:'wdth' 112">${p.cod}</text>
       <g class="lod2">
         <text y="33" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--ink)" paint-order="stroke" stroke="var(--panel)" stroke-width="4" style="font-variation-settings:'wdth' 104">${esc(p.nom)}</text>
-        <text y="49" text-anchor="middle" font-size="11.5" fill="var(--ink-2)" paint-order="stroke" stroke="var(--panel)" stroke-width="3.5" style="font-variation-settings:'wdth' 92">${esc(p.tipo.toLowerCase())} · ${nf(p.ha, 1)} ha</text>
+        <text y="49" text-anchor="middle" font-size="11.5" fill="var(--ink-2)" paint-order="stroke" stroke="var(--panel)" stroke-width="3.5" style="font-variation-settings:'wdth' 92">${esc(p.tipo.toLowerCase())} - ${nf(p.ha, 1)} ha</text>
       </g>
     </g>`;
   }).join("") + DISPOS_MAPA.map(d => `
@@ -1182,7 +1182,7 @@ function mapaInteractivo(root) {
     const p = byId(lid);
     if (p) {
       selBox.innerHTML = `<span class="cod">${esc(p.cod)}</span>
-        <span class="tx"><b>${esc(p.nom)}</b><span class="dt">${esc(p.tipo)} de ${esc(p.cultivo.toLowerCase())} · ${nf(p.ha, 1)} ha · ${p.resp.t}</span></span>
+        <span class="tx"><b>${esc(p.nom)}</b><span class="dt">${esc(p.tipo)} de ${esc(p.cultivo.toLowerCase())} - ${nf(p.ha, 1)} ha - ${p.resp.t}</span></span>
         ${chip(p.est)}<button class="btn" data-ir="${p.id}">${ico("flecha", 18)}Abrir</button>`;
       selBox.classList.add("on");
       $("[data-ir]", selBox).addEventListener("click", () => go("lote", p.id));
@@ -1192,7 +1192,7 @@ function mapaInteractivo(root) {
     }
     const d = DISPOS_MAPA.find(x => x.lid === lid);
     if (d) {
-      selBox.innerHTML = `<span class="cod">${esc(d.cod)}</span><span class="tx"><b>Mide ${esc(KIND[d.t])}</b><span class="dt">está en ${esc(byId(d.p).cod)} · ${esc(byId(d.p).nom)} · última lectura ${esc(d.lect)}</span></span>`;
+      selBox.innerHTML = `<span class="cod">${esc(d.cod)}</span><span class="tx"><b>Mide ${esc(KIND[d.t])}</b><span class="dt">está en ${esc(byId(d.p).cod)} - ${esc(byId(d.p).nom)} - última lectura ${esc(d.lect)}</span></span>`;
       selBox.classList.add("on"); return;
     }
     const a = AGUADAS.find(x => x.lid === lid);
@@ -1244,13 +1244,13 @@ SCR.hoy = () => {
   const urg = PARCELAS.filter(p => p.est === "crit" || p.est === "do").length;
   return {
     title: "Hoy",
-    html: `<div class="pagehead"><div class="crumb">${esc(CAMPO.nom)} · ${esc(CAMPO.lugar)} · lunes 28 de septiembre</div><h1>Lo que hay que hacer hoy</h1></div>
+    html: `<div class="pagehead"><div class="crumb">${esc(CAMPO.nom)} - ${esc(CAMPO.lugar)} - lunes 28 de septiembre</div><h1>Lo que hay que hacer hoy</h1></div>
       ${urg
         ? answer("do", urg + " lugares necesitan algo", "Los otros " + (PARCELAS.length - urg) + " están bien. Empezá por el de arriba, que es el más urgente.", "")
         : answer("ok", "Hoy no hace falta nada", "Los " + PARCELAS.length + " están bien.", "")}
       <div class="filas">${ordenados().map(loteRow).join("")}</div>
       ${mapaConCapas({ alto: 1 })}
-      <div class="note" style="margin:9px 0 12px; font-weight:650; color:var(--ink)">${esc(CAMPO.nom)} · ${nf(CAMPO.ha, 1)} hectáreas en total</div>
+      <div class="note" style="margin:9px 0 12px; font-weight:650; color:var(--ink)">${esc(CAMPO.nom)} - ${nf(CAMPO.ha, 1)} hectáreas en total</div>
       <div class="note rule" style="margin-bottom:16px">
         El borde grueso es <b>el campo entero</b>: ese no se toca. Lo que se toca son los potreros y los lotes de adentro.
         Entre medio hay monte, camino, casco y tajamar, que no son de ningún potrero.
@@ -1273,9 +1273,9 @@ SCR.campo = () => ({
   title: "El campo entero",
   html: head(esc(CAMPO.lugar), CAMPO.nom,
     "<b>Cuánta tierra hay y dónde termina.</b> Las decisiones se toman potrero por potrero.") +
-    `<div class="freshness dato">${ico("lote", 20, "var(--brand)")}<span><b>${nf(CAMPO.ha, 1)} ha en total</b> · ${nf(108.7, 1)} son potreros o lotes y <b>39,3</b> son monte, camino, casco y tajamar</span></div>` +
+    `<div class="freshness dato">${ico("lote", 20, "var(--brand)")}<span><b>${nf(CAMPO.ha, 1)} ha en total</b> - ${nf(108.7, 1)} son potreros o lotes y <b>39,3</b> son monte, camino, casco y tajamar</span></div>` +
     `${mapaConCapas({ plano: 1, alto: 1 })}
-    <div class="note" style="margin:9px 0 18px; font-weight:650; color:var(--ink)">El borde de afuera —el más grueso— mide ${nf(CAMPO.ha, 1)} hectáreas, y no se apaga nunca.</div>
+    <div class="note" style="margin:9px 0 18px; font-weight:650; color:var(--ink)">El borde de afuera -el más grueso- mide ${nf(CAMPO.ha, 1)} hectáreas, y no se apaga nunca.</div>
     <div class="cols c2">
       <div>
         <div class="panel">
@@ -1310,7 +1310,7 @@ SCR.campo = () => ({
             <dl class="kv">
               <dt>De dónde salió</dt><dd>Del archivo del GPS que armó el dueño en Google Earth</dd>
               <dt>Cuándo se cargó</dt><dd>12/08/2026</dd>
-              <dt>Potreros y lotes adentro</dt><dd>6 · ninguno se sale del borde</dd>
+              <dt>Potreros y lotes adentro</dt><dd>6 - ninguno se sale del borde</dd>
             </dl>
             <div class="btnrow" style="margin-top:12px"><button class="btn" data-go="dibujar">${ico("lapiz", 20)}Corregir el dibujo</button></div>
           </div>
@@ -1330,8 +1330,8 @@ SCR.lote = (arg) => {
   const riegos = RIEGOS.filter(r => r.p === p.nom);
   return {
     title: p.nom,
-    html: `<div class="pagehead"><div class="crumb">Hoy · ${esc(CAMPO.nom)}</div><h1>${esc(p.nom)}</h1>
-        <div class="decision">${esc(p.tipo)} de ${esc(p.cultivo.toLowerCase())} · ${nf(p.ha, 1)} hectáreas</div></div>
+    html: `<div class="pagehead"><div class="crumb">Hoy - ${esc(CAMPO.nom)}</div><h1>${esc(p.nom)}</h1>
+        <div class="decision">${esc(p.tipo)} de ${esc(p.cultivo.toLowerCase())} - ${nf(p.ha, 1)} hectáreas</div></div>
       <label class="note" style="display:block; margin-bottom:14px">Cambiar de potrero o lote<br>
         <select class="btn" id="sel-lote" style="width:100%; max-width:26rem; margin-top:5px">${PARCELAS.map(x => `<option value="${x.id}"${x.id === p.id ? " selected" : ""}>${esc(x.nom)}</option>`).join("")}</select></label>
       ${answer(p.est, p.resp.t, p.resp.s, p.resp.w)}
@@ -1444,9 +1444,9 @@ function dibujosDelLote() {
     xLen: 84, xLabels: FECHAS, xTicks: [0, 14, 28, 42, 56, 70, 83], laneH: 82, gap: 12, padR: 70,
     aria: "El agua en la tierra a tres hondos, en 21 días",
     lanes: [
-      { title: "Arriba · 10 cm", sub: "%", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, series: [{ name: "Arriba", color: "var(--d1)", values: HUM10, fill: 1, unit: " %", dec: 1 }], marks: RIEGO_IDX.map(i => ({ i, color: "var(--brand)" })) },
-      { title: "En la raíz · 30 cm", sub: "es la que manda", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, vbands: [{ from: 43, to: 52, label: "sin noticias" }], hlines: [{ v: 19, color: "var(--warn)", label: "riega acá" }], series: [{ name: "En la raíz", color: "var(--d2)", values: HUM30, fill: 1, unit: " %", dec: 1 }] },
-      { title: "Abajo · 60 cm", sub: "si sube, el agua se fue de largo", yMin: 6, yMax: 36, yTicks: [10, 20, 30], series: [{ name: "Abajo", color: "var(--d3)", values: HUM60, fill: 1, unit: " %", dec: 1 }] }
+      { title: "Arriba - 10 cm", sub: "%", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, series: [{ name: "Arriba", color: "var(--d1)", values: HUM10, fill: 1, unit: " %", dec: 1 }], marks: RIEGO_IDX.map(i => ({ i, color: "var(--brand)" })) },
+      { title: "En la raíz - 30 cm", sub: "es la que manda", yMin: 6, yMax: 36, yTicks: [10, 20, 30], bands: okBand, vbands: [{ from: 43, to: 52, label: "sin noticias" }], hlines: [{ v: 19, color: "var(--warn)", label: "riega acá" }], series: [{ name: "En la raíz", color: "var(--d2)", values: HUM30, fill: 1, unit: " %", dec: 1 }] },
+      { title: "Abajo - 60 cm", sub: "si sube, el agua se fue de largo", yMin: 6, yMax: 36, yTicks: [10, 20, 30], series: [{ name: "Abajo", color: "var(--d3)", values: HUM60, fill: 1, unit: " %", dec: 1 }] }
     ]
   });
   if ($("#c-agua")) laneChart($("#c-agua"), {
@@ -1538,7 +1538,7 @@ function formCosecha(host, volver) {
           <dt>Kilos</dt><dd><b>${esc(kg)} kg</b></dd>
           <dt>Se tiraron</dt><dd><b>${esc(desc)}</b> cajones</dd>
           <dt>Por qué</dt><dd><b>${esc(mot)}</b></dd>
-          <dt>Cuándo</dt><dd>Hoy, 28/09/2026 · lo pone el teléfono solo</dd>
+          <dt>Cuándo</dt><dd>Hoy, 28/09/2026 - lo pone el teléfono solo</dd>
         </dl>
         <div class="btnrow" style="margin-top:18px">
           <button class="btn primary" id="f-ok">${ico("tilde", 20)}Sí, guardar</button>
@@ -1591,15 +1591,15 @@ SCR.riegos = () => ({
     "<b>Decide si hay que mandar a alguien a revisar la línea, o si hay que cambiar cuándo riega.</b>") +
     answer("crit", "Huerta Ñu Porâ está perdiendo agua", "En dos riegos seguidos salieron <b>470 litros de más</b> de los que tenían que salir. Los otros lotes andan bien.", "Hoy") +
     `<div class="tiles">
-      ${tile("Riegos en 7 días", "14", "", "9 regaron · 5 decidieron no regar")}
+      ${tile("Riegos en 7 días", "14", "", "9 regaron - 5 decidieron no regar")}
       ${tile("Agua esperada", nf(28400), "litros", "minutos por lo que tira cada gotero")}
       ${tile("Agua que salió", nf(30130), "litros", "contada por el aparato de la línea")}
       ${tile("Diferencia", "+6", "%", "La diferencia es el diagnóstico")}
-      ${tile("Costo de bombeo", gs(284000), "", "de ejemplo · 7 días")}
+      ${tile("Costo de bombeo", gs(284000), "", "de ejemplo - 7 días")}
     </div>
 
     <div class="panel">
-      <header><h2>Agua esperada contra agua que salió</h2><span class="hint">de más es pérdida · de menos es gotero tapado o filtro sucio</span></header>
+      <header><h2>Agua esperada contra agua que salió</h2><span class="hint">de más es pérdida - de menos es gotero tapado o filtro sucio</span></header>
       <div class="body">
         <div class="chart" id="c-delta"></div>
         <div class="note rule" style="margin-top:10px">
@@ -1617,9 +1617,9 @@ SCR.riegos = () => ({
           <tbody>
           ${RIEGOS.map(r => `<tr>
             <td>${esc(r.f)}</td><td>${esc(r.p)}</td><td style="max-width:28ch">${esc(r.cond)}</td><td><b>${esc(r.dec)}</b></td>
-            <td>${r.pol === "—" ? '<span class="chip mute"><span class="g"></span>sin regla</span>' : esc(r.pol)}</td>
-            <td class="num">${r.est ? nf(r.est) + " L" : "—"}</td>
-            <td class="num">${r.med === null ? '<span class="muted">sin medidor</span>' : (r.med ? nf(r.med) + " L" : "—")}</td>
+            <td>${r.pol === "-" ? '<span class="chip mute"><span class="g"></span>sin regla</span>' : esc(r.pol)}</td>
+            <td class="num">${r.est ? nf(r.est) + " L" : "-"}</td>
+            <td class="num">${r.med === null ? '<span class="muted">sin medidor</span>' : (r.med ? nf(r.med) + " L" : "-")}</td>
             <td>${esc(r.res)}${r.flag ? `<span class="why" style="color:var(--${r.ok ? "ink-3" : "crit"})">${esc(r.flag)}</span>` : ""}</td>
           </tr>`).join("")}
           </tbody>
@@ -1655,7 +1655,7 @@ SCR.riegos = () => ({
 
 SCR.cuando = () => ({
   title: "Cuándo regar",
-  html: head("Tomatal Ka'aguy · regla 7", "Cuándo regar",
+  html: head("Tomatal Ka'aguy - regla 7", "Cuándo regar",
     "<b>Decide si riega antes o después, más o menos.</b> Es lo único que se le manda al lote desde acá.") +
     `<div class="answer do">
       <span class="ic">${ico("mano", 34, "var(--brand)")}</span>
@@ -1667,7 +1667,7 @@ SCR.cuando = () => ({
 
     <div class="cols c2">
       <div class="panel">
-        <header><h2>La regla que está usando</h2><span class="hint">regla 7 · desde el 22/09/2026</span></header>
+        <header><h2>La regla que está usando</h2><span class="hint">regla 7 - desde el 22/09/2026</span></header>
         <div class="body">
           <dl class="kv">
             <dt>Arranca cuando la tierra baja de</dt><dd><b>19 %</b> a 30 cm de hondo <span class="why">Con 16 % la planta ya sufre</span></dd>
@@ -1691,9 +1691,9 @@ SCR.cuando = () => ({
         <header><h2>Cuándo le llegó al lote</h2><span class="hint">tres momentos distintos, nunca uno</span></header>
         <div class="body">
           <dl class="kv">
-            <dt>Se escribió acá</dt><dd>22/09/2026 09:14 · Ramona Ayala</dd>
+            <dt>Se escribió acá</dt><dd>22/09/2026 09:14 - Ramona Ayala</dd>
             <dt>El aparato avisó que la recibió</dt><dd>22/09/2026 10:02 ${chip("ok")}</dd>
-            <dt>La empezó a usar</dt><dd>23/09/2026 04:00 · en la primera mañana después de recibirla</dd>
+            <dt>La empezó a usar</dt><dd>23/09/2026 04:00 - en la primera mañana después de recibirla</dd>
           </dl>
           <div style="margin-top:16px; border-top:1px solid var(--line); padding-top:12px">
             <h3>Cuántas veces habría regado con cada número</h3>
@@ -1717,9 +1717,9 @@ SCR.cuando = () => ({
     rankChart($("#c-sim"), {
       padL: 168, padR: 150, metric: "Riegos en 30 días", max: 16,
       rows: [
-        { lab: "Si arranca en 21 % (regla 6)", v: 14, txt: "14 riegos · 16.900 L", color: "var(--ink-3)" },
-        { lab: "Si arranca en 19 % (hoy)", v: 9, txt: "9 riegos · 11.400 L", color: "var(--brand)" },
-        { lab: "Si arranca en 17 %", v: 6, txt: "6 riegos · 7.600 L", color: "var(--ink-3)", extra: ["Cuidado", "2 días con la planta sufriendo"] }
+        { lab: "Si arranca en 21 % (regla 6)", v: 14, txt: "14 riegos - 16.900 L", color: "var(--ink-3)" },
+        { lab: "Si arranca en 19 % (hoy)", v: 9, txt: "9 riegos - 11.400 L", color: "var(--brand)" },
+        { lab: "Si arranca en 17 %", v: 6, txt: "6 riegos - 7.600 L", color: "var(--ink-3)", extra: ["Cuidado", "2 días con la planta sufriendo"] }
       ]
     });
   }
@@ -1731,7 +1731,7 @@ SCR.numeros = () => ({
     "<b>Decide si el aparato está diciendo la verdad.</b> Es la pantalla de quien mantiene los aparatos: al resto no le aparece.") +
     answer("ok", "El aparato SE01-0431 está midiendo bien", "Lo que manda sin tocar y lo que sale después del ajuste van juntos. Si un día se separan, el ajuste quedó mal y <b>se puede recalcular todo lo viejo</b>.", "") +
     `<div class="panel">
-      <header><h2>Qué querés mirar</h2><span class="hint">4 lecturas por hora · nunca se promedian al guardarlas</span></header>
+      <header><h2>Qué querés mirar</h2><span class="hint">4 lecturas por hora - nunca se promedian al guardarlas</span></header>
       <div class="body">
         <div class="btnrow">
           <label class="note">Lote <select class="btn"><option>Tomatal Ka'aguy</option><option>Sandial Tuyutî</option><option>Patio de Asunción</option></select></label>
@@ -1744,11 +1744,11 @@ SCR.numeros = () => ({
     </div>
 
     <div class="panel">
-      <header><h2>SE01-0431 · humedad de la tierra a 30 cm</h2><span class="legend" id="leg-series"></span><span class="hint">datos de ejemplo</span></header>
+      <header><h2>SE01-0431 - humedad de la tierra a 30 cm</h2><span class="legend" id="leg-series"></span><span class="hint">datos de ejemplo</span></header>
       <div class="body">
         <div class="chart" id="c-series"></div>
         <div class="cols c2" style="margin-top:14px">
-          <div class="note rule"><b>El hueco se dibuja como hueco.</b> Entre el 18/09 y el 20/09 no llegó nada. La línea se corta y la franja lo dice: rellenar con cero le enseña al ojo —y a una cuenta— que la tierra se seca de golpe.</div>
+          <div class="note rule"><b>El hueco se dibuja como hueco.</b> Entre el 18/09 y el 20/09 no llegó nada. La línea se corta y la franja lo dice: rellenar con cero le enseña al ojo -y a una cuenta- que la tierra se seca de golpe.</div>
           <div class="note rule"><b>Dos relojes.</b> El eje es la hora en que se midió, no la hora en que llegó. Cuando el dato tarda más de una hora en llegar, el globito lo avisa: ese atraso es la calidad de la señal.</div>
         </div>
       </div>
@@ -1758,9 +1758,9 @@ SCR.numeros = () => ({
       <header><h2>El ajuste que está usando este aparato</h2><span class="hint">se muestra siempre, no está escondido</span></header>
       <div class="body">
         <dl class="kv">
-          <dt>Quién lo comprobó</dt><dd><b>Nosotros</b>, acá — se secó y se pesó tierra del lote en 6 puntos</dd>
+          <dt>Quién lo comprobó</dt><dd><b>Nosotros</b>, acá - se secó y se pesó tierra del lote en 6 puntos</dd>
           <dt>Cuándo</dt><dd>12/08/2026</dd>
-          <dt>Desde cuándo rige</dt><dd>12/08/2026 · reemplazó a la tabla que traía de fábrica</dd>
+          <dt>Desde cuándo rige</dt><dd>12/08/2026 - reemplazó a la tabla que traía de fábrica</dd>
           <dt>Qué pasa con lo viejo</dt><dd>Se guarda lo que el aparato manda <b>sin tocar</b>, así que si el ajuste estuvo mal se recalcula todo</dd>
         </dl>
         <div class="note" style="margin-top:10px">Un ajuste sin decir de dónde salió no es un número: es una creencia. Por eso de dónde salió se guarda al lado del número.</div>
@@ -1775,7 +1775,7 @@ SCR.numeros = () => ({
       lineChart($("#c-series"), {
         xLen: 84, xLabels: FECHAS, xTicks: [0, 14, 28, 42, 56, 70, 83], h: 224, padR: 76, yMin: 8, yMax: 36, yTicks: [10, 15, 20, 25, 30, 35],
         aria: "Humedad a 30 centímetros: lo que manda el aparato contra lo que sale después del ajuste",
-        vbands: [{ from: 43, to: 52, label: "no llegó nada · 18 al 20/09" }],
+        vbands: [{ from: 43, to: 52, label: "no llegó nada - 18 al 20/09" }],
         hlines: [{ v: 19, color: "var(--warn)", label: "riega acá" }],
         series: ser
       });
@@ -1792,12 +1792,12 @@ SCR.numeros = () => ({
 SCR.aparatos = () => ({
   title: "Los aparatos",
   html: head("Estancia Yvoty y patio de Asunción", "Los aparatos",
-    "<b>Decide a qué aparato hay que ir hoy</b> —pila, sonda o antena— y si algún dato viejo hay que recalcularlo.") +
+    "<b>Decide a qué aparato hay que ir hoy</b> -pila, sonda o antena- y si algún dato viejo hay que recalcularlo.") +
     answer("crit", "Un aparato se está quedando sin pila", "<b>SE01-0440</b>, en Potrero Costa Guasu, está al 9 % y no manda hace 3 días. Si se apaga, ese lote riega a ciegas. Llevá 2 pilas grandes de litio.", "Esta semana") +
     `<div class="tiles">
       ${tile("Mandando", "6", "de 8", "Tardan 38 segundos en llegar")}
-      ${tile("Pila baja", "1", "", "SE01-0440 · 9 %")}
-      ${tile("Sin mandar", "1", "", "SE01-0440 · hace 3 días")}
+      ${tile("Pila baja", "1", "", "SE01-0440 - 9 %")}
+      ${tile("Sin mandar", "1", "", "SE01-0440 - hace 3 días")}
       ${tile("Sin comprobar por nosotros", "3", "", "Andan con el ajuste que traían de fábrica")}
     </div>
 
@@ -1862,7 +1862,7 @@ SCR.aparatos = () => ({
 
 SCR.verde = () => ({
   title: "Cuánto pasto hay",
-  html: head("Foto del satélite · gratis, cada 5 días", "Cuánto pasto hay",
+  html: head("Foto del satélite - gratis, cada 5 días", "Cuánto pasto hay",
     "<b>Decide a qué potrero mover la hacienda, cuál se está gastando, y dónde enterrar el próximo aparato.</b>") +
     answer("ok", "Esta semana, metela en Potrero Yvyra'i", "Es el que tiene <b>más pasto</b> de los cinco. Costa Guasu es el que menos tiene y viene bajando año a año: conviene descansarlo.", "") +
     `<div class="tiles">
@@ -1893,7 +1893,7 @@ SCR.verde = () => ({
         <header><h2>¿El lote es parejo o disparejo?</h2><span class="hint">es lo que decide cuántos aparatos lleva</span></header>
         <div class="body">
           <div class="chart" id="c-cv"></div>
-          <div class="note rule" style="margin-top:10px">Si el lote es parejo, <b>con un aparato alcanza</b>. Si es disparejo, hacen falta más — y la foto dice en qué parte ponerlos. Es la respuesta barata a “¿cuántos aparatos por hectárea?”.</div>
+          <div class="note rule" style="margin-top:10px">Si el lote es parejo, <b>con un aparato alcanza</b>. Si es disparejo, hacen falta más - y la foto dice en qué parte ponerlos. Es la respuesta barata a "¿cuántos aparatos por hectárea?".</div>
         </div>
       </div>
     </div>
@@ -1912,8 +1912,8 @@ SCR.verde = () => ({
     rankChart($("#c-rank"), {
       padL: 176, padR: 168, metric: "Cuánto verde", max: 80,
       rows: PARCELAS.slice().sort((a, b) => b.verdor - a.verdor).map(p => ({
-        lab: p.nom, v: p.verdor, txt: p.verdor + " de 100" + (p.id === "p1" ? " · recién plantado" : ""), color: col(p.verdor),
-        extra: ["De dónde sale", p.id === "p3" ? "vuelo de dron · 14/09" : "satélite · 26/09"]
+        lab: p.nom, v: p.verdor, txt: p.verdor + " de 100" + (p.id === "p1" ? " - recién plantado" : ""), color: col(p.verdor),
+        extra: ["De dónde sale", p.id === "p3" ? "vuelo de dron - 14/09" : "satélite - 26/09"]
       }))
     });
     lineChart($("#c-hist"), {
@@ -1928,10 +1928,10 @@ SCR.verde = () => ({
     rankChart($("#c-cv"), {
       padL: 156, padR: 140, metric: "Qué tan disparejo es", max: 34,
       rows: [
-        { lab: "Potrero Costa Guasu", v: 29, txt: "muy disparejo", color: "var(--warn)", extra: ["Aparatos", "tiene 1 · le convienen 3"] },
-        { lab: "Potrero Yvyra'i", v: 18, txt: "algo disparejo", color: "var(--s1)", extra: ["Aparatos", "tiene 2 · está bien"] },
-        { lab: "Sandial Tuyutî", v: 11, txt: "parejo", color: "var(--ok)", extra: ["Aparatos", "tiene 2 · con 1 alcanza"] },
-        { lab: "Tomatal Ka'aguy", v: 8, txt: "parejo", color: "var(--ok)", extra: ["Aparatos", "tiene 2 · con 1 alcanza"] }
+        { lab: "Potrero Costa Guasu", v: 29, txt: "muy disparejo", color: "var(--warn)", extra: ["Aparatos", "tiene 1 - le convienen 3"] },
+        { lab: "Potrero Yvyra'i", v: 18, txt: "algo disparejo", color: "var(--s1)", extra: ["Aparatos", "tiene 2 - está bien"] },
+        { lab: "Sandial Tuyutî", v: 11, txt: "parejo", color: "var(--ok)", extra: ["Aparatos", "tiene 2 - con 1 alcanza"] },
+        { lab: "Tomatal Ka'aguy", v: 8, txt: "parejo", color: "var(--ok)", extra: ["Aparatos", "tiene 2 - con 1 alcanza"] }
       ]
     });
   }
@@ -1939,7 +1939,7 @@ SCR.verde = () => ({
 
 SCR.hidro = () => ({
   title: "El agua de la hidroponía",
-  html: head("Patio de Asunción · mesa 1 · lechuga", "El agua de la hidroponía",
+  html: head("Patio de Asunción - mesa 1 - lechuga", "El agua de la hidroponía",
     "<b>Decide si hay que cambiar el agua, agregarle, corregir la acidez o poner media sombra.</b>") +
     answer("crit", "El agua se calentó: 26,4 grados a las 3 de la tarde", "Pasando los 24 grados <b>la lechuga se va a semilla</b> y se termina la cosecha. El tanque está al sol. <b>Qué hacer:</b> correr el tanque a la sombra del árbol y poner media sombra sobre la mesa.", "Hoy") +
     `<div class="cols c2">
@@ -1973,14 +1973,14 @@ SCR.hidro = () => ({
         <header><h2>La receta que se está usando</h2><span class="hint">no se corrige: se cierra y se escribe otra</span></header>
         <div class="body">
           <dl class="kv">
-            <dt>Receta</dt><dd>r3 · desde el 21/09/2026</dd>
+            <dt>Receta</dt><dd>r3 - desde el 21/09/2026</dd>
             <dt>Sales, entre</dt><dd>1,2 y 1,8 mS/cm</dd>
             <dt>Acidez, entre</dt><dd>5,5 y 6,5</dd>
             <dt>Abono A</dt><dd>1,2 mL por litro</dd>
             <dt>Abono B</dt><dd>1,2 mL por litro</dd>
             <dt>Tanque</dt><dd>200 litros</dd>
-            <dt>Cuándo se cambió</dt><dd>21/09/2026 · hace 7 días</dd>
-            <dt>Próximo cambio</dt><dd>05/10/2026 · cada 14 días</dd>
+            <dt>Cuándo se cambió</dt><dd>21/09/2026 - hace 7 días</dd>
+            <dt>Próximo cambio</dt><dd>05/10/2026 - cada 14 días</dd>
           </dl>
           <div class="note" style="margin-top:10px">Sin saber qué receta estaba puesta, una acidez medida no se puede atribuir a nada y el dato no enseña nada.</div>
         </div>
@@ -1989,10 +1989,10 @@ SCR.hidro = () => ({
         <header><h2>Qué se hizo en la mesa</h2></header>
         <div class="body flush scroller">
           <table><thead><tr><th>Cuándo</th><th>Qué</th><th>Detalle</th><th>Cantero</th></tr></thead><tbody>
-            <tr><td>Hoy 06:00</td><td>Recirculó</td><td>18 minutos · bomba y aireador</td><td>Todos</td></tr>
-            <tr><td>Ayer 19:20</td><td>Se agregó agua</td><td>14 litros · las sales bajaron de 1,78 a 1,69</td><td>Todos</td></tr>
-            <tr><td>Ayer 07:40</td><td>Se echó abono</td><td>40 mL de A y 40 de B · <b>lo hizo solo</b></td><td>B</td></tr>
-            <tr><td>26/09 08:05</td><td>Se echó abono</td><td>35 mL de A y 35 de B · <b>a mano</b></td><td>A, C, D</td></tr>
+            <tr><td>Hoy 06:00</td><td>Recirculó</td><td>18 minutos - bomba y aireador</td><td>Todos</td></tr>
+            <tr><td>Ayer 19:20</td><td>Se agregó agua</td><td>14 litros - las sales bajaron de 1,78 a 1,69</td><td>Todos</td></tr>
+            <tr><td>Ayer 07:40</td><td>Se echó abono</td><td>40 mL de A y 40 de B - <b>lo hizo solo</b></td><td>B</td></tr>
+            <tr><td>26/09 08:05</td><td>Se echó abono</td><td>35 mL de A y 35 de B - <b>a mano</b></td><td>A, C, D</td></tr>
           </tbody></table>
           <div class="note" style="padding:12px">Lo que echa abono solo está en <b>un solo cantero</b>. Si la bombita se traba, se pierden 50 plantas y se sabe que fue eso.</div>
         </div>
@@ -2023,7 +2023,7 @@ SCR.hidro = () => ({
 
 SCR.pruebas = () => ({
   title: "Las pruebas",
-  html: head("Patio de Asunción · ciclo 3 · lechuga", "Las pruebas",
+  html: head("Patio de Asunción - ciclo 3 - lechuga", "Las pruebas",
     "<b>Decide qué se cambia en el ciclo que viene, sabiendo qué fue lo que lo causó.</b>") +
     answer("ok", "La media sombra ganó: 50 % más de lechuga", "El cantero con media sombra dio <b>221 gramos por planta</b> contra 147 del que quedó al sol, y se tiraron 2 en vez de 12. La sombra vale más que el abono.", "") +
     `<div class="panel" style="background:var(--brand-wash); border-color:var(--brand)">
@@ -2039,7 +2039,7 @@ SCR.pruebas = () => ({
         <header><h2>Cuánto pesó cada planta</h2><span class="hint">50 plantas por cantero</span></header>
         <div class="body">
           <div class="chart" id="c-bloques"></div>
-          <div class="legend" style="margin-top:10px">${BLOQUES.map(b => `<span><i class="sq" style="background:${b.col}"></i>Cantero ${b.id} — ${esc(b.var)}</span>`).join("")}</div>
+          <div class="legend" style="margin-top:10px">${BLOQUES.map(b => `<span><i class="sq" style="background:${b.col}"></i>Cantero ${b.id} - ${esc(b.var)}</span>`).join("")}</div>
         </div>
       </div>
       <div class="panel">
@@ -2050,7 +2050,7 @@ SCR.pruebas = () => ({
       const ctrl = BLOQUES[0].peso, d = ((b.peso - ctrl) / ctrl * 100);
       return `<tr><td><b>Cantero ${b.id}</b>${b.ctrl ? '<span class="why">es el testigo</span>' : ""}</td><td>${esc(b.var)}</td>
               <td class="num">${nf(b.peso)} g</td>
-              <td class="num" style="color:${b.ctrl ? "var(--ink-3)" : d > 0 ? "var(--ok)" : "var(--crit)"}">${b.ctrl ? "—" : (d > 0 ? "+" : "") + nf(d, 1) + " %"}</td>
+              <td class="num" style="color:${b.ctrl ? "var(--ink-3)" : d > 0 ? "var(--ok)" : "var(--crit)"}">${b.ctrl ? "-" : (d > 0 ? "+" : "") + nf(d, 1) + " %"}</td>
               <td class="num">${b.desc} de ${b.n}</td><td class="num">${b.dias}</td></tr>`;
     }).join("")}
           </tbody></table>
@@ -2070,7 +2070,7 @@ SCR.pruebas = () => ({
               <dt>Qué se cambió</dt><dd><b>${esc(b.var)}</b></dd>
               <dt>Peso por planta</dt><dd>${nf(b.peso)} g</dd>
               <dt>Se cosecharon</dt><dd>${b.n - b.desc} de ${b.n}</dd>
-              <dt>Se tiraron</dt><dd>${b.desc} · ${esc(b.sint)}</dd>
+              <dt>Se tiraron</dt><dd>${b.desc} - ${esc(b.sint)}</dd>
               <dt>Días hasta cosechar</dt><dd>${b.dias}</dd>
             </dl>
           </div>
@@ -2102,7 +2102,7 @@ SCR.pruebas = () => ({
   after() {
     rankChart($("#c-bloques"), {
       padL: 208, padR: 74, metric: "Peso por planta", max: 240,
-      rows: BLOQUES.map(b => ({ lab: "Cantero " + b.id + " · " + b.var, v: b.peso, txt: nf(b.peso) + " g", color: b.col, extra: ["Se tiraron", b.desc + " de " + b.n] }))
+      rows: BLOQUES.map(b => ({ lab: "Cantero " + b.id + " - " + b.var, v: b.peso, txt: nf(b.peso) + " g", color: b.col, extra: ["Se tiraron", b.desc + " de " + b.n] }))
     });
   }
 });
@@ -2123,7 +2123,7 @@ SCR.avisos = () => ({
             ${chip(a.n)}
             <div style="flex:1; min-width:250px">
               <h3>${esc(a.t)}</h3>
-              <div class="note muted" style="margin-top:2px">${esc(a.p)} · ${esc(a.desde)}</div>
+              <div class="note muted" style="margin-top:2px">${esc(a.p)} - ${esc(a.desde)}</div>
               <div class="note" style="margin-top:7px"><b>Qué se vio:</b> ${esc(a.dato)}</div>
               <div class="note" style="margin-top:4px"><b>Qué hacer:</b> ${esc(a.que)}</div>
             </div>
@@ -2135,7 +2135,7 @@ SCR.avisos = () => ({
         </div>
       </div>`).join("")}
     <div class="panel">
-      <header><h2>Por qué “sin noticias” es gris y no rojo</h2></header>
+      <header><h2>Por qué "sin noticias" es gris y no rojo</h2></header>
       <div class="body">
         <p class="note">El aparato del lote riega días sin señal: eso es el sistema andando bien, no una falla. El rojo se guarda
         para lo que obliga a subirse a la camioneta: pila agotada, tierra tan seca que la planta sufre, agua que se está perdiendo.
@@ -2175,10 +2175,10 @@ SCR.gente = () => ({
         <h3>Sacarle un permiso a alguien no es lo que esconde los datos de otro cliente</h3>
         <p class="note" style="margin-top:5px">
           Los datos de un cliente no se le muestran a otro, y eso <b>no lo decide esta pantalla</b>: lo decide la base de datos.
-          Si alguien pregunta por datos que no son suyos, no le llega nada — ni una fila equivocada, ninguna.
+          Si alguien pregunta por datos que no son suyos, no le llega nada - ni una fila equivocada, ninguna.
           Acá se decide qué puede <b>hacer</b> cada uno, y de rebote cuánto ve; qué datos <b>existen</b> para él ya está resuelto abajo.
         </p>
-        <p class="note">Por eso tampoco existe la opción “ver todos los clientes juntos”: esa pregunta no se puede hacer.</p>
+        <p class="note">Por eso tampoco existe la opción "ver todos los clientes juntos": esa pregunta no se puede hacer.</p>
       </div>
     </div>`,
   after() { }
@@ -2193,14 +2193,14 @@ SCR.dibujar = () => ({
       <div class="body">
         <div class="cols c2">
           <div>
-            <h3>${ico("lote", 20)} El borde de afuera — el campo</h3>
+            <h3>${ico("lote", 20)} El borde de afuera - el campo</h3>
             <p class="note" style="margin-top:6px">Es el contexto: cuánta tierra hay y dónde termina. Se dibuja <b>una sola vez</b>, cuando se da de alta el establecimiento, y casi nunca se toca.</p>
             <dl class="kv"><dt>Estado</dt><dd>${chip("ok")} cargado el 12/08/2026</dd><dt>Tamaño</dt><dd><b>${nf(CAMPO.ha, 1)} ha</b></dd></dl>
           </div>
           <div>
-            <h3>${ico("planta", 20)} Las divisiones de adentro — potreros y lotes</h3>
+            <h3>${ico("planta", 20)} Las divisiones de adentro - potreros y lotes</h3>
             <p class="note" style="margin-top:6px">Son la unidad de decisión: dónde se riega, a cuál se mueve la hacienda. <b>Se corrigen seguido</b>, y cada corrección recalcula todo lo que cuelga.</p>
-            <dl class="kv"><dt>Cargados</dt><dd>6 · ninguno se sale del borde</dd><dt>Suman</dt><dd><b>108,7 ha</b> de las ${nf(CAMPO.ha, 1)}</dd></dl>
+            <dl class="kv"><dt>Cargados</dt><dd>6 - ninguno se sale del borde</dd><dt>Suman</dt><dd><b>108,7 ha</b> de las ${nf(CAMPO.ha, 1)}</dd></dl>
           </div>
         </div>
         <div class="note rule" style="margin-top:12px">
@@ -2236,7 +2236,7 @@ SCR.dibujar = () => ({
               <dt>Qué es</dt><dd>Lote de tomate</dd>
               <dt>Campo</dt><dd>${esc(CAMPO.nom)}</dd>
               <dt>Tamaño</dt><dd><b>1,84 ha</b></dd>
-              <dt>Mojones</dt><dd>4 · el dibujo cierra bien</dd>
+              <dt>Mojones</dt><dd>4 - el dibujo cierra bien</dd>
               <dt>Queda adentro del campo</dt><dd>${chip("ok")}</dd>
             </dl>
           </div>
@@ -2245,9 +2245,9 @@ SCR.dibujar = () => ({
           <header><h2>Qué cambia si lo guardás</h2><span class="hint">se muestra antes, no después</span></header>
           <div class="body">
             <dl class="kv">
-              <dt>Aparatos</dt><dd>4 quedan adentro · <b style="color:var(--crit)">1 queda afuera</b> (SE01-0432)</dd>
+              <dt>Aparatos</dt><dd>4 quedan adentro - <b style="color:var(--crit)">1 queda afuera</b> (SE01-0432)</dd>
               <dt>Lecturas</dt><dd>12.480 dejan de contar acá</dd>
-              <dt>Fotos del satélite</dt><dd>Se vuelven a recortar desde 2017 · 214 fechas</dd>
+              <dt>Fotos del satélite</dt><dd>Se vuelven a recortar desde 2017 - 214 fechas</dd>
               <dt>Riegos</dt><dd>186 se reasignan</dd>
             </dl>
             <div class="note rule" style="margin-top:10px">Nada de esto se asigna a mano. Si un aparato aparece donde no va, lo que se corrige es <b>el dibujo</b>, y el resto se acomoda solo.</div>
@@ -2319,7 +2319,7 @@ function render() {
   const view = $("#view");
   view.innerHTML = scr.html;
   $("#drawerlabel").textContent = scr.title;
-  document.title = scr.title + " · agro-platform (mockup)";
+  document.title = scr.title + " - agro-platform (mockup)";
   $$("#nav .navlink").forEach(b => b.setAttribute("aria-current", b.dataset.k === k ? "page" : "false"));
   $$("#tabbar button").forEach(b => b.setAttribute("aria-current", b.dataset.k === k ? "page" : "false"));
   window.scrollTo(0, 0);

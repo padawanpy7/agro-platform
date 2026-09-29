@@ -134,6 +134,11 @@ function armarGates() {
   // aparecieron otros 40. Lee 262 archivos de texto: son milisegundos.
   gates.push({ nombre: 'memoria (hechos)', ...bf('hechos') })
 
+  // TIPOGRAFIA ASCII. La tool existia desde el dia uno y NO ESTABA ENCHUFADA A NADA: se podia
+  // correr a mano y nadie la corria, que es exactamente el "techo que nadie mide" del que habla
+  // AGENTS.md §7. Enchufada el 29/09 a pedido del dueño, que no quiere el guion largo.
+  gates.push({ nombre: 'tipografia (ascii)', ...bf('ascii', '--check') })
+
   // Los gates del STACK se declaran en `project.yml` (bloque `commands:`), no se clavan aca. Asi
   // el dia que exista codigo del agro se prenden llenando el yml, y mientras tanto el gate dice
   // "no hay comando declarado" en vez de dar verde por no haber mirado nada. Reemplazan a los

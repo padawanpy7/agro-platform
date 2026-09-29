@@ -1,6 +1,6 @@
 # Inventario de pantallas y principios de UI
 
-**28/09/2026, tercera vuelta.** El producto es **agropecuaria de precisión** — no "riego de
+**28/09/2026, tercera vuelta.** El producto es **agropecuaria de precisión** - no "riego de
 precisión", que es el nombre de una línea
 ([preparado-para-ganaderia.md](preparado-para-ganaderia.md) §1). En esta fase sólo hay agricultura,
 pero el mapa y el vocabulario tienen que aguantar ganadería: **potrero, corral, aguada, hacienda**.
@@ -11,14 +11,14 @@ Dos cosas cambiaron respecto de la vuelta anterior, y las dos son decisión del 
    interruptor de rol. **Lo que cada persona ve lo decide su permiso y no se rotula en la
    pantalla.** No hay cartel que diga "estás en la vista de tal", no hay opciones apagadas: quien
    no tiene permiso para cambiar las reglas de riego simplemente no ve esa opción en el menú.
-2. **El mapa tiene dos niveles**: el **campo** —el establecimiento entero— y los **potreros y
+2. **El mapa tiene dos niveles**: el **campo** -el establecimiento entero- y los **potreros y
    lotes** de adentro.
 
 **Lo que NO cambió, y es lo que sostiene todo:** las nueve reglas de
 [quien-usa-esto.md](quien-usa-esto.md) siguen vigentes. El usuario sigue siendo alguien que nunca
-vino a Asunción. Todo lo que se aprendió diseñando la vista del campo —la respuesta arriba y grande
+vino a Asunción. Todo lo que se aprendió diseñando la vista del campo -la respuesta arriba y grande
 antes que el gráfico, la acción escrita en cada renglón, el agua dicha en palabras, el gráfico
-plegado, ícono más palabra, *"última lectura hace X"* arriba— **ahora es cómo se comporta la app
+plegado, ícono más palabra, *"última lectura hace X"* arriba- **ahora es cómo se comporta la app
 entera**. La app única no vuelve a la densidad del primer mockup.
 
 Contra qué más se escribió: [`proposal.md`](../proposal.md), [`design.md`](../design.md) §1 y §4,
@@ -43,8 +43,8 @@ salen del modelo de datos y del lazo de control. **Aplican a la app entera**, no
 ### 1.1 La pantalla contesta una pregunta; no muestra datos
 
 **La respuesta arriba y grande; el gráfico abajo, y plegado.** Cada pantalla abre con una frase que
-se lee de un vistazo —*"Regá hoy temprano"*, *"Andá a mirar la manguera"*, *"148,0 hectáreas en
-total, y solo 108,7 son potreros o lotes"*— más **qué hacer** y **cuándo**. Los gráficos del
+se lee de un vistazo -*"Regá hoy temprano"*, *"Andá a mirar la manguera"*, *"148,0 hectáreas en
+total, y solo 108,7 son potreros o lotes"*- más **qué hacer** y **cuándo**. Los gráficos del
 potrero viven dentro de dos desplegables cerrados: están para quien los quiera, no delante de quien
 no.
 
@@ -56,15 +56,15 @@ campo: *lote*, *potrero*, *manguera*, *pila*, *tajamar*, *corral*, *hacienda*, *
 
 ### 1.3 El color nunca es el único canal
 
-Cinco figuras distintas de estado —rombo (urgente), gota (regar), triángulo (mirar), círculo
-(bien), círculo punteado (sin noticias)— además de color y palabra. Las barras de "seco" llevan
+Cinco figuras distintas de estado -rombo (urgente), gota (regar), triángulo (mirar), círculo
+(bien), círculo punteado (sin noticias)- además de color y palabra. Las barras de "seco" llevan
 trama rayada. El monte del mapa lleva trama, no sólo color.
 
 ### 1.4 Se usa al sol, en un teléfono barato, con las manos sucias
 
 **Esto es el default de la app, no un modo:** tipografía base de 18 px, blancos de toque de 56 px,
 tinta de contraste alto. Más un botón **"Letra más grande"** que la lleva a 21 px. Es un ajuste del
-usuario, igual que el tema oscuro — no es un rol.
+usuario, igual que el tema oscuro - no es un rol.
 
 ### 1.5 La señal es mala y el dato llega viejo
 
@@ -97,7 +97,7 @@ cuándo la está usando.
 
 ### 1.11 Todo número dice de dónde salió
 
-*"El ajuste del aparato"*, con **quién lo comprobó** —nosotros o el fabricante—, cómo y cuándo.
+*"El ajuste del aparato"*, con **quién lo comprobó** -nosotros o el fabricante-, cómo y cuándo.
 
 ### 1.12 Un hueco es un hueco, nunca un cero
 
@@ -105,7 +105,7 @@ La línea se corta y la franja dice *"no llegó nada"*.
 
 ### 1.13 Estar sin señal es normal, no es un error
 
-*"Sin noticias hace 3 días — el riego sigue andando solo"* es **gris**. El rojo se guarda para lo
+*"Sin noticias hace 3 días - el riego sigue andando solo"* es **gris**. El rojo se guarda para lo
 que obliga a subirse a la camioneta. **Si todo es rojo, nada es rojo.**
 
 ### 1.14 Nada se asigna a mano, y eso no se explica con el nombre de una función
@@ -166,7 +166,7 @@ que no le sirve para nada.
 ### 2.4 Y un tercero que sólo mira
 
 Un comprador o una cooperativa que audita tiene *ver el campo* + *ver el riego* con alcance a dos
-lotes. Le alcanza para lo que le importa —cuánta agua se usó y cuándo— y no expone nada más.
+lotes. Le alcanza para lo que le importa -cuánta agua se usó y cuándo- y no expone nada más.
 
 ### 2.5 Cómo se prueba, y es gratis
 
@@ -179,14 +179,14 @@ abierto y callate.** Lo que busque y no encuentre, y lo que toque esperando otra
 
 Sale de [preparado-para-ganaderia.md](preparado-para-ganaderia.md) §5, y **toca el modelo**: el
 `campo` hoy figura como catálogo sin geometría. Le falta `campo.geom geometry(Polygon, 4326)` con
-índice GiST, más la validación `ST_Contains(campo.geom, parcela.geom)` — que un potrero se salga del
+índice GiST, más la validación `ST_Contains(campo.geom, parcela.geom)` - que un potrero se salga del
 campo es un error de carga y conviene que salte al dibujarlo. **Se agrega en la migración de la fase
 1, que es cuando sale gratis.**
 
 | nivel | qué es | en el mapa | contesta |
 |---|---|---|---|
 | **Campo** | El establecimiento entero | **El fondo.** Borde grueso, relleno neutro, **no se toca y no se apaga** | *"cuánta tierra tengo y dónde termina"* |
-| **Potrero / lote** | La división de adentro | **Lo que se toca.** Pintado por cómo está, clickeable, con su código (`P1`…`P6`) | *"a cuál muevo la hacienda", "dónde riego"* |
+| **Potrero / lote** | La división de adentro | **Lo que se toca.** Pintado por cómo está, clickeable, con su código (`P1`...`P6`) | *"a cuál muevo la hacienda", "dónde riego"* |
 
 ### 3.1 La trampa: sumar los potreros no da el campo
 
@@ -206,20 +206,20 @@ solo.
 
 ### 3.2 Se maneja como un mapa, no como un dibujo
 
-El mapa **ocupa el alto que le queda a la ventana** —con `dvh`, no `vh`, por la barra del navegador
-del teléfono— así que al entrar a *El campo entero* se ve entero **sin deslizar nada**. Y se maneja
+El mapa **ocupa el alto que le queda a la ventana** -con `dvh`, no `vh`, por la barra del navegador
+del teléfono- así que al entrar a *El campo entero* se ve entero **sin deslizar nada**. Y se maneja
 como cualquier mapa:
 
 | | |
 |---|---|
-| **Zoom** | Rueda del mouse, pellizco con dos dedos, doble toque, y **botones `+ Acercar` / `− Alejar`** — porque no todo el mundo pellizca |
+| **Zoom** | Rueda del mouse, pellizco con dos dedos, doble toque, y **botones `+ Acercar` / `− Alejar`** - porque no todo el mundo pellizca |
 | **Mover** | Arrastrar con el dedo o con el mouse |
 | **`Ver todo`** | Vuelve al encuadre completo del campo. **Es el que más se usa y el que más se olvida**, y por eso está siempre a la vista |
 | **La escala** | **Cambia con el zoom**: pasa de 500 m a 200, a 100, a 50. Una escala fija mentiría |
 | **El norte** | Fijo. El mapa no rota |
 
 **Lo que no se deforma al acercar.** Los polígonos crecen; **las chapitas `P1`, los códigos `S4`, el
-grosor de las líneas y los aparatos NO**. Se dibujan siempre al mismo tamaño en pantalla — los
+grosor de las líneas y los aparatos NO**. Se dibujan siempre al mismo tamaño en pantalla - los
 trazos con `vector-effect="non-scaling-stroke"` y las marcas recolocadas fuera del grupo que
 escala. Es lo que hace que se sienta un mapa y no una foto agrandada.
 
@@ -228,9 +228,9 @@ el amontonamiento:
 
 | escala | qué se ve |
 |---|---|
-| **lejos** | Sólo las chapitas `P1`…`P6`. Los aparatos, como puntos sin código |
+| **lejos** | Sólo las chapitas `P1`...`P6`. Los aparatos, como puntos sin código |
 | **medio** | Además, el **nombre del potrero** y su tamaño, y el **código de cada aparato** (`S4`) |
-| **cerca** | Además, **qué mide cada aparato y su última lectura** (*humedad · 18,2 %*) |
+| **cerca** | Además, **qué mide cada aparato y su última lectura** (*humedad - 18,2 %*) |
 
 **Sin librerías y sin mapa base de terceros.** Es SVG propio: una matriz de transformación y dos
 escuchas de puntero. Traer Leaflet o MapLibre metería una dependencia externa y una licencia en algo
@@ -240,12 +240,12 @@ que **no tiene conexión**.
 
 **Adentro del dibujo escribir el nombre completo no entra: se solapa todo.** Por eso:
 
-- **Adentro van códigos cortos.** `P1`…`P6` para potreros y lotes, `S1`…`S18` para aparatos, `A1` y
+- **Adentro van códigos cortos.** `P1`...`P6` para potreros y lotes, `S1`...`S18` para aparatos, `A1` y
   `A2` para aguadas y tajamar. El código va en una chapita con borde, no suelto sobre el polígono.
 - **El nombre largo vive afuera**, en el panel, al lado de su código. Y aparece entero **al tocar**:
   tocar el polígono o su renglón en el panel muestra una franja debajo del mapa con el código, el
   nombre completo, qué es y qué hay que hacer, más un botón para abrirlo. **El primer toque muestra;
-  el segundo abre** — nada se ejecuta sin que se vea antes qué es (principio 1.8).
+  el segundo abre** - nada se ejecuta sin que se vea antes qué es (principio 1.8).
 - **El panel va al costado cuando el mapa tiene lugar.** No depende del ancho de la ventana sino
   del ancho que le queda al mapa, que es lo que de verdad importa. **Cuando no entra al costado se
   vuelve un cajón** que se abre desde un botón *Capas* arriba a la izquierda del mapa: así en el
@@ -255,11 +255,11 @@ que **no tiene conexión**.
 
 ```
 [x] Potreros y lotes (6)     <- apaga los seis de una
-    [x] P1 · Potrero Yvyra'i     potrero · 42,0 ha
-    [x] P2 · Potrero Costa Guasu potrero · 58,4 ha
+    [x] P1 - Potrero Yvyra'i     potrero - 42,0 ha
+    [x] P2 - Potrero Costa Guasu potrero - 58,4 ha
     ...
 [x] Aparatos (18)
-    [x] S1 · humedad · en P1
+    [x] S1 - humedad - en P1
     ...
 [x] Aguadas (2)
 [x] Monte              26,0 ha
@@ -268,14 +268,14 @@ que **no tiene conexión**.
 ```
 
 - El grupo se despliega con su flecha y se apaga de a uno adentro.
-- **Si algunos hijos están apagados, el padre queda en estado intermedio** —la casilla con guión—,
+- **Si algunos hijos están apagados, el padre queda en estado intermedio** -la casilla con guión-,
   no apagado. Volver a tocar el padre enciende todo; tocarlo con todo encendido apaga todo.
 - **Casilla de verdad, no un color que hay que adivinar** (principio 1.3). Cada renglón es un blanco
   de toque de 56 px arriba y 46 px adentro del grupo, y la casilla y el nombre son **dos blancos
   separados**: uno apaga, el otro muestra el nombre.
-- **El campo —el borde de afuera— no está en la lista**: no se apaga nunca, porque es el marco.
+- **El campo -el borde de afuera- no está en la lista**: no se apaga nunca, porque es el marco.
 
-### 3.4 Apagar esconde, no borra — y la cuenta no cambia
+### 3.4 Apagar esconde, no borra - y la cuenta no cambia
 
 Apagar una capa **la saca del dibujo y nada más**. La tabla de hectáreas de la derecha **no se
 mueve**, porque esa es la tierra que hay, no lo que se está mirando. El panel lo dice en su pie, con
@@ -283,15 +283,15 @@ esas palabras.
 
 > **Una duda honesta para el dueño:** que el mapa cambie y la cuenta no puede leerse como un error.
 > La alternativa sería que la tabla siguiera a las capas, y eso sería peor: convertiría un número de
-> superficie —que es un hecho del campo— en una consecuencia de qué casillas quedaron tocadas.
-> Se eligió que la cuenta sea el hecho. **Si al probarlo con alguien esto confunde, se cambia** —
+> superficie -que es un hecho del campo- en una consecuencia de qué casillas quedaron tocadas.
+> Se eligió que la cuenta sea el hecho. **Si al probarlo con alguien esto confunde, se cambia** -
 > pero conviene probarlo antes de decidir.
 
 ### 3.5 Los dos niveles no se dibujan a mano
 
 El archivo que el dueño arma con Google Earth trae los dos: el perímetro es el campo y cada división
-es un potrero. La pantalla de dibujo los trata por separado —el borde se carga una vez y casi no se
-toca; las divisiones se corrigen seguido— y muestra qué se recalcula antes de guardar.
+es un potrero. La pantalla de dibujo los trata por separado -el borde se carga una vez y casi no se
+toca; las divisiones se corrigen seguido- y muestra qué se recalcula antes de guardar.
 
 ---
 
@@ -301,12 +301,12 @@ Catorce pantallas. La columna **de dónde sale** dice contra qué objeto de
 [`design.md`](../design.md) §1 lee o escribe. **Esos nombres son para nosotros y no aparecen nunca
 en la interfaz** (principio 1.14).
 
-### 1. Hoy — `#/hoy`
+### 1. Hoy - `#/hoy`
 
 | | |
 |---|---|
 | **Para qué sirve** | Es la primera pantalla del día, y muchas veces la única. |
-| **Qué muestra** | Arriba, cuántos lugares necesitan algo. Después, un renglón grande por potrero o lote con el nombre, **la acción escrita** (*"Andá a mirar la manguera"*), qué es y de qué, el tamaño y **hace cuánto llegó la última lectura** — ordenados por urgencia. Debajo, **el mapa de los dos niveles con su panel de capas**. |
+| **Qué muestra** | Arriba, cuántos lugares necesitan algo. Después, un renglón grande por potrero o lote con el nombre, **la acción escrita** (*"Andá a mirar la manguera"*), qué es y de qué, el tamaño y **hace cuánto llegó la última lectura** - ordenados por urgencia. Debajo, **el mapa de los dos niveles con su panel de capas**. |
 | **De dónde sale** | `campo.geom`, `parcela`, última `medicion` por parcela, `riego_evento` del día, `dispositivo`, `captura_trampa`. |
 | **Qué decisión permite** | **Por dónde empezar el día**, y qué se puede dejar tranquilo. |
 
@@ -314,38 +314,38 @@ Lleva un recuadro que dice que **si lo que se ve con los ojos no coincide con la
 que se ve**: que lo anoten y avisen. Un aparato se ensucia o queda mal enterrado, y una app que no
 admite eso pierde al usuario el primer día que se equivoca.
 
-### 2. El campo entero — `#/campo`
+### 2. El campo entero - `#/campo`
 
 | | |
 |---|---|
 | **Para qué sirve** | El contexto: cuánta tierra hay y dónde termina. |
-| **Qué muestra** | Una línea con el total y **el mapa ocupando el alto de la ventana** —se ve entero al entrar, sin deslizar— con su **panel de capas** al costado. Debajo, **el reparto de hectáreas**: potreros y lotes, monte, caminos, bajos, tajamar, casco. Más la advertencia de §3.1 y de dónde salió el borde. |
+| **Qué muestra** | Una línea con el total y **el mapa ocupando el alto de la ventana** -se ve entero al entrar, sin deslizar- con su **panel de capas** al costado. Debajo, **el reparto de hectáreas**: potreros y lotes, monte, caminos, bajos, tajamar, casco. Más la advertencia de §3.1 y de dónde salió el borde. |
 | **De dónde sale** | `campo` + `campo.geom` (nuevo), `parcela.geom`. |
 | **Qué decisión permite** | Cuánta tierra hay de verdad en producción, y **no confundir el verdor del campo con el del potrero**. |
 
-### 3. Un potrero o un lote — `#/lote`
+### 3. Un potrero o un lote - `#/lote`
 
 | | |
 |---|---|
 | **Para qué sirve** | Todo lo que hace falta saber de una división, en el orden en que se pregunta. |
-| **Qué muestra** | Un desplegable para cambiar de potrero. **La respuesta arriba y grande**, con cuándo hacerlo. Una franja con la última lectura. **Un mapa ya encuadrado en ese potrero**, con sus aparatos y la última lectura de cada uno. **El agua en la tierra a tres hondos, en palabras** — arriba (10 cm), en la raíz (30 cm), abajo (60 cm), con barra y la palabra *seco* / *bien* / *mojado*. Qué pasó estos días. Y **dos desplegables cerrados**: el dibujo del agua en la tierra, y la lluvia, el riego y el pasto. Después, los aparatos, el análisis de tierra y cuatro números. |
+| **Qué muestra** | Un desplegable para cambiar de potrero. **La respuesta arriba y grande**, con cuándo hacerlo. Una franja con la última lectura. **Un mapa ya encuadrado en ese potrero**, con sus aparatos y la última lectura de cada uno. **El agua en la tierra a tres hondos, en palabras** - arriba (10 cm), en la raíz (30 cm), abajo (60 cm), con barra y la palabra *seco* / *bien* / *mojado*. Qué pasó estos días. Y **dos desplegables cerrados**: el dibujo del agua en la tierra, y la lluvia, el riego y el pasto. Después, los aparatos, el análisis de tierra y cuatro números. |
 | **De dónde sale** | `parcela`, `medicion`, `riego_evento`, `politica_riego`, `indice_espacial`, `analisis_suelo`, `campania`, `dispositivo`. |
 | **Qué decisión permite** | **Si riega y cuántos minutos.** Los tres hondos evitan el error caro: si abajo todavía hay agua, veinte minutos alcanzan; regar de más manda el agua abajo de la raíz y se pierde. |
 
 > **El gráfico de la humedad se dibuja hacia abajo porque la profundidad es hacia abajo.** Tres
 > paneles apilados que comparten el tiempo, con una rampa de un solo tono donde más oscuro es más
-> hondo: la profundidad es un **orden**, no cuatro identidades. Es la apuesta visual del producto —
+> hondo: la profundidad es un **orden**, no cuatro identidades. Es la apuesta visual del producto -
 > y **va plegado**, porque la respuesta ya está arriba en una frase.
 
-### 4. Anotar algo — `#/anotar`
+### 4. Anotar algo - `#/anotar`
 
 Cinco botones grandes: **anotar lo que se cosechó**, **sacar foto de la trampa**, **avisar que
 revisó la manguera**, **avisar que regó a mano**, **avisar que movió la hacienda de potrero**. Todo
 de elección, con pantalla de confirmación antes de guardar.
 **De dónde sale:** `campania` (rendimiento), `captura_trampa`, `riego_evento`, notas de mantenimiento, y el movimiento de hacienda que el modelo de ganadería va a necesitar.
-**Decide:** nada, y es a propósito — **es la pantalla que alimenta a todas las demás.**
+**Decide:** nada, y es a propósito - **es la pantalla que alimenta a todas las demás.**
 
-### 5. Qué regó y por qué — `#/riegos`
+### 5. Qué regó y por qué - `#/riegos`
 
 Una fila por riego con **por qué**, **qué hizo**, **con qué regla** y **cuánta agua esperaba contra
 cuánta salió**. La diferencia es el diagnóstico: de más es pérdida, de menos es gotero tapado o
@@ -353,7 +353,7 @@ filtro sucio. Incluye las veces que decidió **no** regar y los tramos en modo c
 **De dónde sale:** `riego_evento`, `politica_riego`, `dispositivo`, `medicion`.
 **Decide:** mandar a alguien a caminar la línea, o cambiar la regla.
 
-### 6. Cuándo regar — `#/cuando`
+### 6. Cuándo regar - `#/cuando`
 
 La regla en palabras, **cuándo le llegó al potrero** (tres momentos) y una comparación *"con este
 número habría regado 9 veces en vez de 14"*. Abajo, las reglas anteriores, que no se corrigen: se
@@ -361,7 +361,7 @@ cierran y se escribe otra.
 **De dónde sale:** `politica_riego`, `parcela`, `riego_evento`.
 **Decide:** regar antes o después, más o menos. **Y no hay botón de válvula** (principio 1.10).
 
-### 7. Cuánto pasto hay — `#/verde`
+### 7. Cuánto pasto hay - `#/verde`
 
 Los potreros ordenados **de más a menos pasto** hoy; uno contra **lo peor y lo mejor de sus nueve
 años**; y **si es parejo o disparejo**, que decide cuántos aparatos lleva. Cada dato dice si vino
@@ -369,7 +369,7 @@ del satélite o de un vuelo de dron, y **dónde no sirve**.
 **De dónde sale:** `indice_espacial`, `parcela`.
 **Decide:** a qué potrero mover la hacienda, cuál se está gastando, dónde enterrar el próximo aparato.
 
-### 8. Los aparatos — `#/aparatos`
+### 8. Los aparatos - `#/aparatos`
 
 Cada aparato con qué hace, dónde está, **pila**, **hace cuánto mandó algo**, las últimas lecturas en
 miniatura y **el ajuste que usa, con quién lo comprobó**. Debajo, todos los ajustes anteriores, que
@@ -377,7 +377,7 @@ no se borran nunca.
 **De dónde sale:** `dispositivo`, `calibracion`, última `medicion`.
 **Decide:** a qué aparato hay que ir a cambiarle la pila o comprobarle la sonda.
 
-### 9. Dibujar el campo — `#/dibujar`
+### 9. Dibujar el campo - `#/dibujar`
 
 **Los dos niveles, separados y explicados**: el borde de afuera se carga una vez y casi no se toca;
 las divisiones de adentro se corrigen seguido. Muestra el límite viejo y el nuevo superpuestos y
@@ -385,15 +385,15 @@ las divisiones de adentro se corrigen seguido. Muestra el límite viejo y el nue
 **De dónde sale:** `campo.geom` (nuevo), `parcela.geom`, `dispositivo.punto`.
 **Decide:** cuál es la unidad de análisis. Todo lo demás cuelga de acá.
 
-### 10. Los números con detalle — `#/numeros`
+### 10. Los números con detalle - `#/numeros`
 
 El explorador crudo. Cualquier aparato, cualquier medición, cualquier rango, con un interruptor
 **sin tocar / con el ajuste / los dos**, el hueco dibujado como hueco, y el ajuste vigente a la
 vista con su procedencia.
 **De dónde sale:** `medicion`, `calibracion`, `dispositivo`, catálogo de magnitudes.
-**Decide:** si el aparato está diciendo la verdad — y si hay que recalcular el histórico.
+**Decide:** si el aparato está diciendo la verdad - y si hay que recalcular el histórico.
 
-### 11. El agua de la hidroponía — `#/hidro`
+### 11. El agua de la hidroponía - `#/hidro`
 
 El segundo caso de uso, y la única pantalla donde sobreviven las unidades técnicas (mS/cm), porque
 quien no tiene ese módulo no la abre nunca. **Calor del agua** (con la raya de los 24 °C), **cuánta
@@ -401,22 +401,22 @@ agua queda**, **sales** y **acidez**. Las sales y el nivel van juntos a propósi
 **De dónde sale:** `medicion`, `solucion_nutritiva` (nueva), `riego_evento`, `calibracion`.
 **Decide:** cambiar el agua, agregarle, corregir la acidez o poner media sombra.
 
-### 12. Las pruebas — `#/pruebas`
+### 12. Las pruebas - `#/pruebas`
 
 El método de bloques, en palabras: **canteros** y **testigo**. Cada uno con qué se cambió y cómo
-salió. Arriba, **qué se buscaba en el ciclo, escrito antes de plantar** — uno solo. Y una
+salió. Arriba, **qué se buscaba en el ciclo, escrito antes de plantar** - uno solo. Y una
 advertencia cuando entre dos canteros cambió más de una cosa.
 **De dónde sale:** `bloque_experimental` (nueva), `campania`, `medicion`, `riego_evento`.
 **Decide:** qué se cambia en el ciclo siguiente, sabiendo qué lo causó.
 
-### 13. Avisos — `#/avisos`
+### 13. Avisos - `#/avisos`
 
 **Qué pasó**, **qué se vio**, **desde cuándo** y **qué hacer**. Tres niveles. Se pueden callar,
 pidiendo motivo y hasta cuándo.
 **De dónde sale:** `medicion`, `riego_evento`, `dispositivo`, `captura_trampa`, `indice_espacial`, `politica_riego`.
 **Decide:** qué se atiende primero.
 
-### 14. Quién entra y qué puede hacer — `#/gente`
+### 14. Quién entra y qué puede hacer - `#/gente`
 
 Las personas con su rol, su alcance y **cuántas cosas le aparecen en el menú**. Debajo, la tabla de
 **qué habilita cada permiso**. Y un recuadro que dice, en palabras, que **sacarle un permiso a
@@ -484,5 +484,5 @@ dicha en palabras, los gráficos plegados, el menú que se arma con permisos y s
 tamaños de toque, y el vocabulario entero.
 
 **Y una pregunta abierta, en §3.4:** apagar una capa cambia el dibujo pero **no** cambia la tabla de
-hectáreas. Es a propósito, y está argumentado — pero es lo primero que conviene mirarle a alguien
+hectáreas. Es a propósito, y está argumentado - pero es lo primero que conviene mirarle a alguien
 cuando lo pruebe.

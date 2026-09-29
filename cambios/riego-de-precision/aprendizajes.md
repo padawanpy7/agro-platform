@@ -1,24 +1,24 @@
 # Aprendizajes de riego-de-precision
 
-## Diseño de front — quinta pasada: el mapa se comporta como mapa (28/09/2026)
+## Diseño de front - quinta pasada: el mapa se comporta como mapa (28/09/2026)
 
 Pedido del dueño: *"le falta zoom y mejor manejo, tiene que ser parecido a Maps"*. Y tenía razón:
 un dibujo fijo con scroll horizontal no es un mapa, es una lámina.
 
-Lo que se hizo, sin librerías y **sin mapa base de terceros** —esto no tiene conexión, y traer
-Leaflet metería una dependencia externa y una licencia—:
+Lo que se hizo, sin librerías y **sin mapa base de terceros** -esto no tiene conexión, y traer
+Leaflet metería una dependencia externa y una licencia-:
 
 - **Ocupa el alto que le queda a la ventana**, con `dvh` y no `vh` por la barra del navegador del
   teléfono. Medido: en *El campo entero* el mapa entra entero arriba de la barra de abajo, en
   teléfono y en escritorio.
 - **Rueda, pellizco, doble toque, arrastre**, y botones `+ Acercar` / `− Alejar` / `Ver todo`.
   **`Ver todo` es el que más se usa y el que más se olvida**, y por eso está siempre visible.
-- **La escala cambia con el zoom** —500 m, 200, 100, 50—. Una escala fija miente.
+- **La escala cambia con el zoom** -500 m, 200, 100, 50-. Una escala fija miente.
 - **Lo que no se deforma al acercar**: chapitas, códigos, aparatos y grosor de línea se dibujan
   siempre al mismo tamaño en pantalla. Los trazos con `vector-effect="non-scaling-stroke"`; las
   marcas, fuera del grupo que escala y recolocadas a mano. **Eso es lo que hace que se sienta un
-  mapa y no una foto agrandada** — y es barato: una matriz y dos escuchas de puntero.
-- **Detalle por escala**: lejos sólo `P1`…`P6`; a media distancia el nombre del potrero y el código
+  mapa y no una foto agrandada** - y es barato: una matriz y dos escuchas de puntero.
+- **Detalle por escala**: lejos sólo `P1`...`P6`; a media distancia el nombre del potrero y el código
   del aparato; de cerca, qué mide y su última lectura. No mostrar todo siempre es lo que evita el
   amontonamiento.
 - **La ficha de lo elegido flota adentro del mapa**, no debajo: con el mapa a pantalla completa,
@@ -30,14 +30,14 @@ Y una regla de oficio que salió de esto: **el alto disponible no se adivina, se
 resta de `100dvh` contra una medición real del `getBoundingClientRect` del mapa a 390 px y a 1360,
 no a ojo.
 
-## Diseño de front — cuarta pasada: el mapa (28/09/2026)
+## Diseño de front - cuarta pasada: el mapa (28/09/2026)
 
 **La leyenda salió del dibujo y se volvió un panel de capas.** Lo encontró el dueño mirando, no
-leyendo: *"se solapa todo"*. Y tenía razón — escribir "Tomatal Ka'aguy · Tomate · 1,8 ha" encima de
+leyendo: *"se solapa todo"*. Y tenía razón - escribir "Tomatal Ka'aguy - Tomate - 1,8 ha" encima de
 un polígono de 100 px es garantizar el choque.
 
-La regla que queda: **adentro del dibujo, códigos cortos; afuera, el nombre completo.** `P1`…`P6`,
-`S1`…`S18`, `A1`, `A2`. El nombre entero aparece **al tocar**, en una franja debajo del mapa —
+La regla que queda: **adentro del dibujo, códigos cortos; afuera, el nombre completo.** `P1`...`P6`,
+`S1`...`S18`, `A1`, `A2`. El nombre entero aparece **al tocar**, en una franja debajo del mapa -
 primer toque muestra, segundo abre, que además cumple la regla de no ejecutar nada a ciegas.
 
 El panel es un **árbol de dos niveles con casilla de verdad en cada uno**, con estado intermedio en
@@ -47,34 +47,34 @@ la media query de viewport lo apretaba igual.
 
 **Decisión declarada, y es la que conviene mirarle a alguien cuando pruebe:** apagar una capa
 esconde el dibujo pero **no cambia la tabla de hectáreas**. La superficie es un hecho del campo, no
-una consecuencia de qué casillas quedaron tocadas. Si confunde, se cambia — pero se decidió así a
+una consecuencia de qué casillas quedaron tocadas. Si confunde, se cambia - pero se decidió así a
 propósito y está escrito en `docs/pantallas.md` §3.3.
 
 Y una de teléfono: **el mapa no se achica hasta dejar de leerse, se desliza.** A 390 px se dibuja a
 640 px de ancho con scroll horizontal y un cartel que lo dice, como cualquier mapa.
 
-## Diseño de front — tercera pasada (28/09/2026)
+## Diseño de front - tercera pasada (28/09/2026)
 
 **Decisión del dueño: una sola app.** Se sacó la vista capataz como vista separada y el interruptor
-de rol. Y el aprendizaje es el bueno: **lo que se aprendió haciendo esa vista no se tiró — se
+de rol. Y el aprendizaje es el bueno: **lo que se aprendió haciendo esa vista no se tiró - se
 ascendió a default de la app entera.** 18 px de base, 56 px de toque, contraste alto, respuesta
 arriba y grande, acción escrita en cada renglón, agua en palabras, gráficos plegados. La vista
 descartada sirvió para descubrir cómo tenía que comportarse todo.
 
 **Y el corolario que ordena el producto: el permiso decide la densidad, y no se rotula.** Quien no
-puede escribir reglas de riego no ve esa opción — no apagada, no con un cartel: no está. Decirle a
+puede escribir reglas de riego no ve esa opción - no apagada, no con un cartel: no está. Decirle a
 alguien "esto es para otro rol" es contarle lo que no puede hacer, que no le sirve de nada.
 
 **El mapa pasó a tener dos niveles**, y eso toca el modelo: `campo` necesita `campo.geom`, que hoy
 no tiene. El campo es el **fondo** y los potreros son **lo que se toca**. Lo que más costó dibujar
-bien es lo que más importa: **la suma de los potreros no da el campo** — hay monte, camino, casco,
+bien es lo que más importa: **la suma de los potreros no da el campo** - hay monte, camino, casco,
 corral y tajamar en el medio. De ahí sale una trampa que un tablero mal hecho induce solo: **el
 verdor del campo entero no sirve para decidir nada**, porque el monte está verde todo el año.
 
 El producto se llama **agropecuaria de precisión**; el ticket sigue llamándose como el día que se
 abrió.
 
-## Diseño de front — segunda pasada (28/09/2026)
+## Diseño de front - segunda pasada (28/09/2026)
 
 **El error de la primera pasada, y vale más que todo lo que salió bien: se diseñaron doce
 pantallas sin saber quién las usa.** El perfil llegó después
@@ -87,7 +87,7 @@ Los cuatro cambios que importaron:
 1. **La respuesta arriba y grande; el gráfico abajo, plegado, como justificación.** Estaba al revés.
 2. **El rol decide el TAMAÑO de la app, no solo los permisos.** El capataz ve tres pantallas; el
    dueño, doce. Es la misma app: lo hace posible el modelo de permisos que ya estaba diseñado.
-3. **Icono + palabra siempre, y las palabras del campo** — lote, potrero, manguera, pila, seco,
+3. **Icono + palabra siempre, y las palabras del campo** - lote, potrero, manguera, pila, seco,
    regar, cantero, testigo. La jerga no se simplifica: se saca y se pone lo que la persona hace.
 4. **Al sol, en un teléfono barato, con las manos sucias**: 18 px de base (21 con un botón),
    56 px de toque, contraste alto, cinco figuras distintas de estado, y *"última lectura hace 3
@@ -101,7 +101,7 @@ no se cierra.
 del rol iba después. El texto quedaba casi negro sobre fondo negro. **Un tema oscuro solo se
 verifica mirándolo.**
 
-## Diseño de front — primera pasada (28/09/2026)
+## Diseño de front - primera pasada (28/09/2026)
 
 **Estado: PENDIENTE DE APROBACIÓN.** Nada de esto sube a `memory/playbooks/ui-designer.md`
 hasta que el dueño mire `docs/mockup/index.html` en el navegador y diga que sí. El playbook
@@ -120,7 +120,7 @@ y [`docs/mockup/index.html`](docs/mockup/index.html) (un archivo, sin backend).
    dos series por **posición** y no solo por color, que es lo que pide la regla de accesibilidad.
 3. **`NULL` se dibuja como hueco** (línea cortada + franja "sin dato"), nunca como caída a cero.
 4. **La política no tiene botón de válvula**, y la pantalla lo dice en un cartel fijo, arriba,
-   en vez de dejar que alguien lo busque. Los tres tiempos —guardada / acusada / rigiendo— son
+   en vez de dejar que alguien lo busque. Los tres tiempos -guardada / acusada / rigiendo- son
    tres filas distintas.
 5. **Sin señal es gris, no rojo.** El rojo se reserva para lo que obliga a ir al lote.
 6. **La procedencia de la calibración es una columna de la tabla**, no un tooltip.
@@ -129,20 +129,22 @@ y [`docs/mockup/index.html`](docs/mockup/index.html) (un archivo, sin backend).
 
 ### Sistema visual propuesto
 
-- **Tipografía: una sola familia, Archivo variable**, usando el **eje de ancho** (wdth 86–118)
+- **Tipografía: una sola familia, Archivo variable**, usando el **eje de ancho** (wdth 86-118)
   para la jerarquía en vez de meter una segunda familia o versalitas. Números con
   `tabular-nums`; **nada de monoespaciada** para etiquetas de dato.
 - **Color**: papel mineral `#F2F4F1` (no crema), tinta verde-negra `#132019`, marca teal de agua
-  profunda `#0D4F5C`. Las paletas de datos —categórica, rampa de profundidad, rampa de NDVI, en
-  claro y en oscuro— están **validadas con el script de la skill `dataviz`** (banda de luminosidad,
+  profunda `#0D4F5C`. Las paletas de datos -categórica, rampa de profundidad, rampa de NDVI, en
+  claro y en oscuro- están **validadas con el script de la skill `dataviz`** (banda de luminosidad,
   piso de croma, separación para daltonismo, contraste contra la superficie). Los hex están en las
   variables CSS del mockup.
 - **Sin tarjetas flotantes con sombra**: paneles con hairline sobre una sola superficie.
 - **Responsive**: riel a la izquierda en escritorio; en teléfono, cajón + barra de 4 pestañas
-  (Mapa · Riego · Solución · Alertas). Los ticks del eje X se ralean solos según el ancho.
+  (Mapa - Riego - Solución - Alertas). Los ticks del eje X se ralean solos según el ancho.
 
 ### Lo que falta
 
 - Que un humano lo abra en el navegador y lo apruebe o lo devuelva.
 - Recién ahí, destilar lo aprobado a `memory/playbooks/ui-designer.md` (respetando el tope de
   `node agro.js presupuesto`: entra lo que ahorra un error en la próxima pantalla, no el catálogo).
+
+

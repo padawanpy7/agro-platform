@@ -28,8 +28,20 @@ const REEMPLAZOS = [
   ['✓', 'OK'], ['✅', 'OK'], ['❌', 'X'],
 ]
 
-const EXTENSIONES = ['.md', '.yml', '.yaml']
-const PODAR = new Set(['node_modules', '.git'])
+// Extendido el 29/09/2026: el repo dejo de ser solo documentos. El guion largo se cuela igual en
+// un comentario de SQL o en el texto de una pantalla, y ahi molesta mas -- en una terminal o en un
+// `psql` sale como basura.
+//
+// `.js` NO ENTRA, y la razon es que esta herramienta se rompio a si misma al intentarlo: su propia
+// tabla de reemplazos CONTIENE los caracteres que reemplaza, asi que se auto-convirtio y dejo de
+// parsear. Los scripts del loop tampoco son nuestros para reformatear.
+const EXTENSIONES = ['.md', '.yml', '.yaml', '.sql', '.sh', '.py', '.html', '.ts', '.tsx']
+
+// `crudo` NO SE TOCA: son capturas VERBATIM de sitios externos, o sea evidencia. Convertirles la
+// tipografia es editar la fuente, y despues no se puede distinguir lo que decia el original de lo
+// que le hicimos nosotros. `diagramas` tampoco: viene copiado de infra-platform y se re-copia, asi
+// que editarlo aca solo crea deriva.
+const PODAR = new Set(['node_modules', '.git', '.venv', 'crudo', 'diagramas'])
 
 function convertir(s) {
   for (const [de, a] of REEMPLAZOS) s = s.split(de).join(a)
@@ -67,18 +79,28 @@ if (!destinos.length) destinos.push('.')
 const archivos = destinos.flatMap((d) => juntar(d))
 
 let n = 0
+const tocados = []
 for (const f of archivos) {
   let src
   try { src = fs.readFileSync(f, 'utf8') } catch { continue }
   const res = convertir(src)
   if (res === src) continue
   n++
+  tocados.push(path.relative(process.cwd(), f))
   if (modo === '--fix') fs.writeFileSync(f, res)
 }
 
 console.log(`${modo === '--fix' ? 'convertidos' : 'a convertir'}: ${n}`)
-console.log('Convierte em/en dash, comillas tipograficas, flechas, ellipsis -> ASCII. ' +
-  'Mantiene acentos y enie del espaniol.')
+// Un gate que dice "1 a convertir" y no dice CUAL no sirve para nada: manda a buscar a mano.
+for (const t of tocados) console.log(`  ${t}`)
+if (n && modo === '--check') console.log('  arreglalo con: node agro.js ascii --fix')
 
-// --check no falla: es informativo, igual que antes. Lo que gatea la prosa es el humano que lee
-// el numero; convertirlo en error rompe corridas por un guion largo en un documento del analista.
+// --check AHORA FALLA (29/09/2026). Antes salia 0 siempre y por eso nunca se pudo enchufar a
+// `check`: era un informe que nadie leia -- el "techo que nadie mide" de AGENTS.md §7.
+//
+// El comentario anterior justificaba no fallar asi: "rompe corridas por un guion largo en un
+// documento del analista". ESA PREOCUPACION ERA CORRECTA y quedo resuelta por otro lado: `crudo`
+// -- las capturas verbatim de sitios externos -- esta en PODAR, junto con `diagramas`, que viene
+// copiado de otro repo. O sea que lo unico que este gate mira ya es lo que escribimos nosotros, y
+// sobre lo nuestro si corresponde fallar.
+if (n && modo === '--check') process.exit(1)

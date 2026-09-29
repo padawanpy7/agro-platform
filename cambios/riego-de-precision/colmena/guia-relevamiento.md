@@ -2,7 +2,7 @@
 
 **Guia de preguntas.** Ninguna de estas tiene respuesta en fuentes publicas: se busco y no aparecio.
 
-Fecha: ____ / ____ / 2026 &nbsp;&nbsp;·&nbsp;&nbsp; Con quien: ______________________________
+Fecha: ____ / ____ / 2026 &nbsp;&nbsp;-&nbsp;&nbsp; Con quien: ______________________________
 
 ---
 

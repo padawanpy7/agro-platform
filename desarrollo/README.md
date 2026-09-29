@@ -22,6 +22,14 @@ nada de aca alla**: si algo de la plataforma cambia, se corrige en su lugar y se
 | **Cloudflare** | DNS y el candado del origen (80/443 solo desde Cloudflare) | `infra/roles/cloudflare` |
 | **Trivy / Falco / kube-bench** | escaneo de imagenes, deteccion en runtime, CIS | Fase 4 |
 
+## Desplegar agro
+
+**[agro-en-staging.md](agro-en-staging.md)** -- el contrato completo, medido contra el cluster el
+29/09/2026: las tres rutas en `infra-platform`, la imagen por digest, el uid y los dos `emptyDir`
+que pide PSA restricted (probados, no supuestos), el PV de **5Gi** con la aritmetica de donde sale,
+los tres secretos y quien los genera, y la CCNP a Copernicus. **Nada de eso esta desplegado**:
+falta la decision del dueño sobre cuando.
+
 ## Lo que NO tenes todavia
 
 - **Observabilidad**: sin Prometheus, sin Grafana, sin logs centralizados, sin alertas. Es la Fase 5

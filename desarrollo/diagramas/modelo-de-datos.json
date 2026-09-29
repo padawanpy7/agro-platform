@@ -11,9 +11,9 @@
   },
   "components": [
     {
-      "id": "cliente",
+      "id": "client",
       "type": "security",
-      "label": "cliente",
+      "label": "client",
       "sublabel": "tenant",
       "tag": "aisla todo",
       "pos": [
@@ -26,10 +26,10 @@
       ]
     },
     {
-      "id": "campo",
+      "id": "farm",
       "type": "database",
-      "label": "campo",
-      "sublabel": "del cliente",
+      "label": "farm",
+      "sublabel": "el establecimiento",
       "pos": [
         240,
         330
@@ -40,9 +40,9 @@
       ]
     },
     {
-      "id": "parcela",
+      "id": "plot",
       "type": "database",
-      "label": "parcela",
+      "label": "plot",
       "sublabel": "poligono PostGIS",
       "tag": "une todo",
       "pos": [
@@ -55,9 +55,9 @@
       ]
     },
     {
-      "id": "campania",
+      "id": "campaign",
       "type": "database",
-      "label": "campania",
+      "label": "campaign",
       "sublabel": "cultivo y rendimiento",
       "tag": "la etiqueta del ML",
       "pos": [
@@ -70,9 +70,9 @@
       ]
     },
     {
-      "id": "suelo",
+      "id": "soil_analysis",
       "type": "database",
-      "label": "analisis_suelo",
+      "label": "soil_analysis",
       "sublabel": "laboratorio, con punto",
       "pos": [
         240,
@@ -84,10 +84,10 @@
       ]
     },
     {
-      "id": "ndvi",
+      "id": "spatial_index",
       "type": "database",
-      "label": "indice_satelital",
-      "sublabel": "NDVI por fecha",
+      "label": "spatial_index",
+      "sublabel": "NDVI por parcela y fecha",
       "pos": [
         450,
         560
@@ -98,9 +98,9 @@
       ]
     },
     {
-      "id": "dispositivo",
+      "id": "device",
       "type": "database",
-      "label": "dispositivo",
+      "label": "device",
       "sublabel": "punto PostGIS",
       "pos": [
         690,
@@ -112,9 +112,9 @@
       ]
     },
     {
-      "id": "politica",
+      "id": "irrigation_policy",
       "type": "database",
-      "label": "politica_riego",
+      "label": "irrigation_policy",
       "sublabel": "umbrales del lote",
       "pos": [
         690,
@@ -126,9 +126,9 @@
       ]
     },
     {
-      "id": "captura",
+      "id": "pest_trap_catch",
       "type": "database",
-      "label": "captura_trampa",
+      "label": "pest_trap_catch",
       "sublabel": "conteo por fecha",
       "pos": [
         690,
@@ -140,9 +140,9 @@
       ]
     },
     {
-      "id": "medicion",
+      "id": "measurement",
       "type": "database",
-      "label": "medicion",
+      "label": "measurement",
       "sublabel": "crudo + calibrado",
       "tag": "serie temporal",
       "pos": [
@@ -155,9 +155,9 @@
       ]
     },
     {
-      "id": "riego",
+      "id": "irrigation_event",
       "type": "database",
-      "label": "riego_evento",
+      "label": "irrigation_event",
       "sublabel": "que decidio y cuanto rego",
       "tag": "la otra etiqueta",
       "pos": [
@@ -175,54 +175,54 @@
       "kind": "security-group",
       "label": "tenant_id + Row-Level Security en todas las tablas",
       "wraps": [
-        "cliente",
-        "campo",
-        "parcela",
-        "campania",
-        "suelo",
-        "ndvi",
-        "dispositivo",
-        "politica",
-        "captura",
-        "medicion",
-        "riego"
+        "client",
+        "farm",
+        "plot",
+        "campaign",
+        "soil_analysis",
+        "spatial_index",
+        "device",
+        "irrigation_policy",
+        "pest_trap_catch",
+        "measurement",
+        "irrigation_event"
       ]
     }
   ],
   "connections": [
     {
       "id": "cli-campo",
-      "from": "cliente",
-      "to": "campo",
+      "from": "client",
+      "to": "farm",
       "label": "1 a N",
       "variant": "emphasis"
     },
     {
       "id": "campo-parcela",
-      "from": "campo",
-      "to": "parcela",
+      "from": "farm",
+      "to": "plot",
       "label": "1 a N",
       "variant": "emphasis"
     },
     {
       "id": "parcela-disp",
-      "from": "parcela",
-      "to": "dispositivo",
+      "from": "plot",
+      "to": "device",
       "label": "1 a N",
       "variant": "emphasis",
       "labelDx": -18
     },
     {
       "id": "disp-medicion",
-      "from": "dispositivo",
-      "to": "medicion",
+      "from": "device",
+      "to": "measurement",
       "label": "1 a N",
       "variant": "emphasis"
     },
     {
       "id": "parcela-campania",
-      "from": "parcela",
-      "to": "campania",
+      "from": "plot",
+      "to": "campaign",
       "label": "1 a N",
       "fromSide": "top",
       "toSide": "bottom",
@@ -230,15 +230,15 @@
     },
     {
       "id": "campania-suelo",
-      "from": "campania",
-      "to": "suelo",
+      "from": "campaign",
+      "to": "soil_analysis",
       "label": "contexto",
       "variant": "dashed"
     },
     {
       "id": "parcela-ndvi",
-      "from": "parcela",
-      "to": "ndvi",
+      "from": "plot",
+      "to": "spatial_index",
       "label": "1 a N",
       "fromSide": "bottom",
       "toSide": "top",
@@ -246,8 +246,8 @@
     },
     {
       "id": "parcela-politica",
-      "from": "parcela",
-      "to": "politica",
+      "from": "plot",
+      "to": "irrigation_policy",
       "label": "1 a N",
       "fromSide": "right",
       "toSide": "left",
@@ -264,8 +264,8 @@
     },
     {
       "id": "disp-captura",
-      "from": "dispositivo",
-      "to": "captura",
+      "from": "device",
+      "to": "pest_trap_catch",
       "label": "1 a N",
       "fromSide": "bottom",
       "toSide": "top",
@@ -273,8 +273,8 @@
     },
     {
       "id": "disp-riego",
-      "from": "dispositivo",
-      "to": "riego",
+      "from": "device",
+      "to": "irrigation_event",
       "label": "1 a N",
       "fromSide": "top",
       "toSide": "left",
@@ -300,16 +300,16 @@
       "title": "Por que la parcela es el centro",
       "items": [
         "Sensores, trampas y satelite se atan por GEOMETRIA, no a mano",
-        "ST_Contains(parcela.geom, dispositivo.punto) lo resuelve la base",
-        "Si el cliente corrige un limite, todo se recalcula solo"
+        "ST_Contains(plot.geom, device.location) lo resuelve la base",
+        "Si el cliente corrige un limite, todo se recalcula solo -- menos spatial_index"
       ]
     },
     {
       "dot": "cyan",
       "title": "Sin esto el ML describe pero no predice",
       "items": [
-        "campania trae el RENDIMIENTO: es la etiqueta de que terreno rinde mejor",
-        "riego_evento trae la ACCION: condicion, decision y resultado",
+        "campaign trae el RENDIMIENTO: la etiqueta llega meses despues de la foto",
+        "irrigation_event trae la ACCION: condicion, decision y resultado",
         "Capturar rendimiento desde el dia uno, aunque sea a mano"
       ]
     },

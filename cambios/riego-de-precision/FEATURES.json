@@ -45,7 +45,7 @@
         "calibracion sin UPDATE: se cierra la vigente y se inserta otra",
         "medicion y riego_evento como hypertables de Timescale; el resto no"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "RP-01-rls",

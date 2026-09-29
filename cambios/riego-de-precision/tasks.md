@@ -10,10 +10,10 @@ paso. El orden no es negociable por una razón sola: **las tres primeras no nece
 nada**, y la cuarta es la primera que pide hardware (~72 USD, Gs 592.000 con caudalímetro, comprado
 entero en Asunción -- ver [PREGUNTAS.md](PREGUNTAS.md) §3).
 
-**La pregunta 0 -quién es el cliente- está abierta y NO bloquea ninguna fase de acá.** Los cuatro
-escenarios (productor, cooperativa, junta de agua, organismo) construyen el mismo producto; lo que
-cambia es quién firma. Lo único que se reescribe si gana otro escenario es `ECONOMIA.md`. Lo que sí
-bloquea a la Fase 4 es la compra del hardware, que es plata del dueño.
+**La pregunta 0 -quién es el cliente- se contestó el 29/09: el PRODUCTOR.** Nunca bloqueó una fase
+de acá, y la respuesta lo confirma: no cambia una línea de lo construido, porque los cuatro
+escenarios construían el mismo producto y sólo cambiaba quién firma. Lo que sí bloquea a la Fase 4
+sigue siendo la compra del hardware, que es plata del dueño.
 
 **Cada fase cierra con su script de verificación versionado en `scripts/`**, no con una corrida a
 mano en la terminal de la sesión: el scratchpad se pierde y el criterio de `HECHO_CUANDO.md` lo
@@ -44,12 +44,16 @@ tests.
 Las doce tablas del `design.md` §1. `medicion` y `riego_evento` como hypertables de Timescale; el
 resto, tablas comunes.
 
-- [~] Migraciones **001** (cliente, modulo, tenant_modulo) y **002** (campo, parcela, dispositivo, magnitud, calibracion, medicion) aplicadas y verificadas. **Faltan** politica_riego, campania, analisis_suelo, indice_espacial, captura_trampa y riego_evento.
-- [~] `medicion` es hypertable, **verificado contra el catalogo de Timescale**, no contra el archivo. `riego_evento` falta.
+- [x] **Las seis migraciones, aplicadas y verificadas el 29/09**: 001 nucleo, 002 historia y RLS, 003 los tres agujeros de acceso, 004 agronomia, 005 ganaderia, 006 calibracion de solo cierre. **62 tablas de producto y 57 de historia.** Se paso de las doce del design a las 62 porque la mitad del Minimum Data Set no la manda ningun sensor.
+- [x] **Las bajadas existen y se CORREN**, no solo se escriben: `apply-schema.sh --down` seguido de una subida limpia deja `verify-schema.sh` en 48/48. Una bajada que nadie ejecuta es un archivo que dice ser un rollback.
+- [x] `medicion`, `riego_evento` y `animal_location` son hypertables, **verificado contra el catalogo de Timescale**. **Desviacion declarada**: el plan decia "medicion y riego_evento, el resto no", y `animal_location` es la tercera. Entra porque crece al ritmo de un aparato, que es el criterio real. `indice_espacial` **fue** hypertable durante una hora y se saco: nueve anios de Sentinel-2 sobre veinte parcelas son trece mil filas, y particionar eso no compra nada.
+- [x] **Una calibracion se cierra y no se edita, y lo hace cumplir el permiso**: `grant update (valid_to)`, por columna. 002 lo decia en un comentario y otorgaba UPDATE sobre la tabla entera, que permitia exactamente lo que el comentario prohibia.
+- [x] **Tres agujeros de acceso cerrados** (migracion 003), los tres de la misma forma -- tablas que nadie penso como "datos de cliente" porque no llevan `tenant_id`: `role_permission` y `membership_role` sin RLS, `app_user` sin permiso para el producto, y `credential` sin un rol que la leyera (ahora `agro_auth`, que no ve un solo dato de cliente).
+- [x] **El DER completo**, generado del catalogo de la base que corre: [docs/der.md](docs/der.md), 62 tablas con todas sus columnas y las 130 claves foraneas en Mermaid. Mas dos diagramas de archify en `desarrollo/diagramas/`. Y el generador **falla** si el diagrama dibujado a mano nombra una tabla que ya no existe -- que es como se descubrio que seguia en espaniol.
 - [x] `calibracion` con `procedencia` NOT NULL y no-vacia, y una sola vigente por (dispositivo, magnitud). **Las dos cosas probadas en rojo.**
 - [x] Comentario de que queda y que se pierde en las cuatro migraciones (001/002, up y down). El de la bajada de la 002 dice explicitamente que **se pierde el historico entero** y que la vuelta atras real es restaurar de backup.
-- [x] `cambios/riego-de-precision/scripts/verify-schema.sh`: **11/11 en verde**, contra `pg_policies` y `pg_class`. Con control negativo: al borrar la policy se pone en rojo.
-- [x] `cambios/riego-de-precision/scripts/verify-schema.sh`: **11/11 en verde**. Incluye el paso que prueba que una magnitud nueva es **una FILA y no una migracion**.
+- [x] `cambios/riego-de-precision/scripts/verify-schema.sh`: **48/48 en verde** contra la base que corre. Con control negativo: borrando a proposito una policy, un trigger, una tabla de historia y un permiso, los pasos correspondientes se ponen en rojo. Incluye el paso que prueba que una magnitud nueva es **una FILA y no una migracion**, y el que prueba que una cosecha cargada hoy **etiqueta una foto de hace dos meses sin tocarla**.
+- [x] Los dos pasos estructurales dejaron de ser CUENTAS ("11 tablas con RLS", "24 de historia") y pasaron a ser **diferencias de conjunto**: cuantas tablas que DEBERIAN tenerlo no lo tienen. Las cuentas se pusieron en rojo al llegar a 62 tablas sin que nada estuviera mal, que es el peor rojo: el que se aprende a editar en vez de leer.
 
 **Rol**: `database`. **Gate**: el objeto tiene que compilar contra la Postgres real (AGENTS.md §7).
 

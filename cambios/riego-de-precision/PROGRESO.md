@@ -5,6 +5,117 @@ metido en `cambios/META/PROGRESO.md`, que es para lo que se hace en `main` y tie
 **+8 lineas por sesion** -pensado para la bitacora del loop, no para un producto de quince
 documentos-. Aca hay lugar. La mas nueva ARRIBA.
 
+## 2026-09-29 (segunda vuelta) -- la base TERMINADA, el DER, y tres agujeros de acceso
+
+**El dueño contesto las dos preguntas que quedaban**, y las dos eran suyas:
+
+| | respuesta | que queda firme |
+|---|---|---|
+| **0. Quien es el cliente** (bloqueaba) | **el PRODUCTOR** | la cuota base por finca + hectarea, el piso de **3 clientes** y no 1 contrato, y el ciclo corto: el producto se vende mostrandolo andando. **No cambia una linea de lo construido** -- que es lo que la propia pregunta afirmaba |
+| **1. En que VPS corre** | **este, para el desarrollo local**; el despliegue a staging lo hace INFRA | el disparador para mudar sigue siendo el **primer cliente que paga**, no una fecha |
+
+Los escenarios B, C y D quedan **despriorizados, no prohibidos**: si maniana financia la
+cooperativa, lo unico que se reescribe sigue siendo `ECONOMIA.md`.
+
+### La base paso de 27 tablas a 62, y el motivo no es que faltaban tablas
+
+**La mitad del Minimum Data Set -la lista que la FAO y DSSAT ya escribieron- no la manda ningun
+sensor**: el perfil del suelo, la densidad de siembra, la fecha de floracion, los kilos cosechados.
+Sin eso, el historico de sensores no alimenta ningun modelo agronomico, por prolijo que sea.
+
+| migracion | que entro |
+|---|---|
+| **003** | los tres agujeros de acceso (abajo) |
+| **004** | `campaign`, `harvest`, `experiment_block`, el suelo, el satelite, la trampa, la foto y el trio `observation`/`diagnosis`/`treatment` |
+| **005** | ganaderia: `animal`, `animal_location`, `animal_group`, `ration` |
+| **006** | una calibracion se **cierra** y no se edita, y lo hace cumplir el permiso |
+
+**Lo que NO se convirtio en tabla, que es donde se ve si el diseño aguantaba:**
+
+- **El peso del animal es una `measurement`** con `animal_id`, porque `quantity` es catalogo. Esa
+  era la promesa de la tabla angosta y se cumplio.
+- **La vacuna es un `treatment`** con producto de tipo vacuna: la misma tabla que usa el tomate.
+- **La enfermedad es una `observation` mas un `diagnosis`**, el mismo par que la planta.
+- Lo unico verdaderamente nuevo de ganaderia es que **el animal se mueve**: `animal_location`.
+
+### Lo que se vio NO es lo que se cree
+
+`observation` guarda **hechos** -sintoma, lugar, CUANTO, la foto- y no cambia nunca. `diagnosis`
+guarda **creencias** y es **append-only**: el modelo sugiere, el tecnico confirma, y **quedan las
+dos filas**. Solo lo confirmado entrena. Un modelo que se entrena con sus propias salidas refuerza
+sus errores cada vuelta hasta estar seguro y equivocado.
+
+### Tres agujeros de acceso, los tres de la misma forma
+
+**Tablas que nadie penso como "datos de cliente" porque no llevan `tenant_id`:**
+
+1. **`role_permission` y `membership_role` sin RLS.** El bucle de la 002 se apoya en `tenant_id` y
+   una tabla de union no tiene. Con un token de A se podian leer -y ESCRIBIR- los permisos de los
+   roles de B. La tenencia sale del padre, no de una columna nueva.
+2. **`app_user` sin permiso para el producto.** Toda pantalla que muestra "quien" iba a fallar. Y
+   darlo pelado era peor: `app_user` es global a proposito. Lleva RLS por membresia.
+3. **`credential` sin nadie que la lea.** La autenticacion pasa ANTES de que haya cliente -eso ES
+   autenticar-, asi que no la puede hacer `agro_app`. Rol nuevo `agro_auth`, que ve identidades y
+   hashes y **ni un dato de cliente**.
+
+### Y una que el comentario prohibia y el permiso permitia
+
+La 002 escribia que una calibracion **se cierra, no se edita** -- y otorgaba `UPDATE` sobre la
+tabla entera, o sea que se podia reescribir la formula de una calibracion que las mediciones ya
+apuntan. La 006 lo arregla **por columna**: `grant update (valid_to)`. Cerrar se puede; reescribir
+no llega a la base.
+
+### El DER
+
+- **[docs/der.md](docs/der.md)** -- las 62 tablas con todas sus columnas, mas las 130 claves
+  foraneas en Mermaid. **Lo genera un script leyendo el catalogo de la base que corre**, no los
+  archivos .sql. No se edita a mano.
+- **Dos diagramas de archify** en `desarrollo/diagramas/`: `modelo-de-datos` (la espina) y
+  **`etiquetas-y-eventos`** (nuevo: la campania, la cosecha, y lo que se vio / se cree / se aplico).
+  Los dos pasan los 9 checks de showcase y la verificacion de contencion.
+- **Un DER completo de archify se intento y se descarto**: archify rechaza toda flecha que cruce a
+  otra, y no hay acomodo de 62 cajas donde cien relaciones no se crucen. El intento quedo escrito
+  en el encabezado del generador, no borrado.
+
+### Lo que el generador encontro apenas existio
+
+`modelo-de-datos.html` seguia diciendo **`parcela`, `campania` y `medicion` cuatro dias despues**
+de que el esquema pasara a ingles. Nadie lo vio porque **nada podia verlo**. El generador ahora
+falla si el diagrama nombra una tabla que no existe; **la primera corrida fallo**, con las once
+tablas viejas en la salida.
+
+### Verificacion
+
+- **`verify-schema.sh`: 48 de 48**, contra la base corriendo. Eran 21.
+- **Control negativo hecho**: borrando a proposito una policy, un trigger, una tabla de historia y
+  un permiso, los pasos correspondientes se pusieron en rojo -- y uno se descubrio **vacuo**: el
+  paso "B no ve los permisos de A" tambien pasa si la policy no deja ver a nadie. Va en par con su
+  control positivo, y queda escrito.
+- **Los dos pasos estructurales dejaron de ser cuentas.** "11 tablas con RLS" y "24 de historia" se
+  pusieron en rojo al llegar a 62 tablas **sin que nada estuviera mal**. Ahora son diferencias de
+  conjunto: cuantas tablas que DEBERIAN tenerlo no lo tienen. La respuesta correcta es 0 para
+  siempre.
+- **Las bajadas existen y se CORREN**: `apply-schema.sh --down` y despues una subida limpia deja
+  48/48. Una bajada que nadie ejecuta es un archivo que dice ser un rollback.
+- **`apply-schema.sh` no existia**, y eso era un hueco real: la base de este VPS se habia armado
+  pegando archivos en psql a mano, asi que nada probaba que **los archivos** la reconstruyen.
+
+### Desviaciones declaradas
+
+- **`animal_location` es la tercera hypertable** y el plan decia "medicion y riego_evento, el resto
+  no". Entra porque crece al ritmo de un aparato, que es el criterio real detras de esa frase.
+- **`spatial_index` FUE hypertable durante una hora y se saco**: nueve anios de Sentinel-2 sobre
+  veinte parcelas son trece mil filas. Particionar eso no compra nada y cuesta la regla de que todo
+  indice unico lleve la columna de particion.
+
+### Lo que sigue
+
+Le pregunte a INFRA el contrato de despliegue a staging -- forma de los manifiestos, si la
+plataforma corre la base o subo la mia, de donde salen los secretos de los cuatro roles, y como se
+declara la salida a Copernicus. Con eso construyo hacia ahi en vez de descubrirlo el dia del
+despliegue. **Despues: el front** -- Next + shadcn, con el modulo `@/ui` y el candado de hash para
+que no se puedan editar los componentes copiados.
+
 ## 2026-09-29 -- la base, entera y en ingles
 
 **Primera linea de codigo del producto y esquema completo.** Lo que quedo funcionando:

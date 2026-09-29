@@ -9,9 +9,11 @@ Lo que no se decide solo **del loop mismo**. Una pregunta abierta que BLOQUEA no
 
 **Bloquean**
 
-- **Quien es el cliente, y quien pone el capital** (pregunta 0 de la ficha del producto). Productor,
-  cooperativa, junta de agua, organismo, o el dueño mismo. Cambia el precio, el ciclo de venta y de
-  donde sale el capital. **Se contesta en la primera reunion, no desde el escritorio.**
+_(ninguna)_
+
+> **La unica que bloqueaba se contesto el 29/09**: *quien es el cliente* -> **el productor**. Quedo
+> abierta cuatro dias y la contesto el dueño, que era la unica forma. El detalle y lo que queda
+> firme por esa decision estan en la ficha.
 
 ## Abiertas -- del loop mismo
 
@@ -23,14 +25,14 @@ _(ninguna)_
 
 > **[cambios/riego-de-precision/PREGUNTAS.md](../riego-de-precision/PREGUNTAS.md)**
 
-Y al 29/09/2026 quedan **dos abiertas**, las dos del dueño y ninguna tecnica:
+Y al 29/09/2026 **no queda ninguna abierta**. Las dos ultimas se contestaron ese dia:
 
-| | que decide |
+| | respuesta |
 |---|---|
-| **0. Quien es el cliente, y quien pone el capital** -- **BLOQUEA** | productor, cooperativa, junta de agua, organismo, o el dueño mismo. Cambia el precio, el ciclo de venta y de quien sale el capital. **Se contesta en la primera reunion, no desde el escritorio** |
-| **1. En que VPS corre el producto** | el de staging con un inquilino de terceros, o uno nuevo. Recomendacion escrita: **el mismo para construir, uno nuevo antes del primer cliente que paga** |
+| **0. Quien es el cliente** (bloqueaba) | **el productor**. Queda firme la cuota por finca + hectarea y el piso de 3 clientes; los otros escenarios quedan despriorizados, no prohibidos |
+| **1. En que VPS corre el producto** | **este, para el desarrollo local**; el despliegue a staging lo hace la sesion INFRA. El disparador para mudar sigue siendo **el primer cliente que paga** |
 
-**Las otras tres se contestaron**: el banco de pruebas (27/09), `medicion` angosta (28/09) y el
+**Las otras tres ya estaban**: el banco de pruebas (27/09), `medicion` angosta (28/09) y el
 hardware de la primera vuelta (con precios locales verificados).
 
 ## Pendientes del loop que NO son preguntas, son trabajo

@@ -4,7 +4,27 @@ Lo que no se decide solo. Una pregunta abierta que BLOQUEA no deja cerrar la vue
 
 ## Abiertas
 
-## 0. Quien es el cliente, y quien pone el capital -- ABIERTA (25/09/2026)
+_(ninguna)_
+
+## 0. ~~Quien es el cliente, y quien pone el capital~~ CONTESTADA (29/09/2026)
+
+> **Respuesta del dueño: el PRODUCTOR.** Escenario A. La decision cierra la unica pregunta que
+> bloqueaba, y **no obliga a tocar una sola linea de lo construido** -- que era justamente lo que
+> este documento afirmaba que pasaria. Lo que si queda firme ahora:
+>
+> | queda firme | por que |
+> |---|---|
+> | La cuota **base por finca + por hectarea** de [ECONOMIA.md](ECONOMIA.md) | era el supuesto, y ahora es la decision |
+> | El **piso de 3 clientes**, no 1 contrato | el escenario B lo habria bajado a uno; con A hay que convencer de a uno |
+> | El ciclo de venta **corto y de ticket chico** | y por lo tanto: el producto se vende **mostrandolo andando**, no en licitacion |
+> | El **dataset crece de a un campo-año por cliente** | lo que [el-sistema-completo.md](docs/el-sistema-completo.md) §6 ya advertia: el N sale de vender, no hay atajo |
+>
+> **Lo que NO cierra, y conviene tenerlo escrito**: los escenarios B, C y D **no quedan prohibidos,
+> quedan despriorizados**. Si mañana la cooperativa financia para sus socios, lo unico que se
+> reescribe sigue siendo `ECONOMIA.md`. La decision es de rumbo comercial, no de arquitectura.
+>
+> Lo de abajo es el analisis con el que se decidio, y se deja porque es lo que hace auditable la
+> decision.
 
 **Todo lo escrito hasta ahora asume que el cliente es UN PRODUCTOR.** La cuota
 (`base por finca + por hectarea`), el modelo A/B de instalacion y el "piso de 3 clientes" de
@@ -54,14 +74,29 @@ que exista mercado** -- que es exactamente lo que la pregunta 0 busca. Sigue **A
 escenarios A a D siguen siendo los que la contestan.
 
 
-**Una bloqueante -la 0- y tres abiertas.** La 2 se contesto el 27/09.
+**Ninguna abierta desde el 29/09/2026.** Las cinco estan contestadas: la 2 el 27/09, la 4 el 28/09
+(medicion ANGOSTA), la 3 con precios locales verificados, y **la 0 y la 1 el 29/09** -- las dos por
+el dueño, que era la unica forma de contestarlas.
 
 **Actualizado el 28/09**: la frase que estaba aca decia *"ninguna es tecnica"*. Dejo de ser cierto con
 la pregunta **4**, que era tecnica y bloqueaba la Fase 1 -- **y que el mismo dia se contesto: ANGOSTA**.
 **Vuelve a ser cierto**: las tres que quedan abiertas dependen de plata, de un campo real o del negocio,
 y ninguna se decide desde el escritorio.
 
-## 1. Donde corre el producto: este VPS o uno nuevo
+## 1. ~~Donde corre el producto: este VPS o uno nuevo~~ CONTESTADA (29/09/2026)
+
+> **Respuesta del dueño: A, y exactamente como estaba recomendado.** El desarrollo **local** corre
+> en este VPS -- que es lo que ya viene pasando desde el 29/09 con `agro-postgres` atado a
+> `127.0.0.1` y sin nada expuesto a internet-, y **el despliegue a staging lo hace la sesion
+> INFRA**, que es la que maneja la plataforma.
+>
+> **Por que esto no contradice la recomendacion de mover antes del primer cliente que paga**: el
+> disparador sigue en pie y sigue siendo el mismo -- **el primer cliente que paga**, no una fecha.
+> Lo que la respuesta decide es que hasta ahi no se gasta en un VPS nuevo.
+>
+> **Y la parte que hay que respetar hasta entonces**: mientras compartan maquina, el dato de agro
+> convive con el inquilino de terceros. Por eso todo lo de agro vive en su propia red y su propio
+> contenedor, y **este repo no despliega**: arma y le pasa a `infra-platform` (AGENTS.md §1).
 
 El VPS de hoy es **staging** y ya tiene un inquilino de terceros (`primavera-nati`). El producto
 trae una base de series temporales, que es la carga mas pesada que esta maquina va a ver, sobre el

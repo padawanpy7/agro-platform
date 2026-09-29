@@ -2,6 +2,14 @@
 
 El puente entre sesiones. Una entrada por sesion, la mas nueva ARRIBA.
 
+## 2026-09-29 (2a vuelta) -- la base terminada, el DER, y tres agujeros de acceso
+**Bitacora del trabajo**: `cambios/riego-de-precision/PROGRESO.md`. Puente: el dueño contesto las dos
+preguntas -**el cliente es el productor**; el local en este VPS y el staging lo despliega INFRA-, asi
+que **no queda ninguna que bloquee**. La base va en 62 tablas y 57 de historia, con bajadas que SE
+CORREN, y `verify-schema.sh` en 48/48.
+- **Del loop**: dos pasos del verify eran CUENTAS y se pusieron en rojo al crecer el esquema sin que
+  nada estuviera mal; ahora son diferencias de conjunto.
+
 ## 2026-09-29 -- la base del producto, y dos gates que no median nada
 **La bitacora del trabajo es la DEL TICKET**: `cambios/riego-de-precision/PROGRESO.md`. Aca el puente:
 existe la primera Postgres (17.11 + Timescale + PostGIS, local, sin exponer), 51 tablas en ingles con

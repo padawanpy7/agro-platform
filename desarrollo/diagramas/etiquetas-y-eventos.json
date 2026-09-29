@@ -1,0 +1,348 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "La etiqueta y el evento: lo que ningun sensor manda",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1340,
+      700
+    ]
+  },
+  "components": [
+    {
+      "id": "plot",
+      "type": "security",
+      "label": "plot",
+      "sublabel": "poligono PostGIS",
+      "tag": "une todo",
+      "pos": [
+        40,
+        170
+      ],
+      "size": [
+        160,
+        66
+      ]
+    },
+    {
+      "id": "campaign",
+      "type": "database",
+      "label": "campaign",
+      "sublabel": "que se sembro",
+      "tag": "presta la etiqueta",
+      "pos": [
+        250,
+        170
+      ],
+      "size": [
+        170,
+        66
+      ]
+    },
+    {
+      "id": "experiment_block",
+      "type": "database",
+      "label": "experiment_block",
+      "sublabel": "una cosa distinta por bloque",
+      "pos": [
+        500,
+        40
+      ],
+      "size": [
+        190,
+        66
+      ]
+    },
+    {
+      "id": "harvest",
+      "type": "database",
+      "label": "harvest",
+      "sublabel": "kilos, descarte y por que",
+      "tag": "LA etiqueta",
+      "pos": [
+        500,
+        170
+      ],
+      "size": [
+        180,
+        66
+      ]
+    },
+    {
+      "id": "observation",
+      "type": "database",
+      "label": "observation",
+      "sublabel": "lo que se VIO",
+      "tag": "no cambia nunca",
+      "pos": [
+        500,
+        320
+      ],
+      "size": [
+        180,
+        66
+      ]
+    },
+    {
+      "id": "diagnosis",
+      "type": "database",
+      "label": "diagnosis",
+      "sublabel": "lo que se CREE",
+      "tag": "append-only",
+      "pos": [
+        800,
+        250
+      ],
+      "size": [
+        170,
+        66
+      ]
+    },
+    {
+      "id": "treatment",
+      "type": "database",
+      "label": "treatment",
+      "sublabel": "lo que se APLICO",
+      "tag": "trazabilidad",
+      "pos": [
+        800,
+        390
+      ],
+      "size": [
+        170,
+        66
+      ]
+    },
+    {
+      "id": "photo",
+      "type": "database",
+      "label": "photo",
+      "sublabel": "el puntero, no el archivo",
+      "pos": [
+        500,
+        460
+      ],
+      "size": [
+        180,
+        66
+      ]
+    },
+    {
+      "id": "animal",
+      "type": "database",
+      "label": "animal",
+      "sublabel": "caravana y RFID",
+      "pos": [
+        40,
+        570
+      ],
+      "size": [
+        160,
+        66
+      ]
+    },
+    {
+      "id": "animal_location",
+      "type": "database",
+      "label": "animal_location",
+      "sublabel": "donde estuvo",
+      "tag": "append-only",
+      "pos": [
+        250,
+        570
+      ],
+      "size": [
+        190,
+        66
+      ]
+    },
+    {
+      "id": "measurement",
+      "type": "database",
+      "label": "measurement",
+      "sublabel": "el peso es una medicion",
+      "tag": "sin tabla propia",
+      "pos": [
+        520,
+        570
+      ],
+      "size": [
+        190,
+        66
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "security-group",
+      "label": "tenant_id + Row-Level Security en todas",
+      "wraps": [
+        "plot",
+        "campaign",
+        "experiment_block",
+        "harvest",
+        "observation",
+        "diagnosis",
+        "treatment",
+        "photo",
+        "animal",
+        "animal_location",
+        "measurement"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "plot-campaign",
+      "from": "plot",
+      "to": "campaign",
+      "label": "1 a N",
+      "variant": "emphasis"
+    },
+    {
+      "id": "campaign-block",
+      "from": "campaign",
+      "to": "experiment_block",
+      "label": "1 a N",
+      "fromSide": "top",
+      "toSide": "left",
+      "via": [
+        [
+          335,
+          73
+        ],
+        [
+          500,
+          73
+        ]
+      ]
+    },
+    {
+      "id": "campaign-harvest",
+      "from": "campaign",
+      "to": "harvest",
+      "label": "1 a N",
+      "variant": "emphasis"
+    },
+    {
+      "id": "campaign-obs",
+      "from": "campaign",
+      "to": "observation",
+      "label": "1 a N",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "via": [
+        [
+          335,
+          353
+        ],
+        [
+          500,
+          353
+        ]
+      ]
+    },
+    {
+      "id": "obs-diag",
+      "from": "observation",
+      "to": "diagnosis",
+      "label": "1 a N",
+      "fromSide": "top",
+      "toSide": "left",
+      "via": [
+        [
+          590,
+          283
+        ],
+        [
+          800,
+          283
+        ]
+      ],
+      "labelDy": -14
+    },
+    {
+      "id": "obs-trat",
+      "from": "observation",
+      "to": "treatment",
+      "label": "0 a N",
+      "fromSide": "right",
+      "toSide": "left",
+      "via": [
+        [
+          760,
+          353
+        ],
+        [
+          760,
+          423
+        ]
+      ],
+      "labelDx": 14
+    },
+    {
+      "id": "obs-foto",
+      "from": "observation",
+      "to": "photo",
+      "label": "0 a N",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 20
+    },
+    {
+      "id": "animal-loc",
+      "from": "animal",
+      "to": "animal_location",
+      "label": "1 a N",
+      "variant": "emphasis"
+    },
+    {
+      "id": "animal-med",
+      "from": "animal",
+      "to": "measurement",
+      "label": "peso",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [
+        [
+          120,
+          670
+        ],
+        [
+          615,
+          670
+        ]
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Lo que se vio NO es lo que se cree",
+      "items": [
+        "observation guarda sintoma, lugar, CUANTO y la foto -- y no cambia nunca",
+        "diagnosis se agrega: el modelo sugiere, el tecnico confirma, y quedan las dos",
+        "Solo lo confirmado entrena: un modelo que aprende de si mismo se refuerza"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "La etiqueta llega meses despues de la foto",
+      "items": [
+        "La foto es de noviembre; el rendimiento se sabe en febrero",
+        "La foto se ata a campaign, y harvest etiqueta TODAS sus fotos de una vez",
+        "Sin eso el dataset nunca se etiqueta, y una foto sin etiqueta no entrena nada"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Ganaderia: casi nada es tabla nueva",
+      "items": [
+        "El peso es una measurement con animal_id: quantity es catalogo",
+        "La vacuna es un treatment con producto de tipo vacuna, la misma tabla que el tomate",
+        "Lo unico realmente nuevo es que el animal se MUEVE: animal_location"
+      ]
+    }
+  ]
+}

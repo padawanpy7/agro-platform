@@ -6,9 +6,36 @@ y funcionan sin internet).
 | Archivo | Que muestra |
 |---|---|
 | `infraestructura-completa.html` | Del sensor enterrado al VPS: campo, gateway, borde y plataforma |
-| `modelo-de-datos.html` | El modelo de datos, con la parcela como unidad de analisis |
+| `modelo-de-datos.html` | La espina del modelo, con la parcela como unidad de analisis |
+| `etiquetas-y-eventos.html` | La otra mitad: la campania, la cosecha, lo que se vio y lo que se aplico |
 
 El `.json` al lado de cada uno es **la fuente**: se edita ese y se regenera. No se edita el HTML.
+
+## El DER completo NO esta aca, y es a proposito
+
+Estos tres son diagramas **para mirar**: cada linea esta puesta a mano y archify **rechaza** una
+flecha que cruce a otra o que pase por encima de una caja, en los dos perfiles de calidad. Eso es
+lo que los hace legibles, y es exactamente lo que un DER de 62 tablas y 130 claves foraneas **no
+puede cumplir** -- no hay acomodo de 62 cajas donde cien relaciones no se crucen. Se intento y se
+descarto; el intento esta documentado en el encabezado de `generate-der.mjs`.
+
+**El DER completo -- todas las tablas, todas las columnas, todas las claves -- vive en
+[cambios/riego-de-precision/docs/der.md](../../cambios/riego-de-precision/docs/der.md)**, lo
+**genera un script leyendo el catalogo de la base que corre**, y trae ademas el grafo entero en
+Mermaid. No se edita a mano:
+
+```sh
+node cambios/riego-de-precision/scripts/generate-der.mjs
+```
+
+## Y ese mismo script vigila este diagrama
+
+`modelo-de-datos.html` se dibujo el 25/09 con los nombres en español y **siguio diciendo `parcela`,
+`campania` y `medicion` cuatro dias despues de que el esquema pasara a ingles**. Nadie se dio
+cuenta porque **nada podia darse cuenta**: un diagrama dibujado a mano no tiene quien lo desmienta.
+
+Desde el 29/09 `generate-der.mjs` **falla** si `modelo-de-datos.json` nombra una tabla que no existe
+en la base. La primera vez que corrio, fallo -- con las once tablas viejas en la salida.
 
 ## Regenerar
 

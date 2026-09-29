@@ -65,3 +65,24 @@ existe es la parte de producto: sensores, gateway, controlador, MQTT, la API, la
 
 Si vas a presentarlo a un tercero, conviene decir esa diferencia en voz alta. Es la misma regla que
 el resto del repositorio: lo declarado no es lo aplicado hasta que se mide.
+
+## Publicados como Artifact (los enlaces, que solo vivian en el chat)
+
+Los `.html` de esta carpeta son la copia buena y no dependen de nada. Pero ademas estan publicados,
+que es lo que sirve para **abrirlos desde el telefono o pasarle el enlace a un tercero** sin
+mandarle un archivo de 700 KB:
+
+| Diagrama | Enlace |
+|---|---|
+| `infraestructura-completa.html` | https://claude.ai/artifact/MBAKVqpqCHK2VMUtyZWw2z |
+| `modelo-de-datos.html` | https://claude.ai/artifact/93iQsN4NdDGgeoJ2TBTfwK |
+| Presentacion de viabilidad (17 laminas) | https://claude.ai/artifact/Q9WktgJCQFoDwiEh3f5TpT |
+| Mockup de pantallas | https://claude.ai/artifact/9axfD7KWQAHCHVLWeodctp |
+
+**Los publicados son del 25/09 y el HTML local del 29/09.** El de `modelo-de-datos` es justamente
+el que quedo nombrando tablas en español despues de que el esquema pasara a ingles: el publicado
+**tiene los nombres viejos**. Antes de mostrarselo a alguien, republicar desde el `.html` de esta
+carpeta.
+
+Quedan escritos aca porque un enlace publicado no vive en ningun repositorio: si se cierra el chat
+donde se genero, no hay de donde sacarlo de nuevo.

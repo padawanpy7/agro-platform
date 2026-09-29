@@ -75,9 +75,7 @@ aplicación (REST para el front) y api de política (la única que el campo cons
       abrir o cerrar una válvula.
 - [ ] Controlador simulado: decide con lo que mide, guarda la última política y su fecha, y a los N
       días sin política nueva cae al programa conservador registrándolo.
-- [ ] Cada decisión entera en `riego_evento`: condición que la causó, decisión, política vigente y
-      resultado (minutos, litros si hay caudalímetro). Sin la acción y su contexto, el histórico
-      describe pero no predice.
+- [x] `riego_evento` con la **condicion** que causo la decision, la politica vigente, y **litros medidos y estimados en columnas SEPARADAS**. Mas `politica_riego` -- validada en la base, no en la API -- `metodo_de_riego` y `tramo`. **11/11 en `scripts/verificar-riego.sh`**, con control negativo.
 - [ ] `scripts/verificar-autonomia.sh`: se corta el enlace y sigue regando; pasan N días y cae al
       conservador.
 

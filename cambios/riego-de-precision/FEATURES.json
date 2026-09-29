@@ -119,7 +119,8 @@
         "Litros medidos y estimados, los dos",
         "Sin la accion y su contexto el ML describe pero no predice"
       ],
-      "passes": false
+      "passes": true,
+      "evidencia": "scripts/verificar-riego.sh 11/11: la condicion que causo la decision, litros medidos y estimados en columnas separadas, y la caida al conservador registrada. Control negativo en rojo."
     },
     {
       "id": "RP-04-banco",

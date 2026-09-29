@@ -134,7 +134,15 @@ if (argv.includes('--paquete')) {
   console.log('Esto NO es una orden: son las senales que hay en los mismos documentos de abajo,')
   console.log('juntas y arriba. La eleccion es de quien trabaja.')
   console.log('')
-  if (b === null) console.log('- Preguntas que bloquean: **no se pudo leer PREGUNTAS.md**')
+  // El mensaje decia "no se pudo leer PREGUNTAS.md" para los DOS casos: que el archivo no exista y
+  // que exista sin la seccion. Son cosas distintas y mandan a lugares distintos -- el 29/09 se creo
+  // el archivo y el aviso siguio igual, que es justo lo que un mensaje impreciso provoca.
+  if (b === null) {
+    const hay = leer(cambios.archivoDelLoop('PREGUNTAS.md')) !== null
+    console.log(hay
+      ? '- Preguntas que bloquean: PREGUNTAS.md existe pero no tiene seccion `**Bloquean**` con items `- **`'
+      : '- Preguntas que bloquean: **no existe PREGUNTAS.md**')
+  }
   else if (b > 0) console.log(`- **${b} pregunta(s) BLOQUEAN**: se resuelven antes de tomar nada (ver PREGUNTAS.md abajo)`)
   else console.log('- Preguntas que bloquean: ninguna anotada (el gate que las cuenta tiene ficha propia: HN-CIERRE-PREGUNTAS-ABIERTAS-FALSO-VERDE)')
   if (s.fecha) console.log(`- Ultima sesion (${s.fecha}): ${s.titulo}`)

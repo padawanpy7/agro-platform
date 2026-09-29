@@ -42,7 +42,7 @@ lo prueba **contra una Postgres real** y comparando el catálogo, no el archivo 
 una migración figure aplicada no prueba que la policy de RLS bloquee.
 
 ```sh
-bash cambios/riego-de-precision/scripts/verificar-rls.sh
+bash cambios/riego-de-precision/scripts/verify-schema.sh
 ```
 
 ## El dato se guarda sin perder precisión
@@ -52,7 +52,7 @@ separadas y son distintas cuando el gateway encoló, el valor **crudo** sigue ah
 calibrado, el punto geográfico no es nulo, y **ninguna fila de la ingesta es un promedio**.
 
 ```sh
-bash cambios/riego-de-precision/scripts/verificar-precision.sh
+bash cambios/riego-de-precision/scripts/verify-schema.sh
 ```
 
 ## Reenviar el mismo payload no duplica filas

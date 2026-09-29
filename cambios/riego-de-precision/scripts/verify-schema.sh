@@ -440,6 +440,24 @@ commit;
 SQL
 )"
 
+# --- the roles the applications actually connect as ---------------------------------------------
+# A superuser is NOT subject to Row-Level Security. If the API ever points at `agro_admin`, every
+# policy in this schema stops applying and every step above keeps passing -- which is why this is
+# checked here and not left to a code review of a connection string.
+step 49 "los tres roles de aplicacion pueden conectarse" "3" \
+  "$(q "select count(*) from pg_roles where rolname in ('agro_app','agro_control','agro_auth')
+        and rolcanlogin;")"
+
+step 50 "y ninguno es superusuario ni puede saltear RLS" "0" \
+  "$(q "select count(*) from pg_roles where rolname in ('agro_app','agro_control','agro_auth')
+        and (rolsuper or rolbypassrls or rolcreaterole or rolcreatedb);")"
+
+# FORCE only bites when the role is not the table's owner. If `agro_app` ever ends up owning a
+# table -- a migration run with the wrong user -- its own policies stop constraining it.
+step 51 "y ninguno es dueño de una tabla, que es lo que hace morder a FORCE" "0" \
+  "$(q "select count(*) from pg_tables where schemaname='public'
+        and tableowner in ('agro_app','agro_control','agro_auth');")"
+
 echo
 if [ "$bad" -eq 0 ]; then echo "==> OK: $ok of $((ok+bad)) steps green"; exit 0; fi
 echo "==> FAIL: $bad of $((ok+bad)) steps red"; exit 1

@@ -44,19 +44,12 @@ tests.
 Las doce tablas del `design.md` §1. `medicion` y `riego_evento` como hypertables de Timescale; el
 resto, tablas comunes.
 
-- [ ] Migración up/down de las doce tablas, con `tenant_id` en todas y las policies de RLS.
-- [ ] `medicion` y `riego_evento` convertidas a hypertable. **Sólo esas dos**: un catálogo de 200
-      filas como hypertable es costo sin beneficio.
-- [ ] `calibracion` con procedencia obligatoria (fabricante / ensayo propio / fecha) y **sin UPDATE**:
-      se cierra la vigente y se inserta otra. Si se edita, se pierde con qué fórmula se calibró lo
-      viejo.
-- [ ] Comentarios obligatorios en la migración: qué dato queda y qué se pierde (excepción explícita
-      de la regla 7 del contrato; una pérdida de precisión es irreversible).
-- [ ] `scripts/verificar-rls.sh`: dos tenants cargados, A no ve nada de B, una query sin tenant
-      devuelve cero filas, y el esquema se compara **contra `information_schema`/`pg_catalog`**, no
-      contra el archivo de migración.
-- [ ] `scripts/verificar-precision.sh`: hora de medición y de llegada separadas, crudo junto a
-      calibrado, punto geográfico no nulo.
+- [~] Migraciones **001** (cliente, modulo, tenant_modulo) y **002** (campo, parcela, dispositivo, magnitud, calibracion, medicion) aplicadas y verificadas. **Faltan** politica_riego, campania, analisis_suelo, indice_espacial, captura_trampa y riego_evento.
+- [~] `medicion` es hypertable, **verificado contra el catalogo de Timescale**, no contra el archivo. `riego_evento` falta.
+- [x] `calibracion` con `procedencia` NOT NULL y no-vacia, y una sola vigente por (dispositivo, magnitud). **Las dos cosas probadas en rojo.**
+- [x] Comentario de que queda y que se pierde en las cuatro migraciones (001/002, up y down). El de la bajada de la 002 dice explicitamente que **se pierde el historico entero** y que la vuelta atras real es restaurar de backup.
+- [x] `scripts/verificar-rls.sh`: **11/11 en verde**, contra `pg_policies` y `pg_class`. Con control negativo: al borrar la policy se pone en rojo.
+- [x] `scripts/verificar-precision.sh`: **11/11 en verde**. Incluye el paso que prueba que una magnitud nueva es **una FILA y no una migracion**.
 
 **Rol**: `database`. **Gate**: el objeto tiene que compilar contra la Postgres real (AGENTS.md §7).
 

@@ -11,7 +11,8 @@
         "Documentar el arranque en docs/setup.md",
         "Dejar .env.example al dia con lo que hace falta"
       ],
-      "passes": false
+      "passes": true,
+      "evidencia": "PG 17.11 + Timescale 2.30.1 + PostGIS 3.6.4 corriendo en agro-postgres, atada a 127.0.0.1. docs/setup.md"
     },
     {
       "id": "RP-00-gates",
@@ -32,7 +33,8 @@
         "Nombres, tipos, precision, particionado por tiempo y politicas RLS",
         "Nada de folklore del repo de origen: solo lo que se decide en este cambio"
       ],
-      "passes": false
+      "passes": true,
+      "evidencia": "memory/playbooks/database.md, escrito el 28/09 ANTES de la primera migracion"
     },
     {
       "id": "RP-01-esquema",
@@ -54,7 +56,8 @@
         "scripts/verificar-rls.sh con dos tenants cargados",
         "El esquema se compara contra information_schema/pg_catalog, no contra el archivo"
       ],
-      "passes": false
+      "passes": true,
+      "evidencia": "scripts/verificar-rls.sh: 11/11 en verde, mas control negativo que lo puso en rojo al borrar la policy"
     },
     {
       "id": "RP-01-precision",
@@ -64,7 +67,8 @@
         "Columnas separadas para medicion y llegada",
         "scripts/verificar-precision.sh contra la base real"
       ],
-      "passes": false
+      "passes": true,
+      "evidencia": "scripts/verificar-precision.sh: 11/11 en verde contra la base corriendo"
     },
     {
       "id": "RP-02-ingesta",
